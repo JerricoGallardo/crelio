@@ -1,4 +1,1 @@
 # Crealio
-
-
-PAG NABASA MO TO BADING KA
