@@ -18,15 +18,15 @@
         
         <nav class="nav-menu">
             <a href="#" class="active">Home</a>
+            <a href="#">Templates</a>
             <a href="#">About</a>
-            <a href="#">Portfolio</a>
-            <a href="#">Contact</a>
+            <a href="#">Feedback</a>
         </nav>
 
         <div class="user-profile">
             <div class="profile-trigger" onclick="toggleProfileMenu()">
-                <img src="https://via.placeholder.com/32" alt="Profile" class="avatar">
-                <div class="status-dot"></div>
+                <img src="img/profile-pic.jpg" alt="Profile" class="avatar">
+                <span class="username">Earl Pogi</span>
             </div>
             
             <!-- Enhanced Profile Dropdown Menu -->
@@ -34,76 +34,16 @@
                 <div class="profile-header">
                     <div class="profile-info">
                         <div class="profile-image-wrapper">
-                            <img src="https://via.placeholder.com/80" alt="Profile" class="large-avatar">
-                            <div class="status-dot large"></div>
+                            <img src="img/profile-pic.jpg" alt="Profile" class="large-avatar">
                         </div>
                         <div class="user-info">
                             <h4>Earl Pogi</h4>
                             <p>earljoshua69@gmail.com</p>
-                            <span class="status">Online</span>
                         </div>
                     </div>
+                </div>
 
                 <div class="menu-items">
-                    <div class="menu-section">
-                        <h5 class="menu-label">Account</h5>
-                        <!-- My Profile with submenu -->
-                        <div class="menu-item-wrapper">
-                            <a href="#" class="menu-item ripple" onclick="toggleSubmenu('profileSubmenu', event)">
-                                <i class="fas fa-user-circle"></i>
-                                <div>
-                                    <span>My Profile</span>
-                                    <small>View and edit your profile</small>
-                                </div>
-                                <i class="fas fa-chevron-right chevron"></i>
-                            </a>
-                            <div class="submenu" id="profileSubmenu">
-                                <a href="#" class="submenu-item ripple">
-                                    <i class="fas fa-id-card"></i>
-                                    <span>View Profile</span>
-                                </a>
-                                <a href="#" class="submenu-item ripple">
-                                    <i class="fas fa-edit"></i>
-                                    <span>Edit Profile</span>
-                                </a>
-                                <a href="#" class="submenu-item ripple">
-                                    <i class="fas fa-image"></i>
-                                    <span>Change Picture</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Settings with submenu -->
-                        <div class="menu-item-wrapper">
-                            <a href="#" class="menu-item ripple" onclick="toggleSubmenu('settingsSubmenu', event)">
-                                <i class="fas fa-cog"></i>
-                                <div>
-                                    <span>Settings</span>
-                                    <small>Account preferences</small>
-                                </div>
-                                <i class="fas fa-chevron-right chevron"></i>
-                            </a>
-                            <div class="submenu" id="settingsSubmenu">
-                                <a href="#" class="submenu-item ripple">
-                                    <i class="fas fa-user-cog"></i>
-                                    <span>Account Settings</span>
-                                </a>
-                                <a href="#" class="submenu-item ripple">
-                                    <i class="fas fa-bell"></i>
-                                    <span>Notifications</span>
-                                </a>
-                                <a href="#" class="submenu-item ripple">
-                                    <i class="fas fa-lock"></i>
-                                    <span>Privacy</span>
-                                </a>
-                                <a href="#" class="submenu-item ripple">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>Security</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="menu-section">
                         <h5 class="menu-label">Preferences</h5>
                         <div class="menu-item">
@@ -141,71 +81,104 @@
 
     <!-- Main Content -->
     <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-item active">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </div>
-            <div class="sidebar-item">
-                <i class="fas fa-th-large"></i>
-                <span>Templates</span>
-            </div>
-            <div class="sidebar-item">
-                <i class="fas fa-edit"></i>
-                <span>Editor</span>
-            </div>
-            <div class="sidebar-item">
-                <i class="fas fa-eye"></i>
-                <span>Preview</span>
-            </div>
-            <div class="sidebar-item">
-                <i class="fas fa-file-pdf"></i>
-                <span>Export to PDF</span>
-            </div>
-            <div class="sidebar-item">
-                <i class="fas fa-globe"></i>
-                <span>Publish</span>
-            </div>
-        </aside>
-
         <!-- Main Content Area -->
         <main class="main-content">
-            <div class="welcome-section">
-                <h1>Welcome back, Earl sarap mo talaga! Baka Aizoholic to!</h1>
-                <p>Create and manage your professional resumes</p>
-            </div>
-
-            <div class="resume-grid">
-                <!-- Add Resume Card -->
-                <div class="resume-card add-new">
-                    <i class="fas fa-plus"></i>
-                    <p>Create New Resume</p>
-                </div>
-
-                <!-- Example Resume Cards -->
-                <div class="resume-card">
-                    <div class="resume-preview">
-                        <img src="https://via.placeholder.com/280x160" alt="Resume Preview">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="welcome-section">
+                        <h1>Creating a Standout Resume </br> That Highlights Your Skills and Experience</h1>
+                        <p>Learn how to create a compelling resume that effectively </br> highlights your skills, experience, and achievements to stand out to employers.</p>
                     </div>
-                    <div class="resume-info">
-                        <h3>Adonis sa UCC</h3>
-                        <p>Last edited: 69 days ago</p>
-                        <div class="resume-actions">
-                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn-more"><i class="fas fa-ellipsis-v"></i></button>
-                        </div>
+
+                    <!-- Left-aligned Get Started button -->
+                    <div class="cta-container">
+                        <button class="btn-get-started">Get Started</button>
                     </div>
                 </div>
-                <!-- Add more resume cards as needed -->
+                
+                <!-- Hero image on the right side -->
+                <div class="hero-image">
+                    <img src="img/72c0b2_29d445b883d24862a52bfe362f1d746f~mv2.webp" alt="Resume Builder Illustration">
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- Floating Action Button -->
-    <button class="fab">
-        <i class="fas fa-plus"></i>
-    </button>
+    <!-- Templates Section - Add this after the hero section but before the footer -->
+    <section class="templates-section">
+        <div class="section-header">
+            <h2>Templates</h2>
+            <p>Choose from our professionally designed resume templates to get started</p>
+        </div>
+        
+        <div class="templates-grid">
+            <!-- Template 1 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic1.png" alt="Resume Template 1">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Professional</h3>
+            </div>
+            
+            <!-- Template 2 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic2.webp" alt="Resume Template 2">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Creative</h3>
+            </div>
+            
+            <!-- Template 3 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic3.webp" alt="Resume Template 3">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Modern</h3>
+            </div>
+            
+            <!-- Template 4 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic4.webp" alt="Resume Template 4">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Executive</h3>
+            </div>
+            
+            <!-- Template 5 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic5.jpg" alt="Resume Template 5">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Simple</h3>
+            </div>
+            
+            <!-- Template 6 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic6.jpg" alt="Resume Template 6">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Academic</h3>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -217,14 +190,9 @@
                 <a href="#">Terms & Conditions</a>
                 <a href="#">Privacy Policy</a>
             </div>
-            <div class="footer-section social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>

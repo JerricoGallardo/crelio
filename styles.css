@@ -35,6 +35,9 @@ body {
     line-height: 1.5;
     color: var(--text-primary);
     background: var(--background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header Styles */
@@ -441,4 +444,286 @@ input:checked + .slider:before {
 
 .compact-mode .resume-card {
     margin-bottom: 16px;
+}
+
+.container {
+    margin-top: var(--header-height);
+    margin-left: 0;
+    padding: 24px;
+    flex: 1; /* This will push the footer down */
+}
+
+.footer {
+    margin-left: 0;
+    padding: 24px;
+    background: var(--surface);
+    /* Add these properties to position the footer at the bottom */
+    position: relative;
+    margin-top: auto;
+}
+
+/* You might want to update these too */
+.main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Style for the Get Started button container */
+.cta-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+/* Style for the Get Started button */
+.btn-get-started {
+    background-color: var(--primary);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.btn-get-started:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+}
+
+.btn-get-started:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.25);
+}
+
+/* Add these styles to your existing CSS file */
+
+/* Hero section layout */
+.hero-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin: 40px 0 60px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the Get Started button container */
+.cta-container {
+    display: flex;
+    justify-content: flex-start; /* Align to the left */
+    margin-top: 32px;
+}
+
+/* Style for the Get Started button */
+.btn-get-started {
+    background-color: var(--primary);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.btn-get-started:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+}
+
+.btn-get-started:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.25);
+}
+
+/* Templates Section Styles */
+.templates-section {
+    padding: 60px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.template-card {
+    transition: var(--transition);
+}
+
+.template-card h3 {
+    text-align: center;
+    margin-top: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.template-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.template-image img {
+    width: 100%;
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.template-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.template-btn {
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover effects */
+.template-card:hover .template-image img {
+    transform: scale(1.05);
+    filter: brightness(0.9);
+}
+
+.template-card:hover .template-overlay {
+    opacity: 1;
+}
+
+.template-card:hover .template-btn {
+    transform: translateY(0);
+}
+
+.template-btn:hover {
+    background-color: #0069d9;
+}
+
+/* Profile image styles */
+.avatar {
+    width: 40px; /* Increased from 32px */
+    height: 40px; /* Increased from 32px */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.username {
+    margin-left: 10px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: inline-block;
+}
+
+/* Update profile trigger to align items */
+.profile-trigger {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+/* For the larger avatar in the dropdown menu */
+.large-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.profile-image-wrapper {
+    position: relative;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .templates-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .templates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        flex-direction: column;
+    }
+    
+    .hero-content {
+        order: 1;
+        text-align: center;
+    }
+    
+    .hero-image {
+        order: 0;
+        margin-bottom: 24px;
+    }
+    
+    .cta-container {
+        justify-content: center;
+    }
 }
