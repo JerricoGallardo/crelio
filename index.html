@@ -178,23 +178,278 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <p>© 2025 Crealio. All rights reserved.</p>
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>About Crealio</h2>
+                <p>Helping you stand out in the job market</p>
             </div>
-            <div class="footer-section">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="mission-box">
+                        <i class="fas fa-bullseye mission-icon"></i>
+                        <h3>Our Mission</h3>
+                        <p>We provide professional tools that help job seekers create standout resumes that catch employers' attention.</p>
+                    </div>
+                    
+                    <div class="features-container">
+                        <div class="feature-box">
+                            <i class="fas fa-file-alt"></i>
+                            <h4>Professional Templates</h4>
+                            <p>Industry-tailored designs</p>
+                        </div>
+                        
+                        <div class="feature-box">
+                            <i class="fas fa-paint-brush"></i>
+                            <h4>Easy Customization</h4>
+                            <p>Intuitive editing tools</p>
+                        </div>
+                        
+                        <div class="feature-box">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>ATS-Friendly</h4>
+                            <p>Pass automated screening</p>
+                        </div>
+                        
+                        <div class="feature-box">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Expert Guidance</h4>
+                            <p>Tips throughout the process</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="img/about-image.jpg" alt="Team working on resume designs">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Previous Feedback Section -->
+    <section class="previous-feedback-wrapper">
+        <div class="previous-feedback">
+            <div class="section-heading">
+                <h2>What Others Are Saying</h2>
+                <p>Don't just take our word for it, see the success stories from users just like yours.</p>
+            </div>
+            
+            <div class="feedback-container">
+                <!-- Feedback Item 1 -->
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <h4>Sarah Johnson</h4>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="feedback-text">The templates are incredibly professional and helped me land an interview within a week of sending out my new resume.</p>
+                    <div class="feedback-company">Marketing Director</div>
+                </div>
+                
+                <!-- Feedback Item 2 -->
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <h4>Michael Chen</h4>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="feedback-text">As a job seeker, it's important to have a tool that can help me create a professional resume. Crealio has been a lifesaver, allowing me to showcase my skills effectively.</p>
+                    <div class="feedback-company">Software Engineer</div>
+                </div>
+                
+                <!-- Feedback Item 3 -->
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <h4>Jasmine Santos</h4>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="feedback-text">The resume builder has provided valuable insights into what employers look for and helped me make data-driven decisions about my career presentation. It's a game changer!</p>
+                    <div class="feedback-company">HR Consultant</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="feedback-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Your Feedback Matters</h2>
+                <p>Help us improve your resume building experience</p>
+            </div>
+            
+            <div class="feedback-content">
+                <div class="feedback-form-container">
+                    <form id="feedbackForm" class="feedback-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your email address" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackType">Feedback Type</label>
+                            <select id="feedbackType" name="feedbackType" required>
+                                <option value="" disabled selected>Select feedback type</option>
+                                <option value="suggestion">Suggestion</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="compliment">Compliment</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Feedback</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Please share your thoughts with us" required></textarea>
+                        </div>
+
+                        
+                            <!-- Add this to your existing feedback form, just before the message textarea -->
+                            <div class="form-group rating-field">
+                                <label for="rating">Your Rating</label>
+                                <div class="star-input">
+                                    <input type="radio" id="star5" name="rating" value="5" required>
+                                    <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star4" name="rating" value="4">
+                                    <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star3" name="rating" value="3">
+                                    <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star2" name="rating" value="2">
+                                    <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star1" name="rating" value="1">
+                                    <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                                </div>
+                            </div>
+
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn-submit">Submit Feedback</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="feedback-info">
+                    <div class="feedback-card">
+                        <i class="fas fa-comments"></i>
+                        <h3>We're Listening</h3>
+                        <p>Your feedback helps us improve Crealio and deliver a better resume building experience for everyone.</p>
+                    </div>
+                    
+                    <div class="feedback-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Have Ideas?</h3>
+                        <p>We love hearing your suggestions! Tell us what features would make your resume creation process easier.</p>
+                    </div>
+                    
+                    <div class="feedback-card">
+                        <i class="fas fa-bug"></i>
+                        <h3>Found a Bug?</h3>
+                        <p>Let us know about any issues you encounter so we can fix them promptly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Enhanced Footer (Replace the existing footer) -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <i class="fas fa-pencil-ruler"></i>
+                        <span>Crealio</span>
+                    </div>
+                    <p class="footer-tagline">Creating standout resumes for success</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#templates">Templates</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#feedback">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Resume Tips</a></li>
+                        <li><a href="#">Career Blog</a></li>
+                        <li><a href="#">Interview Preparation</a></li>
+                        <li><a href="#">Job Search Strategies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> support@crealio.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Resume St., Career City</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Crealio. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+        <!-- Footer 
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p>© 2025 Crealio. All rights reserved.</p>
+                </div>
+                <div class="footer-section">
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </footer>-->
+
+        <script src="script.js"></script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html> 
->>>>>>> 230c3fb517bcab104c504dd0bbc7b13dad424ea5
