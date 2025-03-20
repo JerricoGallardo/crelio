@@ -1,103 +1,238 @@
-// Theme Toggle
-const themeToggle = document.getElementById('themeToggle');
-themeToggle.addEventListener('change', () => {
-    if (themeToggle.checked) {
-        document.body.setAttribute('data-theme', 'dark');
-        document.body.classList.add('dark-mode');
-    } else {
-        document.body.setAttribute('data-theme', 'light');
-        document.body.classList.remove('dark-mode');
+// Theme management with improved efficiency
+const themeManager = (() => {
+    // Cache DOM elements and theme state
+    let currentTheme = localStorage.getItem('darkMode') === 'enabled' ? 'dark' : 'light';
+    
+    function applyTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+        document.body.classList.toggle('dark-mode', theme === 'dark');
+        localStorage.setItem('darkMode', theme === 'dark' ? 'enabled' : 'disabled');
+    }
+
+    function initialize() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            // Set initial state based on saved preference
+            themeToggle.checked = currentTheme === 'dark';
+            applyTheme(currentTheme);
+            
+            // Add event listener
+            themeToggle.addEventListener('change', () => {
+                currentTheme = themeToggle.checked ? 'dark' : 'light';
+                applyTheme(currentTheme);
+            });
+        }
     }
     
-    // Save preference to localStorage
-    localStorage.setItem('darkMode', themeToggle.checked ? 'enabled' : 'disabled');
-});
+    return { initialize, applyTheme };
+})();
 
-// Dropdown Menu
-const profileDropdown = document.querySelector('.profile-dropdown');
-if (profileDropdown) {
-    profileDropdown.addEventListener('click', (e) => {
-        profileDropdown.classList.toggle('active');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!profileDropdown.contains(e.target)) {
-            profileDropdown.classList.remove('active');
-        }
-    });
-}
-
-// Sidebar item active state
-const sidebarItems = document.querySelectorAll('.sidebar-item');
-sidebarItems.forEach(item => {
-    item.addEventListener('click', () => {
-        sidebarItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-    });
-});
-
-// Add smooth scroll behavior
-document.documentElement.style.scrollBehavior = 'smooth';
-
-// Add toast notification function
-function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
+// Enhanced toast notification system
+const toastManager = (() => {
+    let toastContainer;
     
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-} 
-
-// Profile menu toggle function
-function toggleProfileMenu() {
-    const profileMenu = document.getElementById('profileMenu');
-    profileMenu.classList.toggle('active');
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        const isClickInside = profileMenu.contains(event.target) || 
-                            event.target.closest('.profile-trigger');
+    function createContainer() {
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.className = 'toast-container';
+            document.body.appendChild(toastContainer);
+        }
+        return toastContainer;
+    }
+    
+    function showToast(message, type = 'info') {
+        const container = createContainer();
         
-        if (!isClickInside && profileMenu.classList.contains('active')) {
-            profileMenu.classList.remove('active');
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        
+        // Create icon based on type
+        const icon = document.createElement('i');
+        switch(type) {
+            case 'success': icon.className = 'fas fa-check-circle'; break;
+            case 'error': icon.className = 'fas fa-exclamation-circle'; break;
+            case 'info': default: icon.className = 'fas fa-info-circle'; break;
         }
-    });
-}
-
-// Optional: Close menu when pressing Escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const profileMenu = document.getElementById('profileMenu');
-        profileMenu.classList.remove('active');
+        
+        // Add content to toast
+        const text = document.createElement('span');
+        text.textContent = message;
+        toast.appendChild(icon);
+        toast.appendChild(text);
+        
+        // Add and animate
+        container.appendChild(toast);
+        
+        // Force reflow before adding show class for animation
+        void toast.offsetWidth;
+        toast.classList.add('show');
+        
+        // Remove toast after duration
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
-});
+    
+    return { showToast };
+})();
 
-// Update the toggleSubmenu function
+// UI interaction manager
+const uiManager = (() => {
+    function initializeDropdowns() {
+        const profileDropdown = document.querySelector('.profile-dropdown');
+        if (profileDropdown) {
+            profileDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('active');
+            });
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdowns = document.querySelectorAll('.profile-dropdown, #profileMenu');
+            dropdowns.forEach(dropdown => {
+                if (dropdown && !dropdown.contains(e.target) && 
+                    !e.target.closest('.profile-trigger')) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        });
+        
+        // Close dropdowns on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.profile-dropdown, #profileMenu, .submenu.active')
+                    .forEach(el => el.classList.remove('active'));
+            }
+        });
+    }
+    
+    function initializeSidebar() {
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        if (sidebarItems.length) {
+            const clickHandler = (e) => {
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+            };
+            
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', clickHandler);
+            });
+        }
+    }
+    
+    function toggleProfileMenu() {
+        const profileMenu = document.getElementById('profileMenu');
+        if (profileMenu) {
+            profileMenu.classList.toggle('active');
+        }
+    }
+    
+    function toggleCompactMode() {
+        const isCompact = document.body.classList.toggle('compact-mode');
+        toastManager.showToast(`Compact mode ${isCompact ? 'enabled' : 'disabled'}`, 'info');
+        localStorage.setItem('compactMode', isCompact);
+    }
+    
+    return {
+        initializeDropdowns,
+        initializeSidebar,
+        toggleProfileMenu,
+        toggleCompactMode
+    };
+})();
+
+// Navigation and scrolling handler
+const navigationManager = (() => {
+    function initializeSmoothScrolling() {
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        const navLinks = document.querySelectorAll('a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = 70;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active state in navigation
+                        document.querySelectorAll('.nav-menu a').forEach(navItem => {
+                            navItem.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+    }
+    
+    function initializeScrollSpy() {
+        let throttleTimer;
+        
+        const updateActiveNavItem = () => {
+            if (throttleTimer) return;
+            
+            throttleTimer = setTimeout(() => {
+                const sections = document.querySelectorAll('section[id]');
+                let scrollPosition = window.scrollY;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    const navLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
+                    
+                    if (navLink && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLink.classList.add('active');
+                    } else if (navLink) {
+                        navLink.classList.remove('active');
+                    }
+                });
+                
+                throttleTimer = null;
+            }, 100); // Throttle the scroll event handler
+        };
+        
+        window.addEventListener('scroll', updateActiveNavItem, { passive: true });
+    }
+    
+    return {
+        initializeSmoothScrolling,
+        initializeScrollSpy
+    };
+})();
+
+// Menu handling
 function toggleSubmenu(submenuId, event) {
     if (event) {
         event.preventDefault();
         event.stopPropagation();
     }
     
-    // Get the submenu
     const submenu = document.getElementById(submenuId);
     if (!submenu) return;
     
-    // Get all parent menu-item-wrappers
     const parentWrapper = submenu.closest('.menu-item-wrapper');
     
-    // If clicking a nested submenu item, don't close the parent menus
     const isNestedSubmenuItem = event && event.target.closest('.submenu-item');
     if (isNestedSubmenuItem && !event.target.closest('.menu-item-wrapper')) {
         return;
     }
     
-    // Close other submenus at the same level
-    const siblings = submenu.parentElement.parentElement.querySelectorAll('.submenu');
+    // Efficiently close sibling menus
+    const siblings = Array.from(submenu.parentElement.parentElement.querySelectorAll('.submenu'));
     siblings.forEach(sibling => {
         if (sibling !== submenu) {
             sibling.classList.remove('active');
@@ -106,193 +241,27 @@ function toggleSubmenu(submenuId, event) {
         }
     });
     
-    // Toggle the clicked submenu
     submenu.classList.toggle('active');
     if (parentWrapper) {
         parentWrapper.classList.toggle('active');
     }
 }
 
-// Update the click handlers for menu items
 function handleMenuItemClick(action, param, event) {
     event.preventDefault();
     event.stopPropagation();
     
-    // Execute the appropriate action
     switch (action) {
-        case 'color':
-            changeColorScheme(param);
-            break;
         case 'toggleCompact':
-            toggleCompactMode();
+            uiManager.toggleCompactMode();
             break;
     }
-    
-    // Don't close the menus immediately after changing settings
-    event.stopPropagation();
 }
 
-function toggleCompactMode() {
-    document.body.classList.toggle('compact-mode');
-    const isCompact = document.body.classList.contains('compact-mode');
-    showToast(`Compact mode ${isCompact ? 'enabled' : 'disabled'}`, 'info');
-    localStorage.setItem('compactMode', isCompact);
-}
-
-// Feedback form submission handling
-document.addEventListener('DOMContentLoaded', function() {
-    // Check for saved theme preference
-    const darkModeEnabled = localStorage.getItem('darkMode') === 'enabled';
+// Initialize styles
+function initializeStyles() {
+    document.documentElement.style.setProperty('--transition-speed', '0.3s');
     
-    // Apply saved preference
-    if (darkModeEnabled) {
-        document.body.setAttribute('data-theme', 'dark');
-        document.body.classList.add('dark-mode');
-        if (themeToggle) themeToggle.checked = true;
-    } else {
-        document.body.setAttribute('data-theme', 'light');
-        document.body.classList.remove('dark-mode');
-        if (themeToggle) themeToggle.checked = false;
-    }
-    
-    // Load saved compact mode state
-    const savedCompactMode = localStorage.getItem('compactMode') === 'true';
-    if (savedCompactMode) {
-        document.body.classList.add('compact-mode');
-    }
-    
-    const feedbackForm = document.getElementById('feedbackForm');
-    
-    if (feedbackForm) {
-        feedbackForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Get form data
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const feedbackType = document.getElementById('feedbackType').value;
-            const message = document.getElementById('message').value;
-            
-            // Here you would typically send the data to your server
-            // For now, let's just show a success message
-            
-            // Create a success message
-            showToast('Thank you for your feedback!', 'success');
-            
-            // Reset the form
-            feedbackForm.reset();
-        });
-    }
-    
-    // Add smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Only prevent default for internal links
-            const targetId = this.getAttribute('href');
-            if (targetId.startsWith('#')) {
-                e.preventDefault();
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerOffset = 70; // Account for fixed header
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update active state in navigation
-                    document.querySelectorAll('.nav-menu a').forEach(navItem => {
-                        navItem.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                }
-            }
-        });
-    });
-    
-    // Set active nav based on scroll position
-    window.addEventListener('scroll', function() {
-        const sections = document.querySelectorAll('section[id]');
-        let scrollPosition = window.scrollY;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                document.querySelector(`.nav-menu a[href="#${sectionId}"]`)?.classList.add('active');
-            } else {
-                document.querySelector(`.nav-menu a[href="#${sectionId}"]`)?.classList.remove('active');
-            }
-        });
-    });
-});
-
-// Add CSS variables for transition control
-document.documentElement.style.setProperty('--transition-speed', '0.3s');
-
-// Enhanced toast notification function
-function showToast(message, type = 'info') {
-    // Create toast container if it doesn't exist
-    let toastContainer = document.querySelector('.toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    
-    // Create icon based on type
-    const icon = document.createElement('i');
-    switch(type) {
-        case 'success':
-            icon.className = 'fas fa-check-circle';
-            break;
-        case 'error':
-            icon.className = 'fas fa-exclamation-circle';
-            break;
-        case 'info':
-        default:
-            icon.className = 'fas fa-info-circle';
-            break;
-    }
-    
-    // Create message text
-    const text = document.createElement('span');
-    text.textContent = message;
-    
-    // Add icon and text to toast
-    toast.appendChild(icon);
-    toast.appendChild(text);
-    
-    // Add toast to container
-    toastContainer.appendChild(toast);
-    
-    // Add show class after a small delay (for animation)
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove toast after duration
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
-    }, 3000);
-}
-
-// Add these styles programmatically
-document.addEventListener('DOMContentLoaded', function() {
     const style = document.createElement('style');
     style.textContent = `
         .toast-container {
@@ -373,4 +342,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+}
+
+// Initialize form handlers
+function initializeForms() {
+    const feedbackForm = document.getElementById('feedbackForm');
+    
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const feedbackType = document.getElementById('feedbackType').value;
+            const message = document.getElementById('message').value;
+            
+            // Show success message
+            toastManager.showToast('Thank you for your feedback!', 'success');
+            
+            // Reset the form
+            feedbackForm.reset();
+        });
+    }
+}
+
+// Main initialization
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all components
+    themeManager.initialize();
+    initializeStyles();
+    uiManager.initializeDropdowns();
+    uiManager.initializeSidebar();
+    navigationManager.initializeSmoothScrolling();
+    navigationManager.initializeScrollSpy();
+    initializeForms();
+    
+    // Load saved compact mode state
+    const savedCompactMode = localStorage.getItem('compactMode') === 'true';
+    if (savedCompactMode) {
+        document.body.classList.add('compact-mode');
+    }
 });
+
+// Make functions globally available
+window.showToast = toastManager.showToast;
+window.toggleProfileMenu = uiManager.toggleProfileMenu;
+window.toggleSubmenu = toggleSubmenu;
+window.handleMenuItemClick = handleMenuItemClick;
