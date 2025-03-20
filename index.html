@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crealio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-pencil-ruler"></i>
+            <span>Crealio</span>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="#home" class="active">Home</a>
+            <a href="#templates">Templates</a>
+            <a href="#features">Features</a>
+            <a href="#feedback">Feedback</a>
+        </nav>
+
+        <div class="user-profile">
+            <div class="profile-trigger" onclick="toggleProfileMenu()">
+                <img src="img/profile-pic.jpg" alt="Profile" class="avatar">
+                <span class="username">Earl Pogi</span>
+            </div>
+            
+            <!-- Enhanced Profile Dropdown Menu -->
+            <div class="profile-menu" id="profileMenu">
+                <div class="profile-header">
+                    <div class="profile-info">
+                        <div class="profile-image-wrapper">
+                            <img src="img/profile-pic.jpg" alt="Profile" class="large-avatar">
+                        </div>
+                        <div class="user-info">
+                            <h4>Earl Pogi</h4>
+                            <p>earljoshua69@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-items">
+                    <div class="menu-section">
+                        <h5 class="menu-label">Preferences</h5>
+                        <div class="menu-item">
+                            <i class="fas fa-moon"></i>
+                            <div>
+                                <span>Dark Mode</span>
+                                <small>Toggle theme</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="themeToggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;">
+                            <i class="fas fa-compress-alt"></i>
+                            <div>
+                                <span>Compact Mode</span>
+                                <small>Toggle compact layout</small>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="divider"></div>
+                    
+                    <div class="menu-section">
+                        <a href="#" class="menu-item logout ripple">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div id="home" class="container">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="welcome-section">
+                        <h1>Creating a Standout Resume </br> That Highlights Your Skills and Experience</h1>
+                        <p>Learn how to create a compelling resume that effectively </br> highlights your skills, experience, and achievements to stand out to employers.</p>
+                    </div>
+                    <div class="cta-container">
+                        <button class="btn-get-started">Get Started</button>
+                    </div>
+                </div>
+                
+                <!-- Hero image on the right side -->
+                <div class="hero-image">
+                    <img src="img/72c0b2_29d445b883d24862a52bfe362f1d746f~mv2.webp" alt="Resume Builder Illustration">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Templates Section - Add this after the hero section but before the footer -->
+    <section id="templates" class="templates-section">
+        <div class="section-header">
+            <h2>Templates</h2>
+            <p>Choose from our professionally designed resume templates to get started</p>
+        </div>
+        
+        <div class="templates-grid">
+            <!-- Template 1 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic1.png" alt="Resume Template 1">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Professional</h3>
+            </div>
+            
+            <!-- Template 2 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic2.webp" alt="Resume Template 2">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Creative</h3>
+            </div>
+            
+            <!-- Template 3 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic3.webp" alt="Resume Template 3">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Modern</h3>
+            </div>
+            
+            <!-- Template 4 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic4.webp" alt="Resume Template 4">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Executive</h3>
+            </div>
+            
+            <!-- Template 5 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic5.jpg" alt="Resume Template 5">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Simple</h3>
+            </div>
+            
+            <!-- Template 6 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="img/pic6.jpg" alt="Resume Template 6">
+                    <div class="template-overlay">
+                        <button class="template-btn">Use Template</button>
+                    </div>
+                </div>
+                <h3>Academic</h3>
+            </div>
+        </div>
+    </section>
+
+ <!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>Features</h2>
+            <p>Discover the powerful features that make Crealio the best choice for creating your professional resume</p>
+        </div>
+        
+        <div class="features-grid">
+            <!-- Feature 1: Pre-built Templates -->
+            <div class="feature-card">
+                <i class="fas fa-file-alt"></i>
+                <h3>Pre-built Templates</h3>
+                <p>Choose from a variety of professionally designed templates to quickly customize your resume.</p>
+            </div>
+            
+            <!-- Feature 2: Drag-and-Drop Interface -->
+            <div class="feature-card">
+                <i class="fas fa-mouse-pointer"></i>
+                <h3>Drag-and-Drop Interface</h3>
+                <p>Easily customize your resume with a user-friendly drag-and-drop interface, perfect for beginners.</p>
+            </div>
+            
+            <!-- Feature 3: Live Preview -->
+            <div class="feature-card">
+                <i class="fas fa-eye"></i>
+                <h3>Live Preview</h3>
+                <p>See your changes in real-time with a live preview of your resume as you edit.</p>
+            </div>
+            
+            <!-- Feature 4: Mobile & Desktop Responsiveness -->
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile & Desktop Responsiveness</h3>
+                <p>Ensure your resume looks great on any device, whether it's a mobile phone or desktop.</p>
+            </div>
+            
+            <!-- Feature 5: One-Click Publishing -->
+            <div class="feature-card">
+                <i class="fas fa-upload"></i>
+                <h3>One-Click Publishing</h3>
+                <p>Publish your resume online with a single click, making it easy to share with potential employers.</p>
+            </div>
+            
+            <!-- Feature 6: PDF Export -->
+            <div class="feature-card">
+                <i class="fas fa-file-pdf"></i>
+                <h3>PDF Export</h3>
+                <p>Export your resume as a PDF for easy sharing and printing.</p>
+            </div>
+            
+            <!-- Feature 7: User Authentication -->
+            <div class="feature-card">
+                <i class="fas fa-user-lock"></i>
+                <h3>User Authentication</h3>
+                <p>Save your progress and access your resume anytime with secure user authentication.</p>
+            </div>
+            
+            <!-- Feature 8: Customizable Sections -->
+            <div class="feature-card">
+                <i class="fas fa-pencil-ruler"></i>
+                <h3>Customizable Sections</h3>
+                <p>Add, remove, or rearrange sections like About, Projects, Skills, and Contact Information.</p>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Previous Feedback Section -->
+    <section class="previous-feedback-wrapper">
+        <div class="previous-feedback">
+            <div class="section-heading">
+                <h2>What Others Are Saying</h2>
+                <p>Don't just take our word for it, see the success stories from users just like yours.</p>
+            </div>
+            
+            <div class="feedback-container">
+                <!-- Feedback Item 1 -->
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <h4>Sarah Johnson</h4>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="feedback-text">The templates are incredibly professional and helped me land an interview within a week of sending out my new resume.</p>
+                    <div class="feedback-company">Marketing Director</div>
+                </div>
+                
+                <!-- Feedback Item 2 -->
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <h4>Michael Chen</h4>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="feedback-text">As a job seeker, it's important to have a tool that can help me create a professional resume. Crealio has been a lifesaver, allowing me to showcase my skills effectively.</p>
+                    <div class="feedback-company">Software Engineer</div>
+                </div>
+                
+                <!-- Feedback Item 3 -->
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <h4>Jasmine Santos</h4>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="feedback-text">The resume builder has provided valuable insights into what employers look for and helped me make data-driven decisions about my career presentation. It's a game changer!</p>
+                    <div class="feedback-company">HR Consultant</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="feedback-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Your Feedback Matters</h2>
+                <p>Help us improve your resume building experience</p>
+            </div>
+            
+            <div class="feedback-content">
+                <div class="feedback-form-container">
+                    <form id="feedbackForm" class="feedback-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your email address" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackType">Feedback Type</label>
+                            <select id="feedbackType" name="feedbackType" required>
+                                <option value="" disabled selected>Select feedback type</option>
+                                <option value="suggestion">Suggestion</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="compliment">Compliment</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Feedback</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Please share your thoughts with us" required></textarea>
+                        </div>
+
+                        
+                            <!-- Add this to your existing feedback form, just before the message textarea -->
+                            <div class="form-group rating-field">
+                                <label for="rating">Your Rating</label>
+                                <div class="star-input">
+                                    <input type="radio" id="star5" name="rating" value="5" required>
+                                    <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star4" name="rating" value="4">
+                                    <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star3" name="rating" value="3">
+                                    <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star2" name="rating" value="2">
+                                    <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                                    
+                                    <input type="radio" id="star1" name="rating" value="1">
+                                    <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                                </div>
+                            </div>
+
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn-submit">Submit Feedback</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="feedback-info">
+                    <div class="feedback-card">
+                        <i class="fas fa-comments"></i>
+                        <h3>We're Listening</h3>
+                        <p>Your feedback helps us improve Crealio and deliver a better resume building experience for everyone.</p>
+                    </div>
+                    
+                    <div class="feedback-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Have Ideas?</h3>
+                        <p>We love hearing your suggestions! Tell us what features would make your resume creation process easier.</p>
+                    </div>
+                    
+                    <div class="feedback-card">
+                        <i class="fas fa-bug"></i>
+                        <h3>Found a Bug?</h3>
+                        <p>Let us know about any issues you encounter so we can fix them promptly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <i class="fas fa-pencil-ruler"></i>
+                        <span>Crealio</span>
+                    </div>
+                    <p class="footer-tagline">Creating standout resumes for success</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/jerrico.gallardo.982" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="https://github.com/JerricoGallardo/crelio" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                        <a href="https://instagram.com" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://linkedin.com" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#templates">Templates</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#feedback">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> crealio@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> (+63) 909-831-2730 </li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Resume St., Career City</li>
+                    </ul>
+                </div>
+                
+            </div>
+
+
+            <div class="footer-bottom">
+                <p>© 2025 Crealio. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <script src="script.js"></script>
+</body>
+</html>
