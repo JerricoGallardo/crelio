@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crealio - My Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="myprojects.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-pencil-ruler"></i>
+                <span>Crealio</span>
+            </div>
+            
+            <nav>
+                <a href="../Dashboard/dashboard.html" class="nav-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                
+                <a href="myprojects.html" class="nav-item active">
+                    <i class="fas fa-folder"></i>
+                    <span>My Projects</span>
+                </a>
+                <div class="submenu">
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Resumes</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Portfolios</span>
+                    </a>
+                </div>
+                
+                <a href="#" class="nav-item with-submenu">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Create New</span>
+                </a>
+                <div class="submenu">
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Resume</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Portfolio</span>
+                    </a>
+                </div>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Templates</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Export & Share</span>
+                </a>
+                
+                <div class="divider"></div>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help & Tips</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">My Projects</h1>
+                <div class="user-profile">
+                    <div class="profile-trigger" onclick="toggleProfileMenu()">
+                        <img src="../img/profile-pic.jpg" alt="Profile" class="avatar">
+                        <span class="username">Earl Pogi</span>
+                    </div>
+                    
+                    <!-- Enhanced Profile Dropdown Menu -->
+                    <div class="profile-menu" id="profileMenu">
+                        <div class="profile-header">
+                            <div class="profile-info">
+                                <div class="profile-image-wrapper">
+                                    <img src="../img/profile-pic.jpg" alt="Profile" class="large-avatar">
+                                </div>
+                                <div class="user-info">
+                                    <h4>Earl Pogi</h4>
+                                    <p>earljoshua69@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="menu-items">
+                            <div class="menu-section">
+                                <h5 class="menu-label">Preferences</h5>
+                                <div class="menu-item">
+                                    <i class="fas fa-moon"></i>
+                                    <div>
+                                        <span>Dark Mode</span>
+                                        <small>Toggle theme</small>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="themeToggle">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;">
+                                    <i class="fas fa-compress-alt"></i>
+                                    <div>
+                                        <span>Compact Mode</span>
+                                        <small>Toggle compact layout</small>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="divider"></div>
+                            
+                            <div class="menu-section">
+                                <a href="#" class="menu-item logout ripple">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Filter Section -->
+            <div class="filter-section">
+                <div class="filter-group">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search projects...">
+                    </div>
+                    
+                    <div class="filter-buttons">
+                        <button class="filter-btn active">All</button>
+                        <button class="filter-btn">Resumes</button>
+                        <button class="filter-btn">Portfolios</button>
+                        <button class="filter-btn">Recent</button>
+                    </div>
+                </div>
+                
+                <div class="sort-group">
+                    <label for="sortProjects">Sort by:</label>
+                    <select id="sortProjects">
+                        <option value="recent">Most Recent</option>
+                        <option value="name">Name</option>
+                        <option value="views">Most Views</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Projects Grid -->
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-preview">
+                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
+                        <span class="project-type">Resume</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Creative Designer 2025</h3>
+                        <div class="project-meta">
+                            <span class="project-date"><i class="fas fa-calendar-alt"></i> March 7, 2025</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 12 views</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-preview">
+                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
+                        <span class="project-type">Portfolio</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">UX/UI Design Portfolio</h3>
+                        <div class="project-meta">
+                            <span class="project-date"><i class="fas fa-calendar-alt"></i> March 5, 2025</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 27 views</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-globe"></i> Visit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-preview">
+                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
+                        <span class="project-type">Resume</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Professional Resume</h3>
+                        <div class="project-meta">
+                            <span class="project-date"><i class="fas fa-calendar-alt"></i> February 28, 2025</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 8 views</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-preview">
+                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
+                        <span class="project-type">Portfolio</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Graphic Design Showcase</h3>
+                        <div class="project-meta">
+                            <span class="project-date"><i class="fas fa-calendar-alt"></i> February 20, 2025</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 15 views</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-globe"></i> Visit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-preview">
+                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
+                        <span class="project-type">Resume</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Minimal Resume</h3>
+                        <div class="project-meta">
+                            <span class="project-date"><i class="fas fa-calendar-alt"></i> January 15, 2025</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 5 views</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-preview">
+                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
+                        <span class="project-type">Resume</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Creative Resume Template</h3>
+                        <div class="project-meta">
+                            <span class="project-date"><i class="fas fa-calendar-alt"></i> January 5, 2025</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 3 views</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Empty State (hidden by default) -->
+            <div class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <h2>No projects found</h2>
+                <p>Try adjusting your search or filters, or create a new project.</p>
+                <button class="btn-primary">
+                    <i class="fas fa-plus"></i> Create New Project
+                </button>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script src="../Dashboard/dashboard.js"></script>
+</body>
+</html>

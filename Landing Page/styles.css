@@ -1,4 +1,4 @@
-:root {
+    :root {
     --primary: #007bff;
     --secondary: #6c757d;
     --accent: #6610f2;
@@ -86,10 +86,22 @@ body {
     justify-content: space-between;
 }
 
+@media (max-width: 768px) {
+    .header-content {
+        padding-right: calc(var(--content-padding) * 1.5); /* Slightly less padding on smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .header-content {
+        padding-right: var(--content-padding); /* Return to normal padding on very small screens */
+    }
+}
+
 .logo {
     display: flex;
     align-items: center;
-    padding-left: 2rem;
+    padding-left: 1.5rem;
     gap: 12px;
     font-size: 1.5rem;
     font-weight: 600;
@@ -104,17 +116,17 @@ body {
 
   /* For heading spacing */
 .hero-content h1 {
-    margin-bottom: 1.5rem; /* Responsive margin */
+    margin-bottom: 1.5rem;
   }
   
   /* For image width */
   .hero-image img {
-    max-width: 60%; /* Percentage-based max width */
+    max-width: 60%; 
   }
   
   @media (max-width: 992px) {
     .hero-image img {
-      max-width: 100%; /* Full width on smaller screens */
+      max-width: 100%; /
     }
   }
 
@@ -143,6 +155,7 @@ body {
 .user-profile {
     display: flex;
     align-items: center;
+    margin-right: 1.5rem; /* Increase this from 10px */
     gap: 16px;
 }
 
