@@ -385,6 +385,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+	const menuItems = document.querySelectorAll('.nav-item.with-submenu');
+	
+	menuItems.forEach(item => {
+		item.addEventListener('click', function(e) {
+			if (window.innerWidth > 768) {
+				e.preventDefault();
+				this.classList.toggle('open');
+			}
+		});
+	});
+});
+
 // Make functions globally available
 window.showToast = toastManager.showToast;
 window.toggleProfileMenu = uiManager.toggleProfileMenu;
