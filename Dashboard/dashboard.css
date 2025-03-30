@@ -1,4 +1,3 @@
-/* Theme variables */
 :root {
     --primary: #007bff;
     --secondary: #6c757d;
@@ -9,7 +8,7 @@
     --text-secondary: #6c757d;
     --header-height: 64px;
     --sidebar-width: 240px;
-    --sidebar-collapsed-width: 70px;
+    --sidebar-collapsed: 70px;
     --transition: all 0.3s ease;
     --animation-speed: 1;
     --max-content-width: 1400px;
@@ -18,6 +17,7 @@
     --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.05);
     --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.1);
     --border-color: rgba(128, 128, 128, 0.2);
+
 }
 
 /* Dark theme variables */
@@ -32,7 +32,16 @@
     --border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Base styles */
+.logo span {
+    color: var(--primary) !important;
+}
+
+/* Ensure it stays blue in dark mode by explicitly setting it */
+body[data-theme="dark"] .logo span {
+    color: var(--primary) !important;
+}
+
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -48,7 +57,7 @@ body {
 
 a {
     text-decoration: none;
-    color: inherit;
+    color: var(--text-primary);
 }
 
 /* Layout */
@@ -77,12 +86,8 @@ a {
     margin-bottom: 20px;
 }
 
-.logo i, 
-.logo span {
-    color: var(--primary);
-}
-
 .logo i {
+    color: var(--primary);
     font-size: 24px;
     margin-right: 10px;
 }
@@ -92,7 +97,6 @@ a {
     font-weight: 600;
 }
 
-/* Navigation Items */
 .nav-item {
     padding: 12px 20px;
     display: flex;
@@ -119,7 +123,6 @@ a {
     font-weight: 500;
 }
 
-/* Submenu styling */
 .submenu {
     margin-left: 30px;
     padding-top: 5px;
@@ -155,7 +158,214 @@ a {
 .divider {
     height: 1px;
     background-color: var(--border-color);
-    margin: 8px 0;
+    margin: 10px 0;
+}
+
+/* Hamburger Menu Styles */
+.hamburger-menu {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.hamburger-menu:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.hamburger-icon {
+    width: 24px;
+    height: 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-icon span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: var(--transition);
+    transform-origin: left center;
+}
+
+/* Dark mode specific styles */
+body[data-theme="dark"] .hamburger-icon span {
+    background-color: var(--text-primary);
+}
+
+body[data-theme="dark"] .hamburger-menu:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    transition: width var(--transition), overflow-x var(--transition);
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed);
+    overflow-x: hidden;
+}
+
+.sidebar.collapsed .logo span, 
+.sidebar.collapsed .nav-item span,
+.sidebar.collapsed .submenu {
+    display: none;
+}
+
+.sidebar.collapsed .logo i {
+    margin-right: 0;
+}
+
+/* Move sidebar icons slightly to the left when collapsed */
+.sidebar.collapsed .nav-item i {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+}   
+
+.sidebar.collapsed .logo {
+    justify-content: center;
+    padding: 0 0 20px 0;
+}
+
+.main-content {
+    transition: margin-left var(--transition), width var(--transition);
+}
+
+.main-content.expanded {
+    margin-left: var(--sidebar-collapsed);
+    width: calc(100% - var(--sidebar-collapsed));
+}
+
+/* Optional: Add a collapse/expand button */
+.sidebar-toggle {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Adjust spacing for 'Create New' submenu trigger and its dropdown caret */
+.sidebar.collapsed .nav-item.with-submenu:after {
+    right: 5px; /* Move dropdown caret slightly to the right when minimized */
+}
+
+/* Center icons horizontally when sidebar is collapsed */
+.sidebar.collapsed .nav-item i {
+    margin-right: 0;
+    width: 100%; /* Ensure icon is centered */
+    text-align: center;
+}
+
+/* Ensure proper spacing for the 'Create New' item */
+.sidebar.collapsed .nav-item.with-submenu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Light Mode Sidebar Toggle Button */
+.sidebar-toggle {
+    background: #f0f0f0;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.sidebar-toggle:hover {
+    background: #e0e0e0;
+}
+
+/* Dark Mode Sidebar Toggle Button */
+body[data-theme="dark"] .sidebar-toggle {
+    background: #3a3a3a;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+body[data-theme="dark"] .sidebar-toggle:hover {
+    background: #4a4a4a;
+}
+
+/* Ensure the toggle icon (if any) is visible in both modes */
+.sidebar-toggle i {
+    color: var(--text-primary);
+}
+
+body[data-theme="dark"] .sidebar-toggle i {
+    color: var(--text-primary);
+}
+
+/* Blue Indicator Styles */
+.nav-item.active {
+    position: relative;
+}
+
+.nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: var(--sidebar-collapsed);
+    }
+    
+    .main-content {
+        margin-left: var(--sidebar-collapsed);
+        width: calc(100% - var(--sidebar-collapsed));
+    }
+    
+    .sidebar.collapsed .submenu {
+        position: absolute;
+        left: var(--sidebar-collapsed);
+        top: 0;
+        width: 180px;
+        background-color: var(--surface);
+        z-index: 1000;
+        margin-left: 0;
+        border: 1px solid var(--border-color);
+        border-radius: 0 4px 4px 0;
+        display: none;
+    }
+    
+    .nav-item.with-submenu:hover .submenu {
+        display: block;
+    }
+}
+
+.main-content.expanded {
+    margin-left: var(--sidebar-collapsed);
+    width: calc(100% - var(--sidebar-collapsed));
+}
+
+.sidebar.collapsed .submenu {
+    display: none;
 }
 
 /* Main Content */
@@ -172,7 +382,6 @@ a {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    background-color: var(--background);
 }
 
 .page-title {
@@ -180,7 +389,24 @@ a {
     font-weight: 700;
 }
 
-/* User Profile Styling */
+/* Avatar Styles */
+.avatar, .large-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.large-avatar {
+    width: 60px;
+    height: 60px;
+}
+
+/* Profile Menu */
 .user-profile {
     display: flex;
     align-items: center;
@@ -193,20 +419,7 @@ a {
     align-items: center;
     cursor: pointer;
     position: relative;
-    padding: 5px;
-}
-
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--primary);
-}
-
-.large-avatar {
-    width: 60px;
-    height: 60px;
+    padding: 5px; 
 }
 
 .username {
@@ -216,7 +429,6 @@ a {
     display: inline-block;
 }
 
-/* Profile Menu */
 .profile-menu {
     position: absolute;
     top: 60px;
@@ -266,6 +478,17 @@ a {
     padding: 8px;
 }
 
+.menu-section {
+    margin-bottom: 8px;
+}
+
+.menu-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    margin: 0;
+}
+
 .menu-item {
     display: flex;
     align-items: center;
@@ -278,10 +501,6 @@ a {
 
 .menu-item:hover {
     background-color: var(--surface);
-}
-
-body[data-theme="dark"] .menu-item:hover {
-    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .menu-item i {
@@ -310,7 +529,7 @@ body[data-theme="dark"] .menu-item:hover {
     color: #dc3545;
 }
 
-/* Dark Mode Switch */
+/* Switch for Dark Mode */
 .switch {
     position: relative;
     display: inline-block;
@@ -700,38 +919,6 @@ body[data-theme="dark"] .action-item:hover {
 
 .timeline-desc {
     font-size: 13px;
-    color: var(--text-secondary);
-}
-
-/* Tips Section */
-.tips-section {
-    background-color: var(--surface);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-}
-
-.tip-card {
-    background-color: rgba(52, 152, 219, 0.05);
-    border-left: 3px solid var(--primary);
-    padding: 15px;
-    border-radius: 6px;
-    margin-top: 15px;
-}
-
-.tip-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.tip-content {
-    font-size: 14px;
     color: var(--text-secondary);
 }
 
