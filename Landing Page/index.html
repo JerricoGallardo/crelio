@@ -8,6 +8,46 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        // Check if user is logged in, if not redirect to login page
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = '../login.html';
+            } else {
+                // Update user profile information if logged in
+                const userName = localStorage.getItem('userName');
+                const userEmail = localStorage.getItem('userEmail');
+                const userPicture = localStorage.getItem('userPicture');
+                
+                if (userName) {
+                    document.querySelectorAll('.username').forEach(el => {
+                        el.textContent = userName;
+                    });
+                }
+                
+                if (userEmail) {
+                    document.querySelectorAll('.user-info p').forEach(el => {
+                        el.textContent = userEmail;
+                    });
+                }
+                
+                if (userPicture) {
+                    document.querySelectorAll('.avatar, .large-avatar').forEach(el => {
+                        el.src = userPicture;
+                    });
+                }
+            }
+        });
+        
+        // Handle logout
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userPicture');
+            window.location.href = '../login.html';
+        }
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -70,7 +110,7 @@
                     <div class="divider"></div>
                     
                     <div class="menu-section">
-                        <a href="#" class="menu-item logout ripple">
+                        <a href="#" class="menu-item logout ripple" onclick="logout(); return false;">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </a>
@@ -435,7 +475,7 @@
 
 
             <div class="footer-bottom">
-                <p>© 2025 Crealio. All rights reserved.</p>
+                <p> 2025 Crealio. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="#">Terms & Conditions</a>
                     <a href="#">Privacy Policy</a>
