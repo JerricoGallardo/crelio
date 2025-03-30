@@ -177,22 +177,29 @@ function toggleProfileMenu() {
     }
 }
 
-// Better approach
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      // Do not add active class on hover
-      // Or provide visual feedback without adding the active class
-    });
-    
+document.querySelectorAll('.nav-item:not(.with-submenu)').forEach(item => {
     item.addEventListener('click', () => {
-      // Remove active class from all nav items
-      document.querySelectorAll('.nav-item').forEach(navItem => {
-        navItem.classList.remove('active');
-      });
-      // Add active class only to the clicked item
-      item.classList.add('active');
+        // Remove active class from all non-submenu nav items
+        document.querySelectorAll('.nav-item:not(.with-submenu)').forEach(navItem => {
+            navItem.classList.remove('active');
+        });
+        // Add active class only to the clicked item
+        item.classList.add('active');
     });
-  });
+});
+
+// For submenu items, handle them separately
+document.querySelectorAll('.submenu .nav-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent bubbling up to parent
+        // Remove active class from all submenu items
+        document.querySelectorAll('.submenu .nav-item').forEach(navItem => {
+            navItem.classList.remove('active');
+        });
+        // Add active class only to the clicked submenu item
+        item.classList.add('active');
+    });
+});
 
 document.documentElement.style.opacity = 0;
 window.addEventListener('DOMContentLoaded', function() {
@@ -200,4 +207,66 @@ window.addEventListener('DOMContentLoaded', function() {
         document.documentElement.style.opacity = 1;
         document.documentElement.style.transition = 'opacity 0.3s ease';
     }, 0);
+});
+
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    
+    sidebar.classList.toggle('collapsed');
+    mainContent.classList.toggle('expanded');
+}
+
+// Add a sidebar toggle button
+function createSidebarToggleButton() {
+    const sidebar = document.querySelector('.sidebar');
+    const toggleButton = document.createElement('button');
+    toggleButton.classList.add('sidebar-toggle');
+    toggleButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    toggleButton.addEventListener('click', () => {
+        toggleSidebar();
+        // Toggle the chevron direction
+        toggleButton.querySelector('i').classList.toggle('fa-chevron-left');
+        toggleButton.querySelector('i').classList.toggle('fa-chevron-right');
+    });
+    sidebar.appendChild(toggleButton);
+}
+
+// Initialize the sidebar toggle button when the page loads
+document.addEventListener('DOMContentLoaded', createSidebarToggleButton);
+
+// Toggle Profile Menu
+function toggleProfileMenu() {
+    const profileMenu = document.getElementById('profileMenu');
+    profileMenu.classList.toggle('active');
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the logo element
+    const logo = document.querySelector('.logo');
+    
+    // Add click event listener
+    if (logo) {
+        logo.addEventListener('click', function() {
+            // Get the current page path
+            const currentPath = window.location.pathname;
+            
+            // Determine the correct landing page path based on the current directory depth
+            let landingPagePath;
+            
+            // Check if we're in a nested directory like "Create New"
+            if (currentPath.includes('/Create New/')) {
+                landingPagePath = '../../Landing Page/index.html';
+            } else {
+                landingPagePath = '../Landing Page/index.html';
+            }
+            
+            // Navigate to landing page
+            window.location.href = landingPagePath;
+            
+            // Log for debugging
+            console.log('Navigating to:', landingPagePath, 'from:', currentPath);
+        });
+    }
 });

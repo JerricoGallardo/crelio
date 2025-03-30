@@ -17,6 +17,11 @@
             </div>
             
             <nav>
+                <a href="../Profile/profile.html" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                
                 <a href="../Dashboard/dashboard.html" class="nav-item">
                     <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
@@ -37,46 +42,24 @@
                     </a>
                 </div>
                 
-                <a href="#" class="nav-item with-submenu">
+                <a href="../Create New/createnew.html" class="nav-item with-submenu">
                     <i class="fas fa-plus-circle"></i>
                     <span>Create New</span>
                 </a>
                 <div class="submenu">
-                    <a href="#" class="nav-item">
+                    <a href="../Create New/Resume/createnewresume.html" class="nav-item">
                         <i class="fas fa-file-alt"></i>
-                        <span>Resume</span>
+                        <span>Resumes</span>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="../Create New/Portfolio/createnewportfolio.html" class="nav-item">
                         <i class="fas fa-globe"></i>
-                        <span>Portfolio</span>
+                        <span>Portfolios</span>
                     </a>
                 </div>
-                
-                <a href="#" class="nav-item">
-                    <i class="fas fa-layer-group"></i>
-                    <span>Templates</span>
-                </a>
-                
-                <a href="#" class="nav-item">
-                    <i class="fas fa-share-alt"></i>
-                    <span>Export & Share</span>
-                </a>
-                
-                <div class="divider"></div>
-                
-                <a href="#" class="nav-item">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-                
-                <a href="#" class="nav-item">
+            
+                <a href="../Settings/settings.html" class="nav-item">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
-                </a>
-                
-                <a href="#" class="nav-item">
-                    <i class="fas fa-question-circle"></i>
-                    <span>Help & Tips</span>
                 </a>
             </nav>
         </aside>
@@ -86,9 +69,12 @@
             <div class="page-header">
                 <h1 class="page-title">My Projects</h1>
                 <div class="user-profile">
-                    <div class="profile-trigger" onclick="toggleProfileMenu()">
-                        <img src="../img/profile-pic.jpg" alt="Profile" class="avatar">
-                        <span class="username">Earl Pogi</span>
+                    <div class="hamburger-menu" onclick="toggleProfileMenu()">
+                        <div class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
                     </div>
                     
                     <!-- Enhanced Profile Dropdown Menu -->

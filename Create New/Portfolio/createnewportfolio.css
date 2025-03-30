@@ -1,4 +1,3 @@
-/* CSS Variables */
 :root {
     --primary: #007bff;
     --secondary: #6c757d;
@@ -605,422 +604,126 @@ input:checked + .slider:before {
     transition: 0s;
 }
 
-/* Filter Section */
-.filter-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    background-color: var(--surface);
-    border-radius: 10px;
-    padding: 15px 20px;
-    box-shadow: var(--shadow-sm);
+/* Resume Templates Grid Styles */
+.resume-templates {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.filter-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.search-box {
-    display: flex;
-    align-items: center;
-    background-color: var(--background);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 8px 12px;
-    width: 250px;
-}
-
-.search-box i {
-    color: var(--text-secondary);
-    margin-right: 8px;
-}
-
-.search-box input {
-    border: none;
-    outline: none;
-    background: transparent;
+.resume-templates h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
     color: var(--text-primary);
-    width: 100%;
 }
 
-.filter-buttons {
-    display: flex;
-    gap: 8px;
-}
-
-.filter-btn {
-    background-color: var(--background);
+.resume-templates p {
     color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.filter-btn.active {
-    background-color: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.sort-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.sort-group label {
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-.sort-group select {
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 6px 12px;
-    background-color: var(--background);
-    color: var(--text-primary);
-    outline: none;
-    font-size: 14px;
-}
-
-/* Projects Grid */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
     margin-bottom: 30px;
 }
 
-.project-card {
-    background-color: var(--surface);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
 }
 
-.project-card:hover {
+.template-card {
+    background-color: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.template-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-md);
 }
 
-.project-preview {
-    height: 160px;
-    background-color: #333;
-    position: relative;
+.template-image {
+    height: 200px;
     overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.project-preview img {
+.template-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.project-type {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: var(--primary);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
+.template-card:hover .template-image img {
+    transform: scale(1.05);
 }
 
-.project-info {
+.template-info {
     padding: 16px;
 }
 
-.project-title {
+.template-info h3 {
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    color: var(--text-primary);
 }
 
-.project-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 13px;
+.template-info p {
+    font-size: 14px;
     color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.4;
 }
 
-.project-date, .project-views {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.project-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.action-btn {
-    flex: 1;
-    background-color: rgba(0, 123, 255, 0.1);
-    color: var(--primary);
-    border: none;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-.action-btn:hover {
-    background-color: rgba(0, 123, 255, 0.2);
-}
-
-/* Empty State */
-.empty-state {
-    background-color: var(--surface);
-    border-radius: 10px;
-    padding: 40px;
-    text-align: center;
-    margin-bottom: 30px;
-    box-shadow: var(--shadow-sm);
-}
-
-.empty-icon {
-    font-size: 60px;
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-}
-
-.empty-state h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.empty-state p {
-    color: var(--text-secondary);
-    max-width: 500px;
-    margin: 0 auto 20px;
-}
-
-.btn-primary {
+.template-btn {
+    display: inline-block;
     background-color: var(--primary);
     color: white;
-    border: none;
+    padding: 10px 16px;
     border-radius: 6px;
-    padding: 10px 20px;
-    font-size: 14px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.3s;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    width: 100%;
 }
 
-.btn-primary:hover {
+.template-btn:hover {
     background-color: #0069d9;
 }
 
-/* Pagination */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 30px;
+.templates-footer {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
 }
 
-.page-btn {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--background);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
+.templates-footer p {
+    margin: 0;
     font-size: 14px;
-    cursor: pointer;
-    transition: var(--transition);
 }
 
-.page-btn.active {
-    background-color: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.page-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.page-btn:not(:disabled):hover {
-    background-color: rgba(0, 123, 255, 0.1);
-}
-
-/* Dark Mode Styles */
-body[data-theme="dark"] {
-    background-color: var(--background);
-    color: var(--text-primary);
-}
-
-body[data-theme="dark"] .sidebar,
-body[data-theme="dark"] .page-header,
-body[data-theme="dark"] .filter-section,
-body[data-theme="dark"] .project-card,
-body[data-theme="dark"] .empty-state,
-body[data-theme="dark"] .pagination,
-body[data-theme="dark"] .profile-menu {
-    background-color: var(--surface);
-    box-shadow: var(--shadow-sm);
-}
-
-body[data-theme="dark"] .sidebar {
-    border-right: 1px solid var(--border-color);
-}
-
-body[data-theme="dark"] .content-wrapper,
-body[data-theme="dark"] .pagination {
-    background-color: var(--background);
-}
-
-body[data-theme="dark"] .nav-item,
-body[data-theme="dark"] .text-secondary {
-    color: var(--text-secondary);
-}
-
-body[data-theme="dark"] .nav-item:hover,
-body[data-theme="dark"] .nav-item.active {
-    background-color: rgba(255, 255, 255, 0.05);
+.templates-footer a {
     color: var(--primary);
+    text-decoration: underline;
 }
 
-body[data-theme="dark"] .filter-btn,
-body[data-theme="dark"] .search-box,
-body[data-theme="dark"] .sort-group select {
-    background-color: var(--surface);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-}
-
-body[data-theme="dark"] .action-btn {
-    background-color: rgba(0, 123, 255, 0.1);
-    color: var(--primary);
-}
-
-body[data-theme="dark"] .page-btn {
-    background-color: var(--background);
-    color: var(--text-primary);
-}
-
-body[data-theme="dark"] .page-btn.active {
-    background-color: var(--primary);
-    color: white;
-}
-
-body[data-theme="dark"] input::placeholder {
-    color: var(--text-secondary);
-}
-
-body[data-theme="dark"] .page-header,
-body[data-theme="dark"] .filter-section {
-    background-color: var(--background);
-    box-shadow: none;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-    .filter-section {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    .sort-group {
-        align-self: flex-start;
-    }
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .sidebar {
-        width: var(--sidebar-collapsed);
-        overflow-x: hidden;
+    .templates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
     
-    .logo span, .nav-item span {
-        display: none;
-    }
-    
-    .main-content {
-        margin-left: var(--sidebar-collapsed);
-        width: calc(100% - var(--sidebar-collapsed));
-        padding: 20px;
-    }
-    
-    .nav-item.with-submenu:after {
-        display: none;
-    }
-    
-    .submenu {
-        position: absolute;
-        left: var(--sidebar-collapsed);
-        top: 0;
-        width: 180px;
-        background-color: var(--surface);
-        z-index: 1000;
-        margin-left: 0;
-        border: 1px solid var(--border-color);
-        border-radius: 0 4px 4px 0;
-        display: none;
-    }
-    
-    .nav-item.with-submenu:hover .submenu {
-        display: block;
-    }
-    
-    .filter-group {
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-    }
-    
-    .search-box {
-        width: 100%;
-    }
-    
-    .filter-buttons {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 5px;
+    .template-image {
+        height: 160px;
     }
 }
 
 @media (max-width: 576px) {
-    .projects-grid {
+    .templates-grid {
         grid-template-columns: 1fr;
-    }
-    
-    .page-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    .main-content {
-        padding: 15px;
-    }
-    
-    .project-actions {
-        flex-direction: column;
     }
 }
