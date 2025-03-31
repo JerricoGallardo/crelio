@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('getStartedBtn').addEventListener('click', function() {
-        window.location.href = '../Dashboard/dashboard.html';
+        window.location.href = '../login.html';
     });
 });
 

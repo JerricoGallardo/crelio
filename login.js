@@ -362,7 +362,7 @@ loginForm.addEventListener('submit', async (e) => {
     
     // Redirect to landing page after a small delay
     setTimeout(() => {
-        window.location.href = "Landing Page/index.html";
+        window.location.href = "Dashboard/dashboard.html";
     }, 1500);
 });
 
@@ -526,14 +526,25 @@ document.head.insertAdjacentHTML('beforeend', `
 </style>
 `);
 
-// Check if user is already logged in
+// Add this at the beginning of the load event listener
 window.addEventListener('load', () => {
+    console.log("Login page loaded");
+    
+    // Check localStorage
     const userAuth = localStorage.getItem('userAuth');
+    console.log("UserAuth in localStorage:", userAuth);
+    
     if (userAuth) {
         const user = JSON.parse(userAuth);
+        console.log("User object:", user);
+        console.log("isLoggedIn value:", user.isLoggedIn);
+        
         if (user.isLoggedIn) {
-            // If user is already logged in, redirect to landing page
-            window.location.href = "Landing Page/index.html";
+            console.log("Redirecting to landing page...");
+            // Comment out the redirect temporarily for debugging
+            // window.location.href = "Landing Page/index.html";
         }
+    } else {
+        console.log("No user auth found in localStorage");
     }
 });
