@@ -367,6 +367,87 @@ function initializeForms() {
     }
 }
 
+// Function to check user login status and update UI accordingly
+function checkUserLoginStatus() {
+    const userAuth = localStorage.getItem('userAuth');
+    const loginButton = document.getElementById('loginButton');
+    const userProfileDisplay = document.getElementById('userProfileDisplay');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    
+    // Default state - show login button, hide user profile
+    loginButton.style.display = 'flex';
+    userProfileDisplay.style.display = 'none';
+    
+    // If there's valid user auth data, then override the default
+    if (userAuth) {
+        try {
+            const userData = JSON.parse(userAuth);
+            if (userData && userData.isLoggedIn) {
+                // User is logged in, show profile
+                loginButton.style.display = 'none';
+                userProfileDisplay.style.display = 'flex';
+                
+                // Update username display
+                if (userData.name) {
+                    usernameDisplay.textContent = userData.name;
+                }
+                
+                // Update profile menu info if available
+                const menuUserName = document.querySelector('.profile-menu .user-info h4');
+                const menuUserEmail = document.querySelector('.profile-menu .user-info p');
+                
+                if (menuUserName && userData.name) {
+                    menuUserName.textContent = userData.name;
+                }
+                
+                if (menuUserEmail && userData.email) {
+                    menuUserEmail.textContent = userData.email;
+                }
+            }
+        } catch (error) {
+            console.error('Error parsing user auth data:', error);
+        }
+    }
+}
+
+// Function to redirect to login page
+function redirectToLogin() {
+    window.location.href = '../login.html';
+}
+
+// Function to redirect to dashboard
+function redirectToDashboard() {
+    window.location.href = '../Dashboard/dashboard.html';
+}
+
+// Function to handle "Get Started" button click
+function handleGetStarted() {
+    // Check if user is already logged in
+    const userAuth = localStorage.getItem('userAuth');
+    
+    if (userAuth) {
+        try {
+            const userData = JSON.parse(userAuth);
+            if (userData && userData.isLoggedIn) {
+                // User is logged in, redirect to dashboard
+                redirectToDashboard();
+                return;
+            }
+        } catch (error) {
+            console.error('Error parsing user auth data:', error);
+        }
+    }
+    
+    // User is not logged in, redirect to login page
+    redirectToLogin();
+}
+
+// Function to logout user
+function logout() {
+    localStorage.removeItem('userAuth');
+    window.location.reload();
+}
+
 // Main initialization
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
@@ -383,6 +464,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedCompactMode) {
         document.body.classList.add('compact-mode');
     }
+
+    // Check if user is logged in
+    checkUserLoginStatus();
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -399,9 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('getStartedBtn').addEventListener('click', function() {
-        window.location.href = '../login.html';
-    });
+    document.getElementById('getStartedBtn').addEventListener('click', handleGetStarted);
 });
 
 // Make functions globally available
@@ -409,3 +491,7 @@ window.showToast = toastManager.showToast;
 window.toggleProfileMenu = uiManager.toggleProfileMenu;
 window.toggleSubmenu = toggleSubmenu;
 window.handleMenuItemClick = handleMenuItemClick;
+window.redirectToLogin = redirectToLogin;
+window.redirectToDashboard = redirectToDashboard;
+window.handleGetStarted = handleGetStarted;
+window.logout = logout;

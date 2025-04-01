@@ -280,31 +280,102 @@ a:hover {
 
 /* Form Container */
 .form-container {
-    width: 100%;
-    max-width: 460px;
-    background-color: #fff;
+    background-color: white;
     border-radius: 16px;
     box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 480px;
     padding: 40px;
-    margin: auto;
-    animation: fadeInUp 0.8s ease forwards;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    z-index: 10;
 }
 
 .form-container:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
 
-@keyframes fadeInUp {
+/* New animation system - completely CSS-based */
+.dom-loaded .form-container {
+    animation: formAppear 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.active-form {
+    display: block !important;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Form animation trigger */
+.form-animated .active-form h2 {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.form-animated .active-form .subtitle {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.05s forwards;
+}
+
+.form-animated .active-form .input-group:nth-of-type(1) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s forwards;
+}
+
+.form-animated .active-form .input-group:nth-of-type(2) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.15s forwards;
+}
+
+.form-animated .active-form .input-group:nth-of-type(3) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards;
+}
+
+.form-animated .active-form .input-group:nth-of-type(4) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.25s forwards;
+}
+
+.form-animated .active-form .password-strength {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards;
+}
+
+.form-animated .active-form .terms-checkbox {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s forwards;
+}
+
+.form-animated .active-form button[type="submit"] {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.35s forwards;
+}
+
+.form-animated .active-form .divider {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s forwards;
+}
+
+.form-animated .active-form .google-btn-container {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s forwards;
+}
+
+/* Hide elements initially */
+form:not(.active-form) {
+    display: none;
+}
+
+form h2, 
+form .subtitle, 
+form .input-group, 
+form .password-strength,
+form .terms-checkbox, 
+form button[type="submit"], 
+form .divider, 
+form .google-btn-container {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+/* Animation keyframes */
+@keyframes fadeInDown {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
@@ -312,125 +383,179 @@ a:hover {
     }
 }
 
+@keyframes formAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Password strength animation */
+.form-animated .active-form .strength-bar {
+    transition: width 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), 
+                background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Tab indicator animation */
+.tabs::after {
+    transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Smooth tab transitions */
+.tabs .tab {
+    transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
 /* Logo */
 .logo {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
-    gap: 10px;
-    color: var(--primary-color);
-    animation: fadeIn 0.8s ease forwards;
+    justify-content: center;
+    margin-bottom: 24px;
+    gap: 12px;
+    animation: logoAppear 0.8s ease forwards;
+}
+
+@keyframes logoAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .logo i {
-    font-size: 24px;
-    animation: pulse 2s infinite;
+    font-size: 28px;
+    color: var(--primary-color);
 }
 
 .logo span {
     font-size: 24px;
     font-weight: 700;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    color: var(--text-color);
 }
 
 /* Tabs */
 .tabs {
     display: flex;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 30px;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--secondary-color);
     position: relative;
 }
 
 .tab {
-    padding: 12px 0;
-    width: 50%;
+    flex: 1;
     text-align: center;
-    cursor: pointer;
-    font-weight: 500;
+    padding: 12px 0;
+    font-weight: 600;
     color: var(--light-text);
+    cursor: pointer;
     transition: var(--transition);
-    transition: transform 0.2s ease, color 0.3s ease;
-}
-
-.tab:hover {
-    transform: translateY(-2px);
+    position: relative;
 }
 
 .tab.active {
     color: var(--primary-color);
-    font-weight: 600;
 }
 
-.tabs::after {
+.tab.active::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
-    width: 50%;
+    width: 100%;
     height: 2px;
     background-color: var(--primary-color);
-    transition: transform 0.3s ease;
+    border-radius: 2px;
+    transition: var(--transition);
+    animation: slideIn 0.3s ease-out forwards;
 }
 
-.tabs.signup::after {
-    transform: translateX(100%);
+@keyframes slideIn {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
 }
 
-/* Forms */
+/* Form Elements */
 form {
     display: none;
-    animation: fadeIn 0.5s ease forwards;
 }
 
-form.active-form {
-    display: block;
-}
-
-h2 {
-    font-size: 24px;
-    margin-bottom: 8px;
-    font-weight: 700;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 0.2s;
-}
-
-.subtitle {
-    color: var(--light-text);
-    margin-bottom: 24px;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 0.3s;
-}
-
+/* Input Group */
 .input-group {
-    margin-bottom: 20px;
-    animation: fadeInUp 0.8s ease forwards;
+    margin-bottom: 24px;
+    position: relative;
 }
 
-.input-group:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-.input-group:nth-child(4) {
-    animation-delay: 0.5s;
-}
-
-.input-group:nth-child(5) {
-    animation-delay: 0.6s;
-}
-
-label {
+.input-group label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
     font-size: 14px;
+    color: var(--text-color);
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.subtitle {
+    color: var(--light-text);
+    margin-bottom: 32px;
+    font-size: 14px;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 16px;
+    color: var(--light-text);
+    transition: var(--transition);
+    z-index: 1;
+}
+
+.input-with-icon input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: var(--transition);
+    background-color: #fff;
+    color: var(--text-color);
+}
+
+.input-with-icon input[type="password"] {
+    padding-right: 48px; /* Make room for the toggle button */
+}
+
+.input-with-icon input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.2);
+    outline: none;
+}
+
+.input-with-icon input:focus + i {
+    color: var(--primary-color);
 }
 
 .password-label {
@@ -441,69 +566,26 @@ label {
 }
 
 .forgot-password {
-    font-size: 14px;
-}
-
-.input-with-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.input-with-icon i:not(.toggle-password) {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--light-text);
-    transition: var(--transition);
-}
-
-input {
-    width: 100%;
-    padding: 14px;
-    padding-left: 40px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 15px;
-    transition: var(--transition);
-}
-
-input[type="password"], 
-input[type="text"] {
-    padding-right: 38px;
-}
-
-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
-    transform: translateY(-2px);
-    transition: all 0.3s ease;
-}
-
-input:focus + i:not(.toggle-password) {
-    color: var(--primary-color);
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .toggle-password {
     position: absolute;
-    right: 12px;
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--light-text);
+    cursor: pointer;
+    transition: var(--transition);
+    padding: 0;
+    font-size: 16px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    color: var(--light-text);
-    background: transparent;
-    border: none;
-    outline: none;
-    width: 36px;
-    z-index: 5;
-    transition: var(--transition);
+    z-index: 1;
+    width: 48px;
 }
 
 .toggle-password:hover {
@@ -512,18 +594,6 @@ input:focus + i:not(.toggle-password) {
 
 .toggle-password:focus {
     outline: none;
-    color: var(--primary-color);
-}
-
-.toggle-password:active {
-    color: var(--primary-dark);
-}
-
-.toggle-password i {
-    font-size: 16px;
-    display: block;
-    line-height: 1;
-    pointer-events: none;
 }
 
 /* Password strength meter styles */
@@ -537,36 +607,102 @@ input:focus + i:not(.toggle-password) {
 .password-strength span {
     font-size: 12px;
     color: var(--light-text);
+    display: flex;
+    justify-content: space-between;
 }
 
 .strength-meter {
     height: 4px;
     background-color: #f1f1f1;
-    border-radius: 2px;
+    border-radius: 4px;
     overflow: hidden;
+    position: relative;
 }
 
 .strength-bar {
     height: 100%;
     width: 0;
-    background-color: #ccc;
-    transition: width 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
+    transition: width 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), 
+                background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    will-change: width, background-color;
+    transform: translateZ(0);
 }
 
-/* Checkbox */
-.remember-me, .terms-checkbox {
-    margin-bottom: 20px;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 0.7s;
+/* Password strength colors */
+.strength-weak .strength-bar {
+    background-color: var(--error-color);
+}
+
+.strength-fair .strength-bar {
+    background-color: #ff9800;
+}
+
+.strength-good .strength-bar {
+    background-color: #2196f3;
+}
+
+.strength-strong .strength-bar {
+    background-color: var(--success-color);
+}
+
+/* Password strength indicator text */
+.strength-text {
+    font-size: 11px;
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+.strength-weak .strength-text {
+    color: var(--error-color);
+}
+
+.strength-fair .strength-text {
+    color: #ff9800;
+}
+
+.strength-good .strength-text {
+    color: #2196f3;
+}
+
+.strength-strong .strength-text {
+    color: var(--success-color);
+}
+
+/* Terms checkbox styling */
+.terms-checkbox {
+    margin-bottom: 24px;
+    padding: 8px 0;
+}
+
+.terms-checkbox .checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.5;
+}
+
+.terms-checkbox .checkmark {
+    margin-top: 2px;
+}
+
+.terms-checkbox a {
+    font-weight: 500;
+    margin: 0 3px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* Checkbox styling */
+.remember-me {
+    margin-bottom: 24px;
 }
 
 .checkbox-container {
     display: flex;
     align-items: center;
-    position: relative;
-    padding-left: 28px;
     cursor: pointer;
     font-size: 14px;
+    color: var(--light-text);
     user-select: none;
 }
 
@@ -579,15 +715,16 @@ input:focus + i:not(.toggle-password) {
 }
 
 .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
+    display: inline-block;
     height: 18px;
     width: 18px;
+    margin-right: 10px;
     background-color: #fff;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .checkbox-container:hover input ~ .checkmark {
@@ -603,13 +740,6 @@ input:focus + i:not(.toggle-password) {
     content: "";
     position: absolute;
     display: none;
-}
-
-.checkbox-container input:checked ~ .checkmark:after {
-    display: block;
-}
-
-.checkbox-container .checkmark:after {
     left: 6px;
     top: 2px;
     width: 4px;
@@ -619,59 +749,54 @@ input:focus + i:not(.toggle-password) {
     transform: rotate(45deg);
 }
 
-/* Button */
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Button styling */
 .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 14px;
-    border: none;
-    border-radius: 8px;
     background-color: var(--primary-color);
     color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
     font-size: 16px;
-    font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 0.8s;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 24px;
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 119, 255, 0.3);
     background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
 }
 
-.btn-primary:hover .btn-icon {
-    transform: translateX(3px);
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-text {
+    margin-right: 8px;
+    position: relative;
+    z-index: 2;
 }
 
 .btn-icon {
+    position: relative;
+    z-index: 2;
     transition: transform 0.3s ease;
 }
 
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn-primary:active::before {
-    width: 300px;
-    height: 300px;
+.btn-primary:hover .btn-icon {
+    transform: translateX(4px);
 }
 
 /* Divider */
@@ -679,8 +804,6 @@ input:focus + i:not(.toggle-password) {
     display: flex;
     align-items: center;
     margin: 20px 0;
-    animation: fadeIn 0.8s ease forwards;
-    animation-delay: 0.9s;
 }
 
 .divider::before, .divider::after {
@@ -698,8 +821,8 @@ input:focus + i:not(.toggle-password) {
 
 /* Google Sign In */
 .google-btn-container {
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 1s;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 /* Responsive Styles */
@@ -711,6 +834,39 @@ input:focus + i:not(.toggle-password) {
     .form-container {
         padding: 20px;
         max-width: 90%;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        padding: 30px 20px;
+        margin: 0 15px;
+    }
+    
+    h2 {
+        font-size: 22px;
+    }
+    
+    .subtitle {
+        font-size: 13px;
+        margin-bottom: 24px;
+    }
+    
+    .input-with-icon input {
+        padding: 12px 12px 12px 44px;
+        font-size: 14px;
+    }
+    
+    .input-with-icon i {
+        left: 14px;
+    }
+    
+    .terms-checkbox .checkbox-container {
+        font-size: 13px;
+    }
+    
+    .btn-primary {
+        padding: 12px;
     }
 }
 
@@ -750,4 +906,306 @@ input:focus + i:not(.toggle-password) {
     .tabs {
         margin-bottom: 20px;
     }
+}
+
+/* Ensure password fields animate properly */
+.input-group input[type="password"],
+.input-group .input-with-icon,
+.input-group .toggle-password {
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Ensure confirm password field has proper animation */
+#signup-form .input-group:nth-of-type(3) {
+    animation-delay: 0.15s !important;
+}
+
+/* Password strength meter styles */
+.password-strength {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    animation: fadeInUp 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+    opacity: 0;
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+}
+
+/* Ensure all form elements animate properly */
+#login-form, #signup-form {
+    transition: opacity 0.4s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+}
+
+/* Ensure form elements are visible during animation */
+.form-entering .input-group,
+.form-entering button,
+.form-entering .divider,
+.form-entering .google-btn-container {
+    visibility: visible !important;
+}
+
+/* Fix for missing password fields */
+form {
+    display: none;
+}
+
+form.active-form {
+    display: block !important;
+}
+
+/* Hide elements initially but make sure they're visible when needed */
+form h2, 
+form .subtitle, 
+form .input-group, 
+form .password-strength,
+form .terms-checkbox, 
+form button[type="submit"], 
+form .divider, 
+form .google-btn-container {
+    opacity: 0;
+}
+
+/* Form animation trigger with more specific selectors */
+.form-animated .active-form h2 {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.form-animated .active-form .subtitle {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.05s forwards;
+}
+
+/* Target each input group specifically */
+.form-animated .active-form .input-group:nth-of-type(1) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s forwards;
+}
+
+.form-animated .active-form .input-group:nth-of-type(2) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.15s forwards;
+}
+
+.form-animated .active-form .input-group:nth-of-type(3) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards;
+}
+
+.form-animated .active-form .input-group:nth-of-type(4) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.25s forwards;
+}
+
+.form-animated .active-form .password-strength {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards;
+}
+
+.form-animated .active-form .terms-checkbox {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s forwards;
+}
+
+.form-animated .active-form button[type="submit"] {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.35s forwards;
+}
+
+.form-animated .active-form .divider {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s forwards;
+}
+
+.form-animated .active-form .google-btn-container {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s forwards;
+}
+
+/* Clean up duplicate animation rules and fix display issues */
+form {
+    display: none;
+}
+
+form.active-form {
+    display: block !important;
+}
+
+/* Reset all animations and make elements visible by default */
+.form-animated .active-form .input-group,
+.form-animated .active-form .password-strength,
+.form-animated .active-form .terms-checkbox,
+.form-animated .active-form button[type="submit"],
+.form-animated .active-form .divider,
+.form-animated .active-form .google-btn-container,
+.form-animated .active-form h2,
+.form-animated .active-form .subtitle {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+    animation: none;
+}
+
+/* Then apply animations with proper timing */
+.form-animated .active-form h2 {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards !important;
+}
+
+.form-animated .active-form .subtitle {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.05s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(1) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(2) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.15s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(3) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(4) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.25s forwards !important;
+}
+
+.form-animated .active-form .password-strength {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards !important;
+}
+
+.form-animated .active-form .terms-checkbox {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s forwards !important;
+}
+
+.form-animated .active-form button[type="submit"] {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.35s forwards !important;
+}
+
+.form-animated .active-form .divider {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s forwards !important;
+}
+
+.form-animated .active-form .google-btn-container {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s forwards !important;
+}
+
+/* Ensure password fields and their containers are visible */
+.input-with-icon,
+.input-with-icon input,
+.input-with-icon .toggle-password,
+.password-strength,
+.password-strength .strength-meter,
+.password-strength .strength-bar {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Animation keyframes */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes formAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Base form display */
+form {
+    display: none;
+}
+
+form.active-form {
+    display: block !important;
+}
+
+/* Initial form container animation */
+.dom-loaded .form-container {
+    animation: formAppear 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+/* Reset all animations and make elements visible by default */
+.active-form .input-group,
+.active-form .password-strength,
+.active-form .terms-checkbox,
+.active-form button[type="submit"],
+.active-form .divider,
+.active-form .google-btn-container,
+.active-form h2,
+.active-form .subtitle {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Ensure password fields and their containers are visible */
+.input-with-icon,
+.input-with-icon input,
+.input-with-icon .toggle-password,
+.password-strength,
+.password-strength .strength-meter,
+.password-strength .strength-bar {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Then apply animations with proper timing */
+.form-animated .active-form h2 {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards !important;
+}
+
+.form-animated .active-form .subtitle {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.05s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(1) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(2) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.15s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(3) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards !important;
+}
+
+.form-animated .active-form .input-group:nth-of-type(4) {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.25s forwards !important;
+}
+
+.form-animated .active-form .password-strength {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s forwards !important;
+}
+
+.form-animated .active-form .terms-checkbox {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s forwards !important;
+}
+
+.form-animated .active-form button[type="submit"] {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.35s forwards !important;
+}
+
+.form-animated .active-form .divider {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s forwards !important;
+}
+
+.form-animated .active-form .google-btn-container {
+    animation: fadeInDown 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s forwards !important;
+}
+
+/* Password strength animation */
+.form-animated .active-form .strength-bar {
+    transition: width 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), 
+                background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }

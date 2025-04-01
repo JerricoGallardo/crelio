@@ -159,6 +159,31 @@ body {
     gap: 16px;
 }
 
+/* Login button styles */
+.login-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.login-btn:hover {
+    background-color: #0069d9;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.login-btn i {
+    font-size: 16px;
+}
+
 /* Sidebar Styles */
 .sidebar {
     position: fixed;
