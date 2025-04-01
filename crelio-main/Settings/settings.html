@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crealio - Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-pencil-ruler"></i>
+                <span>Crealio</span>
+            </div>
+            
+            <nav>
+                <a href="../Profile/profile.html" class="nav-item active">
+                    <i class="fas fa-user"></i>     
+                    <span>Profile</span>
+                </a>
+                
+                <a href="../Dashboard/dashboard.html" class="nav-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                
+                <a href="../My Projects/myprojects.html" class="nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span>My Projects</span>
+                </a>
+                
+                <a href="../Create New/createnew.html" class="nav-item with-submenu">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Create New</span>
+                </a>
+                <div class="submenu">
+                    <a href="../Create New/Resume/createnewresume.html" class="nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Resumes</span>
+                    </a>
+                    <a href="../Create New/Portfolio/createnewportfolio.html" class="nav-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Portfolio</span>
+                    </a>
+                </div>
+                
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">       
+                <h1 class="page-title">Settings</h1>
+                <div class="user-profile">
+                    <div class="hamburger-menu" onclick="toggleProfileMenu()">
+                        <div class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Dropdown Menu -->
+                    <div class="profile-menu" id="profileMenu">
+                        <div class="profile-header">
+                            <div class="profile-info">
+                                <div class="profile-image-wrapper">
+                                    <img src="../img/profile-pic.jpg" alt="Profile" class="large-avatar">
+                                </div>
+                                <div class="user-info">
+                                    <h4>Earl Pogi</h4>
+                                    <p>earljoshua69@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="menu-items">
+                            <div class="menu-section">
+                                <h5 class="menu-label">Preferences</h5>
+                                <div class="menu-item">
+                                    <i class="fas fa-moon"></i>
+                                    <div>
+                                        <span>Dark Mode</span>
+                                        <small>Toggle theme</small>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="themeToggle">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <a href="#" class="menu-item ripple" onclick="toggleSidebar(); return false;">
+                                    <i class="fas fa-compress-alt"></i>
+                                    <div>
+                                        <span>Compact Mode</span>
+                                        <small>Toggle compact layout</small>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="divider"></div>
+                            
+                            <div class="menu-section">
+                                <a href="#" class="menu-item logout ripple">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="settings-section">
+                <h2 class="section-title">Account Settings</h2>
+                <div class="settings-card">
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Personal Information</h3>
+                            <p>Update your name, email, and profile picture</p>
+                        </div>
+                        <button class="btn-primary">Edit</button>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Password</h3>
+                            <p>Change your password</p>
+                        </div>
+                        <button class="btn-primary">Update</button>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Connected Accounts</h3>
+                            <p>Manage your linked social media and services</p>
+                        </div>
+                        <button class="btn-primary">Manage</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Appearance Section -->
+            <section class="settings-section">
+                <h2 class="section-title">Appearance</h2>
+                <div class="settings-card">
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Theme</h3>
+                            <p>Toggle between light and dark modes</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="mainThemeToggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Layout</h3>
+                            <p>Choose your preferred layout style</p>
+                        </div>
+                        <select class="settings-select">
+                            <option>Default</option>
+                            <option>Compact</option>
+                            <option>Comfortable</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Privacy & Security -->
+            <section class="settings-section">
+                <h2 class="section-title">Privacy & Security</h2>
+                <div class="settings-card">
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Two-Factor Authentication</h3>
+                            <p>Add an extra layer of security to your account</p>
+                        </div>
+                        <button class="btn-primary">Enable</button>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Active Sessions</h3>
+                            <p>View and manage devices that are logged into your account</p>
+                        </div>
+                        <button class="btn-primary">View</button>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-content">
+                            <h3>Privacy Settings</h3>
+                            <p>Control who can view your profile and projects</p>
+                        </div>
+                        <button class="btn-primary">Configure</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+            <script src="../Dashboard/dashboard.js"></script>
+
+    </body>
+</html>
