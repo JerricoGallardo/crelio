@@ -26,19 +26,7 @@ function initializeEditor() {
     const profileImage = document.getElementById('profileImage');
     
     if (photoUpload && profileImage) {
-        photoUpload.addEventListener('change', function(event) {
-            if (event.target.files && event.target.files[0]) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    profileImage.src = e.target.result;
-                    // Auto save after image change
-                    saveResumeData();
-                };
-                
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        });
+        photoUpload.addEventListener('change', handlePhotoUpload);
     }
     
     // Initialize formatting toolbar buttons
@@ -83,10 +71,10 @@ function setupEventListeners() {
             // Ask for confirmation if changes were made
             if (checkForChanges()) {
                 if (confirm('You have unsaved changes. Are you sure you want to leave?')) {
-                    window.location.href = '../Resume/createnewresume.html';
+                    window.location.href = '../createnewresume.html';
                 }
             } else {
-                window.location.href = '../Resume/createnewresume.html';
+                window.location.href = '../createnewresume.html';
             }
         });
     }
@@ -249,25 +237,60 @@ function reattachEventListeners() {
         });
         
         element.addEventListener('blur', function() {
+            // If empty, restore placeholder
             if (this.innerHTML.trim() === '' && this.dataset.placeholder) {
                 this.innerHTML = '';
             }
         });
     });
     
-    // Add event listeners to all add-list-item buttons
-    document.querySelectorAll('.add-list-item-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const targetListClass = this.getAttribute('data-target');
-            const parentItem = this.closest('.experience-item');
-            if (parentItem && targetListClass) {
-                const list = parentItem.querySelector('.' + targetListClass);
-                if (list) {
-                    addListItem(list);
-                }
-            }
+    // Re-attach profile photo upload event listener
+    const photoUpload = document.getElementById('photoUpload');
+    const profileImage = document.getElementById('profileImage');
+    
+    if (photoUpload && profileImage) {
+        // Remove any existing event listeners to prevent duplicates
+        photoUpload.removeEventListener('change', handlePhotoUpload);
+        
+        // Add the event listener again
+        photoUpload.addEventListener('change', handlePhotoUpload);
+    }
+    
+    // Re-attach event listeners for add buttons
+    document.querySelectorAll('.add-experience-btn').forEach(btn => {
+        btn.addEventListener('click', addExperienceItem);
+    });
+    
+    document.querySelectorAll('.add-education-btn').forEach(btn => {
+        btn.addEventListener('click', addEducationItem);
+    });
+    
+    document.querySelectorAll('.add-skill-btn').forEach(btn => {
+        btn.addEventListener('click', addSkillItem);
+    });
+    
+    document.querySelectorAll('.add-list-item-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const list = this.closest('.list-container').querySelector('ul');
+            addListItem(list);
         });
     });
+}
+
+// Handle photo upload - extracted to a separate function so it can be reused
+function handlePhotoUpload(event) {
+    if (event.target.files && event.target.files[0]) {
+        const reader = new FileReader();
+        const profileImage = document.getElementById('profileImage');
+        
+        reader.onload = function(e) {
+            profileImage.src = e.target.result;
+            // Auto save after image change
+            saveResumeData();
+        };
+        
+        reader.readAsDataURL(event.target.files[0]);
+    }
 }
 
 // Prepare PDF download

@@ -25,9 +25,15 @@
         </nav>
 
         <div class="user-profile">
-            <div class="profile-trigger" onclick="toggleProfileMenu()">
+            <div id="loginButton" style="display: none;">
+                <a href="../login.html" class="login-btn">
+                    <i class="fas fa-user"></i>
+                    <span>Login</span>
+                </a>
+            </div>
+            <div id="userProfileDisplay" style="display: none;" class="profile-trigger" onclick="toggleProfileMenu()">
                 <img src="../img/profile-pic.jpg" alt="Profile" class="avatar">
-                <span class="username">Earl Pogi</span>
+                <span class="username" id="usernameDisplay">Earl Pogi</span>
             </div>
             
             <!-- Enhanced Profile Dropdown Menu -->
@@ -116,7 +122,7 @@
                 <div class="template-image">
                     <img src="../img/pic1.png" alt="Resume Template 1">
                     <div class="template-overlay">
-                        <button class="template-btn">Use Template</button>
+                        <button class="template-btn" onclick="handleGetStarted()">Use Template</button>
                     </div>
                 </div>
                 <h3>Professional</h3>
@@ -127,7 +133,7 @@
                 <div class="template-image">
                     <img src="../img/pic2.webp" alt="Resume Template 2">
                     <div class="template-overlay">
-                        <button class="template-btn">Use Template</button>
+                        <button class="template-btn" onclick="handleGetStarted()">Use Template</button>
                     </div>
                 </div>
                 <h3>Creative</h3>
@@ -138,7 +144,7 @@
                 <div class="template-image">
                     <img src="../img/pic3.webp" alt="Resume Template 3">
                     <div class="template-overlay">
-                        <button class="template-btn">Use Template</button>
+                        <button class="template-btn" onclick="handleGetStarted()">Use Template</button>
                     </div>
                 </div>
                 <h3>Modern</h3>
@@ -149,7 +155,7 @@
                 <div class="template-image">
                     <img src="../img/pic4.webp" alt="Resume Template 4">
                     <div class="template-overlay">
-                        <button class="template-btn">Use Template</button>
+                        <button class="template-btn" onclick="handleGetStarted()">Use Template</button>
                     </div>
                 </div>
                 <h3>Executive</h3>
@@ -160,7 +166,7 @@
                 <div class="template-image">
                     <img src="../img/pic5.jpg" alt="Resume Template 5">
                     <div class="template-overlay">
-                        <button class="template-btn">Use Template</button>
+                        <button class="template-btn" onclick="handleGetStarted()">Use Template</button>
                     </div>
                 </div>
                 <h3>Simple</h3>
@@ -171,7 +177,7 @@
                 <div class="template-image">
                     <img src="../img/pic6.jpg" alt="Resume Template 6">
                     <div class="template-overlay">
-                        <button class="template-btn">Use Template</button>
+                        <button class="template-btn" onclick="handleGetStarted()">Use Template</button>
                     </div>
                 </div>
                 <h3>Academic</h3>

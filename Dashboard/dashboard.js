@@ -168,7 +168,58 @@ const themeManager = (() => {
 // Initialize theme manager when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     themeManager.initialize();
+    
+    // Load user data from localStorage
+    loadUserData();
 });
+
+// Function to load user data from localStorage
+function loadUserData() {
+    const userAuth = localStorage.getItem('userAuth');
+    
+    if (!userAuth) {
+        // If no valid user auth found, redirect to login page
+        window.location.href = '../login.html';
+        return;
+    }
+    
+    try {
+        const userData = JSON.parse(userAuth);
+        if (!userData || !userData.isLoggedIn) {
+            // If user is not logged in, redirect to login page
+            window.location.href = '../login.html';
+            return;
+        }
+        
+        // Update username in the dashboard
+        const usernameElements = document.querySelectorAll('.user-info h4');
+        const emailElements = document.querySelectorAll('.user-info p');
+        const welcomeMessage = document.querySelector('.card-title');
+        
+        // Update username display
+        if (userData.name) {
+            usernameElements.forEach(element => {
+                element.textContent = userData.name;
+            });
+            
+            // Update welcome message if it exists
+            if (welcomeMessage && welcomeMessage.textContent.includes('Welcome back')) {
+                welcomeMessage.textContent = `Welcome back, ${userData.name}!`;
+            }
+        }
+        
+        // Update email display
+        if (userData.email) {
+            emailElements.forEach(element => {
+                element.textContent = userData.email;
+            });
+        }
+    } catch (error) {
+        console.error('Error parsing user auth data:', error);
+        // If error parsing user data, redirect to login page
+        window.location.href = '../login.html';
+    }
+}
 
 function toggleProfileMenu() {
     const profileMenu = document.getElementById('profileMenu');

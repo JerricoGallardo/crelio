@@ -17,8 +17,8 @@ const resumeElementsContainer = document.querySelector('.resume-elements-contain
 
 // Initialize animations for elements
 document.addEventListener('DOMContentLoaded', () => {
-    // Add staggered animations to form elements
-    animateFormElements(loginForm);
+    // Add CSS class to body when DOM is loaded
+    document.body.classList.add('dom-loaded');
     
     // Initialize blob animations with random movements
     initBlobAnimations();
@@ -33,20 +33,42 @@ document.addEventListener('DOMContentLoaded', () => {
     addFormHoverEffect();
 });
 
-// Function to animate form elements with staggered timing
-function animateFormElements(form) {
-    const elements = form.querySelectorAll('h2, .subtitle, .input-group, button, .divider, .google-btn-container');
-    elements.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, 100 * index);
-    });
-}
+// Tab switching - Completely simplified approach
+loginTab.addEventListener('click', () => {
+    if (loginTab.classList.contains('active')) return;
+    
+    // Update tab states
+    loginTab.classList.add('active');
+    signupTab.classList.remove('active');
+    tabs.classList.remove('signup');
+    
+    // Hide signup form, show login form
+    signupForm.classList.remove('active-form');
+    loginForm.classList.add('active-form');
+    
+    // Force reflow and trigger animations
+    document.body.classList.remove('form-animated');
+    void document.body.offsetWidth; // Force reflow
+    document.body.classList.add('form-animated');
+});
+
+signupTab.addEventListener('click', () => {
+    if (signupTab.classList.contains('active')) return;
+    
+    // Update tab states
+    signupTab.classList.add('active');
+    loginTab.classList.remove('active');
+    tabs.classList.add('signup');
+    
+    // Hide login form, show signup form
+    loginForm.classList.remove('active-form');
+    signupForm.classList.add('active-form');
+    
+    // Force reflow and trigger animations
+    document.body.classList.remove('form-animated');
+    void document.body.offsetWidth; // Force reflow
+    document.body.classList.add('form-animated');
+});
 
 // Function to initialize blob animations
 function initBlobAnimations() {
@@ -200,57 +222,6 @@ function addFormHoverEffect() {
     });
 }
 
-// Tab switching
-loginTab.addEventListener('click', () => {
-    if (loginTab.classList.contains('active')) return;
-    
-    loginTab.classList.add('active');
-    signupTab.classList.remove('active');
-    tabs.classList.remove('signup');
-    
-    // Hide signup form with a fade out effect
-    signupForm.style.opacity = '0';
-    signupForm.style.transform = 'translateX(20px)';
-    
-    // Show login form with a fade in effect after a short delay
-    setTimeout(() => {
-        signupForm.style.display = 'none';
-        loginForm.style.display = 'block';
-        
-        // Add a slight delay before starting the animation
-        setTimeout(() => {
-            loginForm.style.opacity = '1';
-            loginForm.style.transform = 'translateX(0)';
-            animateFormElements(loginForm);
-        }, 50);
-    }, 300);
-});
-
-signupTab.addEventListener('click', () => {
-    if (signupTab.classList.contains('active')) return;
-    
-    signupTab.classList.add('active');
-    loginTab.classList.remove('active');
-    tabs.classList.add('signup');
-    
-    // Hide login form with a fade out effect
-    loginForm.style.opacity = '0';
-    loginForm.style.transform = 'translateX(-20px)';
-    
-    // Show signup form with a fade in effect after a short delay
-    setTimeout(() => {
-        loginForm.style.display = 'none';
-        signupForm.style.display = 'block';
-        
-        // Add a slight delay before starting the animation
-        setTimeout(() => {
-            signupForm.style.opacity = '1';
-            signupForm.style.transform = 'translateX(0)';
-            animateFormElements(signupForm);
-        }, 50);
-    }, 300);
-});
-
 // Password Visibility Toggle - Fixed to prevent interference with typing
 togglePasswordButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -310,22 +281,53 @@ function calculatePasswordStrength(password) {
 
 // Update visual strength indicator
 function updateStrengthIndicator(strength) {
-    // Update width
-    strengthBar.style.width = `${strength}%`;
+    const strengthContainer = document.querySelector('.password-strength');
+    const strengthMeter = document.querySelector('.strength-meter');
+    const strengthBar = document.querySelector('.strength-bar');
     
-    // Update color based on strength
+    // Remove all existing strength classes
+    strengthContainer.classList.remove('strength-weak', 'strength-fair', 'strength-good', 'strength-strong');
+    
+    // Update the strength text
+    let strengthText = '';
+    let strengthClass = '';
+    
     if (strength < 25) {
-        strengthBar.style.backgroundColor = '#f44336'; // Red (very weak)
+        strengthText = 'Weak';
+        strengthClass = 'strength-weak';
     } else if (strength < 50) {
-        strengthBar.style.backgroundColor = '#ff9800'; // Orange (weak)
+        strengthText = 'Fair';
+        strengthClass = 'strength-fair';
     } else if (strength < 75) {
-        strengthBar.style.backgroundColor = '#ffeb3b'; // Yellow (medium)
+        strengthText = 'Good';
+        strengthClass = 'strength-good';
     } else {
-        strengthBar.style.backgroundColor = '#4caf50'; // Green (strong)
+        strengthText = 'Strong';
+        strengthClass = 'strength-strong';
     }
     
+    // Update the strength label
+    let strengthLabel = strengthContainer.querySelector('span');
+    
+    // If there's no strength text element, create one
+    if (!strengthContainer.querySelector('.strength-text')) {
+        const textSpan = document.createElement('span');
+        textSpan.className = 'strength-text';
+        strengthLabel.appendChild(textSpan);
+    }
+    
+    // Update the strength text
+    const strengthTextElement = strengthContainer.querySelector('.strength-text');
+    strengthTextElement.textContent = strengthText;
+    
+    // Add the appropriate class to the container
+    strengthContainer.classList.add(strengthClass);
+    
+    // Explicitly set the width for the animation effect
+    strengthBar.style.width = `${strength}%`;
+    
     // Add transition animation
-    strengthBar.style.transition = 'width 0.5s ease-out, background-color 0.5s ease';
+    strengthBar.style.transition = 'width 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), background-color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1)';
 }
 
 // Password confirmation check
@@ -353,14 +355,18 @@ loginForm.addEventListener('submit', async (e) => {
     hideLoading(loginSubmit);
     showSuccessMessage(loginForm, "Successfully logged in!");
     
+    // Get the user's name from the email (for demo purposes)
+    const email = document.getElementById('login-email').value;
+    const name = email.split('@')[0]; // Simple extraction of name from email
+    
     // Store authentication in localStorage
     storeAuthentication({
-        email: document.getElementById('login-email').value,
-        name: "User",
+        email: email,
+        name: name,
         isLoggedIn: true
     });
     
-    // Redirect to landing page after a small delay
+    // Redirect to dashboard after a small delay
     setTimeout(() => {
         window.location.href = "Dashboard/dashboard.html";
     }, 1500);
@@ -392,9 +398,9 @@ signupForm.addEventListener('submit', async (e) => {
         isLoggedIn: true
     });
     
-    // Redirect to landing page after a small delay
+    // Redirect to dashboard after a small delay
     setTimeout(() => {
-        window.location.href = "Landing Page/index.html";
+        window.location.href = "Dashboard/dashboard.html";
     }, 1500);
 });
 
@@ -522,6 +528,54 @@ document.head.insertAdjacentHTML('beforeend', `
 .message.error {
     background-color: rgba(244, 67, 54, 0.1);
     color: #f44336;
+}
+.password-strength {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.password-strength .strength-meter {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #ddd;
+}
+.password-strength .strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: #4caf50;
+    transition: width 0.3s ease-out, background-color 0.3s ease;
+}
+.password-strength.strength-weak .strength-bar {
+    background-color: #f44336;
+}
+.password-strength.strength-fair .strength-bar {
+    background-color: #ff9800;
+}
+.password-strength.strength-good .strength-bar {
+    background-color: #ffeb3b;
+}
+.password-strength.strength-strong .strength-bar {
+    background-color: #4caf50;
+}
+.password-strength .strength-text {
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 8px;
+}
+.form-entering {
+    animation: fadeInUp 0.5s ease forwards;
+}
+.form-exiting {
+    animation: fadeOut 0.5s ease forwards;
+}
+.switching-forms .form-entering, .switching-forms .form-exiting {
+    transition: opacity 0.4s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 </style>
 `);
