@@ -1,0 +1,761 @@
+:root {
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --accent: #6610f2;
+    --background: #ffffff;
+    --surface: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --header-height: 64px;
+    --sidebar-width: 240px;
+    --sidebar-collapsed: 70px;
+    --transition: all 0.3s ease;
+    --animation-speed: 1;
+    --max-content-width: 1400px;
+    --content-padding: 24px;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --border-color: rgba(128, 128, 128, 0.2);
+
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+    --background: #1a1a1a;
+    --surface: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+.logo span {
+    color: var(--primary) !important;
+}
+
+/* Ensure it stays blue in dark mode by explicitly setting it */
+body[data-theme="dark"] .logo span {
+    color: var(--primary) !important;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+/* Layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--surface);
+    border-right: 1px solid var(--border-color);
+    padding: 20px 0;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: var(--transition);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.logo i {
+    color: var(--primary);
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.logo span {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-item i {
+    margin-right: 10px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--primary);
+    border-left: 3px solid var(--primary);
+}
+
+.nav-item.active {
+    font-weight: 500;
+}
+
+.submenu {
+    margin-left: 30px;
+    padding-top: 5px;
+    display: none;
+}
+
+.nav-item.with-submenu {
+    cursor: pointer;
+}
+
+.nav-item.with-submenu:after {
+    content: "\f107";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 20px;
+    transition: transform 0.3s;
+}
+
+.nav-item.with-submenu.open:after {
+    transform: rotate(180deg);
+}
+
+.nav-item.with-submenu.open + .submenu {
+    display: block;
+}
+
+.submenu .nav-item {
+    padding: 8px 20px;
+    font-size: 14px;
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 10px 0;
+}
+
+/* Hamburger Menu Styles */
+.hamburger-menu {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.hamburger-menu:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.hamburger-icon {
+    width: 24px;
+    height: 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-icon span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: var(--transition);
+    transform-origin: left center;
+}
+
+/* Dark mode specific styles */
+body[data-theme="dark"] .hamburger-icon span {
+    background-color: var(--text-primary);
+}
+
+body[data-theme="dark"] .hamburger-menu:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    transition: width var(--transition), overflow-x var(--transition);
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed);
+    overflow-x: hidden;
+}
+
+.sidebar.collapsed .logo span, 
+.sidebar.collapsed .nav-item span,
+.sidebar.collapsed .submenu {
+    display: none;
+}
+
+.sidebar.collapsed .logo i {
+    margin-right: 0;
+}
+
+/* Move sidebar icons slightly to the left when collapsed */
+.sidebar.collapsed .nav-item i {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+}   
+
+.sidebar.collapsed .logo {
+    justify-content: center;
+    padding: 0 0 20px 0;
+}
+
+.main-content {
+    transition: margin-left var(--transition), width var(--transition);
+}
+
+.main-content.expanded {
+    margin-left: var(--sidebar-collapsed);
+    width: calc(100% - var(--sidebar-collapsed));
+}
+
+/* Optional: Add a collapse/expand button */
+.sidebar-toggle {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Adjust spacing for 'Create New' submenu trigger and its dropdown caret */
+.sidebar.collapsed .nav-item.with-submenu:after {
+    right: 5px; /* Move dropdown caret slightly to the right when minimized */
+}
+
+/* Center icons horizontally when sidebar is collapsed */
+.sidebar.collapsed .nav-item i {
+    margin-right: 0;
+    width: 100%; /* Ensure icon is centered */
+    text-align: center;
+}
+
+/* Ensure proper spacing for the 'Create New' item */
+.sidebar.collapsed .nav-item.with-submenu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Light Mode Sidebar Toggle Button */
+.sidebar-toggle {
+    background: #f0f0f0;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.sidebar-toggle:hover {
+    background: #e0e0e0;
+}
+
+/* Dark Mode Sidebar Toggle Button */
+body[data-theme="dark"] .sidebar-toggle {
+    background: #3a3a3a;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+body[data-theme="dark"] .sidebar-toggle:hover {
+    background: #4a4a4a;
+}
+
+/* Ensure the toggle icon (if any) is visible in both modes */
+.sidebar-toggle i {
+    color: var(--text-primary);
+}
+
+body[data-theme="dark"] .sidebar-toggle i {
+    color: var(--text-primary);
+}
+
+/* Blue Indicator Styles */
+.nav-item.active {
+    position: relative;
+}
+
+.nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: var(--sidebar-collapsed);
+    }
+    
+    .main-content {
+        margin-left: var(--sidebar-collapsed);
+        width: calc(100% - var(--sidebar-collapsed));
+    }
+    
+    .sidebar.collapsed .submenu {
+        position: absolute;
+        left: var(--sidebar-collapsed);
+        top: 0;
+        width: 180px;
+        background-color: var(--surface);
+        z-index: 1000;
+        margin-left: 0;
+        border: 1px solid var(--border-color);
+        border-radius: 0 4px 4px 0;
+        display: none;
+    }
+    
+    .nav-item.with-submenu:hover .submenu {
+        display: block;
+    }
+}
+
+.main-content.expanded {
+    margin-left: var(--sidebar-collapsed);
+    width: calc(100% - var(--sidebar-collapsed));
+}
+
+.sidebar.collapsed .submenu {
+    display: none;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    transition: var(--transition);
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Avatar Styles */
+.avatar, .large-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.large-avatar {
+    width: 60px;
+    height: 60px;
+}
+
+/* Profile Menu */
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5rem;
+    gap: 16px;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding: 5px; 
+}
+
+.username {
+    margin-left: 10px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: inline-block;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 320px;
+    background: var(--background);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+    border: 1px solid var(--border-color);
+}
+
+.profile-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-info h4 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.user-info p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.menu-items {
+    padding: 8px;
+}
+
+.menu-section {
+    margin-bottom: 8px;
+}
+
+.menu-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    margin: 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    color: var(--text-primary);
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.menu-item:hover {
+    background-color: var(--surface);
+}
+
+.menu-item i {
+    font-size: 18px;
+    width: 24px;
+    color: var(--text-secondary);
+}
+
+.menu-item div {
+    flex: 1;
+}
+
+.menu-item span {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.menu-item small {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.logout {
+    color: #dc3545;
+}
+
+/* Switch for Dark Mode */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Ripple Effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .5s, opacity 1s;
+}
+
+.ripple:active:after {
+    transform: scale(0, 0);
+    opacity: .3;
+    transition: 0s;
+}
+
+/* Profile Content Styles */
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profile-section {
+    background-color: var(--surface);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.edit-btn {
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.edit-btn:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.profile-details {
+    padding: 20px;
+}
+
+.profile-field {
+    margin-bottom: 16px;
+}
+
+.profile-field:last-child {
+    margin-bottom: 0;
+}
+
+.profile-field label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.profile-field p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.summary-text {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Skills */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+}
+
+.skill-tag {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.skill-tag:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Recent Activity */
+.activity-timeline {
+    padding: 20px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.activity-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.activity-details {
+    flex: 1;
+}
+
+.activity-text {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+}
+
+.activity-time {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Dark mode specific adjustments */
+body[data-theme="dark"] .profile-section {
+    background-color: var(--surface);
+}
+
+body[data-theme="dark"] .skill-tag {
+    background-color: rgba(0, 123, 255, 0.2);
+}
