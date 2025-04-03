@@ -452,5 +452,34 @@
     </footer>
 
         <script src="script.js"></script>
+        <script>
+        // Get all sections that need to be observed
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        // Create an Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Remove active class from all links
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    
+                    // Add active class to corresponding link
+                    const targetId = entry.target.id;
+                    const correspondingLink = document.querySelector(`.nav-links a[href="#${targetId}"]`);
+                    if (correspondingLink) {
+                        correspondingLink.classList.add('active');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.5 // Trigger when 50% of the section is visible
+        });
+
+        // Observe all sections
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        </script>
 </body>
 </html>
