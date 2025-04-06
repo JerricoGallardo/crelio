@@ -32,7 +32,7 @@
                     <span>My Projects</span>
                 </a>
 
-                <a href="#" class="nav-item with-submenu">
+                <a href="../Create New/createnew.html" class="nav-item with-submenu">
                     <i class="fas fa-plus-circle"></i>
                     <span>Create New</span>
                 </a>
@@ -40,11 +40,11 @@
                 <div class="submenu">
                     <a href="../Create New/createnewresume.html" class="nav-item">
                         <i class="fas fa-file-alt"></i>
-                        <span>Resumes</span>
+                        <span>Resume</span>
                     </a>
                     <a href="../Create New/createnewportfolio.html" class="nav-item">
                         <i class="fas fa-globe"></i>
-                        <span>Portfolios</span>
+                        <span>Portfolio</span>
                     </a>
                 </div>
                    
@@ -67,7 +67,7 @@
                             <span></span>
                         </div>
                     </div>
-                    <!-- Enhanced Profile Dropdown Menu -->
+                    <!-- Profile Dropdown Menu -->
                     <div class="profile-menu" id="profileMenu">
                         <div class="profile-header">
                             <div class="profile-info">
@@ -107,7 +107,7 @@
                             <div class="divider"></div>
                             
                             <div class="menu-section">
-                                <a href="#" class="menu-item logout ripple">
+                                <a href="#" class="menu-item logout ripple" onclick="logout(); return false;">
                                     <i class="fas fa-sign-out-alt"></i>
                                     <span>Logout</span>
                                 </a>
@@ -185,78 +185,11 @@
             <div class="dashboard-card">
                 <div class="card-header">
                     <h2 class="card-title">Recent Projects</h2>
-                    <a href="#" style="color: var(--primary-color); font-size: 14px;">View All</a>
+                    <a href="../My Projects/myprojects.html" style="color: var(--primary); font-size: 14px;">View All</a>
                 </div>
                 
                 <div class="projects-grid">
-                    <!-- Project 1 -->
-                    <div class="project-card">
-                        <div class="project-preview">
-                            <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
-                            <span class="project-type">Resume</span>
-                        </div>
-                        <div class="project-info">
-                            <h3 class="project-title">Creative Designer 2025</h3>
-                            <div class="project-date">Last edited: March 7, 2025</div>
-                            <div class="project-actions">
-                                <button class="action-btn">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-download"></i> PDF
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-share-alt"></i> Share
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 2 -->
-                    <div class="project-card">
-                        <div class="project-preview">
-                            <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
-                            <span class="project-type">Portfolio</span>
-                        </div>
-                        <div class="project-info">
-                            <h3 class="project-title">UX/UI Design Portfolio</h3>
-                            <div class="project-date">Last edited: March 5, 2025</div>
-                            <div class="project-actions">
-                                <button class="action-btn">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-globe"></i> Visit
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-share-alt"></i> Share
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 3 -->
-                    <div class="project-card">
-                        <div class="project-preview">
-                            <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
-                            <span class="project-type">Resume</span>
-                        </div>
-                        <div class="project-info">
-                            <h3 class="project-title">Professional Resume</h3>
-                            <div class="project-date">Last edited: February 28, 2025</div>
-                            <div class="project-actions">
-                                <button class="action-btn">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-download"></i> PDF
-                                </button>
-                                <button class="action-btn">
-                                    <i class="fas fa-share-alt"></i> Share
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Project Cards -->
                 </div>
             </div>
             

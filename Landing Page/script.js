@@ -185,27 +185,37 @@ const navigationManager = (() => {
             if (throttleTimer) return;
             
             throttleTimer = setTimeout(() => {
-                const sections = document.querySelectorAll('section[id]');
+                const sections = document.querySelectorAll('section[id], #home');
                 let scrollPosition = window.scrollY;
+                let currentSection = null;
                 
+                // Find the current section
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop - 100;
                     const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    const navLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
                     
-                    if (navLink && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        currentSection = section;
+                    }
+                });
+                
+                // Update navigation items
+                document.querySelectorAll('.nav-menu a').forEach(navLink => {
+                    const sectionId = navLink.getAttribute('href').substring(1);
+                    navLink.classList.remove('active');
+                    
+                    if (currentSection && currentSection.id === sectionId) {
                         navLink.classList.add('active');
-                    } else if (navLink) {
-                        navLink.classList.remove('active');
                     }
                 });
                 
                 throttleTimer = null;
-            }, 100); // Throttle the scroll event handler
+            }, 100);
         };
         
         window.addEventListener('scroll', updateActiveNavItem, { passive: true });
+        // Call once on page load
+        updateActiveNavItem();
     }
     
     return {
@@ -374,6 +384,8 @@ function checkUserLoginStatus() {
     const userProfileDisplay = document.getElementById('userProfileDisplay');
     const usernameDisplay = document.getElementById('usernameDisplay');
     
+    if (!loginButton || !userProfileDisplay) return; // Exit if elements don't exist
+    
     // Default state - show login button, hide user profile
     loginButton.style.display = 'flex';
     userProfileDisplay.style.display = 'none';
@@ -387,8 +399,8 @@ function checkUserLoginStatus() {
                 loginButton.style.display = 'none';
                 userProfileDisplay.style.display = 'flex';
                 
-                // Update username display
-                if (userData.name) {
+                // Update username display if it exists
+                if (usernameDisplay) {
                     usernameDisplay.textContent = userData.name;
                 }
                 
@@ -408,10 +420,15 @@ function checkUserLoginStatus() {
             console.error('Error parsing user auth data:', error);
         }
     }
+    
+    // Clear the login source after checking
+    localStorage.removeItem('loginSource');
 }
 
 // Function to redirect to login page
 function redirectToLogin() {
+    // Store the source of login redirect (get-started or direct)
+    localStorage.setItem('loginSource', 'direct');
     window.location.href = '../login.html';
 }
 
@@ -438,13 +455,21 @@ function handleGetStarted() {
         }
     }
     
+    // Store that login was initiated from Get Started
+    localStorage.setItem('loginSource', 'get-started');
     // User is not logged in, redirect to login page
-    redirectToLogin();
+    window.location.href = '../login.html';
 }
 
 // Function to logout user
 function logout() {
+    // Clear user authentication data
     localStorage.removeItem('userAuth');
+    
+    // Show success message
+    toastManager.showToast('Successfully logged out', 'success');
+    
+    // Reload the page
     window.location.reload();
 }
 

@@ -236,6 +236,26 @@ document.querySelectorAll('.nav-item:not(.with-submenu)').forEach(item => {
         });
         // Add active class only to the clicked item
         item.classList.add('active');
+        
+        // Check if sidebar is collapsed and maintain that state
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        
+        // If sidebar is collapsed, ensure it stays collapsed after navigation
+        if (isCollapsed) {
+            // Use setTimeout to ensure this happens after the page navigation
+            setTimeout(() => {
+                const newSidebar = document.querySelector('.sidebar');
+                const newMainContent = document.querySelector('.main-content');
+                if (newSidebar && !newSidebar.classList.contains('collapsed')) {
+                    newSidebar.classList.add('collapsed');
+                }
+                if (newMainContent && !newMainContent.classList.contains('expanded')) {
+                    newMainContent.classList.add('expanded');
+                }
+            }, 100);
+        }
     });
 });
 
@@ -249,6 +269,26 @@ document.querySelectorAll('.submenu .nav-item').forEach(item => {
         });
         // Add active class only to the clicked submenu item
         item.classList.add('active');
+        
+        // Check if sidebar is collapsed and maintain that state
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        
+        // If sidebar is collapsed, ensure it stays collapsed after navigation
+        if (isCollapsed) {
+            // Use setTimeout to ensure this happens after the page navigation
+            setTimeout(() => {
+                const newSidebar = document.querySelector('.sidebar');
+                const newMainContent = document.querySelector('.main-content');
+                if (newSidebar && !newSidebar.classList.contains('collapsed')) {
+                    newSidebar.classList.add('collapsed');
+                }
+                if (newMainContent && !newMainContent.classList.contains('expanded')) {
+                    newMainContent.classList.add('expanded');
+                }
+            }, 100);
+        }
     });
 });
 
@@ -266,6 +306,10 @@ function toggleSidebar() {
     
     sidebar.classList.toggle('collapsed');
     mainContent.classList.toggle('expanded');
+    
+    // Store the sidebar state in localStorage
+    const isCollapsed = sidebar.classList.contains('collapsed');
+    localStorage.setItem('sidebarCollapsed', isCollapsed);
 }
 
 // Add a sidebar toggle button
@@ -281,6 +325,21 @@ function createSidebarToggleButton() {
         toggleButton.querySelector('i').classList.toggle('fa-chevron-right');
     });
     sidebar.appendChild(toggleButton);
+    
+    // Add a hidden element to store the sidebar state
+    const sidebarState = document.createElement('div');
+    sidebarState.classList.add('sidebar-state');
+    sidebarState.setAttribute('data-collapsed', localStorage.getItem('sidebarCollapsed') === 'true');
+    sidebar.appendChild(sidebarState);
+    
+    // Apply the saved sidebar state on page load
+    const savedState = localStorage.getItem('sidebarCollapsed');
+    if (savedState === 'true') {
+        sidebar.classList.add('collapsed');
+        document.querySelector('.main-content').classList.add('expanded');
+        toggleButton.querySelector('i').classList.remove('fa-chevron-left');
+        toggleButton.querySelector('i').classList.add('fa-chevron-right');
+    }
 }
 
 // Initialize the sidebar toggle button when the page loads
@@ -318,6 +377,64 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Log for debugging
             console.log('Navigating to:', landingPagePath, 'from:', currentPath);
+        });
+    }
+});
+
+// Toast notification system
+const toastManager = {
+    showToast: function(message, type = 'success') {
+        // Create toast container if it doesn't exist
+        let toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.className = 'toast-container';
+            document.body.appendChild(toastContainer);
+        }
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        `;
+
+        // Add toast to container
+        toastContainer.appendChild(toast);
+
+        // Show toast
+        setTimeout(() => toast.classList.add('show'), 100);
+
+        // Remove toast after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+};
+
+// Function to handle logout
+function handleLogout() {
+    // Clear user authentication data
+    localStorage.removeItem('userAuth');
+    
+    // Show success message
+    toastManager.showToast('Successfully logged out');
+    
+    // Redirect to landing page after a short delay
+    setTimeout(() => {
+        window.location.href = '../Landing Page/index.html';
+    }, 1000);
+}
+
+// Add event listener to logout button
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutButton = document.querySelector('.logout');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleLogout();
         });
     }
 });

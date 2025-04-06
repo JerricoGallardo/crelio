@@ -366,9 +366,16 @@ loginForm.addEventListener('submit', async (e) => {
         isLoggedIn: true
     });
     
-    // Redirect to dashboard after a small delay
+    // Check login source and redirect accordingly
+    const loginSource = localStorage.getItem('loginSource');
+    
+    // Redirect after a small delay
     setTimeout(() => {
-        window.location.href = "Dashboard/dashboard.html";
+        if (loginSource === 'get-started') {
+            window.location.href = "Dashboard/dashboard.html";
+        } else {
+            window.location.href = "Landing Page/index.html";
+        }
     }, 1500);
 });
 
