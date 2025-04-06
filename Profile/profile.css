@@ -765,3 +765,164 @@ body[data-theme="dark"] .profile-section {
 body[data-theme="dark"] .skill-tag {
     background-color: rgba(0, 123, 255, 0.2);
 }
+
+.profile-details.editing p,
+.profile-details.editing .skill-tag {
+    border: 1px solid var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: rgba(0, 123, 255, 0.05);
+    outline: none;
+    transition: var(--transition);
+}
+
+.profile-details.editing p:focus,
+.profile-details.editing .skill-tag:focus {
+    background-color: rgba(0, 123, 255, 0.1);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.profile-details.editing .skill-tag {
+    cursor: text;
+}
+
+.profile-details.editing .skill-tag:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.add-skill-btn {
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px dashed var(--primary);
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+    margin-top: 10px;
+}
+
+.add-skill-btn:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.profile-details.editing .skill-tag {
+    position: relative;
+    padding-right: 24px;
+}
+
+.profile-details.editing .skill-tag:after {
+    content: '×';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 10;
+}
+
+.profile-details.editing .skill-tag:hover:after {
+    opacity: 1;
+}
+
+.profile-details.editing .skill-tag:focus:after {
+    opacity: 1;
+}
+
+/* Add a delete button to each skill tag when in edit mode */
+.profile-details.editing .skill-tag {
+    position: relative;
+}
+
+.profile-details.editing .skill-tag .delete-skill {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.profile-details.editing .skill-tag:hover .delete-skill {
+    opacity: 1;
+}
+
+.profile-details.editing .skill-tag:focus .delete-skill {
+    opacity: 1;
+}
+
+.profile-details.editing .skill-tag .delete-skill:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 10px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    max-width: 350px;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast i {
+    font-size: 20px;
+}
+
+.toast-success {
+    border-left: 4px solid #28a745;
+}
+
+.toast-success i {
+    color: #28a745;
+}
+
+.toast-error {
+    border-left: 4px solid #dc3545;
+}
+
+.toast-error i {
+    color: #dc3545;
+}
+
+/* Dark mode styles for toast */
+body[data-theme="dark"] .toast {
+    background-color: #333;
+    color: #fff;
+}
