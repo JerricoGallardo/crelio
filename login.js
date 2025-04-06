@@ -373,6 +373,8 @@ loginForm.addEventListener('submit', async (e) => {
     setTimeout(() => {
         if (loginSource === 'get-started') {
             window.location.href = "Dashboard/dashboard.html";
+        } else if (loginSource === 'template') {
+            window.location.href = "Create New/createnewresume.html";
         } else {
             window.location.href = "Landing Page/index.html";
         }

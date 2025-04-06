@@ -469,8 +469,34 @@ function logout() {
     // Show success message
     toastManager.showToast('Successfully logged out', 'success');
     
-    // Reload the page
-    window.location.reload();
+    // Reload the page after a delay to allow the toast to be visible
+    setTimeout(() => {
+        window.location.reload();
+    }, 2000);
+}
+
+// Function to handle template selection
+function handleTemplateSelection() {
+    // Check if user is already logged in
+    const userAuth = localStorage.getItem('userAuth');
+    
+    if (userAuth) {
+        try {
+            const userData = JSON.parse(userAuth);
+            if (userData && userData.isLoggedIn) {
+                // User is logged in, redirect directly to create new resume
+                window.location.href = '../Create New/createnewresume.html';
+                return;
+            }
+        } catch (error) {
+            console.error('Error parsing user auth data:', error);
+        }
+    }
+    
+    // Store that login was initiated from template selection
+    localStorage.setItem('loginSource', 'template');
+    // User is not logged in, redirect to login page
+    window.location.href = '../login.html';
 }
 
 // Main initialization
@@ -519,4 +545,5 @@ window.handleMenuItemClick = handleMenuItemClick;
 window.redirectToLogin = redirectToLogin;
 window.redirectToDashboard = redirectToDashboard;
 window.handleGetStarted = handleGetStarted;
+window.handleTemplateSelection = handleTemplateSelection;
 window.logout = logout;

@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="createnewportfolio.css">
 </head>
 <body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -18,7 +26,7 @@
             
             <nav>
                 <a href="../Profile/profile.html" class="nav-item">
-                    <i class="fas fa-user"></i>     
+                    <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
                 
@@ -32,21 +40,21 @@
                     <span>My Projects</span>
                 </a>
                 
-                <a href="../createnew.html" class="nav-item with-submenu active">
+                <div class="nav-item with-submenu active">
                     <i class="fas fa-plus-circle"></i>
                     <span>Create New</span>
-                </a>
-                <div class="submenu">
-                    <a href="createnewresume.html" class="nav-item">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Resumes</span>
-                    </a>
-                    <a href="#" class="nav-item active">
-                        <i class="fas fa-globe"></i>
-                        <span>Portfolio</span>
-                    </a>
-                </div>
-                
+                  </div>
+                    <div class="submenu">
+                        <a href="createnewresume.html" class="nav-item active">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Resume</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Portfolio</span>
+                        </a>
+                    </div>
+
                 <a href="../Settings/settings.html" class="nav-item">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
@@ -129,7 +137,16 @@
                         <div class="template-info">
                             <h3>Minimal</h3>
                             <p>Clean and straightforward design for a professional look</p>
-                            <a href="PortfolioTemplates/minimal-portfolio.html" class="template-btn">Use This Template</a>
+                            <div class="template-buttons">
+                                <a href="#" class="template-preview-btn" data-template="../Templates/minimal.html">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Preview</span>
+                                </a>
+                                <a href="PortfolioTemplates/minimal-portfolio.html" class="template-btn">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Use This Template</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
@@ -140,7 +157,16 @@
                         <div class="template-info">
                             <h3>Professional</h3>
                             <p>Traditional format preferred by established industries</p>
-                            <a href="PortfolioTemplates/neon-pulse.html" class="template-btn">Use This Template</a>
+                            <div class="template-buttons">
+                                <a href="#" class="template-preview-btn" data-template="../Templates/professional.html">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Preview</span>
+                                </a>
+                                <a href="PortfolioTemplates/neon-pulse.html" class="template-btn">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Use This Template</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
@@ -151,29 +177,58 @@
                         <div class="template-info">
                             <h3>Creative</h3>
                             <p>Modern design for creative fields and startups</p>
-                            <a href="PortfolioTemplates/creative-portfolio.html" class="template-btn">Use This Template</a>
+                            <div class="template-buttons">
+                                <a href="#" class="template-preview-btn" data-template="../Templates/creative.html">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Preview</span>
+                                </a>
+                                <a href="PortfolioTemplates/creative-portfolio.html" class="template-btn">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Use This Template</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="template-card">
+
                         <div class="template-image">
                             <img src="../img/pic4.webp" alt="Executive Template">
                         </div>
                         <div class="template-info">
                             <h3>Executive</h3>
                             <p>Elegant design for senior positions and leadership roles</p>
-                            <a href="PortfolioTemplates/executive-portfolio.html" class="template-btn">Use This Template</a>
+                            <div class="template-buttons">
+                                <a href="#" class="template-preview-btn" data-template="../Templates/executive.html">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Preview</span>
+                                </a>
+                                <a href="PortfolioTemplates/executive-portfolio.html" class="template-btn">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Use This Template</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="template-card">
+
                         <div class="template-image">
                             <img src="../img/pic5.jpg" alt="Modern Template">
                         </div>
                         <div class="template-info">
                             <h3>Modern</h3>
                             <p>Contemporary layout with stylish elements</p>
-                            <a href="PortfolioTemplates/modern-portfolio.html" class="template-btn">Use This Template</a>
+                            <div class="template-buttons">
+                                <a href="#" class="template-preview-btn" data-template="../Templates/modern.html">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Preview</span>
+                                </a>
+                                <a href="PortfolioTemplates/modern-portfolio.html" class="template-btn">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Use This Template</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     
@@ -184,7 +239,16 @@
                         <div class="template-info">
                             <h3>Academic</h3>
                             <p>Structured format for educational and research positions</p>
-                            <a href="PortfolioTemplates/academic-portfolio.html" class="template-btn">Use This Template</a>
+                            <div class="template-buttons">
+                                <a href="#" class="template-preview-btn" data-template="../Templates/academic.html">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Preview</span>
+                                </a>
+                                <a href=""PortfolioTemplates/academic-portfolio.html" class="template-btn">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Use This Template</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -194,8 +258,103 @@
                 </div>
             </div>
         </main>
-            <script src="../Dashboard/dashboard.js"></script>
-            <script src="../js/common.js"></script>
+        
+        <!-- Template Preview Modal -->
+        <div id="templatePreviewModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Template Preview</h2>
+                <div class="template-preview-container">
+                    <div id="templatePreviewImage" class="template-preview-image"></div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="useTemplateBtn" class="template-btn">Use This Template</a>
+                </div>
+            </div>
+        </div>
+        
+        <script src="../Dashboard/dashboard.js"></script>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Mobile menu functionality
+                const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+                const sidebar = document.querySelector('.sidebar');
+                const sidebarOverlay = document.querySelector('.sidebar-overlay');
 
-    </body>
+                function toggleMobileMenu() {
+                    sidebar.classList.toggle('active');
+                    sidebarOverlay.classList.toggle('active');
+                    document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+                }
+
+                mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+                sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
+                // Close mobile menu when clicking a nav item
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        if (window.innerWidth <= 768 && !item.classList.contains('with-submenu')) {
+                            toggleMobileMenu();
+                        }
+                    });
+                });
+
+                // Template preview functionality
+                const previewButtons = document.querySelectorAll('.template-preview-btn');
+                const previewModal = document.getElementById('templatePreviewModal');
+                const previewImage = document.getElementById('templatePreviewImage');
+                const closeModal = document.querySelector('.close-modal');
+                const useTemplateBtn = document.getElementById('useTemplateBtn');
+                
+                // Open modal with template preview
+                previewButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const templateUrl = this.getAttribute('data-template');
+                        
+                        // Get the exact thumbnail image from the template card
+                        const templateCard = this.closest('.template-card');
+                        const thumbnailImg = templateCard.querySelector('.template-image img');
+                        const thumbnailSrc = thumbnailImg.src;
+                        
+                        // Set the preview image to the exact thumbnail
+                        previewImage.style.backgroundImage = `url(${thumbnailSrc})`;
+                        useTemplateBtn.href = templateUrl;
+                        
+                        // Show modal with animation
+                        previewModal.style.display = 'block';
+                        setTimeout(() => {
+                            previewModal.classList.add('show');
+                        }, 10);
+                    });
+                });
+                
+                // Close modal
+                closeModal.addEventListener('click', function() {
+                    previewModal.classList.remove('show');
+                    setTimeout(() => {
+                        previewModal.style.display = 'none';
+                        previewImage.style.backgroundImage = '';
+                    }, 300);
+                });
+                
+                // Close modal when clicking outside
+                window.addEventListener('click', function(e) {
+                    if (e.target === previewModal) {
+                        previewModal.classList.remove('show');
+                        setTimeout(() => {
+                            previewModal.style.display = 'none';
+                            previewImage.style.backgroundImage = '';
+                        }, 300);
+                    }
+                });
+            });
+        </script>
+    </div>
+
+    <!-- Add common.js before closing body tag -->
+    <script src="../js/common.js"></script>
+</body>
 </html>
