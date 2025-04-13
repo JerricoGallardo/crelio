@@ -40,42 +40,86 @@ document.addEventListener('DOMContentLoaded', function() {
                 tag.contentEditable = true;
                 tag.classList.add('editable');
                 
-                // Add delete button
-                const deleteBtn = document.createElement('span');
-                deleteBtn.className = 'delete-skill';
+                // Create wrapper for the skill tag content
+                const contentWrapper = document.createElement('div');
+                contentWrapper.style.display = 'inline-flex';
+                contentWrapper.style.alignItems = 'center';
+                contentWrapper.style.position = 'relative';
+                
+                // Move the text content to the wrapper
+                const text = tag.textContent.replace('×', '').trim();
+                contentWrapper.textContent = text;
+                tag.textContent = '';
+                
+                tag.appendChild(contentWrapper);
+                
+                // Make the content wrapper editable instead of the entire tag
+                contentWrapper.contentEditable = true;
+                tag.contentEditable = false;
+                
+                // Add delete button (red circle)
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-btn';
                 deleteBtn.innerHTML = '×';
-                deleteBtn.onclick = function(e) {
-                    e.preventDefault();
+                deleteBtn.style.position = 'absolute';
+                deleteBtn.style.top = '-8px';
+                deleteBtn.style.right = '-8px';
+                deleteBtn.style.width = '16px';
+                deleteBtn.style.height = '16px';
+                deleteBtn.style.backgroundColor = '#dc3545';
+                deleteBtn.style.color = 'white';
+                deleteBtn.style.borderRadius = '50%';
+                deleteBtn.style.display = 'flex';
+                deleteBtn.style.alignItems = 'center';
+                deleteBtn.style.justifyContent = 'center';
+                deleteBtn.style.fontSize = '12px';
+                deleteBtn.style.cursor = 'pointer';
+                deleteBtn.style.border = 'none';
+                deleteBtn.style.padding = '0';
+                deleteBtn.style.lineHeight = '1';
+                deleteBtn.style.opacity = '0';
+                deleteBtn.style.transition = 'opacity 0.3s ease';
+                
+                // Add hover effect to show delete button
+                tag.addEventListener('mouseenter', () => {
+                    deleteBtn.style.opacity = '1';
+                });
+                
+                tag.addEventListener('mouseleave', () => {
+                    deleteBtn.style.opacity = '0';
+                });
+                
+                // Add click handler for delete button
+                deleteBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     tag.remove();
-                };
+                });
+                
                 tag.appendChild(deleteBtn);
                 
-                // Add click handler to add new skills
-                tag.addEventListener('keydown', function(e) {
+                // Handle key events for editing
+                contentWrapper.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') {
                         e.preventDefault();
-                        const newSkill = document.createElement('span');
-                        newSkill.className = 'skill-tag editable';
-                        newSkill.contentEditable = true;
-                        newSkill.textContent = 'New Skill';
-                        
-                        // Add delete button to new skill
-                        const newDeleteBtn = document.createElement('span');
-                        newDeleteBtn.className = 'delete-skill';
-                        newDeleteBtn.innerHTML = '×';
-                        newDeleteBtn.onclick = function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            newSkill.remove();
-                        };
-                        newSkill.appendChild(newDeleteBtn);
-                        
-                        skillsContainer.insertBefore(newSkill, tag.nextSibling);
-                        newSkill.focus();
-                        
-                        // Add the same event listener to the new skill
-                        newSkill.addEventListener('keydown', arguments.callee);
+                        addNewSkill(skillsContainer, tag);
+                    } else if ((e.key === 'Backspace' || e.key === 'Delete') && this.textContent.trim() === '') {
+                        e.preventDefault();
+                        tag.remove();
+                        return;
+                    }
+                });
+
+                // Handle paste events
+                contentWrapper.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const text = e.clipboardData.getData('text/plain');
+                    document.execCommand('insertText', false, text);
+                });
+
+                // Handle input
+                contentWrapper.addEventListener('input', function(e) {
+                    if (this.textContent.trim() === '') {
+                        this.textContent = '';
                     }
                 });
             });
@@ -85,79 +129,152 @@ document.addEventListener('DOMContentLoaded', function() {
             addSkillBtn.className = 'add-skill-btn';
             addSkillBtn.innerHTML = '<i class="fas fa-plus"></i> Add Skill';
             addSkillBtn.onclick = function() {
-                const newSkill = document.createElement('span');
-                newSkill.className = 'skill-tag editable';
-                newSkill.contentEditable = true;
-                newSkill.textContent = 'New Skill';
-                
-                // Add delete button to new skill
-                const deleteBtn = document.createElement('span');
-                deleteBtn.className = 'delete-skill';
-                deleteBtn.innerHTML = '×';
-                deleteBtn.onclick = function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    newSkill.remove();
-                };
-                newSkill.appendChild(deleteBtn);
-                
-                skillsContainer.appendChild(newSkill);
-                newSkill.focus();
-                
-                // Add event listener to the new skill
-                newSkill.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        const newSkill = document.createElement('span');
-                        newSkill.className = 'skill-tag editable';
-                        newSkill.contentEditable = true;
-                        newSkill.textContent = 'New Skill';
-                        
-                        // Add delete button to new skill
-                        const newDeleteBtn = document.createElement('span');
-                        newDeleteBtn.className = 'delete-skill';
-                        newDeleteBtn.innerHTML = '×';
-                        newDeleteBtn.onclick = function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            newSkill.remove();
-                        };
-                        newSkill.appendChild(newDeleteBtn);
-                        
-                        skillsContainer.insertBefore(newSkill, this.nextSibling);
-                        newSkill.focus();
-                        
-                        // Add the same event listener to the new skill
-                        newSkill.addEventListener('keydown', arguments.callee);
-                    }
-                });
+                addNewSkill(skillsContainer);
             };
             skillsContainer.appendChild(addSkillBtn);
         }
     }
     
+    // Function to add a new skill
+    function addNewSkill(container, insertAfter = null) {
+        const newSkill = document.createElement('span');
+        newSkill.className = 'skill-tag editable';
+        
+        // Create wrapper for the skill tag content
+        const contentWrapper = document.createElement('div');
+        contentWrapper.style.display = 'inline-flex';
+        contentWrapper.style.alignItems = 'center';
+        contentWrapper.style.position = 'relative';
+        contentWrapper.textContent = 'New Skill';
+        
+        newSkill.appendChild(contentWrapper);
+        
+        // Make the content wrapper editable instead of the entire tag
+        contentWrapper.contentEditable = true;
+        newSkill.contentEditable = false;
+        
+        // Add delete button (red circle)
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.innerHTML = '×';
+        deleteBtn.style.position = 'absolute';
+        deleteBtn.style.top = '-8px';
+        deleteBtn.style.right = '-8px';
+        deleteBtn.style.width = '16px';
+        deleteBtn.style.height = '16px';
+        deleteBtn.style.backgroundColor = '#dc3545';
+        deleteBtn.style.color = 'white';
+        deleteBtn.style.borderRadius = '50%';
+        deleteBtn.style.display = 'flex';
+        deleteBtn.style.alignItems = 'center';
+        deleteBtn.style.justifyContent = 'center';
+        deleteBtn.style.fontSize = '12px';
+        deleteBtn.style.cursor = 'pointer';
+        deleteBtn.style.border = 'none';
+        deleteBtn.style.padding = '0';
+        deleteBtn.style.lineHeight = '1';
+        deleteBtn.style.opacity = '0';
+        deleteBtn.style.transition = 'opacity 0.3s ease';
+        
+        // Add hover effect to show delete button
+        newSkill.addEventListener('mouseenter', () => {
+            deleteBtn.style.opacity = '1';
+        });
+        
+        newSkill.addEventListener('mouseleave', () => {
+            deleteBtn.style.opacity = '0';
+        });
+        
+        // Add click handler for delete button
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            newSkill.remove();
+        });
+        
+        newSkill.appendChild(deleteBtn);
+        
+        // Handle key events for editing
+        contentWrapper.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (this.textContent.trim()) {
+                    addNewSkill(container, newSkill);
+                }
+            } else if ((e.key === 'Backspace' || e.key === 'Delete') && this.textContent.trim() === '') {
+                e.preventDefault();
+                newSkill.remove();
+                return;
+            }
+        });
+
+        // Handle paste events to remove formatting
+        contentWrapper.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const text = e.clipboardData.getData('text/plain');
+            document.execCommand('insertText', false, text);
+        });
+
+        // Handle input to maintain minimum content
+        contentWrapper.addEventListener('input', function(e) {
+            if (this.textContent.trim() === '') {
+                this.textContent = '';
+            }
+        });
+
+        // Handle focus to select all text
+        contentWrapper.addEventListener('focus', function(e) {
+            const range = document.createRange();
+            range.selectNodeContents(this);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        });
+        
+        // Insert the new skill
+        if (insertAfter) {
+            container.insertBefore(newSkill, insertAfter.nextSibling);
+        } else {
+            // Insert before the add skill button
+            const addSkillBtn = container.querySelector('.add-skill-btn');
+            container.insertBefore(newSkill, addSkillBtn);
+        }
+        
+        contentWrapper.focus();
+    }
+    
     // Function to save changes
     function saveChanges(details) {
+        // Process skill tags before removing editable state
+        details.querySelectorAll('.skill-tag').forEach(tag => {
+            const contentWrapper = tag.querySelector('div');
+            // Clean up the text content
+            const text = contentWrapper.textContent.trim();
+            if (!text) {
+                tag.remove();
+                return;
+            }
+            
+            // Store the cleaned text and remove any existing delete buttons
+            const deleteBtn = tag.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.remove();
+            }
+            contentWrapper.textContent = text;
+        });
+
         // Remove editable attribute from all elements
         details.querySelectorAll('.editable').forEach(element => {
             element.contentEditable = false;
             element.classList.remove('editable');
-            
-            // Remove delete buttons
-            const deleteBtn = element.querySelector('.delete-skill');
-            if (deleteBtn) {
-                deleteBtn.remove();
-            }
         });
         
-        // Remove the add skill button if it exists
+        // Remove the add skill button
         const addSkillBtn = details.querySelector('.add-skill-btn');
         if (addSkillBtn) {
             addSkillBtn.remove();
         }
         
         // Here you would typically save the changes to a backend
-        // For now, we'll just log the changes
         console.log('Changes saved:', details.textContent);
     }
     

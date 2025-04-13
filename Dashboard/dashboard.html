@@ -27,27 +27,16 @@
                     <span>Dashboard</span>
                 </a>
                 
-                <a href="../My Projects/myprojects.html" class="nav-item">
+                <a href="../My Portfolio/myportfolio.html" class="nav-item">
                     <i class="fas fa-folder"></i>
-                    <span>My Projects</span>
+                    <span>My Portfolio</span>
                 </a>
 
-                <a href="../Create New/createnew.html" class="nav-item with-submenu">
+                <a href="../Create New/createnewportfolio.html" class="nav-item">
                     <i class="fas fa-plus-circle"></i>
-                    <span>Create New</span>
+                    <span>Create Portfolio</span>
                 </a>
                 
-                <div class="submenu">
-                    <a href="../Create New/createnewresume.html" class="nav-item">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Resume</span>
-                    </a>
-                    <a href="../Create New/createnewportfolio.html" class="nav-item">
-                        <i class="fas fa-globe"></i>
-                        <span>Portfolio</span>
-                    </a>
-                </div>
-                   
                 <a href="../Settings/settings.html" class="nav-item">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
@@ -117,24 +106,14 @@
                 </div>
             </div>
             
-            <!-- Welcome and Stats -->
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <h2 class="card-title">Welcome back, Earl!</h2>
-                    <div class="card-icon">
-                        <i class="fas fa-hand-paper"></i>
-                    </div>
-                </div>
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h2>Welcome back, dsasa!</h2>
                 <p>Here's what's happening with your projects today.</p>
             </div>
             
             <!-- Stats Overview -->
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">Total Resumes</div>
-                </div>
-                
                 <div class="stat-card">
                     <div class="stat-value">2</div>
                     <div class="stat-label">Portfolio Sites</div>
@@ -153,31 +132,16 @@
             
             <!-- Quick Actions -->
             <div class="quick-actions">
-                <div class="card-header">
-                    <h2 class="card-title">Quick Actions</h2>
-                </div>
-                
-                <div class="action-grid">
-                    <div class="action-item">
-                        <div class="action-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="action-label">New Resume</div>
-                    </div>
-                    
-                    <div class="action-item">
-                        <div class="action-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <div class="action-label">New Portfolio</div>
-                    </div>
-                    
-                    <div class="action-item">
-                        <div class="action-icon">
-                            <i class="fas fa-user-edit"></i>
-                        </div>
-                        <div class="action-label">Update Profile</div>
-                    </div>
+                <h2>Quick Actions</h2>
+                <div class="action-cards">
+                    <a href="../Profile/profile.html" class="action-card">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Update Profile</span>
+                    </a>
+                    <a href="../Create New/createnewportfolio.html" class="action-card">
+                        <i class="fas fa-globe"></i>
+                        <span>New Portfolio</span>
+                    </a>
                 </div>
             </div>
             
@@ -185,11 +149,15 @@
             <div class="dashboard-card">
                 <div class="card-header">
                     <h2 class="card-title">Recent Projects</h2>
-                    <a href="../My Projects/myprojects.html" style="color: var(--primary); font-size: 14px;">View All</a>
+                    <a href="../My Portfolio/myportfolio.html" style="color: var(--primary); font-size: 14px;">View All</a>
                 </div>
                 
                 <div class="projects-grid">
-                    <!-- Project Cards -->
+                    <!-- Empty state message -->
+                    <div class="empty-projects">
+                        <i class="fas fa-folder-open"></i>
+                        <p>No recent projects</p>
+                    </div>
                 </div>
             </div>
             
@@ -257,6 +225,7 @@
         </main>
     </div>
 
+    <script src="../Main Page JS/mainpage.js"></script>
     <script src="dashboard.js"></script>
 </body>
 </html>

@@ -484,8 +484,8 @@ function handleTemplateSelection() {
         try {
             const userData = JSON.parse(userAuth);
             if (userData && userData.isLoggedIn) {
-                // User is logged in, redirect directly to create new resume
-                window.location.href = '../Create New/createnewresume.html';
+                // User is logged in, redirect directly to create new portfolio
+                window.location.href = '../Create New/createnewportfolio.html';
                 return;
             }
         } catch (error) {
