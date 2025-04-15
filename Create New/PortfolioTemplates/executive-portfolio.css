@@ -1,0 +1,211 @@
+/* This file is just a reference to the Browny template CSS files */
+/* All styles are loaded from the browny-assets/css/ directory */
+
+/* Custom overrides for the Executive template can be added here */
+
+/* Example of a custom override */
+.welcome-hero {
+    background: url('browny-assets/images/about/welcome-banner.jpg') no-repeat center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-hero:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    z-index: -1;
+}
+
+/* Custom color scheme for executive template */
+.header-text h2 span,
+.education .experience-time h3 span,
+.single-horizontal-timeline .experience-time h3 span,
+.single-timeline-box .experience-time h3 {
+    color: #007bff; /* Blue color for executive theme */
+}
+
+.contact-btn,
+.single-contact-box:hover .contact-btn,
+.single-contact-box:hover .contact-btn:focus,
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a.active,
+.isotope-overlay a,
+.header-text a {
+    background: #007bff; /* Blue color for executive theme */
+}
+
+.progress-bar {
+    background: #007bff; /* Blue color for executive theme */
+}
+
+.single-about-add-info:hover {
+    border: 1px solid #007bff; /* Blue color for executive theme */
+}
+
+.single-about-add-info:hover h3 {
+    color: #007bff; /* Blue color for executive theme */
+}
+
+/* Social media link styles */
+a[data-editable="true"] {
+    cursor: pointer;
+    position: relative;
+}
+
+a[data-editable="true"]:hover::after {
+    content: "Click to edit link";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+}
+
+/* Portfolio title styles */
+.portfolio-title {
+    text-align: left;
+    padding: 10px 10px 0;
+    margin-top: -5px;
+}
+
+.portfolio-title h4 {
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
+
+.edit-button-container {
+    text-align: left;
+    padding: 0 10px 10px;
+}
+
+/* Edit button for portfolio titles */
+.portfolio-edit-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 12px;
+    opacity: 1;
+    transition: background 0.3s;
+    z-index: 101;
+    display: inline-block;
+}
+
+.item:hover .portfolio-edit-btn {
+    opacity: 1;
+}
+
+.portfolio-edit-btn:hover {
+    background: #0056b3;
+    cursor: pointer;
+}
+
+/* Portfolio image upload styles */
+.image-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+}
+
+.image-container img {
+    width: 100%;
+    display: block;
+}
+
+.image-upload-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 200; /* Higher z-index to be above isotope-overlay */
+    pointer-events: none;
+}
+
+.image-container:hover .image-upload-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.image-upload-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    z-index: 100;
+    pointer-events: auto;
+    position: relative;
+    display: block;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    opacity: 1;
+    margin-bottom: 10px;
+}
+
+.image-container:hover .image-upload-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.image-upload-btn:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+/* Fix for portfolio items */
+.item {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.item .image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Position the isotope-overlay below the image-upload-overlay */
+.isotope-overlay {
+    position: relative;
+    z-index: 100;
+}
+
+/* Make sure the image upload overlay is on top */
+.item .image-upload-overlay {
+    z-index: 200;
+}
+
+/* Prevent the isotope-overlay from interfering with image-container hover */
+.image-container:hover + .isotope-overlay a::after {
+    display: none;
+}
