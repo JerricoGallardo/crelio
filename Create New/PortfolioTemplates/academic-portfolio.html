@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crealio - Academic Portfolio Template</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="academic-portfolio.css">
+</head>
+<body>
+    <div class="editor-container">
+        <div class="toolbar">
+            <div class="toolbar-buttons">
+                <button class="toolbar-btn" onclick="window.history.back()">
+                    <i class="fas fa-arrow-left"></i>
+                    Back
+                </button>
+                <button class="toolbar-btn" onclick="window.savePortfolio()">
+                    <i class="fas fa-save"></i>
+                    Save
+                </button>
+                <button class="toolbar-btn" onclick="window.previewPortfolio()">
+                    <i class="fas fa-eye"></i>
+                    Preview
+                </button>
+                <select class="toolbar-btn font-select">
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Helvetica">Helvetica</option>
+                </select>
+                <select class="toolbar-btn size-select">
+                    <option value="16px">16px</option>
+                    <option value="18px">18px</option>
+                    <option value="20px">20px</option>
+                </select>
+                <button class="toolbar-btn" title="Bold">
+                    <i class="fas fa-bold"></i>
+                </button>
+                <button class="toolbar-btn" title="Italic">
+                    <i class="fas fa-italic"></i>
+                </button>
+                <button class="toolbar-btn" title="Underline">
+                    <i class="fas fa-underline"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="portfolio-canvas">
+            <!-- Navigation -->
+            <nav class="portfolio-nav">
+                <div class="nav-brand">
+                    <h1 contenteditable="true">Your Name</h1>
+                </div>
+                <button class="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#teaching">Teaching</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Hero Section -->
+            <section id="home" class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h2 contenteditable="true">Dr. <span class="highlight">Your Name</span></h2>
+                        <p class="hero-subtitle" contenteditable="true">Assistant Professor</p>
+                        <p class="hero-description" contenteditable="true">Department of Computer Science, University Name</p>
+                        <div class="hero-buttons">
+                            <a href="#research" class="btn primary">View Research</a>
+                            <a href="#contact" class="btn secondary">Contact Me</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="profile-photo-container">
+                            <div class="profile-photo">
+                                <img src="../../img/placeholder.jpg" alt="Profile Photo">
+                                <div class="photo-overlay">
+                                    <label class="upload-btn">
+                                        <i class="fas fa-camera"></i>
+                                        <input type="file" accept="image/*" style="display: none;">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Section -->
+            <section id="research" class="research-section">
+                <div class="research-content">
+                    <h2 contenteditable="true">Research</h2>
+                    <div class="research-text">
+                        <p contenteditable="true">My research focuses on the intersection of artificial intelligence and human-computer interaction, with a particular emphasis on developing intelligent systems that enhance human capabilities and improve accessibility.</p>
+                    </div>
+                    <div class="research-areas">
+                        <div class="research-area">
+                            <h3 contenteditable="true">Artificial Intelligence</h3>
+                            <p contenteditable="true">Developing novel machine learning algorithms for natural language processing and computer vision applications.</p>
+                        </div>
+                        <div class="research-area">
+                            <h3 contenteditable="true">Human-Computer Interaction</h3>
+                            <p contenteditable="true">Designing and evaluating user interfaces that leverage AI to improve user experience and accessibility.</p>
+                        </div>
+                        <div class="research-area">
+                            <h3 contenteditable="true">Accessibility Technology</h3>
+                            <p contenteditable="true">Creating assistive technologies that empower individuals with disabilities through AI-powered solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications Section -->
+            <section id="publications" class="publications-section">
+                <div class="publications-content">
+                    <h2 contenteditable="true">Publications</h2>
+                    <div class="publication-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="journal">Journal Articles</button>
+                        <button class="filter-btn" data-filter="conference">Conference Papers</button>
+                        <button class="filter-btn" data-filter="book">Book Chapters</button>
+                    </div>
+                    <div class="publications-list">
+                        <!-- Publications will be added here dynamically -->
+                    </div>
+                    <button class="add-publication-btn">
+                        <i class="fas fa-plus"></i> Add Publication
+                    </button>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education" class="education-section">
+                <div class="education-content">
+                    <h2 contenteditable="true">Education</h2>
+                    <div class="education-timeline">
+                        <!-- Education items will be added here dynamically -->
+                    </div>
+                    <button class="add-education-btn">
+                        <i class="fas fa-plus"></i> Add Education
+                    </button>
+                </div>
+            </section>
+
+            <!-- Teaching Section -->
+            <section id="teaching" class="teaching-section">
+                <div class="teaching-content">
+                    <h2 contenteditable="true">Teaching</h2>
+                    <div class="course-list">
+                        <!-- Courses will be added here dynamically -->
+                    </div>
+                    <button class="add-course-btn">
+                        <i class="fas fa-plus"></i> Add Course
+                    </button>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="contact-section">
+                <div class="contact-content">
+                    <h2 contenteditable="true">Contact</h2>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span contenteditable="true">your.email@university.edu</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span contenteditable="true">Department of Computer Science, University Name, City, Country</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span contenteditable="true">+1 (123) 456-7890</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" target="_blank" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" target="_blank" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" target="_blank" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="portfolio-footer">
+                <p contenteditable="true">&copy; 2024 Your Name. All rights reserved.</p>
+            </footer>
+        </div>
+
+        <!-- Publication Modal -->
+        <div class="modal publication-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Add New Publication</h2>
+                <form id="publicationForm" class="publication-form">
+                    <div class="form-group">
+                        <label for="publication-type">Type</label>
+                        <select id="publication-type" name="publication-type" required>
+                            <option value="journal">Journal Article</option>
+                            <option value="conference">Conference Paper</option>
+                            <option value="book">Book Chapter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="publication-title">Title</label>
+                        <input type="text" id="publication-title" name="publication-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publication-authors">Authors</label>
+                        <input type="text" id="publication-authors" name="publication-authors" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publication-venue">Venue</label>
+                        <input type="text" id="publication-venue" name="publication-venue" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publication-year">Year</label>
+                        <input type="number" id="publication-year" name="publication-year" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publication-doi">DOI (optional)</label>
+                        <input type="text" id="publication-doi" name="publication-doi">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn secondary cancel-btn">Cancel</button>
+                        <button type="submit" class="btn primary">Add Publication</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Education Modal -->
+        <div class="modal education-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Add New Education</h2>
+                <form id="educationForm" class="education-form">
+                    <div class="form-group">
+                        <label for="education-dates">Years</label>
+                        <input type="text" id="education-dates" name="education-dates" placeholder="e.g., 2015 - 2020" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="education-degree">Degree</label>
+                        <input type="text" id="education-degree" name="education-degree" placeholder="e.g., Ph.D. in Computer Science" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="education-details">Details</label>
+                        <textarea id="education-details" name="education-details" placeholder="University Name, Dissertation/Thesis title, etc." required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn secondary cancel-btn">Cancel</button>
+                        <button type="submit" class="btn primary">Add Education</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Course Modal -->
+        <div class="modal course-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Add New Course</h2>
+                <form id="courseForm" class="course-form">
+                    <div class="form-group">
+                        <label for="course-title">Course Title</label>
+                        <input type="text" id="course-title" name="course-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="course-code">Course Code</label>
+                        <input type="text" id="course-code" name="course-code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="course-description">Description</label>
+                        <textarea id="course-description" name="course-description" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn secondary cancel-btn">Cancel</button>
+                        <button type="submit" class="btn primary">Add Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="academic-portfolio.js"></script>
+</body>
+</html>
