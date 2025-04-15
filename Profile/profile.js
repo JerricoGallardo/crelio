@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Handle paste events
                 contentWrapper.addEventListener('paste', function(e) {
-                    e.preventDefault();
+                            e.preventDefault();
                     const text = e.clipboardData.getData('text/plain');
                     document.execCommand('insertText', false, text);
                 });
@@ -137,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to add a new skill
     function addNewSkill(container, insertAfter = null) {
-        const newSkill = document.createElement('span');
-        newSkill.className = 'skill-tag editable';
+                const newSkill = document.createElement('span');
+                newSkill.className = 'skill-tag editable';
         
         // Create wrapper for the skill tag content
         const contentWrapper = document.createElement('div');
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add delete button (red circle)
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'delete-btn';
-        deleteBtn.innerHTML = '×';
+                deleteBtn.innerHTML = '×';
         deleteBtn.style.position = 'absolute';
         deleteBtn.style.top = '-8px';
         deleteBtn.style.right = '-8px';
@@ -187,22 +187,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add click handler for delete button
         deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            newSkill.remove();
+                    e.stopPropagation();
+                    newSkill.remove();
         });
         
-        newSkill.appendChild(deleteBtn);
-        
+                newSkill.appendChild(deleteBtn);
+                
         // Handle key events for editing
         contentWrapper.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
                 if (this.textContent.trim()) {
                     addNewSkill(container, newSkill);
                 }
             } else if ((e.key === 'Backspace' || e.key === 'Delete') && this.textContent.trim() === '') {
-                e.preventDefault();
-                newSkill.remove();
+                            e.preventDefault();
+                            newSkill.remove();
                 return;
             }
         });

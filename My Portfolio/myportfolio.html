@@ -112,14 +112,13 @@
                 <div class="filter-group">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search projects...">
+                        <input type="text" placeholder="Search portfolio...">
                     </div>
                     
                     <div class="filter-buttons">
                         <button class="filter-btn active">All</button>
-                        <button class="filter-btn">Resumes</button>
-                        <button class="filter-btn">Portfolios</button>
-                        <button class="filter-btn">Recent</button>
+                        <button class="filter-btn">Published</button>
+                        <button class="filter-btn">Drafts</button>
                     </div>
                 </div>
                 
@@ -128,21 +127,21 @@
                     <select id="sortProjects">
                         <option value="recent">Most Recent</option>
                         <option value="name">Name</option>
-                        <option value="views">Most Views</option>
+                        <option value="views">Most Viewed</option>
                     </select>
                 </div>
             </div>
             
             <!-- Projects Grid -->
             <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card">
+                <!-- Published Project 1 -->
+                <div class="project-card published">
                     <div class="project-preview">
-                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
-                        <span class="project-type">Resume</span>
+                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
+                        <span class="status-badge published">Published</span>
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title">Creative Designer 2025</h3>
+                        <h3 class="project-title">Personal Portfolio 2025</h3>
                         <div class="project-meta">
                             <span class="project-date"><i class="fas fa-calendar-alt"></i> March 7, 2025</span>
                             <span class="project-views"><i class="fas fa-eye"></i> 12 views</span>
@@ -152,20 +151,20 @@
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                             <button class="action-btn">
-                                <i class="fas fa-download"></i> PDF
+                                <i class="fas fa-globe"></i> Visit
                             </button>
                             <button class="action-btn">
-                                <i class="fas fa-share-alt"></i> Share
+                                <i class="fas fa-download"></i> Download
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Project 2 -->
-                <div class="project-card">
+                <!-- Published Project 2 -->
+                <div class="project-card published">
                     <div class="project-preview">
                         <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
-                        <span class="project-type">Portfolio</span>
+                        <span class="status-badge published">Published</span>
                     </div>
                     <div class="project-info">
                         <h3 class="project-title">UX/UI Design Portfolio</h3>
@@ -181,20 +180,20 @@
                                 <i class="fas fa-globe"></i> Visit
                             </button>
                             <button class="action-btn">
-                                <i class="fas fa-share-alt"></i> Share
+                                <i class="fas fa-download"></i> Download
                             </button>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Project 3 -->
-                <div class="project-card">
+
+                <!-- Published Project 3 -->
+                <div class="project-card published">
                     <div class="project-preview">
-                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
-                        <span class="project-type">Resume</span>
+                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
+                        <span class="status-badge published">Published</span>
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title">Professional Resume</h3>
+                        <h3 class="project-title">Web Development Showcase</h3>
                         <div class="project-meta">
                             <span class="project-date"><i class="fas fa-calendar-alt"></i> February 28, 2025</span>
                             <span class="project-views"><i class="fas fa-eye"></i> 8 views</span>
@@ -204,88 +203,88 @@
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                             <button class="action-btn">
-                                <i class="fas fa-download"></i> PDF
-                            </button>
-                            <button class="action-btn">
-                                <i class="fas fa-share-alt"></i> Share
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 4 -->
-                <div class="project-card">
-                    <div class="project-preview">
-                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
-                        <span class="project-type">Portfolio</span>
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Graphic Design Showcase</h3>
-                        <div class="project-meta">
-                            <span class="project-date"><i class="fas fa-calendar-alt"></i> February 20, 2025</span>
-                            <span class="project-views"><i class="fas fa-eye"></i> 15 views</span>
-                        </div>
-                        <div class="project-actions">
-                            <button class="action-btn">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="action-btn">
                                 <i class="fas fa-globe"></i> Visit
                             </button>
                             <button class="action-btn">
-                                <i class="fas fa-share-alt"></i> Share
+                                <i class="fas fa-download"></i> Download
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Project 5 -->
-                <div class="project-card">
+                <!-- Draft Project 1 -->
+                <div class="project-card draft">
                     <div class="project-preview">
-                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
-                        <span class="project-type">Resume</span>
+                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
+                        <span class="status-badge draft">Draft</span>
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title">Minimal Resume</h3>
+                        <h3 class="project-title">Graphic Design Portfolio</h3>
+                        <div class="project-meta">
+                            <span class="project-date"><i class="fas fa-calendar-alt"></i> February 20, 2025</span>
+                            <span class="project-status"><i class="fas fa-clock"></i> Last edited 2 days ago</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                            <button class="action-btn publish-btn">
+                                <i class="fas fa-upload"></i> Publish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Draft Project 2 -->
+                <div class="project-card draft">
+                    <div class="project-preview">
+                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
+                        <span class="status-badge draft">Draft</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Minimalist Portfolio</h3>
                         <div class="project-meta">
                             <span class="project-date"><i class="fas fa-calendar-alt"></i> January 15, 2025</span>
-                            <span class="project-views"><i class="fas fa-eye"></i> 5 views</span>
+                            <span class="project-status"><i class="fas fa-clock"></i> Last edited 5 days ago</span>
                         </div>
                         <div class="project-actions">
                             <button class="action-btn">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                             <button class="action-btn">
-                                <i class="fas fa-download"></i> PDF
+                                <i class="fas fa-eye"></i> Preview
                             </button>
-                            <button class="action-btn">
-                                <i class="fas fa-share-alt"></i> Share
+                            <button class="action-btn publish-btn">
+                                <i class="fas fa-upload"></i> Publish
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Project 6 -->
-                <div class="project-card">
+                <!-- Draft Project 3 -->
+                <div class="project-card draft">
                     <div class="project-preview">
-                        <img src="https://via.placeholder.com/300x160" alt="Resume Preview">
-                        <span class="project-type">Resume</span>
+                        <img src="https://via.placeholder.com/300x160" alt="Portfolio Preview">
+                        <span class="status-badge draft">Draft</span>
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title">Creative Resume Template</h3>
+                        <h3 class="project-title">Creative Portfolio Template</h3>
                         <div class="project-meta">
                             <span class="project-date"><i class="fas fa-calendar-alt"></i> January 5, 2025</span>
-                            <span class="project-views"><i class="fas fa-eye"></i> 3 views</span>
+                            <span class="project-status"><i class="fas fa-clock"></i> Last edited 1 week ago</span>
                         </div>
                         <div class="project-actions">
                             <button class="action-btn">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                             <button class="action-btn">
-                                <i class="fas fa-download"></i> PDF
+                                <i class="fas fa-eye"></i> Preview
                             </button>
-                            <button class="action-btn">
-                                <i class="fas fa-share-alt"></i> Share
+                            <button class="action-btn publish-btn">
+                                <i class="fas fa-upload"></i> Publish
                             </button>
                         </div>
                     </div>
@@ -301,19 +300,6 @@
                 <p>Try adjusting your search or filters, or create a new project.</p>
                 <button class="btn-primary">
                     <i class="fas fa-plus"></i> Create New Project
-                </button>
-            </div>
-            
-            <!-- Pagination -->
-            <div class="pagination">
-                <button class="page-btn" disabled>
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">
-                    <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
         </main>
