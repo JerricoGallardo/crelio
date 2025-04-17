@@ -4,6 +4,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Executive Portfolio Template Loaded');
 
+    // Initialize add/remove functionality for sections
+    initializeAddRemoveControls();
+
     // Navigation functionality
     const navLinks = document.querySelectorAll('.smooth-menu a');
     const sections = document.querySelectorAll('section[id]');
@@ -95,6 +98,56 @@ document.addEventListener('DOMContentLoaded', function() {
     const editMode = true; // Set to false to disable editing
 
     if (editMode) {
+        // Add CSS for button animations
+        const style = document.createElement('style');
+        style.textContent = `
+            .toolbar-button:hover {
+                background-color: #e9ecef !important;
+                transform: translateY(-1px);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .toolbar-button:active {
+                transform: translateY(1px);
+                box-shadow: none;
+            }
+
+            .toolbar-button.clicked {
+                transform: scale(0.95);
+            }
+
+            /* Preview mode styles */
+            .preview-mode {
+                background-color: rgba(255, 255, 255, 0.8) !important;
+                backdrop-filter: blur(5px);
+            }
+
+            .preview-mode .edit-mode-only {
+                display: none !important;
+            }
+
+            #preview-btn.active {
+                background-color: #28a745 !important;
+                color: white !important;
+                border-color: #28a745 !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add toolbar button classes for animations
+        const toolbarButtons = document.querySelectorAll('.editor-toolbar button');
+        toolbarButtons.forEach(button => {
+            button.classList.add('toolbar-button');
+
+            // Add click animation
+            button.addEventListener('click', function() {
+                this.classList.add('clicked');
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 200);
+            });
+        });
+
         // Handle toolbar buttons
         document.getElementById('bold-btn').addEventListener('click', function() {
             document.execCommand('bold', false, null);
@@ -108,10 +161,34 @@ document.addEventListener('DOMContentLoaded', function() {
             document.execCommand('underline', false, null);
         });
 
-        document.getElementById('link-btn').addEventListener('click', function() {
-            const url = prompt('Enter the URL:');
-            if (url) {
-                document.execCommand('createLink', false, url);
+        // Undo/Redo buttons
+        document.getElementById('undo-btn').addEventListener('click', function() {
+            document.execCommand('undo', false, null);
+        });
+
+        document.getElementById('redo-btn').addEventListener('click', function() {
+            document.execCommand('redo', false, null);
+        });
+
+        // Font family and size selectors
+        document.getElementById('font-family-select').addEventListener('change', function() {
+            const fontFamily = this.value;
+            if (fontFamily) {
+                document.execCommand('fontName', false, fontFamily);
+            }
+        });
+
+        document.getElementById('font-size-select').addEventListener('change', function() {
+            const fontSize = this.value;
+            if (fontSize) {
+                // We need to use CSS for font size since execCommand's fontSize is limited
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    const span = document.createElement('span');
+                    span.style.fontSize = fontSize;
+                    range.surroundContents(span);
+                }
             }
         });
 
@@ -120,7 +197,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // In a real implementation, this would save the changes to a database or file
         });
 
-        document.getElementById('preview-btn').addEventListener('click', function() {
+        // Get toolbar elements
+        const editorToolbar = document.querySelector('.editor-toolbar') || document.getElementById('editor-toolbar');
+        const previewBtn = document.getElementById('preview-btn');
+        const previewText = document.getElementById('preview-text') || previewBtn.querySelector('span');
+
+        // Add preview mode functionality
+        previewBtn.addEventListener('click', function() {
             const editables = document.querySelectorAll('[contenteditable="true"]');
             const editableLinks = document.querySelectorAll('a[data-editable="true"]');
             const previewMode = this.getAttribute('data-preview') === 'true';
@@ -132,47 +215,214 @@ document.addEventListener('DOMContentLoaded', function() {
                     el.style.background = '';
                 });
 
+                // Show section controls
+                document.querySelectorAll('.section-controls').forEach(control => {
+                    control.style.display = 'flex';
+                });
+
+                // Show item controls
+                document.querySelectorAll('.item-controls').forEach(control => {
+                    control.style.display = 'flex';
+                });
+
                 // Re-enable link editing
                 document.querySelectorAll('a[data-editable="true"]').forEach(link => {
                     // Re-attach the click event listeners
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
+                        e.stopPropagation();
 
                         // Check if this is a portfolio title link
                         if (this.hasAttribute('data-title')) {
-                            // Edit the title
+                            // Get the current title and URL
                             const span = this.querySelector('span');
                             const currentTitle = span.textContent;
-                            const newTitle = prompt('Enter the portfolio item title:', currentTitle);
-                            if (newTitle !== null) {
+                            const currentUrl = this.getAttribute('href');
+                            const displayUrl = currentUrl === '#' ? '' : currentUrl;
+
+                            // Create a custom edit dialog
+                            const editDialog = document.createElement('div');
+                            editDialog.className = 'portfolio-edit-dialog';
+                            editDialog.style.position = 'fixed';
+                            editDialog.style.top = '50%';
+                            editDialog.style.left = '50%';
+                            editDialog.style.transform = 'translate(-50%, -50%)';
+                            editDialog.style.backgroundColor = 'white';
+                            editDialog.style.padding = '20px';
+                            editDialog.style.borderRadius = '5px';
+                            editDialog.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+                            editDialog.style.zIndex = '10000';
+                            editDialog.style.minWidth = '300px';
+
+                            // Add dialog content
+                            editDialog.innerHTML = `
+                                <h3 style="margin-top: 0; margin-bottom: 15px;">Edit Portfolio Item</h3>
+                                <div style="margin-bottom: 15px;">
+                                    <label for="portfolio-title-input" style="display: block; margin-bottom: 5px; font-weight: bold;">Title:</label>
+                                    <input type="text" id="portfolio-title-input" value="${currentTitle}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <label for="portfolio-url-input" style="display: block; margin-bottom: 5px; font-weight: bold;">URL:</label>
+                                    <input type="text" id="portfolio-url-input" value="${displayUrl}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                                </div>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <button id="cancel-portfolio-edit" style="margin-right: 10px; padding: 8px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">Cancel</button>
+                                    <button id="save-portfolio-edit" style="padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+                                </div>
+                            `;
+
+                            // Add the dialog to the document
+                            document.body.appendChild(editDialog);
+
+                            // Focus on the title input
+                            setTimeout(() => {
+                                document.getElementById('portfolio-title-input').focus();
+                            }, 100);
+
+                            // Handle cancel button
+                            document.getElementById('cancel-portfolio-edit').addEventListener('click', function() {
+                                document.body.removeChild(editDialog);
+                            });
+
+                            // Handle save button
+                            document.getElementById('save-portfolio-edit').addEventListener('click', function() {
+                                const newTitle = document.getElementById('portfolio-title-input').value;
+                                const newUrl = document.getElementById('portfolio-url-input').value;
+
+                                // Update the title and URL
                                 span.textContent = newTitle;
+                                link.setAttribute('href', newUrl || '#');
+
+                                // Remove the dialog
+                                document.body.removeChild(editDialog);
+                            });
+
+                            // Close dialog when clicking outside or pressing Escape
+                            function handleOutsideClick(e) {
+                                if (!editDialog.contains(e.target)) {
+                                    document.body.removeChild(editDialog);
+                                    document.removeEventListener('mousedown', handleOutsideClick);
+                                }
                             }
 
-                            // Edit the link URL
-                            const currentUrl = this.getAttribute('href');
-                            const newUrl = prompt('Enter the URL for this portfolio item (leave empty for no link):', currentUrl === '#' ? '' : currentUrl);
-                            if (newUrl !== null) {
-                                this.setAttribute('href', newUrl);
+                            function handleEscapeKey(e) {
+                                if (e.key === 'Escape') {
+                                    document.body.removeChild(editDialog);
+                                    document.removeEventListener('keydown', handleEscapeKey);
+                                }
                             }
+
+                            // Add event listeners with a slight delay to prevent immediate triggering
+                            setTimeout(() => {
+                                document.addEventListener('mousedown', handleOutsideClick);
+                                document.addEventListener('keydown', handleEscapeKey);
+                            }, 100);
                         } else {
                             // Regular social media link
                             const currentUrl = this.getAttribute('href');
-                            const newUrl = prompt('Enter the social media profile URL:', currentUrl === '#' ? '' : currentUrl);
-                            if (newUrl !== null) {
-                                this.setAttribute('href', newUrl);
+                            const displayUrl = currentUrl === '#' ? '' : currentUrl;
+
+                            // Create a custom URL edit dialog
+                            const urlDialog = document.createElement('div');
+                            urlDialog.className = 'url-edit-dialog';
+                            urlDialog.style.position = 'fixed';
+                            urlDialog.style.top = '50%';
+                            urlDialog.style.left = '50%';
+                            urlDialog.style.transform = 'translate(-50%, -50%)';
+                            urlDialog.style.backgroundColor = 'white';
+                            urlDialog.style.padding = '20px';
+                            urlDialog.style.borderRadius = '5px';
+                            urlDialog.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+                            urlDialog.style.zIndex = '10000';
+                            urlDialog.style.minWidth = '300px';
+
+                            // Add dialog content
+                            urlDialog.innerHTML = `
+                                <h3 style="margin-top: 0; margin-bottom: 15px;">Edit Social Media URL</h3>
+                                <input type="text" id="social-url-input" value="${displayUrl}" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <button id="cancel-social-url" style="margin-right: 10px; padding: 8px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">Cancel</button>
+                                    <button id="save-social-url" style="padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+                                </div>
+                            `;
+
+                            // Add the dialog to the document
+                            document.body.appendChild(urlDialog);
+
+                            // Focus on the URL input
+                            setTimeout(() => {
+                                document.getElementById('social-url-input').focus();
+                            }, 100);
+
+                            // Handle cancel button
+                            document.getElementById('cancel-social-url').addEventListener('click', function() {
+                                document.body.removeChild(urlDialog);
+                            });
+
+                            // Handle save button
+                            document.getElementById('save-social-url').addEventListener('click', function() {
+                                const newUrl = document.getElementById('social-url-input').value;
+
+                                // Update the URL
+                                link.setAttribute('href', newUrl || '#');
+
+                                // Remove the dialog
+                                document.body.removeChild(urlDialog);
+                            });
+
+                            // Close dialog when clicking outside or pressing Escape
+                            function handleOutsideClick(e) {
+                                if (!urlDialog.contains(e.target)) {
+                                    document.body.removeChild(urlDialog);
+                                    document.removeEventListener('mousedown', handleOutsideClick);
+                                }
                             }
+
+                            function handleEscapeKey(e) {
+                                if (e.key === 'Escape') {
+                                    document.body.removeChild(urlDialog);
+                                    document.removeEventListener('keydown', handleEscapeKey);
+                                }
+                            }
+
+                            // Add event listeners with a slight delay to prevent immediate triggering
+                            setTimeout(() => {
+                                document.addEventListener('mousedown', handleOutsideClick);
+                                document.addEventListener('keydown', handleEscapeKey);
+                            }, 100);
                         }
                     });
                 });
 
                 this.setAttribute('data-preview', 'false');
-                this.innerHTML = '<i class="fa fa-eye"></i> Preview';
-                document.querySelector('.editor-toolbar').style.opacity = '1';
+                if (previewText) {
+                    previewText.textContent = 'Preview';
+                } else {
+                    this.innerHTML = '<i class="fa fa-eye" style="margin-right: 5px;"></i> Preview';
+                }
+                this.classList.remove('active');
+                editorToolbar.classList.remove('preview-mode');
+                editorToolbar.style.opacity = '1';
+
+                // Show edit mode elements
+                document.querySelectorAll('.edit-mode-only').forEach(el => {
+                    el.style.display = '';
+                });
             } else {
                 // Switch to preview mode
                 editables.forEach(el => {
                     el.setAttribute('contenteditable', 'false');
                     el.style.background = 'transparent';
+                });
+
+                // Hide section controls
+                document.querySelectorAll('.section-controls').forEach(control => {
+                    control.style.display = 'none';
+                });
+
+                // Hide item controls
+                document.querySelectorAll('.item-controls').forEach(control => {
+                    control.style.display = 'none';
                 });
 
                 // Disable social media link editing in preview mode but allow clicking
@@ -186,8 +436,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 this.setAttribute('data-preview', 'true');
-                this.innerHTML = '<i class="fa fa-edit"></i> Edit';
-                document.querySelector('.editor-toolbar').style.opacity = '0.2';
+                if (previewText) {
+                    previewText.textContent = 'Edit';
+                } else {
+                    this.innerHTML = '<i class="fa fa-edit" style="margin-right: 5px;"></i> Edit';
+                }
+                this.classList.add('active');
+                editorToolbar.classList.add('preview-mode');
+                editorToolbar.style.opacity = '0.8';
+
+                // Hide edit mode elements
+                document.querySelectorAll('.edit-mode-only').forEach(el => {
+                    el.style.display = 'none';
+                });
             }
         });
 
@@ -274,11 +535,127 @@ document.addEventListener('DOMContentLoaded', function() {
         socialLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
+
+                // Get the current URL
                 const currentUrl = this.getAttribute('href');
-                const newUrl = prompt('Enter the social media profile URL:', currentUrl === '#' ? '' : currentUrl);
-                if (newUrl !== null) {
-                    this.setAttribute('href', newUrl);
+                const displayUrl = currentUrl === '#' ? '' : currentUrl;
+
+                // Create a custom URL edit dialog
+                const urlDialog = document.createElement('div');
+                urlDialog.className = 'url-edit-dialog';
+                urlDialog.style.position = 'fixed';
+                urlDialog.style.top = '50%';
+                urlDialog.style.left = '50%';
+                urlDialog.style.transform = 'translate(-50%, -50%)';
+                urlDialog.style.backgroundColor = 'white';
+                urlDialog.style.padding = '20px';
+                urlDialog.style.borderRadius = '5px';
+                urlDialog.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+                urlDialog.style.zIndex = '10000';
+                urlDialog.style.minWidth = '300px';
+
+                // Create dialog elements manually instead of using innerHTML
+                const heading = document.createElement('h3');
+                heading.style.marginTop = '0';
+                heading.style.marginBottom = '15px';
+                heading.textContent = 'Edit Social Media URL';
+                urlDialog.appendChild(heading);
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = 'social-url-input';
+                input.value = displayUrl;
+                input.style.width = '100%';
+                input.style.padding = '8px';
+                input.style.marginBottom = '15px';
+                input.style.border = '1px solid #ddd';
+                input.style.borderRadius = '4px';
+                urlDialog.appendChild(input);
+
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.justifyContent = 'flex-end';
+                urlDialog.appendChild(buttonContainer);
+
+                const cancelButton = document.createElement('button');
+                cancelButton.id = 'cancel-social-url';
+                cancelButton.textContent = 'Cancel';
+                cancelButton.style.marginRight = '10px';
+                cancelButton.style.padding = '8px 15px';
+                cancelButton.style.background = '#f5f5f5';
+                cancelButton.style.border = '1px solid #ddd';
+                cancelButton.style.borderRadius = '4px';
+                cancelButton.style.cursor = 'pointer';
+                buttonContainer.appendChild(cancelButton);
+
+                const saveButton = document.createElement('button');
+                saveButton.id = 'save-social-url';
+                saveButton.textContent = 'Save';
+                saveButton.style.padding = '8px 15px';
+                saveButton.style.background = '#007bff';
+                saveButton.style.color = 'white';
+                saveButton.style.border = 'none';
+                saveButton.style.borderRadius = '4px';
+                saveButton.style.cursor = 'pointer';
+                buttonContainer.appendChild(saveButton);
+
+                // Add the dialog to the document
+                document.body.appendChild(urlDialog);
+
+                // Focus on the URL input
+                setTimeout(() => {
+                    input.focus();
+                }, 100);
+
+                // Function to remove dialog
+                function removeDialog() {
+                    if (document.body.contains(urlDialog)) {
+                        document.body.removeChild(urlDialog);
+                        document.removeEventListener('mousedown', handleOutsideClick);
+                        document.removeEventListener('keydown', handleEscapeKey);
+                    }
                 }
+
+                // Handle cancel button
+                cancelButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    removeDialog();
+                });
+
+                // Handle save button
+                saveButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const newUrl = input.value;
+
+                    // Update the URL
+                    link.setAttribute('href', newUrl || '#');
+
+                    // Remove the dialog
+                    removeDialog();
+                });
+
+                // Close dialog when clicking outside
+                function handleOutsideClick(e) {
+                    if (!urlDialog.contains(e.target)) {
+                        removeDialog();
+                    }
+                }
+
+                // Close dialog when pressing Escape
+                function handleEscapeKey(e) {
+                    if (e.key === 'Escape') {
+                        removeDialog();
+                    }
+                }
+
+                // Add event listeners with a slight delay to prevent immediate triggering
+                setTimeout(() => {
+                    document.addEventListener('mousedown', handleOutsideClick);
+                    document.addEventListener('keydown', handleEscapeKey);
+                }, 100);
             });
         });
 
@@ -315,22 +692,87 @@ document.addEventListener('DOMContentLoaded', function() {
                 modalContent.style.width = '400px';
                 modalContent.style.maxWidth = '90%';
 
-                // Create the form
-                modalContent.innerHTML = `
-                    <h3 style="margin-top: 0; color: #333;">Edit Portfolio Item</h3>
-                    <div style="margin-bottom: 15px;">
-                        <label for="portfolio-title" style="display: block; margin-bottom: 5px; font-weight: bold;">Title:</label>
-                        <input type="text" id="portfolio-title" value="${titleElement.textContent}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label for="portfolio-url" style="display: block; margin-bottom: 5px; font-weight: bold;">URL:</label>
-                        <input type="text" id="portfolio-url" value="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" placeholder="https://example.com">
-                    </div>
-                    <div style="display: flex; justify-content: flex-end;">
-                        <button id="cancel-edit" style="margin-right: 10px; padding: 8px 15px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">Cancel</button>
-                        <button id="save-edit" style="padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Save Changes</button>
-                    </div>
-                `;
+                // Create the form elements manually
+                const heading = document.createElement('h3');
+                heading.style.marginTop = '0';
+                heading.style.color = '#333';
+                heading.textContent = 'Edit Portfolio Item';
+                modalContent.appendChild(heading);
+
+                // Title input container
+                const titleContainer = document.createElement('div');
+                titleContainer.style.marginBottom = '15px';
+                modalContent.appendChild(titleContainer);
+
+                const titleLabel = document.createElement('label');
+                titleLabel.setAttribute('for', 'portfolio-title');
+                titleLabel.style.display = 'block';
+                titleLabel.style.marginBottom = '5px';
+                titleLabel.style.fontWeight = 'bold';
+                titleLabel.textContent = 'Title:';
+                titleContainer.appendChild(titleLabel);
+
+                const titleInput = document.createElement('input');
+                titleInput.type = 'text';
+                titleInput.id = 'portfolio-title';
+                titleInput.value = titleElement.textContent;
+                titleInput.style.width = '100%';
+                titleInput.style.padding = '8px';
+                titleInput.style.border = '1px solid #ddd';
+                titleInput.style.borderRadius = '4px';
+                titleContainer.appendChild(titleInput);
+
+                // URL input container
+                const urlContainer = document.createElement('div');
+                urlContainer.style.marginBottom = '20px';
+                modalContent.appendChild(urlContainer);
+
+                const urlLabel = document.createElement('label');
+                urlLabel.setAttribute('for', 'portfolio-url');
+                urlLabel.style.display = 'block';
+                urlLabel.style.marginBottom = '5px';
+                urlLabel.style.fontWeight = 'bold';
+                urlLabel.textContent = 'URL:';
+                urlContainer.appendChild(urlLabel);
+
+                const urlInput = document.createElement('input');
+                urlInput.type = 'text';
+                urlInput.id = 'portfolio-url';
+                urlInput.value = '';
+                urlInput.style.width = '100%';
+                urlInput.style.padding = '8px';
+                urlInput.style.border = '1px solid #ddd';
+                urlInput.style.borderRadius = '4px';
+                urlInput.placeholder = 'https://example.com';
+                urlContainer.appendChild(urlInput);
+
+                // Button container
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.justifyContent = 'flex-end';
+                modalContent.appendChild(buttonContainer);
+
+                const cancelButton = document.createElement('button');
+                cancelButton.id = 'cancel-edit';
+                cancelButton.textContent = 'Cancel';
+                cancelButton.style.marginRight = '10px';
+                cancelButton.style.padding = '8px 15px';
+                cancelButton.style.background = '#f5f5f5';
+                cancelButton.style.border = '1px solid #ddd';
+                cancelButton.style.borderRadius = '4px';
+                cancelButton.style.cursor = 'pointer';
+                buttonContainer.appendChild(cancelButton);
+
+                const saveButton = document.createElement('button');
+                saveButton.id = 'save-edit';
+                saveButton.textContent = 'Save Changes';
+                saveButton.style.padding = '8px 15px';
+                saveButton.style.background = '#007bff';
+                saveButton.style.color = 'white';
+                saveButton.style.border = 'none';
+                saveButton.style.borderRadius = '4px';
+                saveButton.style.cursor = 'pointer';
+                buttonContainer.appendChild(saveButton);
 
                 // Add the modal to the document
                 modal.appendChild(modalContent);
@@ -341,15 +783,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('portfolio-title').focus();
                 }, 100);
 
+                // Function to remove modal
+                function removeModal() {
+                    if (document.body.contains(modal)) {
+                        document.body.removeChild(modal);
+                    }
+                }
+
                 // Handle cancel button
-                document.getElementById('cancel-edit').addEventListener('click', function() {
-                    document.body.removeChild(modal);
+                cancelButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    removeModal();
                 });
 
                 // Handle save button
-                document.getElementById('save-edit').addEventListener('click', function() {
-                    const newTitle = document.getElementById('portfolio-title').value;
-                    const newUrl = document.getElementById('portfolio-url').value;
+                saveButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const newTitle = titleInput.value;
+                    const newUrl = urlInput.value;
 
                     // Update the title
                     titleElement.textContent = newTitle;
@@ -358,15 +811,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     titleElement.setAttribute('data-url', newUrl || '#');
 
                     // Remove the modal
-                    document.body.removeChild(modal);
+                    removeModal();
                 });
 
                 // Close modal when clicking outside
                 modal.addEventListener('click', function(e) {
                     if (e.target === modal) {
-                        document.body.removeChild(modal);
+                        removeModal();
                     }
                 });
+
+                // Close modal when pressing Escape
+                function handleEscapeKey(e) {
+                    if (e.key === 'Escape') {
+                        removeModal();
+                        document.removeEventListener('keydown', handleEscapeKey);
+                    }
+                }
+
+                // Add escape key listener
+                document.addEventListener('keydown', handleEscapeKey);
             });
         });
     } else {
@@ -385,3 +849,247 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Function to initialize add/remove controls for sections
+function initializeAddRemoveControls() {
+    // Education section controls
+    const addEducationBtn = document.getElementById('add-education-btn');
+    if (addEducationBtn) {
+        addEducationBtn.addEventListener('click', function() {
+            const educationContainer = document.querySelector('.education-horizontal-timeline .row');
+            const educationItems = educationContainer.querySelectorAll('.single-horizontal-timeline');
+            const lastItem = educationItems[educationItems.length - 1];
+
+            if (lastItem) {
+                const newItem = lastItem.cloneNode(true);
+                const newCol = document.createElement('div');
+                newCol.className = 'col-sm-4';
+                newCol.appendChild(newItem);
+
+                // Reset content to be editable
+                newItem.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                    if (el.tagName === 'H2') {
+                        el.textContent = 'YYYY - YYYY';
+                    } else if (el.tagName === 'H3') {
+                        el.textContent = 'Degree Title';
+                    } else if (el.tagName === 'SPAN') {
+                        el.textContent = 'Institution Name';
+                    } else if (el.tagName === 'H5') {
+                        el.textContent = 'Location';
+                    } else if (el.tagName === 'P') {
+                        el.textContent = 'Description of your education and achievements.';
+                    }
+                });
+
+                // Add remove button functionality
+                const removeBtn = newItem.querySelector('.remove-btn');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        newCol.remove();
+                    });
+                }
+
+                educationContainer.appendChild(newCol);
+            }
+        });
+    }
+
+    // Add remove functionality to existing education items
+    document.querySelectorAll('.single-horizontal-timeline .remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const item = this.closest('.col-sm-4');
+            if (item) {
+                // Don't remove if it's the last item
+                const container = item.parentElement;
+                if (container.querySelectorAll('.col-sm-4').length > 1) {
+                    item.remove();
+                } else {
+                    alert('Cannot remove the last education item. You need at least one.');
+                }
+            }
+        });
+    });
+
+    // Skills section controls
+    const addSkillBtn = document.getElementById('add-skill-btn');
+    if (addSkillBtn) {
+        addSkillBtn.addEventListener('click', function() {
+            const skillContainers = document.querySelectorAll('.single-skill-content');
+            const lastSkillContainer = skillContainers[skillContainers.length - 1];
+            const lastSkill = lastSkillContainer.querySelector('.barWrapper:last-child');
+
+            if (lastSkill) {
+                const newSkill = lastSkill.cloneNode(true);
+
+                // Reset content to be editable
+                newSkill.querySelector('.progressText').textContent = 'New Skill';
+                newSkill.querySelector('h3').textContent = '80%';
+
+                // Set progress bar value
+                const progressBar = newSkill.querySelector('.progress-bar');
+                progressBar.setAttribute('aria-valuenow', '80');
+                progressBar.style.width = '80%';
+
+                // Add remove button functionality
+                const removeBtn = newSkill.querySelector('.remove-btn');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        newSkill.remove();
+                    });
+                }
+
+                lastSkillContainer.appendChild(newSkill);
+            }
+        });
+    }
+
+    // Add remove functionality to existing skill items
+    document.querySelectorAll('.barWrapper .remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const item = this.closest('.barWrapper');
+            if (item) {
+                // Don't remove if it's the last skill in the container
+                const container = item.parentElement;
+                if (container.querySelectorAll('.barWrapper').length > 1) {
+                    item.remove();
+                } else {
+                    alert('Cannot remove the last skill. You need at least one skill in each column.');
+                }
+            }
+        });
+    });
+
+    // Experience section controls
+    const addExperienceBtn = document.getElementById('add-experience-btn');
+    if (addExperienceBtn) {
+        addExperienceBtn.addEventListener('click', function() {
+            const experienceContainer = document.querySelector('.main-timeline ul');
+            const experienceItems = experienceContainer.querySelectorAll('li');
+            const lastItem = experienceItems[experienceItems.length - 1];
+
+            if (lastItem) {
+                const newItem = lastItem.cloneNode(true);
+
+                // Reset content to be editable
+                newItem.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                    if (el.tagName === 'H2' || el.tagName === 'SPAN' && el.closest('h2')) {
+                        el.textContent = 'YYYY - YYYY';
+                    } else if (el.tagName === 'H3') {
+                        el.textContent = 'Job Title';
+                    } else if (el.tagName === 'SPAN' && el.closest('h4')) {
+                        el.textContent = 'Company Name';
+                    } else if (el.tagName === 'H5') {
+                        el.textContent = 'Location';
+                    } else if (el.tagName === 'P') {
+                        el.textContent = 'Description of your responsibilities and achievements.';
+                    }
+                });
+
+                // Add remove button functionality
+                const removeBtn = newItem.querySelector('.remove-btn');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        newItem.remove();
+                    });
+                }
+
+                experienceContainer.appendChild(newItem);
+            }
+        });
+    }
+
+    // Add remove functionality to existing experience items
+    document.querySelectorAll('.single-timeline-box .remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const item = this.closest('li');
+            if (item) {
+                // Don't remove if it's the last item
+                const container = item.parentElement;
+                if (container.querySelectorAll('li').length > 1) {
+                    item.remove();
+                } else {
+                    alert('Cannot remove the last experience item. You need at least one.');
+                }
+            }
+        });
+    });
+
+    // Portfolio section controls
+    const addPortfolioBtn = document.getElementById('add-portfolio-btn');
+    if (addPortfolioBtn) {
+        addPortfolioBtn.addEventListener('click', function() {
+            const portfolioContainer = document.querySelector('.portfolio .row');
+            const portfolioItems = portfolioContainer.querySelectorAll('.item');
+            const lastItem = portfolioItems[portfolioItems.length - 1];
+
+            if (lastItem) {
+                const newItem = lastItem.cloneNode(true);
+                const newCol = document.createElement('div');
+                newCol.className = 'col-sm-4';
+                newCol.appendChild(newItem);
+
+                // Reset content and generate unique IDs
+                const newId = 'portfolio-image-' + (portfolioItems.length + 1);
+                const newUploadId = 'portfolio-image-upload-' + (portfolioItems.length + 1);
+
+                const img = newItem.querySelector('img');
+                img.id = newId;
+                img.src = 'browny-assets/images/portfolio/p1.jpg'; // Default image
+
+                const fileInput = newItem.querySelector('input[type="file"]');
+                fileInput.id = newUploadId;
+
+                const uploadBtn = newItem.querySelector('.image-upload-btn');
+                uploadBtn.setAttribute('onclick', `document.getElementById('${newUploadId}').click()`);
+
+                // Reset title
+                const title = newItem.querySelector('[data-title]');
+                if (title) {
+                    title.textContent = 'NEW PORTFOLIO ITEM';
+                }
+
+                // Add remove button functionality
+                const removeBtn = newItem.querySelector('.remove-btn');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        newCol.remove();
+                    });
+                }
+
+                // Add file upload functionality
+                fileInput.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                portfolioContainer.appendChild(newCol);
+            }
+        });
+    }
+
+    // Add remove functionality to existing portfolio items
+    document.querySelectorAll('.item .remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const item = this.closest('.col-sm-4');
+            if (item) {
+                // Don't remove if it's the last item
+                const container = item.parentElement;
+                if (container.querySelectorAll('.col-sm-4').length > 1) {
+                    item.remove();
+                } else {
+                    alert('Cannot remove the last portfolio item. You need at least one.');
+                }
+            }
+        });
+    });
+
+    // Set initial state of mode indicators and controls
+    document.querySelector('.edit-mode-indicator').style.display = 'inline-block';
+    document.querySelector('.preview-mode-indicator').style.display = 'none';
+}
