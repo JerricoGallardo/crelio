@@ -34,47 +34,124 @@
         <!--responsive.css-->
         <link rel="stylesheet" href="browny-assets/css/responsive.css">
 
-        <!-- Editor styles -->
+        <!-- Editor toolbar styles -->
+        <link rel="stylesheet" href="executive-toolbar.css">
+
+        <!-- Additional Editor styles -->
         <style>
             .editor-toolbar {
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
-                background: #333;
-                color: white;
-                padding: 10px;
+                background: #fff;
+                color: #333;
+                padding: 10px 15px;
                 display: flex;
                 justify-content: space-between;
                 z-index: 1000;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                border-bottom: 1px solid #eee;
             }
 
             .toolbar-group {
                 display: flex;
-                gap: 10px;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .toolbar-section {
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                border-right: 1px solid #eee;
+            }
+
+            .toolbar-section:last-child {
+                border-right: none;
             }
 
             .toolbar-btn {
-                background: #444;
-                color: white;
+                background: transparent;
+                color: #555;
                 border: none;
-                padding: 5px 10px;
-                border-radius: 4px;
+                padding: 6px 10px;
+                border-radius: 3px;
                 cursor: pointer;
-                transition: background 0.3s;
+                transition: all 0.2s;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .toolbar-btn:hover {
-                background: #555;
+                background: #f5f5f5;
+                color: #333;
+            }
+
+            .toolbar-btn.active {
+                background: #f0f0f0;
+                color: #007bff;
             }
 
             .toolbar-btn.primary {
                 background: #007bff;
+                color: white;
             }
 
             .toolbar-btn.primary:hover {
                 background: #0069d9;
+            }
+
+            .font-select,
+            .size-select {
+                background: transparent;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 5px;
+                font-size: 14px;
+                color: #555;
+                cursor: pointer;
+                margin: 0 5px;
+            }
+
+            .toolbar-select {
+                background: transparent;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 5px;
+                font-size: 14px;
+                color: #555;
+                cursor: pointer;
+                margin: 0 5px;
+            }
+
+            .toolbar-label {
+                font-size: 13px;
+                color: #777;
+                margin-right: 5px;
+            }
+
+            .edit-mode-indicator {
+                background: #28a745;
+                color: white;
+                padding: 3px 8px;
+                border-radius: 3px;
+                font-size: 12px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+
+            .preview-mode-indicator {
+                background: #17a2b8;
+                color: white;
+                padding: 3px 8px;
+                border-radius: 3px;
+                font-size: 12px;
+                font-weight: bold;
+                margin-right: 10px;
+                display: none;
             }
 
             [contenteditable="true"] {
@@ -120,31 +197,264 @@
             }
 
             body {
-                padding-top: 50px; /* Make room for the fixed toolbar */
+                padding-top: 60px; /* Make room for the fixed toolbar */
+            }
+
+            /* Modern navigation styles */
+            .modern-nav {
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                transition: all 0.3s ease;
+            }
+
+            .modern-nav .navbar-brand {
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                transition: all 0.3s ease;
+            }
+
+            .modern-nav .navbar-brand:focus {
+                outline: 2px dashed rgba(255,255,255,0.5);
+                outline-offset: 2px;
+            }
+
+            .modern-nav .navbar-brand[contenteditable="true"]:empty:before {
+                content: attr(data-placeholder);
+                color: rgba(255,255,255,0.7);
+            }
+
+            .modern-nav .nav.navbar-nav li a {
+                font-weight: 500;
+                letter-spacing: 0.3px;
+                transition: all 0.2s ease;
+                position: relative;
+            }
+
+            .modern-nav .nav.navbar-nav li a:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: #fff;
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+
+            .modern-nav .nav.navbar-nav li a:hover:after,
+            .modern-nav .nav.navbar-nav li.active a:after {
+                width: 100%;
+            }
+
+            /* Add/Remove buttons for sections */
+            .section-controls {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .section-control-btn {
+                background: #f8f9fa;
+                border: 1px solid #ddd;
+                color: #555;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-size: 14px;
+            }
+
+            .section-control-btn:hover {
+                background: #007bff;
+                color: white;
+                border-color: #007bff;
+            }
+
+            .section-control-btn.add-btn {
+                background: #28a745;
+                color: white;
+                border-color: #28a745;
+            }
+
+            .section-control-btn.add-btn:hover {
+                background: #218838;
+            }
+
+            .section-control-btn.remove-btn {
+                background: #dc3545;
+                color: white;
+                border-color: #dc3545;
+            }
+
+            .section-control-btn.remove-btn:hover {
+                background: #c82333;
+            }
+
+            .item-controls {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                display: flex;
+                gap: 5px;
+                z-index: 10;
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
+
+            /* Mode indicators */
+            .edit-mode-indicator,
+            .preview-mode-indicator {
+                font-size: 12px;
+                font-weight: bold;
+                padding: 4px 8px;
+                border-radius: 4px;
+                margin-right: 15px;
+            }
+
+            .edit-mode-indicator {
+                background-color: #28a745;
+                color: white;
+            }
+
+            .preview-mode-indicator {
+                background-color: #17a2b8;
+                color: white;
+                display: none;
+            }
+
+            /* Toolbar sections */
+            .toolbar-section {
+                display: flex;
+                align-items: center;
+                border-right: 1px solid #ddd;
+                padding: 0 10px;
+                margin: 0 5px;
+            }
+
+            .toolbar-section:last-child {
+                border-right: none;
+            }
+
+            .toolbar-label {
+                font-size: 12px;
+                margin-right: 5px;
+                color: #555;
+            }
+
+            .toolbar-select {
+                padding: 3px;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                font-size: 12px;
+                margin-right: 10px;
+            }
+
+            .single-horizontal-timeline:hover .item-controls,
+            .single-timeline-box:hover .item-controls,
+            .barWrapper:hover .item-controls,
+            .item:hover .item-controls {
+                opacity: 1;
             }
         </style>
     </head>
 
     <body>
+        <style>
+            /* Button hover and active states */
+            .toolbar-button:hover {
+                background-color: #e9ecef !important;
+                transform: translateY(-1px);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .toolbar-button:active {
+                transform: translateY(1px);
+                box-shadow: none;
+            }
+
+            /* Select hover state */
+            .toolbar-select:hover {
+                border-color: #adb5bd !important;
+            }
+
+            /* Preview mode styles */
+            .preview-mode {
+                background-color: rgba(255, 255, 255, 0.8) !important;
+                backdrop-filter: blur(5px);
+            }
+
+            .preview-mode .edit-mode-only {
+                display: none !important;
+            }
+
+            #preview-btn.active {
+                background-color: #28a745 !important;
+                color: white !important;
+                border-color: #28a745 !important;
+            }
+        </style>
+
         <!-- Editor Toolbar -->
-        <div class="editor-toolbar">
-            <div class="toolbar-group">
-                <button class="toolbar-btn" id="bold-btn" title="Bold"><i class="fa fa-bold"></i></button>
-                <button class="toolbar-btn" id="italic-btn" title="Italic"><i class="fa fa-italic"></i></button>
-                <button class="toolbar-btn" id="underline-btn" title="Underline"><i class="fa fa-underline"></i></button>
-                <button class="toolbar-btn" id="link-btn" title="Add Link"><i class="fa fa-link"></i></button>
+        <div id="editor-toolbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); z-index: 9999; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease;">
+            <div style="display: flex; align-items: center;">
+                <button class="toolbar-button" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" onclick="window.location.href='../createnewportfolio.html'">
+                    <i class="fa fa-arrow-left" style="margin-right: 5px;"></i>
+                    Back
+                </button>
+                <button class="toolbar-button" style="padding: 8px 12px; background-color: #6f42c1; color: white; border: 1px solid #6f42c1; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="save-btn">
+                    <i class="fa fa-save" style="margin-right: 5px;"></i>
+                    Save
+                </button>
+                <button class="toolbar-button" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="preview-btn" data-preview="false">
+                    <i class="fa fa-eye" style="margin-right: 5px;"></i>
+                    <span id="preview-text">Preview</span>
+                </button>
+                <div style="width: 1px; height: 24px; background-color: #dee2e6; margin: 0 15px;"></div>
+                <button class="toolbar-button edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 10px;" id="undo-btn" title="Undo">
+                    <i class="fa fa-undo"></i>
+                </button>
+                <button class="toolbar-button edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="redo-btn" title="Redo">
+                    <i class="fa fa-repeat"></i>
+                </button>
+                <div style="width: 1px; height: 24px; background-color: #dee2e6; margin: 0 15px;"></div>
+                <button class="toolbar-button edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 10px;" id="bold-btn" title="Bold">
+                    <i class="fa fa-bold"></i>
+                </button>
+                <button class="toolbar-button edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 10px;" id="italic-btn" title="Italic">
+                    <i class="fa fa-italic"></i>
+                </button>
+                <button class="toolbar-button edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="underline-btn" title="Underline">
+                    <i class="fa fa-underline"></i>
+                </button>
+                <div style="width: 1px; height: 24px; background-color: #dee2e6; margin: 0 15px;"></div>
+                <select class="toolbar-select edit-mode-only" style="background: transparent; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; font-size: 14px; color: #555; cursor: pointer; margin-right: 10px; transition: all 0.2s;" id="font-family-select">
+                    <option value="inherit">Default</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                    <option value="'Lato', sans-serif">Lato</option>
+                </select>
+                <select class="toolbar-select edit-mode-only" style="background: transparent; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; font-size: 14px; color: #555; cursor: pointer; transition: all 0.2s;" id="font-size-select">
+                    <option value="">Default</option>
+                    <option value="16px">16px</option>
+                    <option value="18px">18px</option>
+                    <option value="20px">20px</option>
+                </select>
             </div>
-            <div class="toolbar-group">
-                <button class="toolbar-btn primary" id="save-btn" title="Save Changes"><i class="fa fa-save"></i> Save</button>
-                <button class="toolbar-btn" id="preview-btn" title="Preview"><i class="fa fa-eye"></i> Preview</button>
-            </div>
+            <div style="font-weight: 500; color: #333; margin-right: 15px;">Executive Template</div>
         </div>
 
         <!-- top-area Start -->
         <header class="top-area">
             <div class="header-area">
                 <!-- Start Navigation -->
-                <nav class="navbar navbar-default bootsnav navbar-fixed dark no-background">
+                <nav class="navbar navbar-default bootsnav navbar-fixed dark no-background modern-nav">
 
                     <div class="container">
 
@@ -153,7 +463,7 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                                 <i class="fa fa-bars"></i>
                             </button>
-                            <a class="navbar-brand" href="#">Executive</a>
+                            <a class="navbar-brand" href="#" contenteditable="true" data-placeholder="Your Name">Executive</a>
                         </div><!--/.navbar-header-->
                         <!-- End Header Navigation -->
 
@@ -199,7 +509,7 @@
         <!--about start -->
         <section id="about" class="about">
             <div class="section-heading text-center">
-                <h2>about me</h2>
+                <h2 contenteditable="true">about me</h2>
             </div>
             <div class="container">
                 <div class="about-content">
@@ -276,13 +586,19 @@
         <!--education start -->
         <section id="education" class="education">
             <div class="section-heading text-center">
-                <h2>education</h2>
+                <h2 contenteditable="true">education</h2>
+                <div class="section-controls">
+                    <button class="section-control-btn add-btn" id="add-education-btn" title="Add Education"><i class="fa fa-plus"></i></button>
+                </div>
             </div>
             <div class="container">
                 <div class="education-horizontal-timeline">
                     <div class="row">
                         <div class="col-sm-4">
-                            <div class="single-horizontal-timeline">
+                            <div class="single-horizontal-timeline" style="position: relative;">
+                                <div class="item-controls">
+                                    <button class="section-control-btn remove-btn" title="Remove Education"><i class="fa fa-trash"></i></button>
+                                </div>
                                 <div class="experience-time">
                                     <h2 contenteditable="true">2008 - 2010</h2>
                                     <h3 contenteditable="true">master <span>of </span> business administration</h3>
@@ -305,7 +621,10 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="single-horizontal-timeline">
+                            <div class="single-horizontal-timeline" style="position: relative;">
+                                <div class="item-controls">
+                                    <button class="section-control-btn remove-btn" title="Remove Education"><i class="fa fa-trash"></i></button>
+                                </div>
                                 <div class="experience-time">
                                     <h2 contenteditable="true">2004 - 2008</h2>
                                     <h3 contenteditable="true">bachelor <span>of </span> business</h3>
@@ -328,7 +647,10 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="single-horizontal-timeline">
+                            <div class="single-horizontal-timeline" style="position: relative;">
+                                <div class="item-controls">
+                                    <button class="section-control-btn remove-btn" title="Remove Education"><i class="fa fa-trash"></i></button>
+                                </div>
                                 <div class="experience-time">
                                     <h2 contenteditable="true">2016 - 2017</h2>
                                     <h3 contenteditable="true">executive <span>leadership </span> program</h3>
@@ -361,13 +683,19 @@
         <section id="skills" class="skills">
                 <div class="skill-content">
                     <div class="section-heading text-center">
-                        <h2>skills</h2>
+                        <h2 contenteditable="true">skills</h2>
+                        <div class="section-controls">
+                            <button class="section-control-btn add-btn" id="add-skill-btn" title="Add Skill"><i class="fa fa-plus"></i></button>
+                        </div>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="single-skill-content">
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">strategic planning</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -378,7 +706,10 @@
                                             <h3 contenteditable="true">95%</h3>
                                         </div>
                                     </div><!-- /.barWrapper -->
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">leadership</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -389,7 +720,10 @@
                                             <h3 contenteditable="true">90%</h3>
                                         </div>
                                     </div><!-- /.barWrapper -->
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">financial management</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -400,7 +734,10 @@
                                             <h3 contenteditable="true">85%</h3>
                                         </div>
                                     </div><!-- /.barWrapper -->
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">team building</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -415,7 +752,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="single-skill-content">
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">negotiation</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -426,7 +766,10 @@
                                             <h3 contenteditable="true">90%</h3>
                                         </div>
                                     </div><!-- /.barWrapper -->
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">public speaking</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -437,7 +780,10 @@
                                             <h3 contenteditable="true">85%</h3>
                                         </div>
                                     </div><!-- /.barWrapper -->
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">problem solving</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -448,7 +794,10 @@
                                             <h3 contenteditable="true">95%</h3>
                                         </div>
                                     </div><!-- /.barWrapper -->
-                                    <div class="barWrapper">
+                                    <div class="barWrapper" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <span class="progressText" contenteditable="true">business development</span>
                                         <div class="single-progress-txt">
                                             <div class="progress ">
@@ -471,14 +820,20 @@
         <!--experience start -->
         <section id="experience" class="experience">
             <div class="section-heading text-center">
-                <h2>experience</h2>
+                <h2 contenteditable="true">experience</h2>
+                <div class="section-controls">
+                    <button class="section-control-btn add-btn" id="add-experience-btn" title="Add Experience"><i class="fa fa-plus"></i></button>
+                </div>
             </div>
             <div class="container">
                 <div class="experience-content">
                         <div class="main-timeline">
                             <ul>
                                 <li>
-                                    <div class="single-timeline-box fix">
+                                    <div class="single-timeline-box fix" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Experience"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="experience-time text-right">
@@ -505,7 +860,10 @@
                                 </li>
 
                                 <li>
-                                    <div class="single-timeline-box fix">
+                                    <div class="single-timeline-box fix" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Experience"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-offset-1 col-md-5 experience-time-responsive">
                                                 <div class="experience-time">
@@ -543,7 +901,10 @@
                                 </li>
 
                                 <li>
-                                    <div class="single-timeline-box fix">
+                                    <div class="single-timeline-box fix" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Experience"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="experience-time text-right">
@@ -570,7 +931,10 @@
                                 </li>
 
                                 <li>
-                                    <div class="single-timeline-box fix">
+                                    <div class="single-timeline-box fix" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Experience"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-offset-1 col-md-5 experience-time-responsive">
                                                 <div class="experience-time">
@@ -619,7 +983,10 @@
         <section id="portfolio" class="portfolio">
             <div class="portfolio-details">
                 <div class="section-heading text-center">
-                    <h2>portfolio</h2>
+                    <h2 contenteditable="true">portfolio</h2>
+                    <div class="section-controls">
+                        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Portfolio Item"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
                 <div class="container">
                     <div class="portfolio-content">
@@ -627,7 +994,10 @@
                             <div class="row">
 
                                 <div class="col-sm-4">
-                                    <div class="item">
+                                    <div class="item" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="image-container">
                                             <img id="portfolio-image-1" src="browny-assets/images/portfolio/p1.jpg" alt="portfolio image"/>
                                             <div class="image-upload-overlay">
@@ -642,7 +1012,10 @@
                                             <button class="portfolio-edit-btn">Edit</button>
                                         </div>
                                     </div><!-- /.item -->
-                                    <div class="item">
+                                    <div class="item" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="image-container">
                                             <img id="portfolio-image-2" src="browny-assets/images/portfolio/p2.jpg" alt="portfolio image"/>
                                             <div class="image-upload-overlay">
@@ -660,7 +1033,10 @@
                                 </div><!-- /.col -->
 
                                 <div class="col-sm-4">
-                                    <div class="item">
+                                    <div class="item" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="image-container">
                                             <img id="portfolio-image-3" src="browny-assets/images/portfolio/p3.jpg" alt="portfolio image"/>
                                             <div class="image-upload-overlay">
@@ -678,7 +1054,10 @@
                                 </div><!-- /.col -->
 
                                 <div class="col-sm-4">
-                                    <div class="item">
+                                    <div class="item" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="image-container">
                                             <img id="portfolio-image-4" src="browny-assets/images/portfolio/p4.jpg" alt="portfolio image"/>
                                             <div class="image-upload-overlay">
@@ -693,7 +1072,10 @@
                                             <button class="portfolio-edit-btn">Edit</button>
                                         </div>
                                     </div><!-- /.item -->
-                                    <div class="item">
+                                    <div class="item" style="position: relative;">
+                                        <div class="item-controls">
+                                            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         <div class="image-container">
                                             <img id="portfolio-image-5" src="browny-assets/images/portfolio/p5.jpg" alt="portfolio image"/>
                                             <div class="image-upload-overlay">
@@ -721,7 +1103,7 @@
         <!--contact start -->
         <section id="contact" class="contact">
             <div class="section-heading text-center">
-                <h2>contact me</h2>
+                <h2 contenteditable="true">contact me</h2>
             </div>
             <div class="container">
                 <div class="contact-content">
@@ -861,6 +1243,28 @@
 
         <!-- Executive Portfolio JS -->
         <script src="executive-portfolio.js"></script>
+
+        <script>
+            // Initialize toolbar buttons with animation
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add class to toolbar
+                const toolbar = document.getElementById('editor-toolbar');
+                if (toolbar) {
+                    toolbar.classList.add('editor-toolbar');
+                }
+
+                // Add click animation to toolbar buttons
+                const toolbarButtons = document.querySelectorAll('.toolbar-button');
+                toolbarButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.classList.add('clicked');
+                        setTimeout(() => {
+                            this.classList.remove('clicked');
+                        }, 200);
+                    });
+                });
+            });
+        </script>
 
     </body>
 

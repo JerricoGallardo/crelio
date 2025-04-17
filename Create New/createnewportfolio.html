@@ -23,18 +23,18 @@
                 <i class="fas fa-pencil-ruler"></i>
                 <span>Crealio</span>
             </div>
-            
+
             <nav>
                 <a href="../Profile/profile.html" class="nav-item">
                     <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
-                
+
                 <a href="../Dashboard/dashboard.html" class="nav-item">
                     <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </a>
-                
+
                 <a href="../My Portfolio/myportfolio.html" class="nav-item">
                     <i class="fas fa-folder"></i>
                     <span>My Portfolio</span>
@@ -51,7 +51,7 @@
                 </a>
             </nav>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content">
             <div class="page-header">
@@ -64,7 +64,7 @@
                             <span></span>
                         </div>
                     </div>
-                    
+
                     <!-- Profile Dropdown Menu -->
                     <div class="profile-menu" id="profileMenu">
                         <div class="profile-header">
@@ -103,7 +103,7 @@
                             </div>
 
                             <div class="divider"></div>
-                            
+
                             <div class="menu-section">
                                 <a href="#" class="menu-item logout ripple">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -118,15 +118,15 @@
             <div class="resume-templates">
                 <h2>Choose a Portfolio Website Template</h2>
                 <p>Select a template to get started with your new resume</p>
-                
+
                 <div class="templates-grid">
                     <div class="template-card">
                         <div class="template-image">
-                            <img src="../img/pic1.png" alt="Minimal Template">
+                            <img src="../img/portfolio-perfect-preview.jpg" alt="Minimal Template">
                         </div>
                         <div class="template-info">
                             <h3>Minimal</h3>
-                            <p>Clean and straightforward design for a professional look</p>
+                            <p>Modern, responsive portfolio template with clean sections</p>
                             <div class="template-buttons">
                                 <a href="#" class="template-preview-btn" data-template="../Templates/minimal.html">
                                     <i class="fas fa-eye"></i>
@@ -139,7 +139,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="template-card">
                         <div class="template-image">
                             <img src="../img/pic2.webp" alt="Professional Template">
@@ -159,7 +159,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="template-card">
                         <div class="template-image">
                             <img src="../img/pic3.webp" alt="Creative Template">
@@ -179,7 +179,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="template-card">
 
                         <div class="template-image">
@@ -200,7 +200,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="template-card">
 
                         <div class="template-image">
@@ -221,7 +221,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="template-card">
                         <div class="template-image">
                             <img src="../img/pic6.jpg" alt="Academic Template">
@@ -242,13 +242,13 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="templates-footer">
                     <p>Can't find what you're looking for? <a href="../CustomTemplate/customtemplate.html">Create a custom template</a></p>
                 </div>
             </div>
         </main>
-        
+
         <!-- Template Preview Modal -->
         <div id="templatePreviewModal" class="modal">
             <div class="modal-content">
@@ -262,9 +262,9 @@
                 </div>
             </div>
         </div>
-        
+
         <script src="../Dashboard/dashboard.js"></script>
-        
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Mobile menu functionality
@@ -297,22 +297,22 @@
                 const previewImage = document.getElementById('templatePreviewImage');
                 const closeModal = document.querySelector('.close-modal');
                 const useTemplateBtn = document.getElementById('useTemplateBtn');
-                
+
                 // Open modal with template preview
                 previewButtons.forEach(button => {
                     button.addEventListener('click', function(e) {
                         e.preventDefault();
                         const templateUrl = this.getAttribute('data-template');
-                        
+
                         // Get the exact thumbnail image from the template card
                         const templateCard = this.closest('.template-card');
                         const thumbnailImg = templateCard.querySelector('.template-image img');
                         const thumbnailSrc = thumbnailImg.src;
-                        
+
                         // Set the preview image to the exact thumbnail
                         previewImage.style.backgroundImage = `url(${thumbnailSrc})`;
                         useTemplateBtn.href = templateUrl;
-                        
+
                         // Show modal with animation
                         previewModal.style.display = 'block';
                         setTimeout(() => {
@@ -320,7 +320,7 @@
                         }, 10);
                     });
                 });
-                
+
                 // Close modal
                 closeModal.addEventListener('click', function() {
                     previewModal.classList.remove('show');
@@ -329,7 +329,7 @@
                         previewImage.style.backgroundImage = '';
                     }, 300);
                 });
-                
+
                 // Close modal when clicking outside
                 window.addEventListener('click', function(e) {
                     if (e.target === previewModal) {
