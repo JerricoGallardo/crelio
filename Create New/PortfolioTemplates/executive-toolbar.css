@@ -1,0 +1,69 @@
+/* Editor toolbar styles */
+.editor-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toolbar-buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.toolbar-btn {
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbar-btn:hover {
+    background-color: #e9ecef;
+}
+
+.toolbar-btn.primary {
+    background-color: #212121;
+    color: white;
+    border-color: #212121;
+}
+
+.toolbar-btn.primary:hover {
+    background-color: #000;
+}
+
+.font-select,
+.size-select {
+    background: transparent;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.toolbar-btn.active {
+    background: #f0f0f0;
+    color: #007bff;
+}
+
+.edit-mode-indicator,
+.preview-mode-indicator {
+    display: none;
+}

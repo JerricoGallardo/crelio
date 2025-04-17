@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Minimal Portfolio</title>
+</head>
+<body>
+    <h1>Test Minimal Portfolio</h1>
+    <p>This is a test page to check if the minimal-portfolio.js file is being loaded correctly.</p>
+    <p>Open the browser console to see if there are any errors.</p>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="minimal-portfolio.js"></script>
+    <script>
+        console.log('Test page loaded');
+        
+        // Check if the minimal-portfolio.js file is loaded
+        setTimeout(function() {
+            console.log('Checking if minimal-portfolio.js is loaded...');
+            if (typeof initializeEditor === 'function') {
+                console.log('minimal-portfolio.js is loaded correctly!');
+            } else {
+                console.error('minimal-portfolio.js is not loaded correctly!');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
