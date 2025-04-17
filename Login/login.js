@@ -344,74 +344,90 @@ confirmPasswordInput.addEventListener('input', () => {
 // Prevent default form submission for demo
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    // Show loading state on button
+
     showLoading(loginSubmit);
-    
-    // Simulate API call delay
-    await simulateApiCall();
-    
-    // Hide loading state and show success
-    hideLoading(loginSubmit);
-    showSuccessMessage(loginForm, "Successfully logged in!");
-    
-    // Get the user's name from the email (for demo purposes)
+
     const email = document.getElementById('login-email').value;
-    const name = email.split('@')[0]; // Simple extraction of name from email
-    
-    // Store authentication in localStorage
-    storeAuthentication({
-        email: email,
-        name: name,
-        isLoggedIn: true
-    });
-    
-    // Check login source and redirect accordingly
-    const loginSource = localStorage.getItem('loginSource');
-    
-    // Redirect after a small delay
-    setTimeout(() => {
-        if (loginSource === 'get-started') {
-            window.location.href = "Dashboard/dashboard.html";
-        } else if (loginSource === 'template') {
-            window.location.href = "Create New/createnewportfolio.html";
-        } else {
-            window.location.href = "Landing Page/index.html";
+    const password = document.getElementById('login-password').value;
+
+    try {
+        const res = await fetch('https://localhost:7258/api/auth/login', {
+            method: 'POST',
+            body: new URLSearchParams({ email, password }),
+        });
+
+        const text = await res.text();
+
+        if (!res.ok) {
+            throw new Error(text);
         }
-    }, 1500);
+
+        hideLoading(loginSubmit);
+        showSuccessMessage(loginForm, text);
+
+        storeAuthentication({
+            email,
+            name: email.split('@')[0],
+            isLoggedIn: true,
+        });
+
+        setTimeout(() => {
+            window.location.href = "../Dashboard/dashboard.html";
+        }, 1500);
+
+    } catch (err) {
+        hideLoading(loginSubmit);
+        const msg = err.message.includes("verify") 
+            ? "Email not verified. Please check your inbox." 
+            : "Login failed.";
+        showErrorMessage(loginForm, msg);
+    }
 });
+
 
 signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    if (signupPasswordInput.value !== confirmPasswordInput.value) {
+
+    const fullname = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+    if (password !== confirmPassword) {
         showErrorMessage(signupForm, "Passwords do not match!");
         shakeElement(confirmPasswordInput);
         return;
     }
-    
-    // Show loading state on button
+
     showLoading(signupSubmit);
-    
-    // Simulate API call delay
-    await simulateApiCall();
-    
-    // Hide loading state and show success
-    hideLoading(signupSubmit);
-    showSuccessMessage(signupForm, "Account created successfully!");
-    
-    // Store authentication in localStorage
-    storeAuthentication({
-        email: document.getElementById('signup-email').value,
-        name: document.getElementById('signup-name').value,
-        isLoggedIn: true
-    });
-    
-    // Redirect to dashboard after a small delay
-    setTimeout(() => {
-        window.location.href = "Dashboard/dashboard.html";
-    }, 1500);
+
+    try {
+        const res = await fetch('https://localhost:7258/api/auth/register', {
+            method: 'POST',
+            body: new URLSearchParams({ fullname, email, password }),
+        });
+
+        const text = await res.text();
+
+        if (!res.ok) {
+            throw new Error(text);
+        }
+
+        hideLoading(signupSubmit);
+        showSuccessMessage(signupForm, text);
+
+        storeAuthentication({ email, name: fullname, isLoggedIn: true });
+
+        setTimeout(() => {
+            window.location.href = "../Dashboard/dashboard.html";
+        }, 1500);
+
+    } catch (err) {
+        hideLoading(signupSubmit);
+        showErrorMessage(signupForm, err.message || "Registration failed.");
+    }
 });
+
 
 // Helper functions
 function showLoading(button) {
@@ -479,32 +495,49 @@ function storeAuthentication(userData) {
     localStorage.setItem('userAuth', JSON.stringify(userData));
 }
 
-// Google Sign In handler
-function handleGoogleSignIn(response) {
-    // Parse the credential response
+async function handleGoogleSignIn(response) {
     try {
-        const responsePayload = jwt_decode(response.credential);
-        
-        // Store user data from Google
-        storeAuthentication({
-            email: responsePayload.email,
-            name: responsePayload.name,
-            picture: responsePayload.picture,
-            isLoggedIn: true
-        });
-        
-        // Show success message
+      // Decode JWT
+      const responsePayload = jwt_decode(response.credential);
+  
+      // Store locally
+      storeAuthentication({
+        email: responsePayload.email,
+        name: responsePayload.name,
+        picture: responsePayload.picture,
+        isLoggedIn: true
+      });
+  
+      // Send to backend
+      const res = await fetch("https://localhost:7258/api/auth/google", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ credential: response.credential })
+      });
+  
+      if (res.ok) {
         showSuccessMessage(loginForm, "Successfully logged in with Google!");
-        
-        // Redirect to landing page
         setTimeout(() => {
-            window.location.href = "Landing Page/index.html";
+          window.location.href = "Landing Page/index.html";
         }, 1500);
+      } else {
+        throw new Error("Backend rejected login.");
+      }
+  
     } catch (error) {
-        console.error("Error parsing Google sign-in response:", error);
-        showErrorMessage(loginForm, "Google sign-in failed. Please try again.");
+      console.error("Google sign-in failed:", error);
+      showErrorMessage(loginForm, "Google sign-in failed. Please try again.");
     }
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('verified') === 'true') {
+        showSuccessMessage(loginForm, "Your email has been verified. You may now log in.");
+    }
+});
 
 // Add css class to handle shake animation
 document.head.insertAdjacentHTML('beforeend', `

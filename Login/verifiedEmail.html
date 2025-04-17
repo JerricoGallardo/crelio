@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Verified</title>
+  <link rel="stylesheet" href="login.css">
+  <style>
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #4caf50;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="form">
+      <div class="loader"></div>
+      <h2 class="form-title">Your email has been successfully verified!</h2>
+      <p class="form-description">Redirecting to dashboard...</p>
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "../Dashboard/dashboard.html";
+    }, 3000);
+  </script>
+</body>
+</html>

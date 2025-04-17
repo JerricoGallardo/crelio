@@ -97,14 +97,14 @@ function loadUserData() {
     const userAuth = localStorage.getItem('userAuth');
     
     if (!userAuth) {
-        window.location.href = '../login.html';
+        window.location.href = '../Login/login.html';
         return;
     }
     
     try {
         const userData = JSON.parse(userAuth);
         if (!userData || !userData.isLoggedIn) {
-            window.location.href = '../login.html';
+            window.location.href = '../Login/login.html';
             return;
         }
         
@@ -129,7 +129,7 @@ function loadUserData() {
         }
     } catch (error) {
         console.error('Error parsing user auth data:', error);
-        window.location.href = '../login.html';
+        window.location.href = '../Login/login.html';
     }
 }
 
