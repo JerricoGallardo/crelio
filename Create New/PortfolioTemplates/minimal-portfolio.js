@@ -7,9 +7,23 @@ let editMode = true;
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Portfolio Perfect Template Loaded');
 
-    // Make all headings and paragraphs editable
+    // Make all headings and paragraphs editable except for the counter section
     document.querySelectorAll('h1, h2, h3, h4, p, a.btn').forEach(function(element) {
-        element.setAttribute('contenteditable', 'true');
+        // Skip elements in the counter section
+        if (!element.closest('.section-counters')) {
+            element.setAttribute('contenteditable', 'true');
+        } else {
+            // Ensure counter section elements are NOT editable
+            element.setAttribute('contenteditable', 'false');
+        }
+    });
+
+    // Force contenteditable attribute on specific elements that must be editable
+    document.querySelectorAll('.site-section h1, .site-section h2, .site-section h3, .site-section h4, .site-section p, .site-section a.btn, .portfolio-item h4, .service h4, .service p, .skill h4').forEach(function(element) {
+        // Skip elements in the counter section
+        if (!element.closest('.section-counters')) {
+            element.setAttribute('contenteditable', 'true');
+        }
     });
 
     // Initialize editor functionality
@@ -46,11 +60,54 @@ document.addEventListener('DOMContentLoaded', function() {
         reorganizePortfolioItems();
     }, 500);
 
+    // Initialize counters
+    initializeCounters();
+
+    // Initialize progress bars
+    $('.progress-bar').each(function() {
+        $(this).attr('contenteditable', 'false'); // Make progress bars not directly editable
+        $(this).progressbar({
+            display_text: 'fill' // Display text inside the bar
+        });
+        // The ::after pseudo-element will display the percentage
+    });
+
+    // Load saved state if available
+    loadState();
+
+    // Save initial state if no saved state was loaded
+    if (undoStack.length === 0) {
+        saveState();
+    }
+
+    // Reorganize portfolio items after loading saved state
+    setTimeout(() => {
+        reorganizePortfolioItems();
+    }, 1000);
+});
+
+// Global variables for toolbar functionality
+let lastScrollTop = 0;
+let toolbarHidden = false;
+
+// Function to initialize counters
+function initializeCounters() {
+    // Reset any existing counters
+    $('.counter').removeClass('counting');
+
     // Initialize counters with scroll animation
     if ($(".section-counters .start").length > 0) {
         $(".section-counters .start").each(function() {
             var stat_item = $(this),
             offset = stat_item.offset().top;
+
+            // Check if counter is already in view and start it immediately
+            if($(window).scrollTop() > (offset - 1000) && !(stat_item.hasClass('counting'))) {
+                stat_item.addClass('counting');
+                stat_item.countTo();
+            }
+
+            // Add scroll event for future scrolling
             $(window).scroll(function() {
                 if($(window).scrollTop() > (offset - 1000) && !(stat_item.hasClass('counting'))) {
                     stat_item.addClass('counting');
@@ -58,6 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
+
+        // Trigger a scroll event to initialize counters that are already in view
+        $(window).trigger('scroll');
     }
 
     // Custom callback for counting to infinity
@@ -77,31 +137,43 @@ document.addEventListener('DOMContentLoaded', function() {
         options = $.extend({}, options || {}, $this.data('countToOptions') || {});
         $this.countTo(options);
     }
+}
 
-    // Initialize progress bars
-    $('.progress-bar').each(function() {
-        $(this).attr('contenteditable', 'true');
-        $(this).progressbar({
-            display_text: 'fill'
-        });
-    });
+// Function to show the toolbar
+function showToolbar() {
+    const toolbar = document.querySelector('.editor-toolbar');
+    const siteHeader = document.querySelector('.site-header');
 
-    // Load saved state if available
-    loadState();
-
-    // Save initial state if no saved state was loaded
-    if (undoStack.length === 0) {
-        saveState();
+    if (toolbar && siteHeader) {
+        toolbar.style.transform = 'translateY(0)';
+        toolbar.style.transition = 'transform 0.3s ease-in-out';
+        siteHeader.style.top = '50px';
+        siteHeader.style.transition = 'top 0.3s ease-in-out';
+        toolbarHidden = false;
     }
+}
 
-    // Reorganize portfolio items after loading saved state
-    setTimeout(() => {
-        reorganizePortfolioItems();
-    }, 1000);
-});
+// Function to hide the toolbar
+function hideToolbar() {
+    const toolbar = document.querySelector('.editor-toolbar');
+    const siteHeader = document.querySelector('.site-header');
+
+    if (toolbar && siteHeader) {
+        toolbar.style.transform = 'translateY(-100%)';
+        toolbar.style.transition = 'transform 0.3s ease-in-out';
+        siteHeader.style.top = '0';
+        siteHeader.style.transition = 'top 0.3s ease-in-out';
+        toolbarHidden = true;
+    }
+}
 
 // Function to initialize navigation
 function initializeNavigation() {
+    // Variables for toolbar hide/show functionality
+    const toolbar = document.querySelector('.editor-toolbar');
+    const siteHeader = document.querySelector('.site-header');
+    const scrollThreshold = 10; // Minimum scroll amount to trigger hide/show
+
     // Smooth scrolling for all navigation links
     $('.page-scroll a, .site-navigation ul li a').on('click', function(event) {
         var $anchor = $(this);
@@ -143,10 +215,30 @@ function initializeNavigation() {
         $(window).trigger('scroll');
     }, 200);
 
-    // Add active class to navigation items on scroll
+    // Add active class to navigation items on scroll and handle toolbar visibility
     $(window).on('scroll', function() {
         var scrollPos = $(document).scrollTop();
         var found = false;
+
+        // Handle toolbar visibility
+        if (toolbar && siteHeader) {
+            // Determine scroll direction
+            const scrollDirection = scrollPos > lastScrollTop ? 'down' : 'up';
+
+            // Only trigger if we've scrolled more than the threshold
+            if (Math.abs(scrollPos - lastScrollTop) > scrollThreshold) {
+                if (scrollDirection === 'down' && scrollPos > 100) {
+                    // Scrolling down - hide toolbar
+                    hideToolbar();
+                } else {
+                    // Scrolling up - show toolbar
+                    showToolbar();
+                }
+
+                // Update last scroll position
+                lastScrollTop = scrollPos;
+            }
+        }
 
         // Check each section in reverse order (to prioritize later sections)
         var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];
@@ -214,7 +306,8 @@ function initializeProgressBars() {
         $('.progress .progress-bar').each(function() {
             var percentage = $(this).attr('data-percentage');
             $(this).css('width', percentage + '%');
-            $(this).text(''); // Ensure no text is displayed inside the progress bar
+            $(this).text(''); // Clear any existing text
+            $(this).attr('data-content', percentage + '%'); // Use data-content for CSS ::after
         });
     }
 
@@ -251,6 +344,8 @@ function initializeProgressBars() {
             progressBar.css('width', percentage + '%');
             progressBar.attr('data-percentage', percentage);
             progressBar.attr('data-transitiongoal', percentage);
+            progressBar.text(''); // Clear any existing text
+            progressBar.attr('data-content', percentage + '%'); // Use data-content for CSS ::after
 
             saveState();
         });
@@ -275,6 +370,8 @@ function initializeProgressBars() {
             progressBar.css('width', percentage + '%');
             progressBar.attr('data-percentage', percentage);
             progressBar.attr('data-transitiongoal', percentage);
+            progressBar.text(''); // Clear any existing text
+            progressBar.attr('data-content', percentage + '%'); // Use data-content for CSS ::after
 
             saveState();
         });
@@ -608,9 +705,10 @@ function initializeEditor() {
         });
     });
 
-    // Make sure all elements that should be editable are editable
+    // Make sure all elements that should be editable are editable (except counter section)
     document.querySelectorAll('h1, h2, h3, h4, p, a.btn, .progress-bar').forEach(element => {
-        if (!element.hasAttribute('contenteditable')) {
+        // Skip elements in the counter section
+        if (!element.closest('.section-counters') && !element.hasAttribute('contenteditable')) {
             element.setAttribute('contenteditable', 'true');
 
             // Add input event listener to save state
@@ -703,6 +801,7 @@ function initializeAddRemoveControls() {
                 progressBar.setAttribute('data-transitiongoal', '80');
                 progressBar.setAttribute('data-percentage', '80');
                 progressBar.style.width = '80%';
+                progressBar.textContent = '80%'; // Add percentage text
 
                 // Add remove button functionality
                 const removeBtn = newSkill.querySelector('.remove-btn');
@@ -744,8 +843,7 @@ function initializeAddRemoveControls() {
                     progressBar.attr('data-percentage', percentage);
                     progressBar.attr('data-transitiongoal', percentage);
 
-                    // Ensure no text is displayed inside the progress bar
-                    progressBar.text('');
+                    // No need to set text - the ::after pseudo-element will display the percentage
 
                     saveState();
                 });
@@ -764,7 +862,7 @@ function initializeAddRemoveControls() {
                 progressBar.setAttribute('data-transitiongoal', '80');
                 progressBar.setAttribute('data-percentage', '80');
                 progressBar.style.width = '80%';
-                progressBar.textContent = ''; // Ensure no text is displayed inside
+                progressBar.textContent = '80%'; // Set text for display
 
                 // Add remove button functionality
                 const removeBtn = newSkill.querySelector('.remove-btn');
@@ -815,8 +913,7 @@ function initializeAddRemoveControls() {
                     progressBar.attr('data-percentage', percentage);
                     progressBar.attr('data-transitiongoal', percentage);
 
-                    // Ensure no text is displayed inside the progress bar
-                    progressBar.text('');
+                    progressBar.text(percentage + '%'); // Set text for display
 
                     saveState();
                 });
@@ -1515,12 +1612,46 @@ function undo() {
         redoStack.push(undoStack.pop());
         document.documentElement.innerHTML = undoStack[undoStack.length - 1];
 
+        // Ensure edit mode is active
+        editMode = true;
+
+        // Make all headings and paragraphs editable except for the counter section
+        document.querySelectorAll('h1, h2, h3, h4, p, a.btn').forEach(function(element) {
+            // Skip elements in the counter section
+            if (!element.closest('.section-counters')) {
+                element.setAttribute('contenteditable', 'true');
+            } else {
+                // Ensure counter section elements are NOT editable
+                element.setAttribute('contenteditable', 'false');
+            }
+        });
+
+        // Force contenteditable attribute on specific elements that must be editable
+        document.querySelectorAll('.site-section h1, .site-section h2, .site-section h3, .site-section h4, .site-section p, .site-section a.btn, .portfolio-item h4, .service h4, .service p, .skill h4').forEach(function(element) {
+            // Skip elements in the counter section
+            if (!element.closest('.section-counters')) {
+                element.setAttribute('contenteditable', 'true');
+            }
+        });
+
         // Reinitialize event listeners
         initializeEditor();
         initializeAddRemoveControls();
         initializeImageUploads();
         initializeSocialLinks();
         initializeProgressBars();
+        initializeCounters();
+
+        // Force toolbar to be visible
+        showToolbar();
+
+        // Reset the last scroll position to current position
+        // This ensures the toolbar won't hide until user scrolls down again
+        lastScrollTop = $(document).scrollTop();
+        toolbarHidden = false;
+
+        // Reinitialize navigation (which includes scroll event handler)
+        initializeNavigation();
     }
 }
 
@@ -1530,12 +1661,46 @@ function redo() {
         undoStack.push(redoStack.pop());
         document.documentElement.innerHTML = undoStack[undoStack.length - 1];
 
+        // Ensure edit mode is active
+        editMode = true;
+
+        // Make all headings and paragraphs editable except for the counter section
+        document.querySelectorAll('h1, h2, h3, h4, p, a.btn').forEach(function(element) {
+            // Skip elements in the counter section
+            if (!element.closest('.section-counters')) {
+                element.setAttribute('contenteditable', 'true');
+            } else {
+                // Ensure counter section elements are NOT editable
+                element.setAttribute('contenteditable', 'false');
+            }
+        });
+
+        // Force contenteditable attribute on specific elements that must be editable
+        document.querySelectorAll('.site-section h1, .site-section h2, .site-section h3, .site-section h4, .site-section p, .site-section a.btn, .portfolio-item h4, .service h4, .service p, .skill h4').forEach(function(element) {
+            // Skip elements in the counter section
+            if (!element.closest('.section-counters')) {
+                element.setAttribute('contenteditable', 'true');
+            }
+        });
+
         // Reinitialize event listeners
         initializeEditor();
         initializeAddRemoveControls();
         initializeImageUploads();
         initializeSocialLinks();
         initializeProgressBars();
+        initializeCounters();
+
+        // Force toolbar to be visible
+        showToolbar();
+
+        // Reset the last scroll position to current position
+        // This ensures the toolbar won't hide until user scrolls down again
+        lastScrollTop = $(document).scrollTop();
+        toolbarHidden = false;
+
+        // Reinitialize navigation (which includes scroll event handler)
+        initializeNavigation();
     }
 }
 
@@ -1930,6 +2095,28 @@ function loadState() {
             const portfolioData = JSON.parse(savedData);
             document.documentElement.innerHTML = portfolioData.content;
 
+            // Ensure edit mode is active
+            editMode = true;
+
+            // Make all headings and paragraphs editable except for the counter section
+            document.querySelectorAll('h1, h2, h3, h4, p, a.btn').forEach(function(element) {
+                // Skip elements in the counter section
+                if (!element.closest('.section-counters')) {
+                    element.setAttribute('contenteditable', 'true');
+                } else {
+                    // Ensure counter section elements are NOT editable
+                    element.setAttribute('contenteditable', 'false');
+                }
+            });
+
+            // Force contenteditable attribute on specific elements that must be editable
+            document.querySelectorAll('.site-section h1, .site-section h2, .site-section h3, .site-section h4, .site-section p, .site-section a.btn, .portfolio-item h4, .service h4, .service p, .skill h4').forEach(function(element) {
+                // Skip elements in the counter section
+                if (!element.closest('.section-counters')) {
+                    element.setAttribute('contenteditable', 'true');
+                }
+            });
+
             // Reinitialize all event listeners and functionality
             initializeEditor();
             initializeAddRemoveControls();
@@ -1937,6 +2124,7 @@ function loadState() {
             initializeSocialLinks();
             initializeProgressBars();
             initializeNavigation();
+            initializeCounters();
 
             // Reorganize portfolio items to ensure proper row structure
             setTimeout(() => {
@@ -1949,3 +2137,23 @@ function loadState() {
         }
     }
 }
+
+// Ensure the MINIMAL text in the header remains editable
+$(document).ready(function() {
+    // Make sure the site logo text is editable
+    $('.site-logo h1').attr('contenteditable', 'true');
+
+    // Prevent the site-logo link from being followed when editing the text
+    $('.site-logo').on('click', function(e) {
+        if ($(e.target).is('h1')) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    });
+
+    // Ensure the h1 inside site-logo gets focus when clicked
+    $('.site-logo h1').on('click', function(e) {
+        e.stopPropagation();
+        $(this).focus();
+    });
+});

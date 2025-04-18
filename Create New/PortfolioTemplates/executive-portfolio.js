@@ -31,11 +31,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Update active navigation link on scroll
+    // Variables for toolbar hide/show functionality
+    let lastScrollTop = 0;
+    const toolbar = document.querySelector('.editor-toolbar');
+    const mainNav = document.querySelector('.main-nav');
+    const scrollThreshold = 10; // Minimum scroll amount to trigger hide/show
+
+    // Update active navigation link on scroll and handle toolbar visibility
     window.addEventListener('scroll', function() {
         let current = '';
         const scrollPosition = window.scrollY;
 
+        // Handle toolbar visibility
+        if (toolbar && mainNav) {
+            // Determine scroll direction
+            const scrollDirection = scrollPosition > lastScrollTop ? 'down' : 'up';
+
+            // Only trigger if we've scrolled more than the threshold
+            if (Math.abs(scrollPosition - lastScrollTop) > scrollThreshold) {
+                if (scrollDirection === 'down' && scrollPosition > 100) {
+                    // Scrolling down - hide toolbar
+                    toolbar.style.transform = 'translateY(-100%)';
+                    toolbar.style.transition = 'transform 0.3s ease-in-out';
+
+                    // Move navigation to top position
+                    mainNav.style.top = '0';
+                    mainNav.style.transition = 'top 0.3s ease-in-out';
+                } else {
+                    // Scrolling up - show toolbar
+                    toolbar.style.transform = 'translateY(0)';
+                    toolbar.style.transition = 'transform 0.3s ease-in-out';
+
+                    // Move navigation below toolbar
+                    mainNav.style.top = '50px';
+                    mainNav.style.transition = 'top 0.3s ease-in-out';
+                }
+
+                // Update last scroll position
+                lastScrollTop = scrollPosition;
+            }
+        }
+
+        // Update active navigation links
         sections.forEach(section => {
             const sectionTop = section.offsetTop - 100;
             const sectionHeight = section.offsetHeight;
