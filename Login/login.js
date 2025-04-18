@@ -419,7 +419,7 @@ signupForm.addEventListener('submit', async (e) => {
         storeAuthentication({ email, name: fullname, isLoggedIn: true });
 
         setTimeout(() => {
-            window.location.href = "../Dashboard/dashboard.html";
+            window.location.href = "checkEmailVerification.html";
         }, 1500);
 
     } catch (err) {
