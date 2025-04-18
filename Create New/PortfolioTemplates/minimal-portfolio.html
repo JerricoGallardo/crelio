@@ -434,14 +434,14 @@
             min-height: 700px;
         }
 
-        /* Progress bar styling - updated to match design in image */
+        /* Progress bar styling - original style with percentage */
         .progress {
-            height: 16px;
+            height: 16px; /* Medium height progress bar */
             margin-bottom: 30px;
             margin-top: 10px;
-            overflow: hidden;
+            overflow: hidden; /* Hide overflow */
             background-color: #e0d0ff; /* Light purple background */
-            border-radius: 20px; /* Rounded corners */
+            border-radius: 4px; /* Rounded corners */
             box-shadow: none;
             position: relative;
             cursor: pointer;
@@ -451,29 +451,32 @@
             float: left;
             width: 0;
             height: 100%;
-            color: transparent !important; /* Hide any text inside the bar */
             background-color: #000; /* Black progress bar */
             box-shadow: none;
             transition: width .6s ease;
             position: relative;
-            border-radius: 20px; /* Rounded corners */
-            text-indent: -9999px; /* Force hide text */
-            font-size: 0; /* Force hide text */
+            border-radius: 4px; /* Rounded corners */
+            text-align: right; /* Align text to the right */
+            padding-right: 5px; /* Add some padding */
+            font-size: 0; /* Hide any text content */
+            line-height: 16px; /* Match height */
+            font-weight: bold; /* Make text bold */
+            color: transparent; /* Make text transparent */
         }
 
-        /* Add small percentage text at the end of the progress bar */
+        /* Add percentage text inside the progress bar */
         .progress-bar::after {
-            content: attr(data-percentage) '%';
+            content: attr(data-content);
             position: absolute;
             right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
+            top: 0;
+            color: #fff;
+            font-size: 12px;
+            line-height: 16px;
             font-weight: bold;
-            font-size: 8px; /* Smaller font size */
-            text-indent: 0; /* Override the text-indent from progress-bar */
-            display: block !important; /* Force display */
         }
+
+        /* No need for ::after pseudo-element as we're displaying text directly */
 
 
 
@@ -644,7 +647,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <a href="#hero" class="site-logo"><h1 style="margin: 0; font-weight: bold; font-size: 28px; color: #212121; letter-spacing: 1px;">MINIMAL</h1></a>
+                    <a href="#hero" class="site-logo"><h1 contenteditable="true" style="margin: 0; font-weight: bold; font-size: 28px; color: #212121; letter-spacing: 1px;">MINIMAL</h1></a>
                 </div>
                 <div class="col-md-9 col-sm-6 col-xs-6">
                     <div class="mobile-menu-toggle visible-xs visible-sm">
@@ -673,7 +676,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h1 contenteditable="true">ALEX VIDAL</h1>
+                    <h1 contenteditable="true" style="text-decoration: none;">ALEX VIDAL</h1>
                     <div class="page-scroll">
                         <p class="job-title" contenteditable="true">Full Stack Developer</p>
                         <a href="#contact" class="btn btn-fill" contenteditable="true">HIRE ME</a>
@@ -702,7 +705,6 @@
                         <h2 contenteditable="true">ABOUT</h2>
                         <img src="assets/img/lines.svg" class="img-lines" alt="lines">
                         <p contenteditable="true">Hello! I'm Alex, a full stack developer, a Ruby enthusiast, and a guy slightly obsessed with code quality. Also I'm a co-founder of pykod.com. I'm currently available for freelance work. If you have a project that you want to get started or think you need my help with something, then get in touch.</p>
-                        <a href="#" class="btn btn-fill" contenteditable="true" target="_blank">DOWNLOAD MY CV</a>
                     </div>
                 </div>
             </div>
@@ -725,8 +727,7 @@
                             </div>
                             <h4 contenteditable="true">HTML/CSS</h4>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" data-transitiongoal="100" data-percentage="100" style="width: 100%">
-                                </div>
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="100" data-percentage="100" data-content="100%" style="width: 100%"></div>
                             </div>
                         </div>
                         <div class="skill">
@@ -735,8 +736,7 @@
                             </div>
                             <h4 contenteditable="true">PYTHON</h4>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" data-transitiongoal="75" data-percentage="75" style="width: 75%">
-                                </div>
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="75" data-percentage="75" data-content="75%" style="width: 75%"></div>
                             </div>
                         </div>
                     </div>
@@ -747,8 +747,7 @@
                             </div>
                             <h4 contenteditable="true">JAVASCRIPT</h4>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" data-transitiongoal="82" data-percentage="82" style="width: 82%">
-                                </div>
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="82" data-percentage="82" data-content="82%" style="width: 82%"></div>
                             </div>
                         </div>
                         <div class="skill">
@@ -757,8 +756,7 @@
                             </div>
                             <h4 contenteditable="true">RUBY</h4>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" data-transitiongoal="66" data-percentage="66" style="width: 66%">
-                                </div>
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="66" data-percentage="66" data-content="66%" style="width: 66%"></div>
                             </div>
                         </div>
                     </div>
@@ -769,8 +767,7 @@
                             </div>
                             <h4 contenteditable="true">PHP</h4>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" data-transitiongoal="97" data-percentage="97" style="width: 97%">
-                                </div>
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="97" data-percentage="97" data-content="97%" style="width: 97%"></div>
                             </div>
                         </div>
                         <div class="skill">
@@ -779,8 +776,7 @@
                             </div>
                             <h4 contenteditable="true">JAVA</h4>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" data-transitiongoal="45" data-percentage="45" style="width: 45%">
-                                </div>
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="45" data-percentage="45" data-content="45%" style="width: 45%"></div>
                             </div>
                         </div>
                     </div>
@@ -905,15 +901,15 @@
                 <div class="row">
                     <div class="col-sm-4 col-xs-12">
                         <p class="counter start" data-to="10" data-speed="2000">0</p>
-                        <h4 contenteditable="true">Years Experience</h4>
+                        <h4>Years Experience</h4>
                     </div>
                     <div class="col-sm-4 col-xs-12">
                         <p class="counter start" data-to="120" data-speed="2000">0</p>
-                        <h4 contenteditable="true">Projects Delivered</h4>
+                        <h4>Projects Delivered</h4>
                     </div>
                     <div class="col-sm-4 col-xs-12">
                         <p id="infinity" class="counter" data-from="0" data-to="1" data-speed="1000">0</p>
-                        <h4 contenteditable="true">Seconds on this site!<br>What are you waiting for?</h4>
+                        <h4>Seconds on this site!<br>What are you waiting for?</h4>
                     </div>
                 </div>
             </div>
