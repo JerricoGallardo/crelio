@@ -102,6 +102,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to initialize navigation
 function initializeNavigation() {
+    // Variables for toolbar hide/show functionality
+    let lastScrollTop = 0;
+    const toolbar = document.querySelector('.editor-toolbar');
+    const siteHeader = document.querySelector('.site-header');
+    const scrollThreshold = 10; // Minimum scroll amount to trigger hide/show
+
     // Smooth scrolling for all navigation links
     $('.page-scroll a, .site-navigation ul li a').on('click', function(event) {
         var $anchor = $(this);
@@ -143,10 +149,40 @@ function initializeNavigation() {
         $(window).trigger('scroll');
     }, 200);
 
-    // Add active class to navigation items on scroll
+    // Add active class to navigation items on scroll and handle toolbar visibility
     $(window).on('scroll', function() {
         var scrollPos = $(document).scrollTop();
         var found = false;
+
+        // Handle toolbar visibility
+        if (toolbar && siteHeader) {
+            // Determine scroll direction
+            const scrollDirection = scrollPos > lastScrollTop ? 'down' : 'up';
+
+            // Only trigger if we've scrolled more than the threshold
+            if (Math.abs(scrollPos - lastScrollTop) > scrollThreshold) {
+                if (scrollDirection === 'down' && scrollPos > 100) {
+                    // Scrolling down - hide toolbar
+                    toolbar.style.transform = 'translateY(-100%)';
+                    toolbar.style.transition = 'transform 0.3s ease-in-out';
+
+                    // Move header to top position
+                    siteHeader.style.top = '0';
+                    siteHeader.style.transition = 'top 0.3s ease-in-out';
+                } else {
+                    // Scrolling up - show toolbar
+                    toolbar.style.transform = 'translateY(0)';
+                    toolbar.style.transition = 'transform 0.3s ease-in-out';
+
+                    // Move header below toolbar
+                    siteHeader.style.top = '50px';
+                    siteHeader.style.transition = 'top 0.3s ease-in-out';
+                }
+
+                // Update last scroll position
+                lastScrollTop = scrollPos;
+            }
+        }
 
         // Check each section in reverse order (to prioritize later sections)
         var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];

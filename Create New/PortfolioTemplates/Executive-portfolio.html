@@ -400,7 +400,7 @@
         </style>
 
         <!-- Editor Toolbar -->
-        <div id="editor-toolbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); z-index: 9999; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease;">
+        <div id="editor-toolbar" class="editor-toolbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); z-index: 9999; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; transform: translateY(0); transition: transform 0.3s ease-in-out;">
             <div style="display: flex; align-items: center;">
                 <button class="toolbar-button" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" onclick="window.location.href='../createnewportfolio.html'">
                     <i class="fa fa-arrow-left" style="margin-right: 5px;"></i>
@@ -454,7 +454,7 @@
         <header class="top-area">
             <div class="header-area">
                 <!-- Start Navigation -->
-                <nav class="navbar navbar-default bootsnav navbar-fixed dark no-background modern-nav">
+                <nav class="navbar navbar-default bootsnav navbar-fixed dark no-background modern-nav main-nav" style="transition: top 0.3s ease-in-out;">
 
                     <div class="container">
 
