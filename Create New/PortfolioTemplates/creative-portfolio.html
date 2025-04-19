@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="creative-portfolio.css">
 </head>
 <body>
-    <div class="toolbar">
-        <div class="toolbar-left">
+        <div class="toolbar">
+            <div class="toolbar-left">
             <button class="back-button" onclick="history.back()">
                 <i class="fas fa-arrow-left"></i> Back
             </button>
@@ -19,19 +19,19 @@
             <button class="preview-btn">
                 <i class="fas fa-eye"></i> Preview
             </button>
-        </div>
+            </div>
         
-        <div class="toolbar-center">
-            <div class="tool-group">
+            <div class="toolbar-center">
+                <div class="tool-group">
                 <button class="toolbar-btn" data-command="undo" title="Undo">
                     <i class="fas fa-undo"></i>
                 </button>
                 <button class="toolbar-btn" data-command="redo" title="Redo">
                     <i class="fas fa-redo"></i>
                 </button>
-            </div>
+                </div>
             
-            <div class="tool-group">
+                <div class="tool-group">
                 <button class="toolbar-btn" data-command="bold" title="Bold">
                     <i class="fas fa-bold"></i>
                 </button>
@@ -41,19 +41,19 @@
                 <button class="toolbar-btn" data-command="underline" title="Underline">
                     <i class="fas fa-underline"></i>
                 </button>
-            </div>
+                </div>
             
-            <div class="tool-group">
+                <div class="tool-group">
                 <select id="fontFamily" class="style-select">
                     <option value="Poppins">Poppins</option>
-                    <option value="Arial">Arial</option>
-                    <option value="Helvetica">Helvetica</option>
-                    <option value="Times New Roman">Times New Roman</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Times New Roman">Times New Roman</option>
                     <option value="Courier New">Courier New</option>
                     <option value="Georgia">Georgia</option>
                     <option value="Verdana">Verdana</option>
                     <option value="Roboto">Roboto</option>
-                </select>
+                    </select>
                 
                 <select id="fontSize" class="style-select">
                     <option value="10">10px</option>
@@ -71,10 +71,10 @@
                     <option value="56">56px</option>
                     <option value="64">64px</option>
                     <option value="72">72px</option>
-                </select>
+                    </select>
             </div>
         </div>
-        
+
         <div class="toolbar-right">
             <span class="template-name">Creative Template</span>
         </div>
@@ -82,53 +82,53 @@
 
     <div class="portfolio-container">
         <nav class="portfolio-nav">
-            <div class="nav-brand">
+                    <div class="nav-brand">
                 <span class="brand-name" contenteditable="true">Your Name</span>
-            </div>
-            <div class="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <ul class="nav-links">
+                    </div>
+                    <div class="nav-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <ul class="nav-links">
                 <li><a href="#home" class="nav-link glow-text">Home</a></li>
                 <li><a href="#about" class="nav-link glow-text">About</a></li>
                 <li><a href="#projects" class="nav-link glow-text">Projects</a></li>
                 <li><a href="#skills" class="nav-link glow-text">Skills</a></li>
                 <li><a href="#contact" class="nav-link glow-text">Contact</a></li>
-            </ul>
-        </nav>
+                    </ul>
+                </nav>
 
         <section class="hero-section">
-            <div class="hero-content">
-                <div class="hero-text">
+                    <div class="hero-content">
+                        <div class="hero-text">
                     <h2 contenteditable="true">Creative Developer</h2>
                     <p contenteditable="true">Crafting Digital Experiences</p>
-                    <div class="hero-buttons">
+                            <div class="hero-buttons">
                         <a href="#projects" class="btn primary"><span contenteditable="true">View My Work</span></a>
                         <a href="#contact" class="btn secondary"><span contenteditable="true">Get in Touch</span></a>
-                    </div>
-                </div>
-                <div class="hero-image">
+                            </div>
+                        </div>
+                        <div class="hero-image">
                     <div class="profile-photo-container">
                         <div class="profile-photo">
                             <img src="../../img/profile-placeholder.jpg" alt="Profile Photo">
-                            <div class="photo-overlay">
+                                    <div class="photo-overlay">
                                 <button class="remove-photo-btn">
                                     <i class="fas fa-times"></i>
                                 </button>
                                 <label class="upload-btn">
-                                    <i class="fas fa-camera"></i>
+                                            <i class="fas fa-camera"></i>
                                     <input type="file" accept="image/*" style="display: none;">
-                                </label>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
         <section id="about" class="about-section">
-            <div class="about-content">
-                <h2 contenteditable="true">About Me</h2>
+                    <div class="about-content">
+                            <h2 contenteditable="true">About Me</h2>
                 <p contenteditable="true">I'm a passionate developer with a keen eye for design and a love for creating beautiful, functional websites. With expertise in modern web technologies, I bring ideas to life through clean code and intuitive user experiences.</p>
                 <p contenteditable="true">My journey in web development has equipped me with a diverse skill set and a deep understanding of both frontend and backend technologies. I'm constantly learning and exploring new ways to push the boundaries of what's possible on the web.</p>
             </div>
@@ -208,14 +208,14 @@
                     <button class="add-btn skill">
                         <i class="fas fa-plus"></i> Add Skill
                     </button>
-                </div>
+                                    </div>
                 <div class="skill-category">
                     <div class="skill-category-header">
                         <h3 contenteditable="true">Backend</h3>
                         <button class="delete-category" title="Delete Category">
                             <i class="fas fa-times"></i>
                         </button>
-                    </div>
+                                </div>
                     <div class="skill-items">
                         <div class="skill-item">
                             <span class="skill-name">Node.js</span>
@@ -236,7 +236,7 @@
                             <span class="skill-name">Python</span>
                             <div class="skill-level">
                                 <div class="skill-progress" style="width: 85%"></div>
-                            </div>
+                    </div>
                             <span class="skill-percentage">85%</span>
                             <div class="skill-actions">
                                 <button class="edit-skill" title="Edit Skill">
@@ -274,22 +274,22 @@
                     <i class="fas fa-plus"></i> Add Category
                 </button>
             </div>
-        </section>
+                </section>
 
         <section id="contact" class="contact-section">
-            <h2 contenteditable="true">Get in Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
+                    <h2 contenteditable="true">Get in Touch</h2>
+                    <div class="contact-content">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
                         <span contenteditable="true" class="contact-text">your.email@example.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
                         <span contenteditable="true" class="contact-text">+1 234 567 890</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
                         <span contenteditable="true" class="contact-text">Your Location</span>
                     </div>
                     <hr class="contact-divider">
@@ -297,7 +297,7 @@
                         <div class="contact-item">
                             <i class="fab fa-github"></i>
                             <span contenteditable="true" class="contact-text">github.com/yourusername</span>
-                        </div>
+                            </div>
                         <div class="contact-item">
                             <i class="fab fa-linkedin"></i>
                             <span contenteditable="true" class="contact-text">linkedin.com/in/yourprofile</span>
@@ -307,9 +307,9 @@
                             <span contenteditable="true" class="contact-text">twitter.com/yourhandle</span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                        </div>
+                    </div>
+                </section>
 
         <footer class="portfolio-footer">
             <div class="footer-content">
@@ -397,7 +397,9 @@
             <span class="close-modal">&times;</span>
             <div class="project-view-container">
                 <div class="project-view-image">
-                    <img src="../../img/project-placeholder-1.jpg" alt="Project Image" id="viewProjectImage">
+                    <div class="project-image-placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>
                 </div>
                 <div class="project-view-details">
                     <h2 id="viewProjectTitle">Project Title</h2>
@@ -408,12 +410,19 @@
                     </div>
                     
                     <div class="project-view-links">
-                        <a href="#" id="viewProjectDemo" class="btn primary view-btn" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Visit Website <i class="fas fa-external-link-alt"></i>
-                        </a>
-                        <a href="#" id="viewProjectGithub" class="btn secondary view-btn" target="_blank">
-                            <i class="fab fa-github"></i> View on GitHub <i class="fas fa-external-link-alt"></i>
-                        </a>
+                        <div class="project-view-main-links">
+                            <a href="#" id="viewProjectDemo" class="btn primary view-btn" target="_blank">
+                                <i class="fas fa-globe"></i> Visit Website <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            <a href="#" id="viewProjectGithub" class="btn secondary view-btn" target="_blank">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                        </div>
+                        <div class="add-url-container">
+                            <button id="addProjectUrl" class="btn add-url-btn">
+                                <i class="fas fa-plus"></i> Add URL
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
