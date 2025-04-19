@@ -1,1037 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dynamic Portfolio Builder</title>
-  <!-- html2pdf Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Lato:wght@400;700&family=Montserrat:wght@400;600;700&family=Poppins:wght@400;500;700&family=Raleway:wght@400;600;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&family=Ubuntu:wght@400;500;700&display=swap"
-    rel="stylesheet">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    :root {
-      --bg-light: #f9f9f9;
-      --bg-dark: #1a1a1a;
-      --text-light: #343a40;
-      --text-dark: #e9ecef;
-      --primary: #007bff;
-      --primary-dark: #0056b3;
-      --secondary: #6c757d;
-      --secondary-dark: #495057;
-      --accent: #ffc107;
-      --accent-dark: #d39e00;
-      --font-default: 'Roboto', sans-serif;
-      --transition-duration: 0.3s;
-      --box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.075);
-      --border-radius: 0.5rem;
-    }
-
-    /* General Styles */
-    body {
-      font-family: var(--font-default);
-      margin: 0;
-      padding: 20px;
-      background: var(--bg-light);
-      color: var(--text-light);
-      transition: background var(--transition-duration), color var(--transition-duration);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
-
-    body.dark-mode {
-      background: var(--bg-dark);
-      color: var(--text-dark);
-    }
-
-    .main-container {
-      width: 100%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    /* Typography */
-    h1,
-    h2,
-    h3 {
-      color: var(--primary);
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-    }
-
-    h2 {
-      font-size: 2rem;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-    }
-
-    /* Forms and Portfolio Sections */
-    form,
-    .portfolio {
-      background: #fff;
-      color: var(--text-light);
-      padding: 30px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      margin-bottom: 30px;
-      width: 100%;
-      box-sizing: border-box;
-      transition: background var(--transition-duration), color var(--transition-duration), box-shadow var(--transition-duration);
-    }
-
-    body.dark-mode form,
-    body.dark-mode .portfolio {
-      background: #212529;
-      color: var(--text-dark);
-      box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
-    }
-
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: 500;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 12px;
-      margin-top: 0.5rem;
-      border: 1px solid #ced4da;
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      box-sizing: border-box;
-      transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: var(--primary);
-      outline: 0;
-      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-    /* Buttons */
-    button {
-      margin-top: 20px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color var(--transition-duration), transform 0.1s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--box-shadow);
-    }
-
-    button:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
-    }
-
-    button:active {
-      transform: translateY(1px);
-      box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
-    }
-
-    button.secondary {
-      background: var(--secondary);
-    }
-
-    button.secondary:hover {
-      background: var(--secondary-dark);
-    }
-
-    /* Portfolio Display */
-    .portfolio {
-      max-width: 900px;
-    }
-
-    .project {
-      margin-top: 1.5rem;
-      border-left: 4px solid var(--primary);
-      padding-left: 15px;
-      position: relative;
-    }
-
-    .delete-project {
-      position: absolute;
-      right: 0;
-      top: 0;
-      background: #dc3545;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .delete-project:hover {
-      transform: scale(1.1);
-    }
-
-    .delete-project:active {
-      transform: scale(0.9);
-    }
-
-    /* Profile Picture */
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 20px;
-      box-shadow: var(--box-shadow);
-      transition: transform 0.3s ease;
-    }
-
-    .profile-pic:hover {
-      transform: scale(1.05);
-    }
-
-    .current-image-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    .current-image-preview {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      transition: transform 0.3s ease, box-shadow var(--transition-duration);
-    }
-
-    .current-image-preview:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-    }
-
-    .remove-image-btn {
-      background: #dc3545;
-      padding: 8px 12px;
-      font-size: 0.9rem;
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #6c757d;
-    }
-
-    /* Typewriter Effect */
-    .typewriter {
-      display: inline-block;
-      overflow: hidden;
-      border-right: 0.1em solid var(--primary);
-      white-space: nowrap;
-      animation: typing 2s steps(25, end), blink 0.75s step-end infinite;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-
-    @keyframes typing {
-      from {
-        width: 0
-      }
-
-      to {
-        width: 100%
-      }
-    }
-
-    @keyframes blink {
-
-      from,
-      to {
-        border-color: transparent
-      }
-
-      50% {
-        border-color: var(--primary);
-      }
-    }
-
-    /* Portfolio Actions */
-    .portfolio-actions {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      align-self: flex-end;
-      justify-content: flex-end;
-    }
-
-    /* Portfolio List */
-    .portfolio-list {
-      width: 100%;
-      margin-bottom: 20px;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .portfolio-item {
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: var(--border-radius);
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: transform 0.3s ease, box-shadow var(--transition-duration);
-    }
-
-    .portfolio-item:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--box-shadow);
-    }
-
-    .portfolio-item-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    /* Font Selector */
-    .font-selector {
-      margin-top: 1.5rem;
-    }
-
-    .font-preview {
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      color: #6c757d;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* PDF-Specific Styles */
-    @media print {
-
-      body,
-      body.dark-mode {
-        background: white !important;
-        color: black !important;
-        padding: 0;
-      }
-
-      .portfolio,
-      body.dark-mode .portfolio {
-        box-shadow: none;
-        margin: 0;
-        padding: 0;
-        max-width: 100%;
-        background: white !important;
-        color: black !important;
-      }
-
-      button {
-        display: none !important;
-      }
-
-      .portfolio-actions,
-      .portfolio-list {
-        display: none !important;
-      }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .typewriter {
-        font-size: 2rem;
-      }
-
-      .portfolio-actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .current-image-container {
-        flex-direction: column;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      h2 {
-        font-size: 1.75rem;
-      }
-
-      h3 {
-        font-size: 1.25rem;
-      }
-
-      .main-container {
-        padding: 10px;
-      }
-
-      form,
-      .portfolio {
-        padding: 20px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="portfolio-actions">
-    <button onclick="toggleDarkMode()"><i class="fas fa-adjust"></i> Toggle Dark Mode</button>
-    <button class="secondary" onclick="showPortfolioList()"><i class="fas fa-list"></i> My Portfolios</button>
-    <button class="secondary" onclick="createNewPortfolio()"><i class="fas fa-plus"></i> Create New</button>
-  </div>
-
-  <div class="main-container">
-    <h1 class="typewriter">My Portfolio</h1>
-
-    <div id="portfolioList" class="portfolio-list" style="display: none;">
-      <h2>My Saved Portfolios</h2>
-      <div id="savedPortfolios"></div>
-    </div>
-
-    <form id="portfolioForm">
-      <label for="name">Your Name:</label>
-      <input type="text" id="name" required />
-
-      <label for="bio">Bio/About You:</label>
-      <textarea id="bio" rows="4" required></textarea>
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" required />
-
-      <label for="github">GitHub Username:</label>
-      <input type="text" id="github" required />
-
-      <div class="font-selector">
-        <label for="fontFamily">Select Font:</label>
-        <select id="fontFamily" onchange="changeFont(this.value)">
-          <option value="'Roboto', sans-serif">Roboto (Default)</option>
-          <option value="'Open Sans', sans-serif">Open Sans</option>
-          <option value="'Lato', sans-serif">Lato</option>
-          <option value="'Montserrat', sans-serif">Montserrat</option>
-          <option value="'Poppins', sans-serif">Poppins</option>
-          <option value="'Raleway', sans-serif">Raleway</option>
-          <option value="'Merriweather', serif">Merriweather</option>
-          <option value="'Playfair Display', serif">Playfair Display</option>
-          <option value="'Source Sans Pro', sans-serif">Source Sans Pro</option>
-          <option value="'Ubuntu', sans-serif">Ubuntu</option>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Professional Portfolio Template</title>
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Editor Toolbar -->
+<div class="editor-toolbar">
+    <div style="display: flex; align-items: center; padding: 0 15px;">
+        <button id="exit-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-arrow-left"></i> Exit
+        </button>
+        <button id="save-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-floppy-disk"></i> Save
+        </button>
+        <button id="preview-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-eye-open"></i> Preview
+        </button>
+        <div style="margin-right: 15px; border-right: 1px solid #ddd; height: 30px;"></div>
+        <button id="bold-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-bold"></i>
+        </button>
+        <button id="italic-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-italic"></i>
+        </button>
+        <button id="underline-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-text-width"></i>
+        </button>
+        <div style="margin-right: 15px; border-right: 1px solid #ddd; height: 30px;"></div>
+        <button id="undo-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-arrow-left"></i> Undo
+        </button>
+        <button id="redo-btn" class="toolbar-button" style="margin-right: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="glyphicon glyphicon-arrow-right"></i> Redo
+        </button>
+        <select id="font-selector" style="margin-right: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+            <option value="Arial">Arial</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Palatino">Palatino</option>
+            <option value="Garamond">Garamond</option>
+            <option value="Bookman">Bookman</option>
+            <option value="Tahoma">Tahoma</option>
         </select>
-        <div class="font-preview" id="fontPreview">This is how your text will look with the selected font.</div>
-      </div>
+        <select id="font-size-selector" style="margin-right: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+            <option value="12px">12px</option>
+            <option value="14px">14px</option>
+            <option value="16px" selected>16px</option>
+            <option value="18px">18px</option>
+            <option value="20px">20px</option>
+            <option value="24px">24px</option>
+            <option value="28px">28px</option>
+            <option value="32px">32px</option>
+            <option value="36px">36px</option>
+            <option value="42px">42px</option>
+            <option value="48px">48px</option>
+            <option value="56px">56px</option>
+            <option value="64px">64px</option>
+            <option value="72px">72px</option>
+        </select>
+        <div style="font-weight: 500; color: #333; margin-right: 15px;">Professional Template</div>
+    </div>
+</div>
 
-      <div id="currentImageContainer" style="display: none;">
-        <label>Current Profile Image:</label>
-        <div class="current-image-container">
-          <img id="currentImagePreview" class="current-image-preview" src="" alt="Current profile image">
-          <button type="button" class="remove-image-btn" onclick="removeCurrentImage()"><i
-              class="fas fa-trash"></i> Remove Image</button>
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="assets/professional/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="assets/professional/fonts/font-awesome/css/font-awesome.css">
+
+<!-- Stylesheet -->
+<link rel="stylesheet" type="text/css" href="assets/professional/css/style.css">
+<link rel="stylesheet" type="text/css" href="assets/professional/css/prettyPhoto.css">
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+
+<!-- Editor Styles -->
+<style>
+    /* Editor toolbar styles */
+    .editor-toolbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+        padding: 10px 0;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .toolbar-button:hover {
+        background-color: #e9ecef !important;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .toolbar-button:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    /* Adjust body padding to account for fixed toolbar */
+    body {
+        padding-top: 60px;
+    }
+
+    /* Make content editable areas more visible */
+    [contenteditable="true"]:hover {
+        outline: 1px dashed #ccc;
+    }
+
+    [contenteditable="true"]:focus {
+        outline: 2px solid #5cb3fd;
+    }
+
+    /* Section controls styles */
+    .section-controls {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+    }
+
+    .section-control-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        color: #333;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .section-control-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .section-control-btn:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    .add-btn {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
+    }
+
+    .remove-btn {
+        background-color: #dc3545;
+        color: white;
+        border-color: #dc3545;
+    }
+
+    /* Item controls */
+    .item-controls {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 100;
+        display: none;
+    }
+
+    .portfolio-item:hover .item-controls,
+    .skill:hover .item-controls,
+    .testimonial-item:hover .item-controls,
+    .achievement-box:hover .item-controls {
+        display: block;
+    }
+
+    /* Preview mode styles */
+    .preview-mode {
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        backdrop-filter: blur(5px);
+    }
+
+    .preview-mode .edit-mode-only {
+        display: none !important;
+    }
+
+    #preview-btn.active {
+        background-color: #28a745 !important;
+        color: white !important;
+        border-color: #28a745 !important;
+    }
+
+    /* Adjust the intro section to account for toolbar */
+    #header {
+        margin-top: -60px;
+    }
+</style>
+
+</head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+<!-- Header -->
+<header id="header">
+  <div class="intro text-center">
+    <div class="overlay">
+      <div class="container">
+        <div class="row">
+          <div class="intro-text">
+            <h1 contenteditable="true">Marcus Hansen</h1>
+            <p contenteditable="true">UX Designer & Front End Developer</p>
+            <a href="#about" class="btn btn-default btn-lg page-scroll" contenteditable="true">Learn More</a> </div>
         </div>
-      </div>
-
-      <label for="profileImage">Profile Image:</label>
-      <input type="file" id="profileImage" accept="image/*" />
-
-      <div id="projectFields">
-        <div class="project-input">
-          <label>Project 1 Title:</label>
-          <input type="text" class="projectTitle" required />
-          <label>Project 1 Description:</label>
-          <textarea class="projectDesc" rows="3" required></textarea>
-          <button type="button" class="delete-project" onclick="removeProject(this)"><i
-              class="fas fa-times"></i></button>
-        </div>
-      </div>
-      <button type="button" onclick="addProject()"><i class="fas fa-plus"></i> Add Another Project</button>
-      <div style="display: flex; gap: 10px;">
-        <button type="submit"><i class="fas fa-save"></i> Save Portfolio</button>
-        <button type="button" class="secondary" onclick="previewPortfolio()"><i class="fas fa-eye"></i> Preview</button>
-      </div>
-    </form>
-
-    <div id="portfolioDisplay" class="portfolio" style="display: none;">
-      <div id="imageContainer" style="text-align: center;"></div>
-      <h2 id="displayName"></h2>
-      <p id="displayBio"></p>
-
-      <h3>Projects</h3>
-      <div id="projectsContainer"></div>
-
-      <h3>Contact</h3>
-      <p>Email: <span id="displayEmail"></span></p>
-      <p>GitHub: <a href="#" target="_blank" id="displayGitHub"></a></p>
-      <div style="display: flex; gap: 10px;">
-        <button onclick="generatePDF()"><i class="fas fa-file-pdf"></i> Download as PDF</button>
-        <button class="secondary" onclick="editPortfolio()"><i class="fas fa-edit"></i> Edit Portfolio</button>
       </div>
     </div>
   </div>
+</header>
 
-  <footer>
-    &copy; 2024 Dynamic Portfolio Builder. All rights reserved.
-  </footer>
+<!-- Navigation -->
+<div id="nav">
+  <nav class="navbar navbar-custom">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i> </button>
+      </div>
 
-  <script>
-    const form = document.getElementById("portfolioForm");
-    const display = document.getElementById("portfolioDisplay");
-    const imageContainer = document.getElementById("imageContainer");
-    const projectsContainer = document.getElementById("projectsContainer");
-    const projectFields = document.getElementById("projectFields");
-    const portfolioList = document.getElementById("portfolioList");
-    const savedPortfolios = document.getElementById("savedPortfolios");
-    const currentImageContainer = document.getElementById("currentImageContainer");
-    const currentImagePreview = document.getElementById("currentImagePreview");
-    const fontFamilySelect = document.getElementById("fontFamily");
-    const fontPreview = document.getElementById("fontPreview");
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-main-collapse">
+        <ul class="nav navbar-nav">
+          <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+          <li class="hidden"> <a href="#page-top"></a> </li>
+          <li> <a class="page-scroll" href="#page-top">Home</a> </li>
+          <li> <a class="page-scroll" href="#about">About</a> </li>
+          <li> <a class="page-scroll" href="#skills">Skills</a> </li>
+          <li> <a class="page-scroll" href="#portfolio">Portfolio</a> </li>
+          <li> <a class="page-scroll" href="#testimonials">Testimonials</a> </li>
+          <li> <a class="page-scroll" href="#contact">Contact</a> </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
 
-    let projectCount = 1;
-    let currentPortfolioId = null;
-    let currentProfileImage = null;
-    let newProfileImage = null;
-    let imageRemoved = false;
-    let currentFont = "'Roboto', sans-serif";
-
-    // Initialize with sample data if no portfolios exist
-    if (!localStorage.getItem('portfolios')) {
-      const samplePortfolio = {
-        id: 'sample1',
-        name: 'John Doe',
-        bio: 'Web Developer with 5 years of experience building modern web applications.',
-        email: 'john.doe@example.com',
-        github: 'johndoe',
-        font: "'Roboto', sans-serif",
-        projects: [
-          { title: 'E-commerce Website', description: 'Built a full-stack e-commerce platform with React and Node.js' },
-          { title: 'Portfolio Generator', description: 'Created a dynamic portfolio generator web app' }
-        ]
-      };
-      localStorage.setItem('portfolios', JSON.stringify([samplePortfolio]));
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-    }
-
-    function changeFont(font) {
-      currentFont = font;
-      document.documentElement.style.setProperty('--font-default', font);
-      fontPreview.style.fontFamily = font;
-
-      // Update the font preview text
-      const selectedOption = fontFamilySelect.options[fontFamilySelect.selectedIndex].text;
-      fontPreview.textContent = `This is ${selectedOption.split(' ')[0]} font preview.`;
-    }
-
-    function addProject() {
-      projectCount++;
-      const projectDiv = document.createElement("div");
-      projectDiv.className = "project-input";
-
-      const titleLabel = document.createElement("label");
-      titleLabel.innerHTML = `Project ${projectCount} Title:`;
-      const titleInput = document.createElement("input");
-      titleInput.type = "text";
-      titleInput.className = "projectTitle";
-
-      const descLabel = document.createElement("label");
-      descLabel.innerHTML = `Project ${projectCount} Description:`;
-      const descInput = document.createElement("textarea");
-      descInput.className = "projectDesc";
-      descInput.rows = 3;
-
-      const deleteBtn = document.createElement("button");
-      deleteBtn.type = "button";
-      deleteBtn.className = "delete-project";
-      deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
-      deleteBtn.onclick = function () { removeProject(this); };
-
-      projectDiv.appendChild(titleLabel);
-      projectDiv.appendChild(titleInput);
-      projectDiv.appendChild(descLabel);
-      projectDiv.appendChild(descInput);
-      projectDiv.appendChild(deleteBtn);
-
-      projectFields.appendChild(projectDiv);
-    }
-
-    function removeProject(button) {
-      if (document.querySelectorAll('.project-input').length > 1) {
-        // Add shrink animation before removal
-        button.parentElement.style.transform = 'scale(0.9)';
-        button.parentElement.style.opacity = '0';
-        setTimeout(() => {
-          button.parentElement.remove();
-          // Update project numbering
-          const projects = document.querySelectorAll('.project-input');
-          projects.forEach((project, index) => {
-            project.querySelector('label').innerHTML = `Project ${index + 1} Title:`;
-            project.querySelectorAll('label')[1].innerHTML = `Project ${index + 1} Description:`;
-          });
-          projectCount = projects.length;
-        }, 200);
-      } else {
-        alert("You need at least one project");
-      }
-    }
-
-    function showPortfolioList() {
-      form.style.display = "none";
-      display.style.display = "none";
-      portfolioList.style.display = "block";
-      loadPortfolioList();
-    }
-
-    function loadPortfolioList() {
-      const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
-      savedPortfolios.innerHTML = '';
-
-      if (portfolios.length === 0) {
-        savedPortfolios.innerHTML = '<p>No portfolios saved yet.</p>';
-        return;
-      }
-
-      portfolios.forEach(portfolio => {
-        const item = document.createElement("div");
-        item.className = "portfolio-item";
-
-        const info = document.createElement("div");
-        info.innerHTML = `<strong>${portfolio.name}</strong> - ${portfolio.projects.length} projects`;
-
-        const actions = document.createElement("div");
-        actions.className = "portfolio-item-actions";
-
-        const viewBtn = document.createElement("button");
-        viewBtn.textContent = '<i class="fas fa-eye"></i> View';
-        viewBtn.onclick = () => loadPortfolio(portfolio.id);
-
-        const editBtn = document.createElement("button");
-        editBtn.textContent = '<i class="fas fa-edit"></i> Edit';
-        editBtn.className = "secondary";
-        editBtn.onclick = () => editPortfolio(portfolio.id);
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = '<i class="fas fa-trash"></i> Delete';
-        deleteBtn.style.background = "#dc3545";
-        deleteBtn.onclick = () => deletePortfolio(portfolio.id);
-
-        actions.appendChild(viewBtn);
-        actions.appendChild(editBtn);
-        actions.appendChild(deleteBtn);
-
-        item.appendChild(info);
-        item.appendChild(actions);
-
-        savedPortfolios.appendChild(item);
-      });
-    }
-
-    function createNewPortfolio() {
-      currentPortfolioId = null;
-      form.reset();
-      projectFields.innerHTML = `
-        <div class="project-input">
-          <label>Project 1 Title:</label>
-          <input type="text" class="projectTitle" required />
-          <label>Project 1 Description:</label>
-          <textarea class="projectDesc" rows="3" required></textarea>
-          <button type="button" class="delete-project" onclick="removeProject(this)"><i class="fas fa-times"></i></button>
+<!-- About Section -->
+<div id="about">
+  <div class="container">
+    <div class="section-title text-center center">
+      <h2 contenteditable="true">About Me</h2>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <img src="assets/professional/img/about.jpg" class="img-responsive" alt="" id="about-image">
+        <div class="text-center" style="margin-top: 10px;">
+          <button class="btn btn-default" onclick="document.getElementById('about-upload').click()">Change Image</button>
+          <input type="file" id="about-upload" style="display: none;" accept="image/*">
         </div>
-      `;
-      projectCount = 1;
-      currentProfileImage = null;
-      newProfileImage = null;
-      imageRemoved = false;
-      currentImageContainer.style.display = "none";
-      imageContainer.innerHTML = '';
-      portfolioList.style.display = "none";
-      form.style.display = "block";
-      display.style.display = "none";
-      // Reset to default font
-      changeFont("'Roboto', sans-serif");
-      fontFamilySelect.value = "'Roboto', sans-serif";
-    }
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="about-text">
+          <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
+          <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare.</p>
+          <a href="#portfolio" class="btn btn-primary btn-lg page-scroll" contenteditable="true">My Portfolio</a> </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    function loadPortfolio(id) {
-      const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
-      const portfolio = portfolios.find(p => p.id === id);
+<!-- Skills Section -->
+<div id="skills" class="text-center">
+  <div class="container">
+    <div class="section-title center">
+      <h2 contenteditable="true">Skills</h2>
+      <hr>
+      <div class="section-controls">
+        <button class="section-control-btn add-btn" id="add-skill-btn" title="Add Skill"><i class="fa fa-plus"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-6 skill">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+        </div>
+        <span class="chart" data-percent="95"> <span class="percent">95</span> </span>
+        <h4 contenteditable="true">HTML5</h4>
+      </div>
+      <div class="col-md-3 col-sm-6 skill">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+        </div>
+        <span class="chart" data-percent="85"> <span class="percent">85</span> </span>
+        <h4 contenteditable="true">CSS3</h4>
+      </div>
+      <div class="col-md-3 col-sm-6 skill">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+        </div>
+        <span class="chart" data-percent="80"> <span class="percent">80</span> </span>
+        <h4 contenteditable="true">jQuery</h4>
+      </div>
+      <div class="col-md-3 col-sm-6 skill">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
+        </div>
+        <span class="chart" data-percent="80"> <span class="percent">80</span> </span>
+        <h4 contenteditable="true">WordPress</h4>
+      </div>
+    </div>
+  </div>
+</div>
 
-      if (!portfolio) {
-        alert("Portfolio not found");
-        return;
-      }
+<!-- Portfolio Section -->
+<div id="portfolio">
+  <div class="container">
+    <div class="section-title text-center center">
+      <h2 contenteditable="true">Portfolio</h2>
+      <hr>
+      <div class="section-controls">
+        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Portfolio Item"><i class="fa fa-plus"></i></button>
+      </div>
+    </div>
+    <!-- Category filter removed -->
+    <div class="row">
+      <div class="portfolio-items">
+        <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
+          <div class="item-controls">
+            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+          </div>
+          <div class="hover-bg">
+            <div class="hover-text">
+              <h4 contenteditable="true">Project Title</h4>
+              <small contenteditable="true">Web Design</small>
+              <div class="portfolio-buttons">
+                <button class="btn btn-default btn-sm edit-project-link" data-project="1">Edit Link</button>
+                <a href="#" class="btn btn-primary btn-sm visit-project" target="_blank">Visit Page</a>
+              </div>
+            </div>
+            <img src="assets/professional/img/portfolio/01-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-1">
+          </div>
+          <div class="text-center edit-mode-only" style="margin-top: 10px;">
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-1').click()">Change Image</button>
+            <input type="file" id="portfolio-upload-1" style="display: none;" accept="image/*">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
+          <div class="item-controls">
+            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+          </div>
+          <div class="hover-bg">
+            <div class="hover-text">
+              <h4 contenteditable="true">Project Title</h4>
+              <small contenteditable="true">App Development</small>
+              <div class="portfolio-buttons">
+                <button class="btn btn-default btn-sm edit-project-link" data-project="2">Edit Link</button>
+                <a href="#" class="btn btn-primary btn-sm visit-project" target="_blank">Visit Page</a>
+              </div>
+            </div>
+            <img src="assets/professional/img/portfolio/02-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-2">
+          </div>
+          <div class="text-center edit-mode-only" style="margin-top: 10px;">
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-2').click()">Change Image</button>
+            <input type="file" id="portfolio-upload-2" style="display: none;" accept="image/*">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
+          <div class="item-controls">
+            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+          </div>
+          <div class="hover-bg">
+            <div class="hover-text">
+              <h4 contenteditable="true">Project Title</h4>
+              <small contenteditable="true">Web Design</small>
+              <div class="portfolio-buttons">
+                <button class="btn btn-default btn-sm edit-project-link" data-project="3">Edit Link</button>
+                <a href="#" class="btn btn-primary btn-sm visit-project" target="_blank">Visit Page</a>
+              </div>
+            </div>
+            <img src="assets/professional/img/portfolio/03-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-3">
+          </div>
+          <div class="text-center edit-mode-only" style="margin-top: 10px;">
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-3').click()">Change Image</button>
+            <input type="file" id="portfolio-upload-3" style="display: none;" accept="image/*">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
+          <div class="item-controls">
+            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+          </div>
+          <div class="hover-bg">
+            <div class="hover-text">
+              <h4 contenteditable="true">Project Title</h4>
+              <small contenteditable="true">Web Design</small>
+              <div class="portfolio-buttons">
+                <button class="btn btn-default btn-sm edit-project-link" data-project="4">Edit Link</button>
+                <a href="#" class="btn btn-primary btn-sm visit-project" target="_blank">Visit Page</a>
+              </div>
+            </div>
+            <img src="assets/professional/img/portfolio/04-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-4">
+          </div>
+          <div class="text-center edit-mode-only" style="margin-top: 10px;">
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-4').click()">Change Image</button>
+            <input type="file" id="portfolio-upload-4" style="display: none;" accept="image/*">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
+          <div class="item-controls">
+            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+          </div>
+          <div class="hover-bg">
+            <div class="hover-text">
+              <h4 contenteditable="true">Project Title</h4>
+              <small contenteditable="true">App Development</small>
+              <div class="portfolio-buttons">
+                <button class="btn btn-default btn-sm edit-project-link" data-project="5">Edit Link</button>
+                <a href="#" class="btn btn-primary btn-sm visit-project" target="_blank">Visit Page</a>
+              </div>
+            </div>
+            <img src="assets/professional/img/portfolio/05-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-5">
+          </div>
+          <div class="text-center edit-mode-only" style="margin-top: 10px;">
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-5').click()">Change Image</button>
+            <input type="file" id="portfolio-upload-5" style="display: none;" accept="image/*">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
+          <div class="item-controls">
+            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+          </div>
+          <div class="hover-bg">
+            <div class="hover-text">
+              <h4 contenteditable="true">Project Title</h4>
+              <small contenteditable="true">Branding</small>
+              <div class="portfolio-buttons">
+                <button class="btn btn-default btn-sm edit-project-link" data-project="6">Edit Link</button>
+                <a href="#" class="btn btn-primary btn-sm visit-project" target="_blank">Visit Page</a>
+              </div>
+            </div>
+            <img src="assets/professional/img/portfolio/06-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-6">
+          </div>
+          <div class="text-center edit-mode-only" style="margin-top: 10px;">
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-6').click()">Change Image</button>
+            <input type="file" id="portfolio-upload-6" style="display: none;" accept="image/*">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      // Apply the saved font
-      if (portfolio.font) {
-        changeFont(portfolio.font);
-        fontFamilySelect.value = portfolio.font;
-      } else {
-        changeFont("'Roboto', sans-serif");
-        fontFamilySelect.value = "'Roboto', sans-serif";
-      }
+<!-- Achievements Section -->
+<div id="achievements" class="text-center">
+  <div class="container">
+    <div class="section-title center">
+      <h2 contenteditable="true">Some Stats</h2>
+      <hr>
+      <div class="section-controls">
+        <button class="section-control-btn add-btn" id="add-achievement-btn" title="Add Achievement"><i class="fa fa-plus"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-3 achievement-item">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
+        </div>
+        <div class="achievement-box">
+          <span class="count">310</span>
+          <h4 contenteditable="true">Happy Clients</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-3 achievement-item">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
+        </div>
+        <div class="achievement-box">
+          <span class="count">4700</span>
+          <h4 contenteditable="true">Hours of Work</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-3 achievement-item">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
+        </div>
+        <div class="achievement-box">
+          <span class="count">30</span>
+          <h4 contenteditable="true">Awards Won</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-3 achievement-item">
+        <div class="item-controls">
+          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
+        </div>
+        <div class="achievement-box">
+          <span class="count">8</span>
+          <h4 contenteditable="true">Years of Experience</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      document.getElementById("displayName").innerText = portfolio.name;
-      document.getElementById("displayBio").innerText = portfolio.bio;
-      document.getElementById("displayEmail").innerText = portfolio.email;
+<!-- Testimonials Section -->
+<div id="testimonials" class="text-center">
+  <div class="container">
+    <div class="section-title center">
+      <h2 contenteditable="true">Testimonials</h2>
+      <hr>
+      <div class="section-controls">
+        <button class="section-control-btn add-btn" id="add-testimonial-btn" title="Add Testimonial"><i class="fa fa-plus"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row testimonials">
+          <div class="col-sm-4 testimonial-item">
+            <div class="item-controls">
+              <button class="section-control-btn remove-btn" title="Remove Testimonial"><i class="fa fa-trash"></i></button>
+            </div>
+            <blockquote><i class="fa fa-quote-left"></i>
+              <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
+              <div class="clients-name">
+                <p><strong contenteditable="true">John Doe</strong><br>
+                  <em contenteditable="true">CEO, Company Inc.</em></p>
+              </div>
+            </blockquote>
+          </div>
+          <div class="col-sm-4 testimonial-item">
+            <div class="item-controls">
+              <button class="section-control-btn remove-btn" title="Remove Testimonial"><i class="fa fa-trash"></i></button>
+            </div>
+            <blockquote><i class="fa fa-quote-left"></i>
+              <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
+              <div class="clients-name">
+                <p><strong contenteditable="true">Jane Doe</strong><br>
+                  <em contenteditable="true">CEO, Company Inc.</em></p>
+              </div>
+            </blockquote>
+          </div>
+          <div class="col-sm-4 testimonial-item">
+            <div class="item-controls">
+              <button class="section-control-btn remove-btn" title="Remove Testimonial"><i class="fa fa-trash"></i></button>
+            </div>
+            <blockquote><i class="fa fa-quote-left"></i>
+              <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
+              <div class="clients-name">
+                <p><strong contenteditable="true">Chris Smith</strong><br>
+                  <em contenteditable="true">CEO, Company Inc.</em></p>
+              </div>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      const github = document.getElementById("github").value;
-      const githubLink = `https://github.com/${portfolio.github}`;
-      const displayGitHub = document.getElementById("displayGitHub");
-      displayGitHub.href = githubLink;
-      displayGitHub.innerText = portfolio.github;
+<!-- Contact Section -->
+<div id="contact" class="text-center">
+  <div class="overlay">
+    <div class="container">
+      <div class="section-title center">
+        <h2 contenteditable="true">Get In Touch</h2>
+        <hr>
+      </div>
+      <div class="col-md-8 col-md-offset-2">
+        <form name="sentMessage" id="contactForm" novalidate>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" id="name" class="form-control" placeholder="Name" required="required">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="email" id="email" class="form-control" placeholder="Email" required="required">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+            <p class="help-block text-danger"></p>
+          </div>
+          <div id="success"></div>
+          <button type="submit" class="btn btn-default" contenteditable="true">Send Message</button>
+        </form>
+        <div class="social">
+          <ul>
+            <li><a href="#" data-editable="true"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#" data-editable="true"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#" data-editable="true"><i class="fa fa-dribbble"></i></a></li>
+            <li><a href="#" data-editable="true"><i class="fa fa-github"></i></a></li>
+            <li><a href="#" data-editable="true"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="#" data-editable="true"><i class="fa fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      projectsContainer.innerHTML = "";
-      portfolio.projects.forEach(project => {
-        const projectDiv = document.createElement("div");
-        projectDiv.className = "project";
-        projectDiv.innerHTML = `<strong>${project.title}</strong><p>${project.description}</p>`;
-        projectsContainer.appendChild(projectDiv);
-      });
+<div id="footer">
+  <div class="container text-center">
+    <div class="fnav">
+      <p contenteditable="true">Copyright &copy; 2023 Professional Portfolio. Designed by <a href="#" rel="nofollow">TemplateWire</a></p>
+    </div>
+  </div>
+</div>
 
-      if (portfolio.profileImage && !imageRemoved) {
-        imageContainer.innerHTML = `<img src="${portfolio.profileImage}" alt="Profile Picture" class="profile-pic">`;
-      } else {
-        imageContainer.innerHTML = '';
-      }
+<!-- Project Link Modal -->
+<div class="modal fade" id="project-link-modal" tabindex="-1" role="dialog" aria-labelledby="projectLinkModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="projectLinkModalLabel">Edit Project Link</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="project-link-input">Project URL:</label>
+          <input type="text" class="form-control" id="project-link-input" placeholder="https://example.com">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="save-project-link">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-      portfolioList.style.display = "none";
-      form.style.display = "none";
-      display.style.display = "block";
-      currentPortfolioId = id;
-    }
+<!-- Core JavaScript Files -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="assets/professional/js/bootstrap.js"></script>
+<script src="assets/professional/js/SmoothScroll.js"></script>
+<script src="assets/professional/js/easypiechart.js"></script>
+<script src="assets/professional/js/jquery.prettyPhoto.js"></script>
+<script src="assets/professional/js/jquery.isotope.js"></script>
+<script src="assets/professional/js/jquery.counterup.js"></script>
+<script src="assets/professional/js/waypoints.js"></script>
+<script src="assets/professional/js/jqBootstrapValidation.js"></script>
+<script src="assets/professional/js/contact_me.js"></script>
+<script src="assets/professional/js/main.js"></script>
+<script src="professional-portfolio.js"></script>
 
-    function editPortfolio(id) {
-      if (id) {
-        // Editing an existing portfolio
-        const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
-        const portfolio = portfolios.find(p => p.id === id);
-
-        if (!portfolio) {
-          alert("Portfolio not found");
-          return;
-        }
-
-        currentPortfolioId = id;
-
-        // Fill the form
-        document.getElementById("name").value = portfolio.name;
-        document.getElementById("bio").value = portfolio.bio;
-        document.getElementById("email").value = portfolio.email;
-        document.getElementById("github").value = portfolio.github;
-
-        // Set the font
-        if (portfolio.font) {
-          changeFont(portfolio.font);
-          fontFamilySelect.value = portfolio.font;
-        } else {
-          changeFont("'Roboto', sans-serif");
-          fontFamilySelect.value = "'Roboto', sans-serif";
-        }
-
-        // Handle profile image
-        if (portfolio.profileImage) {
-          currentProfileImage = portfolio.profileImage;
-          currentImagePreview.src = portfolio.profileImage;
-          currentImageContainer.style.display = "block";
-        } else {
-          currentImageContainer.style.display = "none";
-        }
-
-        // Clear and recreate project fields
-        projectFields.innerHTML = '';
-        projectCount = 0;
-
-        portfolio.projects.forEach((project, index) => {
-          projectCount++;
-          const projectDiv = document.createElement("div");
-          projectDiv.className = "project-input";
-
-          const titleLabel = document.createElement("label");
-          titleLabel.innerHTML = `Project ${index + 1} Title:`;
-          const titleInput = document.createElement("input");
-          titleInput.type = "text";
-          titleInput.className = "projectTitle";
-          titleInput.value = project.title;
-
-          const descLabel = document.createElement("label");
-          descLabel.innerHTML = `Project ${index + 1} Description:`;
-          const descInput = document.createElement("textarea");
-          descInput.className = "projectDesc";
-          descInput.rows = 3;
-          descInput.value = project.description;
-
-          const deleteBtn = document.createElement("button");
-          deleteBtn.type = "button";
-          deleteBtn.className = "delete-project";
-          deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
-          deleteBtn.onclick = function () { removeProject(this); };
-
-          projectDiv.appendChild(titleLabel);
-          projectDiv.appendChild(titleInput);
-          projectDiv.appendChild(descLabel);
-          projectDiv.appendChild(descInput);
-          projectDiv.appendChild(deleteBtn);
-
-          projectFields.appendChild(projectDiv);
-        });
-
-        portfolioList.style.display = "none";
-        form.style.display = "block";
-        display.style.display = "none";
-      } else {
-        // Editing the currently displayed portfolio
-        portfolioList.style.display = "none";
-        form.style.display = "block";
-        display.style.display = "none";
-      }
-    }
-
-    function removeCurrentImage() {
-      // Add fade out animation
-      currentImageContainer.style.opacity = '0';
-      currentImageContainer.style.transform = 'translateY(-10px)';
-      setTimeout(() => {
-        currentProfileImage = null;
-        currentImageContainer.style.display = "none";
-        imageRemoved = true;
-        document.getElementById("profileImage").value = ""; // Clear file input
-      }, 300);
-    }
-
-    function deletePortfolio(id) {
-      if (confirm("Are you sure you want to delete this portfolio?")) {
-        const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
-        const updatedPortfolios = portfolios.filter(p => p.id !== id);
-        localStorage.setItem('portfolios', JSON.stringify(updatedPortfolios));
-        loadPortfolioList();
-
-        if (currentPortfolioId === id) {
-          createNewPortfolio();
-        }
-      }
-    }
-
-    function previewPortfolio() {
-      // Similar to form submission but doesn't save
-      document.getElementById("displayName").innerText = document.getElementById("name").value;
-      document.getElementById("displayBio").innerText = document.getElementById("bio").value;
-      document.getElementById("displayEmail").innerText = document.getElementById("email").value;
-
-      const github = document.getElementById("github").value;
-      const githubLink = `https://github.com/${github}`;
-      const displayGitHub = document.getElementById("displayGitHub");
-      displayGitHub.href = githubLink;
-      displayGitHub.innerText = github;
-
-      const titles = document.querySelectorAll(".projectTitle");
-      const descs = document.querySelectorAll(".projectDesc");
-
-      projectsContainer.innerHTML = "";
-      for (let i = 0; i < titles.length; i++) {
-        if (titles[i].value && descs[i].value) {
-          const projectDiv = document.createElement("div");
-          projectDiv.className = "project";
-          projectDiv.innerHTML = `<strong>${titles[i].value}</strong><p>${descs[i].value}</p>`;
-          projectsContainer.appendChild(projectDiv);
-        }
-      }
-
-      const profileImage = document.getElementById("profileImage").files[0];
-      imageContainer.innerHTML = "";
-
-      if (profileImage) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const img = document.createElement("img");
-          img.src = e.target.result;
-          img.alt = "Profile Picture";
-          img.className = "profile-pic";
-          imageContainer.appendChild(img);
-          newProfileImage = e.target.result;
-        };
-        reader.readAsDataURL(profileImage);
-      } else if (currentProfileImage && !imageRemoved) {
-        imageContainer.innerHTML = `<img src="${currentProfileImage}" alt="Profile Picture" class="profile-pic">`;
-      }
-
-      // Add fade in animation
-      display.style.opacity = '0';
-      display.style.transform = 'translateY(20px)';
-      portfolioList.style.display = "none";
-      form.style.display = "none";
-      display.style.display = "block";
-      setTimeout(() => {
-        display.style.opacity = '1';
-        display.style.transform = 'translateY(0)';
-      }, 10);
-    }
-
-    function generatePDF() {
-      // Show loading state on button
-      const pdfButton = document.querySelector('button[onclick="generatePDF()"]');
-      const originalText = pdfButton.textContent;
-      pdfButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
-      pdfButton.disabled = true;
-
-      // Clone the display element to avoid modifying the original
-      const element = display.cloneNode(true);
-
-      // Remove buttons from the cloned element
-      const buttons = element.querySelectorAll('button');
-      buttons.forEach(button => button.remove());
-
-      // Add print-specific styles
-      element.style.padding = '20px';
-      element.style.maxWidth = '800px';
-      element.style.margin = '0 auto';
-
-      // Options for PDF generation
-      const opt = {
-        margin: 10,
-        filename: `${document.getElementById("displayName").textContent || 'portfolio'}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      // Generate PDF
-      html2pdf().set(opt).from(element).save().then(() => {
-        // Restore button state
-        pdfButton.textContent = originalText;
-        pdfButton.disabled = false;
-      });
-    }
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      // Add loading animation to submit button
-      const submitButton = e.target.querySelector('button[type="submit"]');
-      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-      submitButton.disabled = true;
-
-      // Collect form data
-      const portfolioData = {
-        id: currentPortfolioId || Date.now().toString(),
-        name: document.getElementById("name").value,
-        bio: document.getElementById("bio").value,
-        email: document.getElementById("email").value,
-        github: document.getElementById("github").value,
-        font: currentFont,
-        projects: []
-      };
-
-      // Collect projects
-      const titles = document.querySelectorAll(".projectTitle");
-      const descs = document.querySelectorAll(".projectDesc");
-      for (let i = 0; i < titles.length; i++) {
-        if (titles[i].value && descs[i].value) {
-          portfolioData.projects.push({
-            title: titles[i].value,
-            description: descs[i].value
-          });
-        }
-      }
-
-      // Handle profile image
-      const profileImage = document.getElementById("profileImage").files[0];
-      if (profileImage) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          portfolioData.profileImage = e.target.result;
-          savePortfolio(portfolioData);
-        };
-        reader.readAsDataURL(profileImage);
-      } else if (currentProfileImage && !imageRemoved) {
-        portfolioData.profileImage = currentProfileImage;
-        savePortfolio(portfolioData);
-      } else if (newProfileImage) {
-        portfolioData.profileImage = newProfileImage;
-        savePortfolio(portfolioData);
-      } else {
-        savePortfolio(portfolioData);
-      }
-    });
-
-    function savePortfolio(portfolioData) {
-      const portfolios = JSON.parse(localStorage.getItem('portfolios')) || [];
-
-      if (currentPortfolioId) {
-        // Update existing portfolio
-        const index = portfolios.findIndex(p => p.id === currentPortfolioId);
-        if (index !== -1) {
-          portfolios[index] = portfolioData;
-        }
-      } else {
-        // Add new portfolio
-        portfolios.push(portfolioData);
-        currentPortfolioId = portfolioData.id;
-      }
-
-      localStorage.setItem('portfolios', JSON.stringify(portfolios));
-
-      // Reset image states
-      currentProfileImage = portfolioData.profileImage || null;
-      newProfileImage = null;
-      imageRemoved = false;
-
-      // Show the saved portfolio
-      loadPortfolio(portfolioData.id);
-
-      // Reset submit button
-      const submitButton = form.querySelector('button[type="submit"]');
-      submitButton.innerHTML = '<i class="fas fa-save"></i> Save Portfolio';
-      submitButton.disabled = false;
-    }
-
-    // Initialize with a new portfolio form
-    createNewPortfolio();
-
-    // Enable all buttons after the script has loaded
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-      button.disabled = false;
-    });
-  </script>
 </body>
-
 </html>

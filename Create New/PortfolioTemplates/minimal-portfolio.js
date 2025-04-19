@@ -380,6 +380,48 @@ function initializeProgressBars() {
 
 // Function to initialize editor
 function initializeEditor() {
+    // Special handling for site title
+    const siteTitle = document.getElementById('site-title');
+    if (siteTitle) {
+        // Make sure it's editable
+        siteTitle.setAttribute('contenteditable', 'true');
+
+        // Add click handler to make it editable on click
+        siteTitle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Select all text on click
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(this);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        });
+
+        // Make sure the title is saved when edited
+        siteTitle.addEventListener('input', function() {
+            saveState();
+        });
+    }
+
+    // Handle the site logo container to prevent it from interfering with editing
+    const siteLogoContainer = document.querySelector('.site-logo-container');
+    if (siteLogoContainer) {
+        siteLogoContainer.addEventListener('click', function(e) {
+            // If the click is directly on the container (not on the h1), focus the h1
+            if (e.target === this) {
+                const h1 = this.querySelector('#site-title');
+                if (h1) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Trigger a click on the h1
+                    h1.click();
+                }
+            }
+        });
+    }
+
     // Add CSS for button animations and portfolio items
     const style = document.createElement('style');
     style.textContent = `
