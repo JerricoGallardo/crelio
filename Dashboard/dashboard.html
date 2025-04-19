@@ -15,7 +15,7 @@
                 <i class="fas fa-pencil-ruler"></i>
                 <span>Crealio</span>
             </div>
-            
+
             <nav>
                 <a href="../Profile/profile.html" class="nav-item">
                     <i class="fas fa-user"></i>
@@ -26,7 +26,7 @@
                     <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </a>
-                
+
                 <a href="../My Portfolio/myportfolio.html" class="nav-item">
                     <i class="fas fa-folder"></i>
                     <span>My Portfolio</span>
@@ -36,14 +36,14 @@
                     <i class="fas fa-plus-circle"></i>
                     <span>Create Portfolio</span>
                 </a>
-                
+
                 <a href="../Settings/settings.html" class="nav-item">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </a>
             </nav>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content">
             <div class="page-header">
@@ -84,7 +84,8 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
-                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;">
+                                <!-- Compact Mode button hidden as requested -->
+                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;" style="display: none;">
                                     <i class="fas fa-compress-alt"></i>
                                     <div>
                                         <span>Compact Mode</span>
@@ -94,7 +95,7 @@
                             </div>
 
                             <div class="divider"></div>
-                            
+
                             <div class="menu-section">
                                 <a href="#" class="menu-item logout ripple" onclick="logout(); return false;">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -105,31 +106,31 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Welcome Section -->
             <div class="welcome-section">
                 <h2>Welcome back, dsasa!</h2>
                 <p>Here's what's happening with your projects today.</p>
             </div>
-            
+
             <!-- Stats Overview -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-value">2</div>
                     <div class="stat-label">Portfolio Sites</div>
                 </div>
-                
+
                 <div class="stat-card">
                     <div class="stat-value">12</div>
                     <div class="stat-label">Total Downloads</div>
                 </div>
-                
+
                 <div class="stat-card">
                     <div class="stat-value">27</div>
                     <div class="stat-label">Profile Views</div>
                 </div>
             </div>
-            
+
             <!-- Quick Actions -->
             <div class="quick-actions">
                 <h2>Quick Actions</h2>
@@ -144,14 +145,14 @@
                     </a>
                 </div>
             </div>
-            
+
             <!-- Recent Projects -->
             <div class="dashboard-card">
                 <div class="card-header">
                     <h2 class="card-title">Recent Projects</h2>
                     <a href="../My Portfolio/myportfolio.html" style="color: var(--primary); font-size: 14px;">View All</a>
                 </div>
-                
+
                 <div class="projects-grid">
                     <!-- Empty state message -->
                     <div class="empty-projects">
@@ -160,7 +161,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Activity Timeline -->
             <div class="timeline-card">
                 <div class="timeline-header">
@@ -173,7 +174,7 @@
                         <button class="filter-btn">Downloads</button>
                     </div>
                 </div>
-                
+
                 <div class="timeline">
                     <!-- Activity 1 -->
                     <div class="timeline-item">
@@ -186,7 +187,7 @@
                             <p class="timeline-desc">Using the Modern template</p>
                         </div>
                     </div>
-                    
+
                     <!-- Activity 2 -->
                     <div class="timeline-item">
                         <div class="timeline-dot">
@@ -197,7 +198,7 @@
                             <h3 class="timeline-title">Downloaded "Professional Portfolio Website" as PDF</h3>
                         </div>
                     </div>
-                    
+
                     <!-- Activity 3 -->
                     <div class="timeline-item">
                         <div class="timeline-dot">
@@ -209,7 +210,7 @@
                             <p class="timeline-desc">3 unique visitors from LinkedIn</p>
                         </div>
                     </div>
-                    
+
                     <!-- Activity 4 -->
                     <div class="timeline-item">
                         <div class="timeline-dot">
@@ -222,11 +223,12 @@
                     </div>
                 </div>
             </div>
-            
+
         </main>
     </div>
 
     <script src="../Main Page JS/mainpage.js"></script>
+    <script src="../Main Page JS/page-transitions.js"></script>
     <script src="dashboard.js"></script>
 </body>
 </html>

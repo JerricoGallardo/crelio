@@ -15,35 +15,35 @@
                 <i class="fas fa-pencil-ruler"></i>
                 <span>Crealio</span>
             </div>
-            
+
             <nav>
                 <a href="#" class="nav-item active">
                     <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
-                
+
                 <a href="../Dashboard/dashboard.html" class="nav-item">
                     <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </a>
-                
+
                 <a href="../My Portfolio/myportfolio.html" class="nav-item">
                     <i class="fas fa-folder"></i>
                     <span>My Portfolio</span>
                 </a>
-                
+
                 <a href="../Create New/createnewportfolio.html" class="nav-item">
                     <i class="fas fa-plus-circle"></i>
                     <span>Create Portfolio</span>
                 </a>
-                
+
                 <a href="../Settings/settings.html" class="nav-item">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </a>
             </nav>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content">
             <div class="page-header">
@@ -56,7 +56,7 @@
                             <span></span>
                         </div>
                     </div>
-                    
+
                     <!-- Profile Dropdown Menu -->
                     <div class="profile-menu" id="profileMenu">
                         <div class="profile-header">
@@ -85,7 +85,8 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
-                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;">
+                                <!-- Compact Mode button hidden as requested -->
+                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;" style="display: none;">
                                     <i class="fas fa-compress-alt"></i>
                                     <div>
                                         <span>Compact Mode</span>
@@ -95,7 +96,7 @@
                             </div>
 
                             <div class="divider"></div>
-                            
+
                             <div class="menu-section">
                                 <a href="#" class="menu-item logout ripple">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -206,6 +207,7 @@
         </main>
     </div>
     <script src="../Main Page JS/mainpage.js"></script>
+    <script src="../Main Page JS/page-transitions.js"></script>
     <script src="profile.js"></script>
 
 </body>

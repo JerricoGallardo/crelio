@@ -15,35 +15,35 @@
                 <i class="fas fa-pencil-ruler"></i>
                 <span>Crealio</span>
             </div>
-            
+
             <nav>
                 <a href="../Profile/profile.html" class="nav-item">
                     <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
-                
+
                 <a href="../Dashboard/dashboard.html" class="nav-item">
                     <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </a>
-                
+
                 <a href="myportfolio.html" class="nav-item active">
                     <i class="fas fa-folder"></i>
                     <span>My Portfolio</span>
                 </a>
-                
+
                 <a href="../Create New/createnewportfolio.html" class="nav-item">
                     <i class="fas fa-plus-circle"></i>
                     <span>Create Portfolio</span>
                 </a>
-            
+
                 <a href="../Settings/settings.html" class="nav-item">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </a>
             </nav>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content">
             <div class="page-header">
@@ -56,7 +56,7 @@
                             <span></span>
                         </div>
                     </div>
-                    
+
                     <!-- Enhanced Profile Dropdown Menu -->
                     <div class="profile-menu" id="profileMenu">
                         <div class="profile-header">
@@ -85,7 +85,8 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
-                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;">
+                                <!-- Compact Mode button hidden as requested -->
+                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;" style="display: none;">
                                     <i class="fas fa-compress-alt"></i>
                                     <div>
                                         <span>Compact Mode</span>
@@ -95,7 +96,7 @@
                             </div>
 
                             <div class="divider"></div>
-                            
+
                             <div class="menu-section">
                                 <a href="#" class="menu-item logout ripple" onclick="logout(); return false;">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -106,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projects Filter Section -->
             <div class="filter-section">
                 <div class="filter-group">
@@ -114,14 +115,14 @@
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Search portfolio...">
                     </div>
-                    
+
                     <div class="filter-buttons">
                         <button class="filter-btn active">All</button>
                         <button class="filter-btn">Published</button>
                         <button class="filter-btn">Drafts</button>
                     </div>
                 </div>
-                
+
                 <div class="sort-group">
                     <label for="sortProjects">Sort by:</label>
                     <select id="sortProjects">
@@ -131,7 +132,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <!-- Projects Grid -->
             <div class="projects-grid">
                 <!-- Published Project 1 -->
@@ -159,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Published Project 2 -->
                 <div class="project-card published">
                     <div class="project-preview">
@@ -211,7 +212,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Draft Project 1 -->
                 <div class="project-card draft">
                     <div class="project-preview">
@@ -237,7 +238,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Draft Project 2 -->
                 <div class="project-card draft">
                     <div class="project-preview">
@@ -263,7 +264,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Draft Project 3 -->
                 <div class="project-card draft">
                     <div class="project-preview">
@@ -290,7 +291,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Empty State (hidden by default) -->
             <div class="empty-state" style="display: none;">
                 <div class="empty-icon">
@@ -306,5 +307,6 @@
     </div>
 
     <script src="../Main Page JS/mainpage.js"></script>
+    <script src="../Main Page JS/page-transitions.js"></script>
 </body>
 </html>
