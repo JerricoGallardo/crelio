@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Page Needs -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Crealio - Minimal Template</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
+
+    <!-- Stylesheets -->
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/responsive.css" rel="stylesheet">
+
+    <!-- Make sure the CSS is loaded -->
+    <style>
+        @import url('assets/css/style.css');
+        @import url('assets/css/responsive.css');
+
+        /* Fix for site title cursor and alignment */
+        #site-title {
+            cursor: text !important;
+            padding-top: 15px; /* Increased padding to move it lower */
+            margin-bottom: 5px; /* Added margin to fine-tune position */
+            line-height: 1; /* Tighter line height */
+        }
+
+        .site-logo-container {
+            cursor: default;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Adjust navigation alignment */
+        .site-navigation {
+            padding-top: 8px; /* Adjusted to match the MINIMAL text */
+        }
+
+        .site-navigation ul li a {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            line-height: 30px;
+            display: inline-block;
+        }
+
+        /* Ensure the navigation row is properly aligned */
+        .site-header .row {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+    <!-- Editor Toolbar Styles -->
+    <style>
+        .editor-toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .toolbar-buttons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toolbar-btn {
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toolbar-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .toolbar-btn.primary {
+            background-color: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .toolbar-btn.primary:hover {
+            background-color: #000;
+        }
+
+        .font-select,
+        .size-select {
+            background: transparent;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .edit-mode-indicator {
+            background-color: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+            display: none;
+        }
+
+        .preview-mode-indicator {
+            background-color: #17a2b8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+            display: none;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 2px dashed #212121;
+            outline-offset: 2px;
+        }
+
+        .section-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .section-control-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #555;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        <!-- Editor Toolbar -->
+        <div class="editor-toolbar">
+            <div class="toolbar-left">
+                <button id="exit-btn" class="back-button">
+                    <i class="fa fa-arrow-left"></i> Back
+                </button>
+                <button id="save-btn" class="save-btn">
+                    <i class="fa fa-save"></i> Save
+                </button>
+                <button id="preview-btn" class="preview-btn">
+                    <i class="fa fa-eye"></i> Preview
+                </button>
+            </div>
+            
+            <div class="toolbar-center">
+                <div class="tool-group">
+                    <button id="undo-btn" class="toolbar-btn" title="Undo">
+                        <i class="fa fa-undo"></i>
+                    </button>
+                    <button id="redo-btn" class="toolbar-btn" title="Redo">
+                        <i class="fa fa-repeat"></i>
+                    </button>
+                </div>
+                
+                <div class="tool-group">
+                    <button id="bold-btn" class="toolbar-btn" title="Bold">
+                        <i class="fa fa-bold"></i>
+                    </button>
+                    <button id="italic-btn" class="toolbar-btn" title="Italic">
+                        <i class="fa fa-italic"></i>
+                    </button>
+                    <button id="underline-btn" class="toolbar-btn" title="Underline">
+                        <i class="fa fa-underline"></i>
+                    </button>
+                </div>
+                
+                <div class="tool-group">
+                    <select id="font-family-select" class="style-select">
+                        <option value="inherit">Default</option>
+                        <option value="'Poppins', sans-serif">Poppins</option>
+                        <option value="'Roboto', sans-serif">Roboto</option>
+                        <option value="'Open Sans', sans-serif">Open Sans</option>
+                        <option value="'Montserrat', sans-serif">Montserrat</option>
+                        <option value="'Lato', sans-serif">Lato</option>
+                    </select>
+                    <select id="font-size-select" class="style-select">
+                        <option value="">Default</option>
+                        <option value="16px">16px</option>
+                        <option value="18px">18px</option>
+                        <option value="20px">20px</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="toolbar-right">
+                <div class="template-name">Executive Template</div>
+            </div>
+        </div>
+
+        <!-- top-area Start -->
+        <header class="top-area">
+680-        <div class="container">
+681-            <div class="row">
+682-                <div class="col-md-3 col-sm-6 col-xs-6">
+683-                    <div class="site-logo-container">
+684-                        <h1 id="site-title" contenteditable="true" style="margin: 0; padding-top: 15px; margin-bottom: 5px; font-weight: bold; font-size: 28px; color: #212121; letter-spacing: 1px; cursor: text; line-height: 1;">MINIMAL</h1>
+685-                        <a href="#hero" class="site-logo-link" style="display: none;"></a>
+686-                    </div>
+687-                </div>
+688-                <div class="col-md-9 col-sm-6 col-xs-6">
+689-                    <div class="mobile-menu-toggle visible-xs visible-sm">
+690-                        <button type="button" class="navbar-toggle">
+691-                            <span class="sr-only">Toggle navigation</span>
+692-                            <span class="icon-bar"></span>
+693-                            <span class="icon-bar"></span>
+694-                            <span class="icon-bar"></span>
+695-                        </button>
+696-                    </div>
+697-                    <nav id="primary-navigation" class="site-navigation">
+698-                        <ul class="nav navbar-nav navbar-right">
+699-                            <li class="page-scroll"><a href="#hero">HOME</a></li>
+700-                            <li class="page-scroll"><a href="#about">ABOUT</a></li>
+701-                            <li class="page-scroll"><a href="#service">SERVICE</a></li>
+702-                            <li class="page-scroll"><a href="#portfolio">PORTFOLIO</a></li>
+703-                            <li class="page-scroll"><a href="#contact">CONTACT</a></li>
+704-                        </ul>
+705-                    </nav>
+706-                </div>
+707-            </div>
+708-        </div>
+709-    </header><!-- /#header -->
+710-
+711-    <div id="hero" class="hero">
+712-        <div class="container">
+713-            <div class="row">
+714-                <div class="col-md-6">
+715-                    <h1 contenteditable="true" style="text-decoration: none;">ALEX VIDAL</h1>
+716-                    <div class="page-scroll">
+717-                        <p class="job-title" contenteditable="true">Full Stack Developer</p>
+718-                        <a href="#contact" class="btn btn-fill" contenteditable="true">HIRE ME</a>
+719-                        <div class="clearfix visible-xxs"></div>
+720-                        <a href="#portfolio" class="btn btn-border" contenteditable="true">EXPLORE MORE</a>
+721-                    </div>
+722-                </div>
+723-                <div class="col-md-6 text-right">
+724-                    <div class="hero-image-wrapper">
+725-                        <img src="assets/img/alex-vidal.png" alt="profile" id="profile-image">
+726-                        <div class="text-right" style="margin-top: 10px;">
+727-                            <button class="btn btn-border" onclick="document.getElementById('profile-upload').click()">CHANGE IMAGE</button>
+728-                            <input type="file" id="profile-upload" style="display: none;" accept="image/*">
+729-                        </div>
+730-                    </div>
+731-                </div>
+732-            </div>
+733-        </div>
+734-    </div><!-- /.hero -->
+735-
+736-    <main id="main" class="site-main">
+737-        <section id="about" class="site-section section-about text-center">
+738-            <div class="container">
+739-                <div class="row">
+740-                    <div class="col-md-6 col-md-offset-3">
+741-                        <h2 contenteditable="true">ABOUT</h2>
+742-                        <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+743-                        <p contenteditable="true">Hello! I'm Alex, a full stack developer, a Ruby enthusiast, and a guy slightly obsessed with code quality. Also I'm a co-founder of pykod.com. I'm currently available for freelance work. If you have a project that you want to get started or think you need my help with something, then get in touch.</p>
+744-                    </div>
+745-                </div>
+746-            </div>
+747-        </section><!-- /.secton-about -->
+748-
+749-        <section class="site-section section-skills">
+750-            <div class="container">
+751-                <div class="text-center">
+752-                    <h3 contenteditable="true">MY SKILLS</h3>
+753-                    <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+754-                    <div class="section-controls">
+755-                        <button class="section-control-btn add-btn" id="add-skill-btn" title="Add Skill"><i class="glyphicon glyphicon-plus"></i></button>
+756-                    </div>
+757-                </div>
+758-                <div class="row" style="margin-top: 50px;">
+759-                    <div class="col-md-4">
+760-                        <div class="skill">
+761-                            <div class="item-controls">
+762-                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+763-                            </div>
+764-                            <h4 contenteditable="true">HTML/CSS</h4>
+765-                            <div class="progress">
+766-                                <div class="progress-bar" role="progressbar" data-transitiongoal="100" data-percentage="100" data-content="100%" style="width: 100%"></div>
+767-                            </div>
+768-                        </div>
+769-                        <div class="skill">
+770-                            <div class="item-controls">
+771-                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+772-                            </div>
+773-                            <h4 contenteditable="true">PYTHON</h4>
+774-                            <div class="progress">
+775-                                <div class="progress-bar" role="progressbar" data-transitiongoal="75" data-percentage="75" data-content="75%" style="width: 75%"></div>
+776-                            </div>
+777-                        </div>
+778-                    </div>
+779-                    <div class="col-md-4">
+780-                        <div class="skill">
+781-                            <div class="item-controls">
+782-                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+783-                            </div>
+784-                            <h4 contenteditable="true">JAVASCRIPT</h4>
+785-                            <div class="progress">
+786-                                <div class="progress-bar" role="progressbar" data-transitiongoal="82" data-percentage="82" data-content="82%" style="width: 82%"></div>
+787-                            </div>
+788-                        </div>
+789-                        <div class="skill">
+790-                            <div class="item-controls">
+791-                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+792-                            </div>
+793-                            <h4 contenteditable="true">RUBY</h4>
+794-                            <div class="progress">
+795-                                <div class="progress-bar" role="progressbar" data-transitiongoal="66" data-percentage="66" data-content="66%" style="width: 66%"></div>
+796-                            </div>
+797-                        </div>
+798-                    </div>
+799-                    <div class="col-md-4">
+800-                        <div class="skill">
+801-                            <div class="item-controls">
+802-                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+803-                            </div>
+804-                            <h4 contenteditable="true">PHP</h4>
+805-                            <div class="progress">
+806-                                <div class="progress-bar" role="progressbar" data-transitiongoal="97" data-percentage="97" data-content="97%" style="width: 97%"></div>
+807-                            </div>
+808-                        </div>
+809-                        <div class="skill">
+810-                            <div class="item-controls">
+811-                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+812-                            </div>
+813-                            <h4 contenteditable="true">JAVA</h4>
+814-                            <div class="progress">
+815-                                <div class="progress-bar" role="progressbar" data-transitiongoal="45" data-percentage="45" data-content="45%" style="width: 45%"></div>
+816-                            </div>
+817-                        </div>
+818-                    </div>
+819-                </div>
+820-            </div>
+821-        </section><!-- /.secton-skills -->
+822-
+823-        <section id="service" class="site-section section-services overlay text-center">
+824-            <div class="container">
+825-                <div class="row">
+826-                    <div class="col-md-12">
+827-                        <h3 contenteditable="true">WHAT I DO</h3>
+828-                        <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+829-                        <div class="section-controls" style="margin-top: 10px; margin-bottom: 20px; display: flex; justify-content: center;">
+830-                            <button type="button" class="section-control-btn add-btn" id="add-service-btn" title="Add Service" style="cursor: pointer; position: relative; z-index: 100;"><i class="glyphicon glyphicon-plus"></i></button>
+831-                        </div>
+832-                    </div>
+833-                    <div class="col-sm-4">
+834-                        <div class="service">
+835-                            <div class="item-controls">
+836-                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
+837-                            </div>
+838-                            <img src="assets/img/front-end.svg" alt="Front End Developer">
+839-                            <h4 contenteditable="true">Front-end</h4>
+840-                            <p contenteditable="true">As a javascript developer, I have experience in HTML5 and CSS3 techniques working with jQuery or more advanced javascript MVC frameworks such as angular</p>
+841-                        </div><!-- /.service -->
+842-                    </div>
+843-                    <div class="col-sm-4">
+844-                        <div class="service">
+845-                            <div class="item-controls">
+846-                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
+847-                            </div>
+848-                            <img src="assets/img/back-end.svg" alt="Back End Developer">
+849-                            <h4 contenteditable="true">Back-end</h4>
+850-                            <p contenteditable="true">Utilising php frameworks such as Zend or creating bespoke code, I've written services supporting thousands of users, including REST APIs, e-learning applications and more.</p>
+851-                        </div><!-- /.service -->
+852-                    </div>
+853-                    <div class="col-sm-4">
+854-                        <div class="service">
+855-                            <div class="item-controls">
+856-                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
+857-                            </div>
+858-                            <img src="assets/img/consultancy.svg" alt="Coding">
+859-                            <h4 contenteditable="true">Consultancy</h4>
+860-                            <p contenteditable="true">As well as providing development services, I can also help you decide strategic roadmaps via consultancy services.</p>
+861-                        </div><!-- /.service -->
+862-                    </div>
+863-                </div>
+864-            </div>
+865-        </section><!-- /.secton-services -->
+866-
+867-        <section id="portfolio" class="site-section section-portfolio">
+868-            <div class="container">
+869-                <div class="text-center">
+870-                    <h3 contenteditable="true">MY RECENT WORKS</h3>
+871-                    <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+872-                    <div class="section-controls">
+873-                        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Portfolio Item"><i class="glyphicon glyphicon-plus"></i></button>
+874-                    </div>
+875-                </div>
+876-                <div class="row">
+877-                    <div class="col-md-4 col-xs-6">
+878-                        <div class="portfolio-item">
+879-                            <div class="item-controls">
+880-                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+881-                            </div>
+882-                            <div class="portfolio-item-wrapper">
+883-                                <img src="assets/img/portfolio/portfolio-1.jpg" class="img-res" alt="" id="portfolio-image-1">
+884-                                <div class="portfolio-item-overlay">
+885-                                    <h4 contenteditable="true">Project Title</h4>
+886-                                    <div class="portfolio-item-buttons">
+887-                                        <a href="#" class="portfolio-item-button view-project" data-project="1" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+888-                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-1').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+889-                                    </div>
+890-                                </div>
+891-                            </div>
+892-                            <input type="file" id="portfolio-upload-1" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+893-                        </div><!-- /.portfolio-item -->
+894-                    </div>
+895-                    <div class="col-md-4 col-xs-6">
+896-                        <div class="portfolio-item">
+897-                            <div class="item-controls">
+898-                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+899-                            </div>
+900-                            <div class="portfolio-item-wrapper">
+901-                                <img src="assets/img/portfolio/portfolio-2.jpg" class="img-res" alt="" id="portfolio-image-2">
+902-                                <div class="portfolio-item-overlay">
+903-                                    <h4 contenteditable="true">Project Title</h4>
+904-                                    <div class="portfolio-item-buttons">
+905-                                        <a href="#" class="portfolio-item-button view-project" data-project="2" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+906-                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-2').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+907-                                    </div>
+908-                                </div>
+909-                            </div>
+910-                            <input type="file" id="portfolio-upload-2" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+911-                        </div><!-- /.portfolio-item -->
+912-                    </div>
+913-                    <div class="col-md-4 col-xs-6">
+914-                        <div class="portfolio-item">
+915-                            <div class="item-controls">
+916-                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+917-                            </div>
+918-                            <div class="portfolio-item-wrapper">
+919-                                <img src="assets/img/portfolio/portfolio-3.jpg" class="img-res" alt="" id="portfolio-image-3">
+920-                                <div class="portfolio-item-overlay">
+921-                                    <h4 contenteditable="true">Project Title</h4>
+922-                                    <div class="portfolio-item-buttons">
+923-                                        <a href="#" class="portfolio-item-button view-project" data-project="3" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+924-                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-3').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+925-                                    </div>
+926-                                </div>
+927-                            </div>
+928-                            <input type="file" id="portfolio-upload-3" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+929-                        </div><!-- /.portfolio-item -->
+930-                    </div>
+931-                </div>
+932-            </div>
+933-        </section><!-- /.secton-portfolio -->
+934-
+935-        <section class="site-section section-counters text-center">
+936-            <div class="container">
+937-                <div class="row">
+938-                    <div class="col-sm-4 col-xs-12">
+939-                        <p class="counter start" data-to="10" data-speed="2000">0</p>
+940-                        <h4>Years Experience</h4>
+941-                    </div>
+942-                    <div class="col-sm-4 col-xs-12">
+943-                        <p class="counter start" data-to="120" data-speed="2000">0</p>
+944-                        <h4>Projects Delivered</h4>
+945-                    </div>
+946-                    <div class="col-sm-4 col-xs-12">
+947-                        <p id="infinity" class="counter" data-from="0" data-to="1" data-speed="1000">0</p>
+948-                        <h4>Seconds on this site!<br>What are you waiting for?</h4>
+949-                    </div>
+950-                </div>
+951-            </div>
+952-        </section><!-- /.section-counters -->
+953-
+954-        <section id="contact" class="site-section section-form text-center">
+955-            <div class="container">
+956-                <h3 contenteditable="true">CONTACT</h3>
+957-                <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+958-                <form>
+959-                    <div class="row">
+960-                        <div class="col-sm-6">
+961-                            <input type="text" name="name" class="form-control mt-x-0" placeholder="Name" required>
+962-                        </div>
+963-                        <div class="col-sm-6">
+964-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+965-                        </div>
+966-                        <div class="col-sm-12">
+967-                            <textarea name="message" id="mesaage" class="form-control" placeholder="Message" required></textarea>
+968-                        </div>
+969-                    </div>
+970-                    <button href="#" class="btn btn-border" type="submit" contenteditable="true">HIRE ME <span class="glyphicon glyphicon-send"></span></button>
+971-                </form>
+972-            </div>
+973-        </section><!-- /.section-form -->
+974-    </main><!-- /#main -->
+975-
+976-    <!-- Portfolio Modal -->
+977-    <div class="portfolio-modal" id="portfolio-modal">
+978-        <div class="portfolio-modal-content">
+979-            <span class="portfolio-modal-close">&times;</span>
+980-            <div class="portfolio-modal-body">
+981-                <img src="" alt="Project Image" id="portfolio-modal-image">
+982-                <div class="portfolio-modal-details">
+983-                    <h2 id="portfolio-modal-title">Project title</h2>
+984-                    <p id="portfolio-modal-description" contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec commodo finibus tristique. Maecenas dignissim condimentum sem eu tincidunt. Curabitur in dui quis magna vestibulum pulvinar a ut urna. Nam pellentesque mattis urna. Aenean eget lectus sit amet turpis facilisis consectetur quis vel ante. Integer in massa ut nibh ultricies sagittis imperdiet in ante. Nam sed turpis vel ante placerat feugiat ac tempus magna. Nam aliquet ullamcorper dolor non hendrerit.</p>
+985-                    <a href="#" class="btn btn-border" id="portfolio-modal-link">VISIT PAGE</a>
+986-                </div>
+987-            </div>
+988-        </div>
+989-    </div>
+990-
+991-    <footer id="colophon" class="site-footer">
+992-        <div class="container">
+993-            <div class="row">
+994-                <div class="col-sm-4 col-xs-12">
+995-                    <a class="icon facebook-bg" href="#" data-editable="true"><i class="icon-facebook"></i></a>
+996-                    <a class="icon twitter-bg" href="#" data-editable="true"><i class="icon-twitter"></i></a>
+997-                    <a class="icon gplus-bg" href="#" data-editable="true"><i class="icon-linkedin"></i></a>
+998-                    <a class="icon linkedin-bg" href="#" data-editable="true"><i class="icon-gplus"></i></a>
+999-                </div>
+1000-                <div class="col-sm-4 col-sm-offset-0 col-xs-6 col-xs-offset-3"><p class="copyright" contenteditable="true">2023. All Rights Reserved</p></div>
+1001-                <div class="col-sm-4 col-xs-3">
+1002-                    <div class="text-right page-scroll">
+1003-                        <a class="icon icon-up-bg" href="#hero"><i class="icon-up"></i></a>
+1004-                    </div>
+1005-                </div>
+1006-            </div>
+1007-        </div>
+1008-    </footer><!-- /#footer -->
+1009-
+1010-    <!-- Bootstrap core JavaScript
+1011-    ================================================== -->
+1012-    <!-- Placed at the end of the document so the pages load faster -->
+1013-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+1014-    <script src="assets/js/bootstrap.min.js"></script>
+1015-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+1016-    <script src="assets/js/skrollr.min.js"></script>
+1017-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-progressbar/0.9.0/bootstrap-progressbar.min.js"></script>
+1018-    <script src="assets/js/jquery.countTo.min.js"></script>
+1019-    <script src="assets/js/script.js"></script>
+1020-    <script src="minimal-portfolio-new.js"></script>
+1021-
+1022-    <!-- Initialize the Portfolio Perfect template -->
+1023-    <script>
+1024-        $(document).ready(function() {
+1025-            // Initialize skrollr for parallax effects
+1026-            if (!(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
+1027-                skrollr.init({
+1028-                    forceHeight: false,
+1029-                    smoothScrolling: false,
+1030-                    mobileCheck: function() {
+1031-                        //hack - forces mobile version to be off
+1032-                        return false;
+1033-                    }
+1034-                });
+1035-            }
+1036-
+1037-            // Add sticky header on scroll
+1038-            $(window).on('scroll', function() {
+1039-                if ($(window).scrollTop() > 100) {
+1040-                    $('.site-header').addClass('sticky');
+1041-                } else {
+1042-                    $('.site-header').removeClass('sticky');
+1043-                }
+1044-            });
+1045-
+1046-            // Function to set active menu item based on current section
+1047-            function setActiveMenuItem() {
+1048-                var scrollPos = $(document).scrollTop();
+1049-                var windowHeight = $(window).height();
+1050-                var found = false;
+1051-
+1052-                // Get the current URL hash if any
+1053-                var currentHash = window.location.hash;
+1054-
+1055-                // If we have a hash in the URL, activate that menu item
+1056-                if (currentHash && $(currentHash).length) {
+1057-                    $('.site-navigation ul li').removeClass('active');
+1058-                    $('.site-navigation ul li a[href="' + currentHash + '"]').parent().addClass('active');
+1059-                    return;
+1060-                }
+1061-
+1062-                // Check each section in reverse order (to prioritize later sections)
+1063-                var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];
+1064-
+1065-                // Calculate the top and bottom of the viewport
+1066-                var viewportTop = scrollPos;
+1067-                var viewportBottom = scrollPos + windowHeight;
+1068-                var viewportCenter = scrollPos + (windowHeight / 2);
+1069-
+1070-                // First pass: Check if any section occupies a significant portion of the viewport
+1071-                for (var i = 0; i < sections.length; i++) {
+1072-                    var section = $(sections[i]);
+1073-                    if (section.length) {
+1074-                        var sectionTop = section.offset().top;
+1075-                        var sectionHeight = section.height();
+1076-                        var sectionBottom = sectionTop + sectionHeight;
+1077-                        var sectionCenter = sectionTop + (sectionHeight / 2);
+1078-
+1079-                        // Calculate how much of the section is visible in the viewport
+1080-                        var visibleTop = Math.max(sectionTop, viewportTop);
+1081-                        var visibleBottom = Math.min(sectionBottom, viewportBottom);
+1082-                        var visibleHeight = Math.max(0, visibleBottom - visibleTop);
+1083-                        var visibilityPercentage = visibleHeight / windowHeight * 100;
+1084-
+1085-                        // If section occupies more than 40% of the viewport or contains the viewport center
+1086-                        if (visibilityPercentage > 40 || (sectionTop <= viewportCenter && sectionBottom >= viewportCenter)) {
+1087-                            $('.site-navigation ul li').removeClass('active');
+1088-                            $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
+1089-
+1090-                            // Add specific body classes for each section
+1091-                            $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+1092-                            $('body').addClass(sections[i].substring(1) + '-section');
+1093-
+1094-                            found = true;
+1095-                            break;
+1096-                        }
+1097-                    }
+1098-                }
+1099-
+1100-                // Second pass: If no section is dominant, use the one that contains the center of the viewport
+1101-                if (!found) {
+1102-                    for (var i = 0; i < sections.length; i++) {
+1103-                        var section = $(sections[i]);
+1104-                        if (section.length) {
+1105-                            var sectionTop = section.offset().top - 100; // Add offset for header
+1106-                            var sectionBottom = sectionTop + section.height();
+1107-
+1108-                            if (viewportCenter >= sectionTop && viewportCenter <= sectionBottom) {
+1109-                                $('.site-navigation ul li').removeClass('active');
+1110-                                $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
+1111-
+1112-                                // Add specific body classes for each section
+1113-                                $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+1114-                                $('body').addClass(sections[i].substring(1) + '-section');
+1115-
+1116-                                found = true;
+1117-                                break;
+1118-                            }
+1119-                        }
+1120-                    }
+1121-                }
+1122-
+1123-                // If still no section is active and we're at the top, activate home
+1124-                if (!found) {
+1125-                    $('.site-navigation ul li').removeClass('active');
+1126-                    $('.site-navigation ul li a[href="#hero"]').parent().addClass('active');
+1127-                    $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+1128-                    $('body').addClass('hero-section');
+1129-                }
+1130-            }
+1131-
+1132-            // Set active menu item on page load
+1133-            setActiveMenuItem();
+1134-
+1135-            // Update active menu item on scroll
+1136-            $(window).on('scroll', setActiveMenuItem);
+1137-
+1138-            // Force active menu item for the about section if we're in that section
+1139-            if ($('#about').length && $(window).scrollTop() >= $('#about').offset().top - 150) {
+1140-                $('.site-navigation ul li').removeClass('active');
+1141-                $('.site-navigation ul li a[href="#about"]').parent().addClass('active');
+1142-                $('body').addClass('about-section');
+1143-            }
+1144-
+1145-            // Update active section on scroll - this is a more aggressive approach
+1146-            $(window).on('scroll', function() {
+1147-                // Call our main function to update the active menu item
+1148-                setActiveMenuItem();
+1149-
+1150-                // Force immediate update of the navigation state
+1151-                var scrollPos = $(window).scrollTop();
+1152-                var windowHeight = $(window).height();
+1153-                var viewportCenter = scrollPos + (windowHeight / 2);
+1154-
+1155-                // Check each section
+1156-                var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];
+1157-                var found = false;
+1158-
+1159-                for (var i = 0; i < sections.length; i++) {
+1160-                    var section = $(sections[i]);
+1161-                    if (section.length) {
+1162-                        var sectionTop = section.offset().top - 120; // Adjust for header
+1163-                        var sectionBottom = sectionTop + section.height();
+1164-
+1165-                        // Check if viewport center is within this section
+1166-                        if (viewportCenter >= sectionTop && viewportCenter <= sectionBottom) {
+1167-                            // Set active navigation item
+1168-                            $('.site-navigation ul li').removeClass('active');
+1169-                            $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
+1170-
+1171-                            // Set body class
+1172-                            $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+1173-                            $('body').addClass(sections[i].substring(1) + '-section');
+1174-
+1175-                            found = true;
+1176-                            break;
+1177-                        }
+1178-                    }
+1179-                }
+1180-
+1181-                // If no section is active, default to the one closest to the viewport center
+1182-                if (!found) {
+1183-                    var closestSection = null;
+1184-                    var closestDistance = Infinity;
+1185-
+1186-                    for (var i = 0; i < sections.length; i++) {
+1187-                        var section = $(sections[i]);
+1188-                        if (section.length) {
+1189-                            var sectionCenter = section.offset().top + (section.height() / 2);
+1190-                            var distance = Math.abs(viewportCenter - sectionCenter);
+1191-
+1192-                            if (distance < closestDistance) {
+1193-                                closestDistance = distance;
+1194-                                closestSection = sections[i];
+1195-                            }
+1196-                        }
+1197-                    }
+1198-
+1199-                    if (closestSection) {
+1200-                        $('.site-navigation ul li').removeClass('active');
+1201-                        $('.site-navigation ul li a[href="' + closestSection + '"]').parent().addClass('active');
+1202-
+1203-                        $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+1204-                        $('body').addClass(closestSection.substring(1) + '-section');
+1205-                    }
+1206-                }
+1207-            });
+1208-
+1209-            // Force the about section to be active if the URL contains #about
+1210-            if (window.location.hash === '#about') {
+1211-                $('.site-navigation ul li').removeClass('active');
+1212-                $('.site-navigation ul li a[href="#about"]').parent().addClass('active');
+1213-                $('body').addClass('about-section');
+1214-            }
+1215-
+1216-            // Add button animations
+1217-            const toolbarButtons = document.querySelectorAll('.toolbar-btn');
+1218-            toolbarButtons.forEach(button => {
+1219-                button.addEventListener('click', function() {
+1220-                    this.classList.add('clicked');
+1221-                    setTimeout(() => {
+1222-                        this.classList.remove('clicked');
+1223-                    }, 200);
+1224-                });
+1225-            });
+1226-
+1227-            // Add click handlers for navigation links
+1228-            $('.site-navigation ul li a').on('click', function(e) {
+1229-                e.preventDefault();
+1230-                var target = $(this).attr('href');
+1231-                var targetSection = target.substring(1); // Remove the # to get the section name
+1232-
+1233-                // Remove active class from all menu items
+1234-                $('.site-navigation ul li').removeClass('active');
+1235-
+1236-                // Add active class to clicked menu item
+1237-                $(this).parent().addClass('active');
+1238-
+1239-                // Update body classes for all sections
+1240-                $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+1241-                $('body').addClass(targetSection + '-section');
+1242-
+1243-                // Smooth scroll to target
+1244-                $('html, body').animate({
+1245-                    scrollTop: $(target).offset().top - 120
+1246-                }, 800, function() {
+1247-                    // After animation completes, update the URL hash
+1248-                    if (history.pushState) {
+1249-                        history.pushState(null, null, target);
+1250-                    } else {
+1251-                        window.location.hash = target;
+1252-                    }
+1253-
+1254-                    // Force active state again after scroll completes
+1255-                    $('.site-navigation ul li').removeClass('active');
+1256-                    $('.site-navigation ul li a[href="' + target + '"]').parent().addClass('active');
+1257-
+1258-                    // Make sure the body class is still set correctly
+1259-                    $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+1260-                    $('body').addClass(targetSection + '-section');
+1261-
+1262-                    // Force the underline to be visible
+1263-                    $('.site-navigation ul li a[href="' + target + '"]').css('position', 'relative');
+1264-                    $('.site-navigation ul li a[href="' + target + '"]:after').css('width', '100%');
+1265-                });
+1266-            });
+1267-        });
+1268-    </script>
+1269-
+1270-
+1271-</body>
+1272-</html>

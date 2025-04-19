@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Page Needs -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Crealio - Minimal Template</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
+
+    <!-- Stylesheets -->
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/responsive.css" rel="stylesheet">
+
+    <!-- Make sure the CSS is loaded -->
+    <style>
+        @import url('assets/css/style.css');
+        @import url('assets/css/responsive.css');
+
+        /* Fix for site title cursor and alignment */
+        #site-title {
+            cursor: text !important;
+            padding-top: 15px; /* Increased padding to move it lower */
+            margin-bottom: 5px; /* Added margin to fine-tune position */
+            line-height: 1; /* Tighter line height */
+        }
+
+        .site-logo-container {
+            cursor: default;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Adjust navigation alignment */
+        .site-navigation {
+            padding-top: 8px; /* Adjusted to match the MINIMAL text */
+        }
+
+        .site-navigation ul li a {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            line-height: 30px;
+            display: inline-block;
+        }
+
+        /* Ensure the navigation row is properly aligned */
+        .site-header .row {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+    <!-- Editor Toolbar Styles -->
+    <style>
+        .editor-toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .toolbar-buttons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toolbar-btn {
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toolbar-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .toolbar-btn.primary {
+            background-color: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .toolbar-btn.primary:hover {
+            background-color: #000;
+        }
+
+        .font-select,
+        .size-select {
+            background: transparent;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .edit-mode-indicator {
+            background-color: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+            display: none;
+        }
+
+        .preview-mode-indicator {
+            background-color: #17a2b8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+            display: none;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 2px dashed #212121;
+            outline-offset: 2px;
+        }
+
+        .section-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .section-control-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #555;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .section-control-btn:hover {
+            background: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .section-control-btn.add-btn {
+            background: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .section-control-btn.add-btn:hover {
+            background: #000;
+        }
+
+        .section-control-btn.remove-btn {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .section-control-btn.remove-btn:hover {
+            background: #c82333;
+        }
+
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .portfolio-item:hover .item-controls,
+        .service:hover .item-controls,
+        .skill:hover .item-controls {
+            opacity: 1;
+        }
+
+        /* Fix for img-res class */
+        .img-res {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+
+        /* Fix for portfolio items */
+        .portfolio-item {
+            height: 280px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-item:before {
+            content: '';
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            transition: background-color 0.25s ease-in-out;
+        }
+
+        .portfolio-item:hover:before {
+            background-color: rgba(33,33,33,0.6);
+        }
+
+        .portfolio-item-info {
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out, left 0.25s ease-in-out;
+            transform: translateY(-50%);
+            text-align: center;
+            width: 100%;
+        }
+
+        .portfolio-item:hover .portfolio-item-info {
+            left: 0;
+            opacity: 1;
+        }
+
+        .portfolio-item-info h4 {
+            margin: 0 0 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Header and Navigation Styles */
+        .site-header {
+            position: fixed;
+            top: 50px; /* Position below the editor toolbar */
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            background-color: #fff;
+            border-bottom: 2px solid #212121;
+            padding: 15px 0;
+            transition: all 0.3s ease-in-out, top 0.3s ease-in-out;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .site-header.sticky {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .site-logo h1 {
+            color: #212121;
+            font-weight: bold;
+            font-size: 28px;
+            margin: 0;
+            padding: 10px 0;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+
+        .site-navigation {
+            padding: 10px 0;
+        }
+
+        .site-navigation ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-align: right;
+        }
+
+        .site-navigation ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        .site-navigation ul li a {
+            color: #212121;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 5px;
+            display: block;
+            position: relative;
+            transition: all 0.3s;
+            margin: 0 5px;
+        }
+
+        .site-navigation ul li a:hover,
+        .site-navigation ul li a:focus,
+        .site-navigation ul li.active a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .site-navigation ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: #212121;
+            transition: width 0.3s ease;
+        }
+
+        .site-navigation ul li a:hover:after,
+        .site-navigation ul li.active a:after {
+            width: 100%;
+        }
+
+        /* Fix for navigation active state */
+        .site-navigation ul li.active a {
+            color: #000;
+            font-weight: 800;
+        }
+
+        /* Force active state for specific sections */
+        body.about-section .site-navigation ul li a[href="#about"],
+        body.service-section .site-navigation ul li a[href="#service"],
+        body.portfolio-section .site-navigation ul li a[href="#portfolio"],
+        body.contact-section .site-navigation ul li a[href="#contact"],
+        body.hero-section .site-navigation ul li a[href="#hero"] {
+            color: #000;
+            font-weight: 800;
+        }
+
+        body.about-section .site-navigation ul li a[href="#about"]:after,
+        body.service-section .site-navigation ul li a[href="#service"]:after,
+        body.portfolio-section .site-navigation ul li a[href="#portfolio"]:after,
+        body.contact-section .site-navigation ul li a[href="#contact"]:after,
+        body.hero-section .site-navigation ul li a[href="#hero"]:after {
+            width: 100%;
+        }
+
+        /* Fix navigation alignment */
+        .navbar-nav {
+            float: right;
+            margin: 0;
+        }
+
+        .navbar-nav > li {
+            float: left;
+        }
+
+        .navbar-nav > li > a {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu-toggle {
+            text-align: right;
+        }
+
+        .navbar-toggle {
+            margin: 10px 0;
+            padding: 9px 10px;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            float: right;
+        }
+
+        .navbar-toggle .icon-bar {
+            display: block;
+            width: 22px;
+            height: 2px;
+            border-radius: 1px;
+            background-color: #212121;
+            margin: 4px 0;
+        }
+
+        @media (max-width: 767px) {
+            .site-navigation {
+                position: fixed;
+                top: 120px; /* Position below the editor toolbar + header */
+                left: 0;
+                width: 100%;
+                height: 0;
+                background-color: #fff;
+                overflow: hidden;
+                transition: height 0.3s ease-in-out;
+                box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+            }
+
+            .site-navigation.active {
+                height: auto;
+                padding: 15px 0;
+            }
+
+            .site-navigation ul {
+                text-align: center;
+            }
+
+            .site-navigation ul li {
+                display: block;
+                margin: 0;
+                padding: 8px 0;
+            }
+
+            .site-navigation ul li a {
+                display: inline-block;
+            }
+
+            .site-navigation ul li a:after {
+                display: none;
+            }
+        }
+
+        /* Adjust hero section to account for fixed header */
+        .hero {
+            padding-top: 180px; /* Increased to account for editor toolbar + header */
+            background-color: #f2f2f2;
+            min-height: 700px;
+        }
+
+        /* Progress bar styling - original style with percentage */
+        .progress {
+            height: 16px; /* Medium height progress bar */
+            margin-bottom: 30px;
+            margin-top: 10px;
+            overflow: hidden; /* Hide overflow */
+            background-color: #e0d0ff; /* Light purple background */
+            border-radius: 4px; /* Rounded corners */
+            box-shadow: none;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            float: left;
+            width: 0;
+            height: 100%;
+            background-color: #000; /* Black progress bar */
+            box-shadow: none;
+            transition: width .6s ease;
+            position: relative;
+            border-radius: 4px; /* Rounded corners */
+            text-align: right; /* Align text to the right */
+            padding-right: 5px; /* Add some padding */
+            font-size: 0; /* Hide any text content */
+            line-height: 16px; /* Match height */
+            font-weight: bold; /* Make text bold */
+            color: transparent; /* Make text transparent */
+        }
+
+        /* Add percentage text inside the progress bar */
+        .progress-bar::after {
+            content: attr(data-content);
+            position: absolute;
+            right: 5px;
+            top: 0;
+            color: #fff;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: bold;
+        }
+
+        /* No need for ::after pseudo-element as we're displaying text directly */
+
+
+
+        /* Skill section styling */
+        .skill {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .skill h4 {
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Adjust delete button position */
+        .skill .item-controls {
+            position: absolute;
+            top: 10px;
+            right: -5px; /* Position it very close to the progress bar */
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .skill .section-control-btn.remove-btn {
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .hero .job-title {
+            font-size: 22px;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .hero .btn {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            padding: 20px;
+        }
+
+        .hero-image-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border: 10px solid #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Additional Portfolio Perfect Styles */
+        h2, h3 {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            padding: 8px 20px;
+            font-size: 12px;
+        }
+
+        .section-about,
+        .section-portfolio,
+        .section-form {
+            padding: 60px 0;
+            background-color: #fff;
+        }
+
+        .section-skills,
+        .section-counters {
+            padding: 60px 0;
+            background-color: #f2f2f2;
+        }
+
+        .section-services {
+            padding: 60px 0;
+        }
+
+        /* Adjust spacing for skills section */
+        .section-skills h3 {
+            margin-bottom: 10px;
+        }
+
+        .section-skills .skill {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body style="padding-top: 0;">
+    <!-- Editor Toolbar -->
+    <div id="editor-toolbar" class="editor-toolbar" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); z-index: 9999; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease;">
+        <div style="display: flex; align-items: center;">
+            <button class="toolbar-btn" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" onclick="window.location.href='../createnewportfolio.html'">
+                <i class="glyphicon glyphicon-arrow-left" style="margin-right: 5px;"></i>
+                Back
+            </button>
+            <button class="toolbar-btn" style="padding: 8px 12px; background-color: #6f42c1; color: white; border: 1px solid #6f42c1; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="save-btn">
+                <i class="glyphicon glyphicon-floppy-disk" style="margin-right: 5px;"></i>
+                Save
+            </button>
+            <button class="toolbar-btn" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="preview-btn" data-preview="false">
+                <i class="glyphicon glyphicon-eye-open" style="margin-right: 5px;"></i>
+                <span id="preview-text">Preview</span>
+            </button>
+            <div style="width: 1px; height: 24px; background-color: #dee2e6; margin: 0 15px;"></div>
+            <button class="toolbar-btn edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 10px;" id="undo-btn" title="Undo">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </button>
+            <button class="toolbar-btn edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="redo-btn" title="Redo">
+                <i class="glyphicon glyphicon-arrow-right"></i>
+            </button>
+            <div class="edit-mode-only" style="width: 1px; height: 24px; background-color: #dee2e6; margin: 0 15px;"></div>
+            <button class="toolbar-btn edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 10px;" id="bold-btn" title="Bold">
+                <i class="glyphicon glyphicon-bold"></i>
+            </button>
+            <button class="toolbar-btn edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 10px;" id="italic-btn" title="Italic">
+                <i class="glyphicon glyphicon-italic"></i>
+            </button>
+            <button class="toolbar-btn edit-mode-only" style="padding: 8px 12px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; margin-right: 15px;" id="underline-btn" title="Underline">
+                <i class="glyphicon glyphicon-text-color"></i>
+            </button>
+            <div class="edit-mode-only" style="width: 1px; height: 24px; background-color: #dee2e6; margin: 0 15px;"></div>
+            <select class="toolbar-select edit-mode-only" style="background: transparent; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; font-size: 14px; color: #555; cursor: pointer; margin-right: 10px; transition: all 0.2s;" id="font-family-select">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Helvetica">Helvetica</option>
+            </select>
+            <select class="toolbar-select edit-mode-only" style="background: transparent; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; font-size: 14px; color: #555; cursor: pointer; transition: all 0.2s;" id="font-size-select">
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px">20px</option>
+            </select>
+        </div>
+        <div style="font-weight: 500; color: #333; margin-right: 15px;">Minimal Template</div>
+    </div>
+
+    <header id="masthead" class="site-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="site-logo-container">
+                        <h1 id="site-title" contenteditable="true" style="margin: 0; padding-top: 15px; margin-bottom: 5px; font-weight: bold; font-size: 28px; color: #212121; letter-spacing: 1px; cursor: text; line-height: 1;">MINIMAL</h1>
+                        <a href="#hero" class="site-logo-link" style="display: none;"></a>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-6 col-xs-6">
+                    <div class="mobile-menu-toggle visible-xs visible-sm">
+                        <button type="button" class="navbar-toggle">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <nav id="primary-navigation" class="site-navigation">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="page-scroll"><a href="#hero">HOME</a></li>
+                            <li class="page-scroll"><a href="#about">ABOUT</a></li>
+                            <li class="page-scroll"><a href="#service">SERVICE</a></li>
+                            <li class="page-scroll"><a href="#portfolio">PORTFOLIO</a></li>
+                            <li class="page-scroll"><a href="#contact">CONTACT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header><!-- /#header -->
+
+    <div id="hero" class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 contenteditable="true" style="text-decoration: none;">ALEX VIDAL</h1>
+                    <div class="page-scroll">
+                        <p class="job-title" contenteditable="true">Full Stack Developer</p>
+                        <a href="#contact" class="btn btn-fill" contenteditable="true">HIRE ME</a>
+                        <div class="clearfix visible-xxs"></div>
+                        <a href="#portfolio" class="btn btn-border" contenteditable="true">EXPLORE MORE</a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="hero-image-wrapper">
+                        <img src="assets/img/alex-vidal.png" alt="profile" id="profile-image">
+                        <div class="text-right" style="margin-top: 10px;">
+                            <button class="btn btn-border" onclick="document.getElementById('profile-upload').click()">CHANGE IMAGE</button>
+                            <input type="file" id="profile-upload" style="display: none;" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.hero -->
+
+    <main id="main" class="site-main">
+        <section id="about" class="site-section section-about text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h2 contenteditable="true">ABOUT</h2>
+                        <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+                        <p contenteditable="true">Hello! I'm Alex, a full stack developer, a Ruby enthusiast, and a guy slightly obsessed with code quality. Also I'm a co-founder of pykod.com. I'm currently available for freelance work. If you have a project that you want to get started or think you need my help with something, then get in touch.</p>
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.secton-about -->
+
+        <section class="site-section section-skills">
+            <div class="container">
+                <div class="text-center">
+                    <h3 contenteditable="true">MY SKILLS</h3>
+                    <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+                    <div class="section-controls">
+                        <button class="section-control-btn add-btn" id="add-skill-btn" title="Add Skill"><i class="glyphicon glyphicon-plus"></i></button>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 50px;">
+                    <div class="col-md-4">
+                        <div class="skill">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <h4 contenteditable="true">HTML/CSS</h4>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="100" data-percentage="100" data-content="100%" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <h4 contenteditable="true">PYTHON</h4>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="75" data-percentage="75" data-content="75%" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="skill">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <h4 contenteditable="true">JAVASCRIPT</h4>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="82" data-percentage="82" data-content="82%" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <h4 contenteditable="true">RUBY</h4>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="66" data-percentage="66" data-content="66%" style="width: 66%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="skill">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <h4 contenteditable="true">PHP</h4>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="97" data-percentage="97" data-content="97%" style="width: 97%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <h4 contenteditable="true">JAVA</h4>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" data-transitiongoal="45" data-percentage="45" data-content="45%" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.secton-skills -->
+
+        <section id="service" class="site-section section-services overlay text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 contenteditable="true">WHAT I DO</h3>
+                        <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+                        <div class="section-controls" style="margin-top: 10px; margin-bottom: 20px; display: flex; justify-content: center;">
+                            <button type="button" class="section-control-btn add-btn" id="add-service-btn" title="Add Service" style="cursor: pointer; position: relative; z-index: 100;"><i class="glyphicon glyphicon-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="service">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <img src="assets/img/front-end.svg" alt="Front End Developer">
+                            <h4 contenteditable="true">Front-end</h4>
+                            <p contenteditable="true">As a javascript developer, I have experience in HTML5 and CSS3 techniques working with jQuery or more advanced javascript MVC frameworks such as angular</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="service">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <img src="assets/img/back-end.svg" alt="Back End Developer">
+                            <h4 contenteditable="true">Back-end</h4>
+                            <p contenteditable="true">Utilising php frameworks such as Zend or creating bespoke code, I've written services supporting thousands of users, including REST APIs, e-learning applications and more.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="service">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <img src="assets/img/consultancy.svg" alt="Coding">
+                            <h4 contenteditable="true">Consultancy</h4>
+                            <p contenteditable="true">As well as providing development services, I can also help you decide strategic roadmaps via consultancy services.</p>
+                        </div><!-- /.service -->
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.secton-services -->
+
+        <section id="portfolio" class="site-section section-portfolio">
+            <div class="container">
+                <div class="text-center">
+                    <h3 contenteditable="true">MY RECENT WORKS</h3>
+                    <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+                    <div class="section-controls">
+                        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Portfolio Item"><i class="glyphicon glyphicon-plus"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <div class="portfolio-item-wrapper">
+                                <img src="assets/img/portfolio/portfolio-1.jpg" class="img-res" alt="" id="portfolio-image-1">
+                                <div class="portfolio-item-overlay">
+                                    <h4 contenteditable="true">Project Title</h4>
+                                    <div class="portfolio-item-buttons">
+                                        <a href="#" class="portfolio-item-button view-project" data-project="1" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-1').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="portfolio-upload-1" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <div class="portfolio-item-wrapper">
+                                <img src="assets/img/portfolio/portfolio-2.jpg" class="img-res" alt="" id="portfolio-image-2">
+                                <div class="portfolio-item-overlay">
+                                    <h4 contenteditable="true">Project Title</h4>
+                                    <div class="portfolio-item-buttons">
+                                        <a href="#" class="portfolio-item-button view-project" data-project="2" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-2').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="portfolio-upload-2" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <div class="portfolio-item-wrapper">
+                                <img src="assets/img/portfolio/portfolio-3.jpg" class="img-res" alt="" id="portfolio-image-3">
+                                <div class="portfolio-item-overlay">
+                                    <h4 contenteditable="true">Project Title</h4>
+                                    <div class="portfolio-item-buttons">
+                                        <a href="#" class="portfolio-item-button view-project" data-project="3" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-3').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="portfolio-upload-3" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.secton-portfolio -->
+
+        <section class="site-section section-counters text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-12">
+                        <p class="counter start" data-to="10" data-speed="2000">0</p>
+                        <h4>Years Experience</h4>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <p class="counter start" data-to="120" data-speed="2000">0</p>
+                        <h4>Projects Delivered</h4>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <p id="infinity" class="counter" data-from="0" data-to="1" data-speed="1000">0</p>
+                        <h4>Seconds on this site!<br>What are you waiting for?</h4>
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.section-counters -->
+
+        <section id="contact" class="site-section section-form text-center">
+            <div class="container">
+                <h3 contenteditable="true">CONTACT</h3>
+                <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+                <form>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" name="name" class="form-control mt-x-0" placeholder="Name" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea name="message" id="mesaage" class="form-control" placeholder="Message" required></textarea>
+                        </div>
+                    </div>
+                    <button href="#" class="btn btn-border" type="submit" contenteditable="true">HIRE ME <span class="glyphicon glyphicon-send"></span></button>
+                </form>
+            </div>
+        </section><!-- /.section-form -->
+    </main><!-- /#main -->
+
+    <!-- Portfolio Modal -->
+    <div class="portfolio-modal" id="portfolio-modal">
+        <div class="portfolio-modal-content">
+            <span class="portfolio-modal-close">&times;</span>
+            <div class="portfolio-modal-body">
+                <img src="" alt="Project Image" id="portfolio-modal-image">
+                <div class="portfolio-modal-details">
+                    <h2 id="portfolio-modal-title">Project title</h2>
+                    <p id="portfolio-modal-description" contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec commodo finibus tristique. Maecenas dignissim condimentum sem eu tincidunt. Curabitur in dui quis magna vestibulum pulvinar a ut urna. Nam pellentesque mattis urna. Aenean eget lectus sit amet turpis facilisis consectetur quis vel ante. Integer in massa ut nibh ultricies sagittis imperdiet in ante. Nam sed turpis vel ante placerat feugiat ac tempus magna. Nam aliquet ullamcorper dolor non hendrerit.</p>
+                    <a href="#" class="btn btn-border" id="portfolio-modal-link">VISIT PAGE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="colophon" class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <a class="icon facebook-bg" href="#" data-editable="true"><i class="icon-facebook"></i></a>
+                    <a class="icon twitter-bg" href="#" data-editable="true"><i class="icon-twitter"></i></a>
+                    <a class="icon gplus-bg" href="#" data-editable="true"><i class="icon-linkedin"></i></a>
+                    <a class="icon linkedin-bg" href="#" data-editable="true"><i class="icon-gplus"></i></a>
+                </div>
+                <div class="col-sm-4 col-sm-offset-0 col-xs-6 col-xs-offset-3"><p class="copyright" contenteditable="true">2023. All Rights Reserved</p></div>
+                <div class="col-sm-4 col-xs-3">
+                    <div class="text-right page-scroll">
+                        <a class="icon icon-up-bg" href="#hero"><i class="icon-up"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer><!-- /#footer -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="assets/js/skrollr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-progressbar/0.9.0/bootstrap-progressbar.min.js"></script>
+    <script src="assets/js/jquery.countTo.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="minimal-portfolio-new.js"></script>
+
+    <!-- Initialize the Portfolio Perfect template -->
+    <script>
+        $(document).ready(function() {
+            // Initialize skrollr for parallax effects
+            if (!(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
+                skrollr.init({
+                    forceHeight: false,
+                    smoothScrolling: false,
+                    mobileCheck: function() {
+                        //hack - forces mobile version to be off
+                        return false;
+                    }
+                });
+            }
+
+            // Add sticky header on scroll
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 100) {
+                    $('.site-header').addClass('sticky');
+                } else {
+                    $('.site-header').removeClass('sticky');
+                }
+            });
+
+            // Function to set active menu item based on current section
+            function setActiveMenuItem() {
+                var scrollPos = $(document).scrollTop();
+                var windowHeight = $(window).height();
+                var found = false;
+
+                // Get the current URL hash if any
+                var currentHash = window.location.hash;
+
+                // If we have a hash in the URL, activate that menu item
+                if (currentHash && $(currentHash).length) {
+                    $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li a[href="' + currentHash + '"]').parent().addClass('active');
+                    return;
+                }
+
+                // Check each section in reverse order (to prioritize later sections)
+                var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];
+
+                // Calculate the top and bottom of the viewport
+                var viewportTop = scrollPos;
+                var viewportBottom = scrollPos + windowHeight;
+                var viewportCenter = scrollPos + (windowHeight / 2);
+
+                // First pass: Check if any section occupies a significant portion of the viewport
+                for (var i = 0; i < sections.length; i++) {
+                    var section = $(sections[i]);
+                    if (section.length) {
+                        var sectionTop = section.offset().top;
+                        var sectionHeight = section.height();
+                        var sectionBottom = sectionTop + sectionHeight;
+                        var sectionCenter = sectionTop + (sectionHeight / 2);
+
+                        // Calculate how much of the section is visible in the viewport
+                        var visibleTop = Math.max(sectionTop, viewportTop);
+                        var visibleBottom = Math.min(sectionBottom, viewportBottom);
+                        var visibleHeight = Math.max(0, visibleBottom - visibleTop);
+                        var visibilityPercentage = visibleHeight / windowHeight * 100;
+
+                        // If section occupies more than 40% of the viewport or contains the viewport center
+                        if (visibilityPercentage > 40 || (sectionTop <= viewportCenter && sectionBottom >= viewportCenter)) {
+                            $('.site-navigation ul li').removeClass('active');
+                            $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
+
+                            // Add specific body classes for each section
+                            $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                            $('body').addClass(sections[i].substring(1) + '-section');
+
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Second pass: If no section is dominant, use the one that contains the center of the viewport
+                if (!found) {
+                    for (var i = 0; i < sections.length; i++) {
+                        var section = $(sections[i]);
+                        if (section.length) {
+                            var sectionTop = section.offset().top - 100; // Add offset for header
+                            var sectionBottom = sectionTop + section.height();
+
+                            if (viewportCenter >= sectionTop && viewportCenter <= sectionBottom) {
+                                $('.site-navigation ul li').removeClass('active');
+                                $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
+
+                                // Add specific body classes for each section
+                                $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                                $('body').addClass(sections[i].substring(1) + '-section');
+
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // If still no section is active and we're at the top, activate home
+                if (!found) {
+                    $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li a[href="#hero"]').parent().addClass('active');
+                    $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                    $('body').addClass('hero-section');
+                }
+            }
+
+            // Set active menu item on page load
+            setActiveMenuItem();
+
+            // Update active menu item on scroll
+            $(window).on('scroll', setActiveMenuItem);
+
+            // Force active menu item for the about section if we're in that section
+            if ($('#about').length && $(window).scrollTop() >= $('#about').offset().top - 150) {
+                $('.site-navigation ul li').removeClass('active');
+                $('.site-navigation ul li a[href="#about"]').parent().addClass('active');
+                $('body').addClass('about-section');
+            }
+
+            // Update active section on scroll - this is a more aggressive approach
+            $(window).on('scroll', function() {
+                // Call our main function to update the active menu item
+                setActiveMenuItem();
+
+                // Force immediate update of the navigation state
+                var scrollPos = $(window).scrollTop();
+                var windowHeight = $(window).height();
+                var viewportCenter = scrollPos + (windowHeight / 2);
+
+                // Check each section
+                var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];
+                var found = false;
+
+                for (var i = 0; i < sections.length; i++) {
+                    var section = $(sections[i]);
+                    if (section.length) {
+                        var sectionTop = section.offset().top - 120; // Adjust for header
+                        var sectionBottom = sectionTop + section.height();
+
+                        // Check if viewport center is within this section
+                        if (viewportCenter >= sectionTop && viewportCenter <= sectionBottom) {
+                            // Set active navigation item
+                            $('.site-navigation ul li').removeClass('active');
+                            $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
+
+                            // Set body class
+                            $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                            $('body').addClass(sections[i].substring(1) + '-section');
+
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                // If no section is active, default to the one closest to the viewport center
+                if (!found) {
+                    var closestSection = null;
+                    var closestDistance = Infinity;
+
+                    for (var i = 0; i < sections.length; i++) {
+                        var section = $(sections[i]);
+                        if (section.length) {
+                            var sectionCenter = section.offset().top + (section.height() / 2);
+                            var distance = Math.abs(viewportCenter - sectionCenter);
+
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestSection = sections[i];
+                            }
+                        }
+                    }
+
+                    if (closestSection) {
+                        $('.site-navigation ul li').removeClass('active');
+                        $('.site-navigation ul li a[href="' + closestSection + '"]').parent().addClass('active');
+
+                        $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                        $('body').addClass(closestSection.substring(1) + '-section');
+                    }
+                }
+            });
+
+            // Force the about section to be active if the URL contains #about
+            if (window.location.hash === '#about') {
+                $('.site-navigation ul li').removeClass('active');
+                $('.site-navigation ul li a[href="#about"]').parent().addClass('active');
+                $('body').addClass('about-section');
+            }
+
+            // Add button animations
+            const toolbarButtons = document.querySelectorAll('.toolbar-btn');
+            toolbarButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.add('clicked');
+                    setTimeout(() => {
+                        this.classList.remove('clicked');
+                    }, 200);
+                });
+            });
+
+            // Add click handlers for navigation links
+            $('.site-navigation ul li a').on('click', function(e) {
+                e.preventDefault();
+                var target = $(this).attr('href');
+                var targetSection = target.substring(1); // Remove the # to get the section name
+
+                // Remove active class from all menu items
+                $('.site-navigation ul li').removeClass('active');
+
+                // Add active class to clicked menu item
+                $(this).parent().addClass('active');
+
+                // Update body classes for all sections
+                $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                $('body').addClass(targetSection + '-section');
+
+                // Smooth scroll to target
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 120
+                }, 800, function() {
+                    // After animation completes, update the URL hash
+                    if (history.pushState) {
+                        history.pushState(null, null, target);
+                    } else {
+                        window.location.hash = target;
+                    }
+
+                    // Force active state again after scroll completes
+                    $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li a[href="' + target + '"]').parent().addClass('active');
+
+                    // Make sure the body class is still set correctly
+                    $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                    $('body').addClass(targetSection + '-section');
+
+                    // Force the underline to be visible
+                    $('.site-navigation ul li a[href="' + target + '"]').css('position', 'relative');
+                    $('.site-navigation ul li a[href="' + target + '"]:after').css('width', '100%');
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>
