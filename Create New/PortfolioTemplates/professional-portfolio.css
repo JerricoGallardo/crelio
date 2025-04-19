@@ -1,0 +1,405 @@
+/* Professional Portfolio Template CSS */
+
+/* Editor toolbar styles */
+.editor-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 10px 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.toolbar-button:hover {
+    background-color: #e9ecef !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toolbar-button:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+/* Adjust body padding to account for fixed toolbar */
+body {
+    padding-top: 60px;
+}
+
+/* Make content editable areas more visible */
+[contenteditable="true"]:hover {
+    outline: 1px dashed #ccc;
+}
+
+[contenteditable="true"]:focus {
+    outline: 2px solid #5cb3fd;
+}
+
+/* Section controls styles */
+.section-controls {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.section-control-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.section-control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.section-control-btn:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+.add-btn {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.remove-btn {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+/* Item controls */
+.item-controls {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 100;
+    display: none;
+}
+
+.portfolio-item:hover .item-controls,
+.skill:hover .item-controls,
+.testimonial-item:hover .item-controls,
+.achievement-item:hover .item-controls {
+    display: block;
+}
+
+/* Preview mode styles */
+.preview-mode {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(5px);
+}
+
+.preview-mode .edit-mode-only {
+    display: none !important;
+}
+
+#preview-btn.active {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+/* Adjust the intro section to account for toolbar */
+#header {
+    margin-top: -60px;
+}
+
+/* Spinner animation for loading indicators */
+.glyphicon-spin {
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Portfolio item styles */
+.portfolio-item {
+    position: relative !important;
+    margin-bottom: 30px !important; /* Increased from 20px to match original */
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+.portfolio-item .hover-bg {
+    position: relative !important;
+    overflow: hidden !important;
+    height: 300px !important; /* Increased height for larger images */
+    cursor: pointer !important;
+    width: 100% !important; /* Ensure full width */
+    display: block !important; /* Ensure block display */
+    margin: 0 auto !important; /* Center the container */
+    padding: 0 !important; /* Remove any padding */
+    border: none !important; /* Remove any borders */
+    box-sizing: border-box !important; /* Ensure proper box sizing */
+}
+
+.portfolio-item .hover-text {
+    position: absolute !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    color: #ffffff !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    padding: 25% 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    opacity: 0 !important;
+    transition: all 0.5s !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 5 !important; /* Ensure it's above the image */
+    box-sizing: border-box !important; /* Ensure proper box sizing */
+}
+
+.portfolio-item .hover-bg:hover .hover-text {
+    opacity: 1 !important;
+}
+
+/* Ensure hover works in all browsers */
+.portfolio-item .hover-bg:hover .hover-text,
+.portfolio-item .hover-bg:focus .hover-text,
+.portfolio-item .hover-bg:active .hover-text {
+    opacity: 1 !important;
+}
+
+/* Make sure the hover text is on top */
+.portfolio-item .hover-text h4,
+.portfolio-item .hover-text small {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 10px;
+}
+
+/* Portfolio buttons */
+.portfolio-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.portfolio-buttons .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.portfolio-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-buttons .btn-primary {
+    background-color: #1CBB9B;
+    border-color: #1CBB9B;
+}
+
+.portfolio-buttons .btn-primary:hover {
+    background-color: #18a589;
+    border-color: #18a589;
+}
+
+/* Ensure the hover effect works in preview mode */
+.preview-mode .portfolio-item .hover-bg:hover .hover-text {
+    opacity: 1 !important;
+}
+
+/* Ensure hover works in preview mode for all browsers */
+.preview-mode .portfolio-item .hover-bg:hover .hover-text,
+.preview-mode .portfolio-item .hover-bg:focus .hover-text,
+.preview-mode .portfolio-item .hover-bg:active .hover-text {
+    opacity: 1 !important;
+}
+
+/* Fix portfolio grid layout */
+.portfolio-items {
+    margin: 0 -15px; /* Negative margin to counteract Bootstrap padding */
+}
+
+.portfolio-items .col-sm-6,
+.portfolio-items .col-md-3,
+.portfolio-items .col-lg-3 {
+    padding: 0 15px; /* Standard Bootstrap padding */
+    float: left; /* Ensure proper floating */
+    box-sizing: border-box; /* Ensure proper box sizing */
+}
+
+/* Ensure 3 items per row */
+.portfolio-items .col-md-4 {
+    width: 33.333% !important;
+}
+
+/* Responsive column widths handled by Bootstrap */
+
+/* Fix for portfolio images */
+.portfolio-item .hover-bg img.img-responsive,
+.portfolio-item .hover-bg img {
+    width: 100% !important; /* Make images fill their container */
+    height: 300px !important; /* Fixed height for all portfolio images */
+    object-fit: cover !important; /* Maintain aspect ratio while filling container */
+    object-position: center !important; /* Center the image */
+    display: block !important; /* Ensure the image is displayed as a block */
+    position: relative !important; /* Ensure proper positioning */
+    max-width: 100% !important; /* Ensure the image doesn't exceed its container */
+    margin: 0 !important; /* Remove any margins */
+    padding: 0 !important; /* Remove any padding */
+    border: none !important; /* Remove any borders */
+}
+
+/* Ensure newly added portfolio items have correct dimensions */
+.portfolio-items .portfolio-item {
+    box-sizing: border-box !important;
+    float: left !important;
+    padding: 0 15px !important;
+    position: relative !important;
+    margin-bottom: 30px !important;
+    display: block !important;
+}
+
+/* Fix for hover-bg element */
+.portfolio-item .hover-bg {
+    position: relative !important;
+    overflow: hidden !important;
+    height: 300px !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    display: block !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Fix for hover-text element */
+.portfolio-item .hover-text {
+    position: absolute !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    color: #ffffff !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    padding: 25% 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    opacity: 0 !important;
+    transition: all 0.5s !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 5 !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 767px) {
+    /* Responsive styles handled by Bootstrap classes */
+}
+
+@media (max-width: 480px) {
+    /* Responsive styles handled by Bootstrap classes */
+}
+
+/* Ensure consistent spacing between portfolio rows */
+.portfolio-items .row {
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: 30px;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Skill chart styles */
+.chart {
+    position: relative;
+    display: inline-block;
+    width: 160px;
+    height: 160px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chart canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.percent {
+    display: inline-block;
+    line-height: 160px;
+    z-index: 2;
+    font-size: 30px;
+    font-weight: 600;
+    color: #1CBB9B;
+}
+
+.percent:after {
+    content: '%';
+    margin-left: 0.1em;
+    font-size: .8em;
+}
+
+/* Testimonial styles */
+.testimonial-item {
+    position: relative;
+}
+
+/* Achievement styles */
+.achievement-item {
+    position: relative;
+}
+
+/* Adjust image upload buttons */
+.portfolio-item .btn,
+#about .btn {
+    margin-top: 10px;
+}
+
+/* Fix for social media icons */
+.social ul li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.social i.fa {
+    font-size: 24px;
+    padding: 10px;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+.social i.fa:hover {
+    color: #1CBB9B;
+}

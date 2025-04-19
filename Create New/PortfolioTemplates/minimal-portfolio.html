@@ -38,6 +38,39 @@
     <style>
         @import url('assets/css/style.css');
         @import url('assets/css/responsive.css');
+
+        /* Fix for site title cursor and alignment */
+        #site-title {
+            cursor: text !important;
+            padding-top: 15px; /* Increased padding to move it lower */
+            margin-bottom: 5px; /* Added margin to fine-tune position */
+            line-height: 1; /* Tighter line height */
+        }
+
+        .site-logo-container {
+            cursor: default;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Adjust navigation alignment */
+        .site-navigation {
+            padding-top: 8px; /* Adjusted to match the MINIMAL text */
+        }
+
+        .site-navigation ul li a {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            line-height: 30px;
+            display: inline-block;
+        }
+
+        /* Ensure the navigation row is properly aligned */
+        .site-header .row {
+            display: flex;
+            align-items: center;
+        }
     </style>
 
     <!-- Editor Toolbar Styles -->
@@ -647,7 +680,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <a href="#hero" class="site-logo"><h1 contenteditable="true" style="margin: 0; font-weight: bold; font-size: 28px; color: #212121; letter-spacing: 1px;">MINIMAL</h1></a>
+                    <div class="site-logo-container">
+                        <h1 id="site-title" contenteditable="true" style="margin: 0; padding-top: 15px; margin-bottom: 5px; font-weight: bold; font-size: 28px; color: #212121; letter-spacing: 1px; cursor: text; line-height: 1;">MINIMAL</h1>
+                        <a href="#hero" class="site-logo-link" style="display: none;"></a>
+                    </div>
                 </div>
                 <div class="col-md-9 col-sm-6 col-xs-6">
                     <div class="mobile-menu-toggle visible-xs visible-sm">
