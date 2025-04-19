@@ -263,11 +263,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b4da8', end
 }
 .chart {
 	position: relative;
-	display: inline-block;
+	display: flex;
 	width: 140px;
 	height: 140px;
 	margin-bottom: 26px;
 	text-align: center;
+	align-items: center;
+	justify-content: center;
 }
 .chart canvas {
 	position: absolute;
@@ -275,16 +277,48 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b4da8', end
 	left: 0;
 }
 .percent {
-	display: inline-block;
 	font-size: 21px;
 	color: #fff;
-	line-height: 140px;
-	z-index: 2;
+	z-index: 10;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	cursor: pointer;
+	background-color: transparent;
+	/* Ensure perfect centering */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.3s ease;
+}
+
+.percent-editing {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 50%;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+/* Animation for the chart when value changes */
+@keyframes chartPulse {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.05); }
+	100% { transform: scale(1); }
 }
 .percent:after {
 	content: '%';
 	margin-left: 0.1em;
 	font-size: .8em;
+	display: inline-flex;
+	align-items: center;
 }
 /* Portfolio Section */
 #portfolio {

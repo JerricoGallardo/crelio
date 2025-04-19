@@ -2,6 +2,7 @@
 let undoStack = [];
 let redoStack = [];
 let editMode = true;
+let isUndoRedoOperation = false; // Flag to prevent saveState during undo/redo
 
 // Document Ready Function
 document.addEventListener('DOMContentLoaded', function() {
@@ -27,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
 
     // Make all headings and paragraphs editable
-    document.querySelectorAll('h1, h2, h3, h4, p, a.btn, small, strong, em').forEach(function(element) {
+    document.querySelectorAll('h1, h2, h3, h4, p, a.btn, small, strong, em, .percent').forEach(function(element) {
         // Skip elements that shouldn't be editable
-        if (!element.closest('.count') && !element.closest('.percent')) {
+        if (!element.closest('.count') || element.classList.contains('percent')) {
             element.setAttribute('contenteditable', 'true');
 
             // Enable one-click editing without requiring text selection
@@ -47,7 +48,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Focus the element
                     element.focus();
+
+                    // Add editing class for percentages
+                    if (element.classList.contains('percent')) {
+                        element.classList.add('percent-editing');
+                    }
                 }
+            });
+
+            // Add input event listener to save state when content changes
+            element.addEventListener('input', function() {
+                // If this is a percent element, only validate the input but don't update the chart yet
+                if (element.classList.contains('percent')) {
+                    // Get the new percentage value (remove the % if it exists)
+                    let newPercent = element.textContent.replace('%', '');
+
+                    // Only validate if it's a number, but don't force it to be between 0-100 yet
+                    // This allows the user to type multi-digit numbers without interference
+                    if (isNaN(parseInt(newPercent)) && newPercent !== '') {
+                        // If it's not a number and not empty, revert to a valid number
+                        newPercent = parseInt(newPercent) || 0;
+                        element.textContent = newPercent;
+                    }
+
+                    // Store the current value as a data attribute for later use
+                    element.setAttribute('data-current-value', newPercent);
+
+                    // Add keydown event handler for Enter key if not already added
+                    if (!element.hasEnterKeyHandler) {
+                        element.hasEnterKeyHandler = true;
+                        element.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault(); // Prevent default behavior
+
+                                // Update the percentage value
+                                let newPercent = this.textContent.replace('%', '');
+                                newPercent = Math.min(100, Math.max(0, parseInt(newPercent) || 0));
+                                this.textContent = newPercent;
+
+                                // Update the chart
+                                const chart = this.closest('.chart');
+                                if (chart) {
+                                    chart.setAttribute('data-percent', newPercent);
+                                    setTimeout(function() {
+                                        $(chart).data('easyPieChart').update(newPercent);
+                                    }, 50);
+                                }
+
+                                // Remove editing class
+                                this.classList.remove('percent-editing');
+
+                                // Blur the element to remove focus
+                                this.blur();
+                            }
+                        });
+                    }
+                }
+
+                // Use a small delay to ensure we capture the final state after typing
+                clearTimeout(element.saveTimeout);
+                element.saveTimeout = setTimeout(function() {
+                    saveState();
+                }, 300); // 300ms delay to avoid saving too frequently while typing
+            });
+
+            // Also save state when user clicks away (blur event)
+            element.addEventListener('blur', function() {
+                // Remove editing class for percentages
+                if (element.classList.contains('percent')) {
+                    element.classList.remove('percent-editing');
+                }
+                // If this is a percent element, now we update the chart when the user finishes typing
+                if (element.classList.contains('percent')) {
+                    let newPercent = element.textContent.replace('%', '');
+                    newPercent = Math.min(100, Math.max(0, parseInt(newPercent) || 0));
+                    element.textContent = newPercent;
+
+                    // Update the chart's data-percent attribute
+                    const chart = element.closest('.chart');
+                    if (chart) {
+                        chart.setAttribute('data-percent', newPercent);
+
+                        // Update the chart with the new percentage
+                        setTimeout(function() {
+                            $(chart).data('easyPieChart').update(newPercent);
+                        }, 50);
+                    }
+                }
+
+                // Small delay to ensure we capture the final state
+                setTimeout(function() {
+                    saveState();
+                }, 100);
             });
         }
     });
@@ -156,7 +248,62 @@ function initializeSkillCharts() {
         barColor: '#1CBB9B',
         trackColor: '#c8c8c8',
         size: 160,
-        animate: 1000
+        animate: 1000,
+        onStep: function(from, to, percent) {
+            // Update the percent text when the chart is animated
+            $(this.el).find('.percent').text(Math.round(percent));
+        }
+    });
+
+    // Add click handler to make editing percentages easier
+    $('.chart').on('click', function(e) {
+        // Only if we're not already editing
+        if (!$(this).find('.percent').is(':focus')) {
+            // Focus and select all text in the percent span
+            const percentEl = $(this).find('.percent')[0];
+            if (percentEl) {
+                // Add editing class
+                percentEl.classList.add('percent-editing');
+
+                // Create a range and select all text
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(percentEl);
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                // Focus the element
+                percentEl.focus();
+
+                // Prevent event bubbling
+                e.stopPropagation();
+            }
+        }
+    });
+
+    // Add blur handler to remove editing class and animate the chart
+    $('.percent').on('blur', function() {
+        // Remove editing class
+        this.classList.remove('percent-editing');
+
+        // Get the chart element
+        const chart = $(this).closest('.chart')[0];
+
+        // Apply animation
+        chart.style.animation = 'chartPulse 0.5s ease';
+
+        // Remove animation after it completes
+        setTimeout(() => {
+            chart.style.animation = '';
+        }, 500);
+    });
+
+    // Add keydown handler for Enter key
+    $('.percent').on('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.blur(); // This will trigger the blur event above
+        }
     });
 }
 
@@ -224,38 +371,11 @@ function initializePortfolio() {
 
 // Function to initialize editor
 function initializeEditor() {
-    // Add CSS for button animations
+    // Add CSS for button animations - we'll use the styles from the HTML now
     const style = document.createElement('style');
     style.textContent = `
-        .toolbar-button:hover {
-            background-color: #e9ecef !important;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .toolbar-button:active {
-            transform: translateY(1px);
-            box-shadow: none;
-        }
-
         .toolbar-button.clicked {
             transform: scale(0.95);
-        }
-
-        /* Preview mode styles */
-        .preview-mode {
-            background-color: rgba(255, 255, 255, 0.8) !important;
-            backdrop-filter: blur(5px);
-        }
-
-        .preview-mode .edit-mode-only {
-            display: none !important;
-        }
-
-        #preview-btn.active {
-            background-color: #28a745 !important;
-            color: white !important;
-            border-color: #28a745 !important;
         }
     `;
     document.head.appendChild(style);
@@ -276,8 +396,25 @@ function initializeEditor() {
         saveState();
     });
 
-    document.getElementById('undo-btn').addEventListener('click', undo);
-    document.getElementById('redo-btn').addEventListener('click', redo);
+    document.getElementById('undo-btn').addEventListener('click', function() {
+        // Add visual feedback
+        const btn = this;
+        btn.classList.add('active');
+        setTimeout(() => btn.classList.remove('active'), 300);
+
+        // Perform undo
+        undo();
+    });
+
+    document.getElementById('redo-btn').addEventListener('click', function() {
+        // Add visual feedback
+        const btn = this;
+        btn.classList.add('active');
+        setTimeout(() => btn.classList.remove('active'), 300);
+
+        // Perform redo
+        redo();
+    });
 
     // Initialize preview button
     document.getElementById('preview-btn').addEventListener('click', togglePreview);
@@ -288,6 +425,47 @@ function initializeEditor() {
     // Initialize exit button
     document.getElementById('exit-btn').addEventListener('click', function() {
         window.location.href = '../index.html';
+    });
+
+    // Add keyboard shortcuts for undo/redo
+    document.addEventListener('keydown', function(e) {
+        // Ctrl+Z for undo
+        if (e.ctrlKey && e.key === 'z') {
+            // Don't interfere with browser's native undo in editable elements
+            const activeElement = document.activeElement;
+            const isInEditableField = activeElement.isContentEditable ||
+                                     activeElement.tagName === 'INPUT' ||
+                                     activeElement.tagName === 'TEXTAREA';
+
+            if (!isInEditableField) {
+                e.preventDefault();
+                const undoBtn = document.getElementById('undo-btn');
+                if (undoBtn && !undoBtn.classList.contains('disabled')) {
+                    undoBtn.classList.add('active');
+                    setTimeout(() => undoBtn.classList.remove('active'), 300);
+                    undo();
+                }
+            }
+        }
+
+        // Ctrl+Y for redo
+        if (e.ctrlKey && e.key === 'y') {
+            // Don't interfere with browser's native redo in editable elements
+            const activeElement = document.activeElement;
+            const isInEditableField = activeElement.isContentEditable ||
+                                     activeElement.tagName === 'INPUT' ||
+                                     activeElement.tagName === 'TEXTAREA';
+
+            if (!isInEditableField) {
+                e.preventDefault();
+                const redoBtn = document.getElementById('redo-btn');
+                if (redoBtn && !redoBtn.classList.contains('disabled')) {
+                    redoBtn.classList.add('active');
+                    setTimeout(() => redoBtn.classList.remove('active'), 300);
+                    redo();
+                }
+            }
+        }
     });
 }
 
@@ -302,33 +480,47 @@ function togglePreview() {
         document.body.classList.add('preview-mode');
         toolbar.classList.add('preview-mode');
         previewBtn.classList.add('active');
-        previewBtn.innerHTML = '<i class="glyphicon glyphicon-pencil"></i> Edit';
+        previewBtn.innerHTML = '<i class="fas fa-pencil-alt"></i> Edit';
 
         // Hide all edit controls
         document.querySelectorAll('.item-controls, .section-controls').forEach(control => {
             control.style.display = 'none';
         });
 
-        // Disable contenteditable
+        // Store original state and disable contenteditable
         document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+            element.setAttribute('data-original-editable', 'true');
             element.setAttribute('contenteditable', 'false');
+            // Remove highlighting classes
+            element.classList.remove('selecting-all');
+            element.classList.remove('active-edit');
+        });
+
+        // Make links clickable in preview mode
+        document.querySelectorAll('a').forEach(link => {
+            link.style.pointerEvents = 'auto';
         });
     } else {
         // Exit preview mode
         document.body.classList.remove('preview-mode');
         toolbar.classList.remove('preview-mode');
         previewBtn.classList.remove('active');
-        previewBtn.innerHTML = '<i class="glyphicon glyphicon-eye-open"></i> Preview';
+        previewBtn.innerHTML = '<i class="fas fa-eye"></i> Preview';
 
         // Show all edit controls
         document.querySelectorAll('.item-controls, .section-controls').forEach(control => {
             control.style.display = '';
         });
 
-        // Enable contenteditable
-        document.querySelectorAll('[contenteditable="false"]').forEach(element => {
-            if (element.getAttribute('data-editable') !== 'false') {
-                element.setAttribute('contenteditable', 'true');
+        // Restore contenteditable state
+        document.querySelectorAll('[data-original-editable="true"]').forEach(element => {
+            element.setAttribute('contenteditable', 'true');
+        });
+
+        // Prevent links from navigating in edit mode
+        document.querySelectorAll('a').forEach(link => {
+            if (!link.classList.contains('visit-project')) {
+                link.style.pointerEvents = 'none';
             }
         });
     }
@@ -339,17 +531,19 @@ function savePortfolio() {
     // Show a saving indicator
     const saveBtn = document.getElementById('save-btn');
     const originalText = saveBtn.innerHTML;
-    saveBtn.innerHTML = '<i class="glyphicon glyphicon-refresh glyphicon-spin"></i> Saving...';
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
     saveBtn.disabled = true;
+    saveBtn.classList.add('saving');
 
     // Simulate saving (in a real app, this would save to a server)
     setTimeout(function() {
-        saveBtn.innerHTML = '<i class="glyphicon glyphicon-ok"></i> Saved!';
+        saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
 
         // Reset button after a delay
         setTimeout(function() {
             saveBtn.innerHTML = originalText;
             saveBtn.disabled = false;
+            saveBtn.classList.remove('saving');
         }, 2000);
     }, 1500);
 }
@@ -422,6 +616,70 @@ function initializeAddRemoveControls() {
             chart.setAttribute('data-percent', '75');
             const percent = newSkill.querySelector('.percent');
             percent.textContent = '75';
+            percent.setAttribute('contenteditable', 'true');
+
+            // Add event listeners for the percent element
+            percent.addEventListener('input', function() {
+                // Get the new percentage value (remove the % if it exists)
+                let newPercent = this.textContent.replace('%', '');
+
+                // Only validate if it's a number, but don't force it to be between 0-100 yet
+                // This allows the user to type multi-digit numbers without interference
+                if (isNaN(parseInt(newPercent)) && newPercent !== '') {
+                    // If it's not a number and not empty, revert to a valid number
+                    newPercent = parseInt(newPercent) || 0;
+                    this.textContent = newPercent;
+                }
+
+                // Store the current value as a data attribute for later use
+                this.setAttribute('data-current-value', newPercent);
+            });
+
+            // Add keydown event to handle Enter key
+            percent.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent default behavior
+
+                    // Update the percentage value
+                    let newPercent = this.textContent.replace('%', '');
+                    newPercent = Math.min(100, Math.max(0, parseInt(newPercent) || 0));
+                    this.textContent = newPercent;
+
+                    // Update the chart
+                    chart.setAttribute('data-percent', newPercent);
+                    setTimeout(function() {
+                        $(chart).data('easyPieChart').update(newPercent);
+                    }, 50);
+
+                    // Blur the element to remove focus
+                    this.blur();
+                }
+            });
+
+            percent.addEventListener('blur', function() {
+                // Make sure it has a valid value
+                let newPercent = this.textContent.replace('%', '');
+                newPercent = Math.min(100, Math.max(0, parseInt(newPercent) || 0));
+                this.textContent = newPercent;
+
+                // Update the chart's data-percent attribute
+                chart.setAttribute('data-percent', newPercent);
+
+                // Update the chart with the new percentage
+                setTimeout(function() {
+                    $(chart).data('easyPieChart').update(newPercent);
+
+                    // Add animation to the chart
+                    chart.style.animation = 'chartPulse 0.5s ease';
+
+                    // Remove animation after it completes
+                    setTimeout(() => {
+                        chart.style.animation = '';
+                    }, 500);
+                }, 50);
+
+                saveState();
+            });
 
             // Add remove button functionality
             const removeBtn = newSkill.querySelector('.remove-btn');
@@ -877,10 +1135,299 @@ function initializeAddRemoveControls() {
     });
 }
 
+// Function to capture the current state of editable elements
+function captureState() {
+    const state = {};
+
+    // Capture text content of all editable elements
+    document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+        const id = element.id || generateUniqueId(element);
+        state[id] = {
+            content: element.innerHTML,
+            path: getElementPath(element)
+        };
+    });
+
+    // Capture portfolio items
+    state.portfolioItems = [];
+    document.querySelectorAll('.portfolio-item').forEach((item, index) => {
+        const itemState = {
+            index: index,
+            title: item.querySelector('h4') ? item.querySelector('h4').innerHTML : '',
+            category: item.querySelector('small') ? item.querySelector('small').innerHTML : '',
+            link: item.getAttribute('data-link') || '#',
+            imageSrc: item.querySelector('img') ? item.querySelector('img').src : ''
+        };
+        state.portfolioItems.push(itemState);
+    });
+
+    // Capture skills
+    state.skills = [];
+    document.querySelectorAll('.skill').forEach((skill, index) => {
+        const chart = skill.querySelector('.chart');
+        const percent = skill.querySelector('.percent');
+        const skillState = {
+            index: index,
+            title: skill.querySelector('h4') ? skill.querySelector('h4').innerHTML : '',
+            percent: percent ? percent.innerHTML : '',
+            dataPercent: chart ? chart.getAttribute('data-percent') : ''
+        };
+        state.skills.push(skillState);
+    });
+
+    // Capture about image
+    const aboutImage = document.getElementById('about-image');
+    if (aboutImage) {
+        state.aboutImage = aboutImage.src;
+    }
+
+    return state;
+}
+
+// Generate a unique ID for elements without IDs
+function generateUniqueId(element) {
+    const path = getElementPath(element);
+    return 'element_' + btoa(path).replace(/[^a-zA-Z0-9]/g, '');
+}
+
+// Get the CSS selector path for an element
+function getElementPath(element) {
+    if (!element) return '';
+
+    let path = '';
+    while (element && element !== document.body) {
+        let selector = element.tagName.toLowerCase();
+        if (element.id) {
+            selector += '#' + element.id;
+            return selector + path;
+        } else {
+            let sibling = element;
+            let index = 1;
+            while (sibling = sibling.previousElementSibling) {
+                if (sibling.tagName === element.tagName) index++;
+            }
+            selector += ':nth-of-type(' + index + ')';
+        }
+        path = ' > ' + selector + path;
+        element = element.parentElement;
+    }
+    return path.substring(3); // Remove the first ' > '
+}
+
 // Function to save the current state
 function saveState() {
-    undoStack.push(document.documentElement.innerHTML);
-    redoStack = [];
+    // Don't save state during undo/redo operations
+    if (isUndoRedoOperation) return;
+
+    // Capture the current state
+    const currentState = captureState();
+
+    // Check if this is a new state (different from the last one)
+    let isNewState = true;
+    if (undoStack.length > 0) {
+        const lastState = undoStack[undoStack.length - 1];
+        // Simple comparison - in a real app you'd do a deep comparison
+        isNewState = JSON.stringify(currentState) !== JSON.stringify(lastState);
+    }
+
+    // Only add to stack if it's a new state
+    if (isNewState) {
+        // Add to undo stack
+        undoStack.push(currentState);
+
+        // Clear redo stack when a new change is made
+        redoStack = [];
+
+        // Enable/disable undo/redo buttons based on stack state
+        updateUndoRedoButtons();
+
+        console.log('State saved. Undo stack size:', undoStack.length);
+    }
+}
+
+// Function to apply a state
+function applyState(state) {
+    // Set flag to prevent saveState calls during state application
+    isUndoRedoOperation = true;
+
+    // Store the current scroll position
+    const scrollPos = window.scrollY;
+
+    try {
+        // Apply text content to editable elements
+        for (const id in state) {
+            if (id === 'portfolioItems' || id === 'skills' || id === 'aboutImage') continue;
+
+            let element;
+            if (id.startsWith('element_')) {
+                // Find by path for generated IDs
+                const path = state[id].path;
+                element = document.querySelector(path);
+            } else {
+                // Find by ID
+                element = document.getElementById(id);
+            }
+
+            if (element && state[id].content) {
+                element.innerHTML = state[id].content;
+            }
+        }
+
+        // Apply about image if it exists
+        if (state.aboutImage) {
+            const aboutImage = document.getElementById('about-image');
+            if (aboutImage) {
+                aboutImage.src = state.aboutImage;
+            }
+        }
+
+        // Apply portfolio items state
+        if (state.portfolioItems && state.portfolioItems.length > 0) {
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            // Only update if we have the same number of items
+            // Otherwise, we'd need more complex logic to add/remove items
+            if (portfolioItems.length === state.portfolioItems.length) {
+                state.portfolioItems.forEach((itemState, index) => {
+                    if (index < portfolioItems.length) {
+                        const item = portfolioItems[index];
+
+                        // Update title
+                        const title = item.querySelector('h4');
+                        if (title && itemState.title) {
+                            title.innerHTML = itemState.title;
+                        }
+
+                        // Update category
+                        const category = item.querySelector('small');
+                        if (category && itemState.category) {
+                            category.innerHTML = itemState.category;
+                        }
+
+                        // Update link
+                        item.setAttribute('data-link', itemState.link);
+                        const visitBtn = item.querySelector('.visit-project');
+                        if (visitBtn) {
+                            visitBtn.href = itemState.link;
+                        }
+
+                        // Update image
+                        const img = item.querySelector('img');
+                        if (img && itemState.imageSrc) {
+                            img.src = itemState.imageSrc;
+                        }
+                    }
+                });
+            }
+        }
+
+        // Apply skills state
+        if (state.skills && state.skills.length > 0) {
+            const skills = document.querySelectorAll('.skill');
+
+            // Only update if we have the same number of skills
+            if (skills.length === state.skills.length) {
+                state.skills.forEach((skillState, index) => {
+                    if (index < skills.length) {
+                        const skill = skills[index];
+
+                        // Update title
+                        const title = skill.querySelector('h4');
+                        if (title && skillState.title) {
+                            title.innerHTML = skillState.title;
+                        }
+
+                        // Update percent
+                        const percent = skill.querySelector('.percent');
+                        const chart = skill.querySelector('.chart');
+                        if (percent && skillState.percent) {
+                            percent.innerHTML = skillState.percent;
+                        }
+
+                        // Update chart data-percent attribute
+                        if (chart && skillState.dataPercent) {
+                            chart.setAttribute('data-percent', skillState.dataPercent);
+                            // Update the chart
+                            $(chart).data('easyPieChart').update(parseInt(skillState.dataPercent));
+                        }
+                    }
+                });
+            }
+        }
+
+        // Reinitialize charts and counters
+        initializeSkillCharts();
+        initializeCounters();
+
+        // Reinitialize portfolio
+        $('.portfolio-items').isotope('reloadItems').isotope();
+
+        // Re-add input event listeners to all editable elements
+        document.querySelectorAll('[contenteditable="true"]').forEach(function(element) {
+            // Remove existing input listeners to avoid duplicates
+            const newElement = element.cloneNode(true);
+            element.parentNode.replaceChild(newElement, element);
+
+            // Add input event listener with debounce
+            newElement.addEventListener('input', function() {
+                // Use a small delay to ensure we capture the final state after typing
+                clearTimeout(newElement.saveTimeout);
+                newElement.saveTimeout = setTimeout(function() {
+                    saveState();
+                }, 300); // 300ms delay to avoid saving too frequently while typing
+            });
+
+            // Also save state when user clicks away (blur event)
+            newElement.addEventListener('blur', function() {
+                // Small delay to ensure we capture the final state
+                setTimeout(function() {
+                    saveState();
+                }, 100);
+            });
+
+            // Re-add click listener for selection
+            newElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (newElement.contentEditable === 'true') {
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    range.selectNodeContents(newElement);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    newElement.focus();
+                }
+            });
+        });
+
+        // Restore scroll position
+        window.scrollTo(0, scrollPos);
+
+        // Update undo/redo buttons
+        updateUndoRedoButtons();
+    } catch (error) {
+        console.error('Error applying state:', error);
+    } finally {
+        // Reset flag
+        isUndoRedoOperation = false;
+    }
+}
+
+// Function to update undo/redo buttons state
+function updateUndoRedoButtons() {
+    const undoBtn = document.getElementById('undo-btn');
+    const redoBtn = document.getElementById('redo-btn');
+
+    if (undoBtn) {
+        undoBtn.disabled = undoStack.length <= 1;
+        undoBtn.classList.toggle('disabled', undoStack.length <= 1);
+    }
+
+    if (redoBtn) {
+        redoBtn.disabled = redoStack.length === 0;
+        redoBtn.classList.toggle('disabled', redoStack.length === 0);
+    }
 }
 
 // Function to open the project link modal
@@ -940,40 +1487,38 @@ function loadState() {
     // In a real app, this would load from localStorage or a server
     // For now, we'll just initialize the undo stack with the current state
     if (undoStack.length === 0) {
-        undoStack.push(document.documentElement.innerHTML);
+        saveState();
     }
+
+    // Update undo/redo buttons
+    updateUndoRedoButtons();
 }
 
 // Function to undo the last change
 function undo() {
     if (undoStack.length > 1) { // Keep at least one state in the stack
+        // Save the current state to redo stack and remove it from undo stack
         redoStack.push(undoStack.pop());
-        document.documentElement.innerHTML = undoStack[undoStack.length - 1];
 
-        // Reinitialize event handlers and functionality
-        initializeEditor();
-        initializeAddRemoveControls();
-        initializeImageUploads();
-        initializeSkillCharts();
-        initializeCounters();
-        initializePortfolio();
-        initializeNavigation();
+        // Apply the previous state
+        applyState(undoStack[undoStack.length - 1]);
+
+        console.log('Undo performed. Undo stack:', undoStack.length, 'Redo stack:', redoStack.length);
     }
 }
 
 // Function to redo the last undone change
 function redo() {
     if (redoStack.length > 0) {
-        undoStack.push(redoStack.pop());
-        document.documentElement.innerHTML = undoStack[undoStack.length - 1];
+        // Get the state to redo
+        const stateToRedo = redoStack.pop();
 
-        // Reinitialize event handlers and functionality
-        initializeEditor();
-        initializeAddRemoveControls();
-        initializeImageUploads();
-        initializeSkillCharts();
-        initializeCounters();
-        initializePortfolio();
-        initializeNavigation();
+        // Add it to the undo stack
+        undoStack.push(stateToRedo);
+
+        // Apply the state
+        applyState(stateToRedo);
+
+        console.log('Redo performed. Undo stack:', undoStack.length, 'Redo stack:', redoStack.length);
     }
 }
