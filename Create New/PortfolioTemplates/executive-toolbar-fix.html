@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Executive Portfolio</title>
+    <style>
+        /* Toolbar styles */
+        .editor-toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toolbar-buttons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toolbar-btn {
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+        }
+
+        .toolbar-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .toolbar-btn.primary {
+            background-color: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .toolbar-btn.primary:hover {
+            background-color: #000;
+        }
+
+        .font-select,
+        .size-select {
+            background: transparent;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .toolbar-btn.active {
+            background: #f0f0f0;
+            color: #007bff;
+        }
+
+        .edit-mode-indicator,
+        .preview-mode-indicator {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- This is a test file to check the toolbar styling -->
+    <div class="editor-toolbar">
+        <div class="toolbar-buttons">
+            <button class="toolbar-btn" onclick="window.location.href='../createnewportfolio.html'">
+                <i class="fa fa-arrow-left"></i>
+                Back
+            </button>
+            <button class="toolbar-btn primary" id="save-btn">
+                <i class="fa fa-save"></i>
+                Save
+            </button>
+            <button class="toolbar-btn" id="preview-btn" data-preview="false">
+                <i class="fa fa-eye"></i>
+                Preview
+            </button>
+            <select class="font-select" id="font-family-select">
+                <option value="inherit">Default</option>
+                <option value="'Poppins', sans-serif">Poppins</option>
+                <option value="'Roboto', sans-serif">Roboto</option>
+                <option value="'Open Sans', sans-serif">Open Sans</option>
+                <option value="'Montserrat', sans-serif">Montserrat</option>
+                <option value="'Lato', sans-serif">Lato</option>
+            </select>
+            <select class="size-select" id="font-size-select">
+                <option value="">Default</option>
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px">20px</option>
+            </select>
+            <button class="toolbar-btn" id="bold-btn" title="Bold">
+                <i class="fa fa-bold"></i>
+            </button>
+            <button class="toolbar-btn" id="italic-btn" title="Italic">
+                <i class="fa fa-italic"></i>
+            </button>
+            <button class="toolbar-btn" id="underline-btn" title="Underline">
+                <i class="fa fa-underline"></i>
+            </button>
+            <button class="toolbar-btn" id="undo-btn" title="Undo">
+                <i class="fa fa-undo"></i>
+            </button>
+            <button class="toolbar-btn" id="redo-btn" title="Redo">
+                <i class="fa fa-repeat"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
