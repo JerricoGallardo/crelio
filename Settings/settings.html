@@ -15,38 +15,38 @@
                 <i class="fas fa-pencil-ruler"></i>
                 <span>Crealio</span>
             </div>
-            
+
             <nav>
                 <a href="../Profile/profile.html" class="nav-item">
-                    <i class="fas fa-user"></i>     
+                    <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
-                
+
                 <a href="../Dashboard/dashboard.html" class="nav-item">
                     <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </a>
-                
+
                 <a href="../My Portfolio/myportfolio.html" class="nav-item">
                     <i class="fas fa-folder"></i>
                     <span>My Portfolio</span>
                 </a>
-                
+
                 <a href="../Create New/createnewportfolio.html" class="nav-item">
                     <i class="fas fa-plus-circle"></i>
                     <span>Create Portfolio</span>
                 </a>
-                
+
                 <a href="#" class="nav-item active">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </a>
             </nav>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content">
-            <div class="page-header">       
+            <div class="page-header">
                 <h1 class="page-title">Settings</h1>
                 <div class="user-profile">
                     <div class="hamburger-menu" onclick="toggleProfileMenu()">
@@ -56,7 +56,7 @@
                             <span></span>
                         </div>
                     </div>
-                    
+
                     <!-- Profile Dropdown Menu -->
                     <div class="profile-menu" id="profileMenu">
                         <div class="profile-header">
@@ -85,7 +85,8 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
-                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;">
+                                <!-- Compact Mode button hidden as requested -->
+                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;" style="display: none;">
                                     <i class="fas fa-compress-alt"></i>
                                     <div>
                                         <span>Compact Mode</span>
@@ -95,7 +96,7 @@
                             </div>
 
                             <div class="divider"></div>
-                            
+
                             <div class="menu-section">
                                 <a href="#" class="menu-item logout ripple">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -117,7 +118,7 @@
                         </div>
                         <button class="btn-primary">Edit</button>
                     </div>
-                    
+
                     <div class="settings-item">
                         <div class="settings-content">
                             <h3>Password</h3>
@@ -125,7 +126,7 @@
                         </div>
                         <button class="btn-primary">Update</button>
                     </div>
-                    
+
                     <div class="settings-item">
                         <div class="settings-content">
                             <h3>Connected Accounts</h3>
@@ -135,7 +136,7 @@
                     </div>
                 </div>
             </section>
-            
+
             <!-- Appearance Section -->
             <section class="settings-section">
                 <h2 class="section-title">Appearance</h2>
@@ -150,8 +151,9 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    
-                    <div class="settings-item">
+
+                    <!-- Layout option hidden to match the removal of Compact Mode -->
+                    <div class="settings-item" style="display: none;">
                         <div class="settings-content">
                             <h3>Layout</h3>
                             <p>Choose your preferred layout style</p>
@@ -164,7 +166,7 @@
                     </div>
                 </div>
             </section>
-            
+
             <!-- Privacy & Security -->
             <section class="settings-section">
                 <h2 class="section-title">Privacy & Security</h2>
@@ -176,7 +178,7 @@
                         </div>
                         <button class="btn-primary">Enable</button>
                     </div>
-                    
+
                     <div class="settings-item">
                         <div class="settings-content">
                             <h3>Active Sessions</h3>
@@ -184,7 +186,7 @@
                         </div>
                         <button class="btn-primary">View</button>
                     </div>
-                    
+
                     <div class="settings-item">
                         <div class="settings-content">
                             <h3>Privacy Settings</h3>
@@ -196,6 +198,7 @@
             </section>
         </main>
             <script src="../Main Page JS/mainpage.js"></script>
+            <script src="../Main Page JS/page-transitions.js"></script>
 
     </body>
 </html>

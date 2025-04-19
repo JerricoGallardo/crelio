@@ -93,7 +93,8 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
-                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;">
+                                <!-- Compact Mode button hidden as requested -->
+                                <a href="#" class="menu-item ripple" onclick="toggleCompactMode(); return false;" style="display: none;">
                                     <i class="fas fa-compress-alt"></i>
                                     <div>
                                         <span>Compact Mode</span>
@@ -117,20 +118,20 @@
             <!-- Template Selection -->
             <div class="resume-templates">
                 <h2>Choose a Portfolio Website Template</h2>
-                <p>Select a template to get started with your new resume</p>
+                <p>Select a template to get started with your new portfolio</p>
 
                 <div class="templates-grid">
                     <div class="template-card">
                         <div class="template-image">
-                            <img src="../img/portfolio-perfect-preview.jpg" alt="Minimal Template">
+                            <img src="../img/thumbnails/Minimal Template.png" alt="Minimal Template">
                         </div>
                         <div class="template-info">
                             <h3>Minimal</h3>
                             <p>Modern, responsive portfolio template with clean sections</p>
                             <div class="template-buttons">
-                                <a href="#" class="template-preview-btn" data-template="../Templates/minimal.html">
+                                <a href="#" class="template-preview-btn">
                                     <i class="fas fa-eye"></i>
-                                    <span>Preview</span>
+                                    <span>Preview Thumbnail</span>
                                 </a>
                                 <a href="PortfolioTemplates/minimal-portfolio.html" class="template-btn">
                                     <i class="fas fa-file-alt"></i>
@@ -142,15 +143,15 @@
 
                     <div class="template-card">
                         <div class="template-image">
-                            <img src="../img/pic2.webp" alt="Professional Template">
+                            <img src="../img/thumbnails/Professional Template.png" alt="Professional Template">
                         </div>
                         <div class="template-info">
                             <h3>Professional</h3>
                             <p>Traditional format preferred by established industries</p>
                             <div class="template-buttons">
-                                <a href="#" class="template-preview-btn" data-template="../Templates/professional.html">
+                                <a href="#" class="template-preview-btn">
                                     <i class="fas fa-eye"></i>
-                                    <span>Preview</span>
+                                    <span>Preview Thumbnail</span>
                                 </a>
                                 <a href="PortfolioTemplates/professional-portfolio.html" class="template-btn">
                                     <i class="fas fa-file-alt"></i>
@@ -162,17 +163,17 @@
 
                     <div class="template-card">
                         <div class="template-image">
-                            <img src="../img/pic3.webp" alt="Creative Template">
+                            <img src="../img/thumbnails/Creative Template.png" alt="Creative Template">
                         </div>
                         <div class="template-info">
                             <h3>Creative</h3>
                             <p>Modern design for creative fields and startups</p>
                             <div class="template-buttons">
-                                <a href="#" class="template-preview-btn" data-template="../Templates/creative.html">
+                                <a href="#" class="template-preview-btn">
                                     <i class="fas fa-eye"></i>
-                                    <span>Preview</span>
+                                    <span>Preview Thumbnail</span>
                                 </a>
-                                <a href="PortfolioTemplates/neon-pulse.html" class="template-btn">
+                                <a href="PortfolioTemplates/creative-portfolio.html" class="template-btn">
                                     <i class="fas fa-file-alt"></i>
                                     <span>Use This Template</span>
                                 </a>
@@ -183,17 +184,17 @@
                     <div class="template-card">
 
                         <div class="template-image">
-                            <img src="../img/pic4.webp" alt="Executive Template">
+                            <img src="../img/thumbnails/Executive Template.png" alt="Executive Template">
                         </div>
                         <div class="template-info">
                             <h3>Executive</h3>
                             <p>Elegant design for senior positions and leadership roles</p>
                             <div class="template-buttons">
-                                <a href="#" class="template-preview-btn" data-template="../Templates/executive.html">
+                                <a href="#" class="template-preview-btn">
                                     <i class="fas fa-eye"></i>
-                                    <span>Preview</span>
+                                    <span>Preview Thumbnail</span>
                                 </a>
-                                <a href="PortfolioTemplates/executive-portfolio.html" class="template-btn">
+                                <a href="PortfolioTemplates/Executive-portfolio.html" class="template-btn">
                                     <i class="fas fa-file-alt"></i>
                                     <span>Use This Template</span>
                                 </a>
@@ -204,15 +205,15 @@
                     <div class="template-card">
 
                         <div class="template-image">
-                            <img src="../img/pic5.jpg" alt="Modern Template">
+                            <img src="../img/thumbnails/Modern Template.png" alt="Modern Template">
                         </div>
                         <div class="template-info">
                             <h3>Modern</h3>
                             <p>Contemporary layout with stylish elements</p>
                             <div class="template-buttons">
-                                <a href="#" class="template-preview-btn" data-template="../Templates/modern.html">
+                                <a href="#" class="template-preview-btn">
                                     <i class="fas fa-eye"></i>
-                                    <span>Preview</span>
+                                    <span>Preview Thumbnail</span>
                                 </a>
                                 <a href="PortfolioTemplates/modern-portfolio.html" class="template-btn">
                                     <i class="fas fa-file-alt"></i>
@@ -222,25 +223,7 @@
                         </div>
                     </div>
 
-                    <div class="template-card">
-                        <div class="template-image">
-                            <img src="../img/pic6.jpg" alt="Academic Template">
-                        </div>
-                        <div class="template-info">
-                            <h3>Academic</h3>
-                            <p>Structured format for educational and research positions</p>
-                            <div class="template-buttons">
-                                <a href="#" class="template-preview-btn" data-template="../Templates/academic.html">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Preview</span>
-                                </a>
-                                <a href="PortfolioTemplates/academic-portfolio.html" class="template-btn">
-                                    <i class="fas fa-file-alt"></i>
-                                    <span>Use This Template</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="templates-footer">
@@ -253,7 +236,7 @@
         <div id="templatePreviewModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
-                <h2>Template Preview</h2>
+                <h2>Template Thumbnail Preview</h2>
                 <div class="template-preview-container">
                     <div id="templatePreviewImage" class="template-preview-image"></div>
                 </div>
@@ -302,16 +285,17 @@
                 previewButtons.forEach(button => {
                     button.addEventListener('click', function(e) {
                         e.preventDefault();
-                        const templateUrl = this.getAttribute('data-template');
-
                         // Get the exact thumbnail image from the template card
                         const templateCard = this.closest('.template-card');
                         const thumbnailImg = templateCard.querySelector('.template-image img');
                         const thumbnailSrc = thumbnailImg.src;
 
+                        // Find the corresponding Use Template button and get its href
+                        const useTemplateLink = templateCard.querySelector('.template-btn').getAttribute('href');
+
                         // Set the preview image to the exact thumbnail
                         previewImage.style.backgroundImage = `url(${thumbnailSrc})`;
-                        useTemplateBtn.href = templateUrl;
+                        useTemplateBtn.href = useTemplateLink;
 
                         // Show modal with animation
                         previewModal.style.display = 'block';
@@ -345,5 +329,6 @@
     </div>
 
     <script src="../Main Page JS/mainpage.js"></script>
+    <script src="../Main Page JS/page-transitions.js"></script>
 </body>
 </html>
