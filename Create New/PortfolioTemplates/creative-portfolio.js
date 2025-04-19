@@ -2,6 +2,146 @@
 localStorage.removeItem('portfolioContent');
 localStorage.removeItem('portfolioContent_old');
 
+// Create a global function to handle URL management consistently
+function handleAddProjectUrls() {
+    console.log('Managing project URLs');
+    
+    // Find the modal and current project
+    const modal = document.getElementById('projectViewModal');
+    if (!modal) {
+        console.error('Project view modal not found');
+        return;
+    }
+    
+    // Get the current project reference
+    const currentProjectId = modal.dataset.currentProject;
+    console.log('Current project selector:', currentProjectId);
+    
+    if (!currentProjectId) {
+        alert('No project is currently open.');
+        return;
+    }
+    
+    // Try to find the project card using the selector
+    let projectCard = document.querySelector(currentProjectId);
+    
+    // Fallback 1: Check if the Add URL button has a project ID
+    if (!projectCard) {
+        console.log('Project not found with selector, trying button data attribute...');
+        const addUrlBtn = document.getElementById('addProjectUrl');
+        if (addUrlBtn && addUrlBtn.dataset.projectId) {
+            const projectId = addUrlBtn.dataset.projectId;
+            projectCard = document.querySelector(`.project-card[data-id="${projectId}"]`);
+            console.log('Found project via button data:', projectCard ? projectCard.dataset.id : 'not found');
+        }
+    }
+    
+    // Fallback 2: Try active project
+    if (!projectCard) {
+        console.error('Project card not found with selector or button data');
+        console.log('Trying to find project directly...');
+        
+        // List all project cards for debugging
+        const allProjects = document.querySelectorAll('.project-card');
+        console.log(`Found ${allProjects.length} total projects:`, 
+            Array.from(allProjects).map(p => p.dataset.id));
+        
+        // Use the most recently clicked project card if possible
+        const openedProjects = document.querySelectorAll('.project-card.active');
+        if (openedProjects.length > 0) {
+            console.log('Using active project as fallback');
+            projectCard = openedProjects[0];
+            modal.dataset.currentProject = `.project-card[data-id="${projectCard.dataset.id}"]`;
+        } else {
+            alert('Could not find the current project. Please try again.');
+            return;
+        }
+    }
+    
+    console.log('Found project card:', projectCard);
+    
+    // Get current URLs directly from the buttons in the modal
+    const demoBtn = document.getElementById('viewProjectDemo');
+    const githubBtn = document.getElementById('viewProjectGithub');
+    
+    // Log URL values for debugging
+    console.log('Current URLs before prompt:', {
+        demoUrl: demoBtn ? demoBtn.href : 'not found',
+        githubUrl: githubBtn ? githubBtn.href : 'not found'
+    });
+    
+    // Get the most current URL values
+    const demoUrl = demoBtn ? demoBtn.href : '';
+    const githubUrl = githubBtn ? githubBtn.href : '';
+    
+    // Use a non-empty value for the prompt and ensure '#' is shown as empty
+    // Also remove http://localhost part if running locally
+    const cleanDemoUrl = (demoUrl && demoUrl !== '#') 
+        ? demoUrl.replace(/^(https?:\/\/localhost:[0-9]+)?\//, '') 
+        : '';
+    const cleanGithubUrl = (githubUrl && githubUrl !== '#') 
+        ? githubUrl.replace(/^(https?:\/\/localhost:[0-9]+)?\//, '') 
+        : '';
+    
+    // Log cleaned URLs for debugging
+    console.log('Cleaned URLs for prompt:', { cleanDemoUrl, cleanGithubUrl });
+    
+    // First, prompt for website URL with current value
+    const newDemoUrl = prompt('Enter the website URL:', cleanDemoUrl);
+    if (newDemoUrl !== null) {
+        // Update demo URL
+        projectCard.setAttribute('data-demo-url', newDemoUrl);
+        if (demoBtn) {
+            demoBtn.href = newDemoUrl || '#';
+            
+            // Update click handler immediately
+            demoBtn.onclick = function(e) {
+                if (!newDemoUrl || newDemoUrl === '#') {
+                    e.preventDefault();
+                    alert('No website URL has been provided for this project.');
+                }
+            };
+        }
+        
+        // Then, prompt for GitHub URL
+        const newGithubUrl = prompt('Enter the GitHub URL:', cleanGithubUrl);
+        if (newGithubUrl !== null) {
+            // Update GitHub URL
+            projectCard.setAttribute('data-github-url', newGithubUrl);
+            if (githubBtn) {
+                githubBtn.href = newGithubUrl || '#';
+                
+                // Update click handler immediately
+                githubBtn.onclick = function(e) {
+                    if (!newGithubUrl || newGithubUrl === '#') {
+                        e.preventDefault();
+                        alert('No GitHub repository URL has been provided for this project.');
+                    }
+                };
+            }
+            
+            // Save state
+            if (typeof saveState === 'function') {
+                saveState();
+            }
+            
+            // Log updated URLs
+            console.log('Updated URLs:', {
+                demoUrl: newDemoUrl || '#',
+                githubUrl: newGithubUrl || '#'
+            });
+            
+            // Show appropriate success message based on URL presence
+            if ((!newDemoUrl || newDemoUrl === '#') && 
+                (!newGithubUrl || newGithubUrl === '#')) {
+                alert('No URLs have been provided. You will need to add URLs later.');
+            } else {
+                alert('URLs have been updated successfully!');
+            }
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Clear localStorage to fix content issues
     localStorage.removeItem('portfolioContent');
@@ -85,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add Project Button
-    const addProjectBtn = document.querySelector('.add-project-btn');
+const addProjectBtn = document.querySelector('.add-project-btn');
     if (addProjectBtn) {
         // Remove any existing handlers by cloning and replacing
         const newBtn = addProjectBtn.cloneNode(true);
@@ -110,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <button class="remove-image-btn" title="Remove Image">
                             <i class="fas fa-trash"></i>
                         </button>
-                </div>
+                    </div>
                     <div class="project-image-upload">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </div>
@@ -136,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add Category Button
     const addCategoryBtn = document.querySelector('.add-category-btn');
-    const skillsGrid = document.querySelector('.skills-grid');
+const skillsGrid = document.querySelector('.skills-grid');
 
     // We'll initialize the skill variables later in the file
 
@@ -285,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // If it's inside a button, prevent default navigation
             const buttonParent = editableElement.closest('a.btn');
             if (buttonParent) {
-                e.preventDefault();
+        e.preventDefault();
                 buttonParent.addEventListener('click', function(evt) {
                     // Only prevent navigation if the text is selected
                     if (editableElement.classList.contains('selecting-all')) {
@@ -414,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Save current state for undo/redo
-    function saveState() {
+function saveState() {
         const content = document.querySelector('.portfolio-container').innerHTML;
         
         // If we're not at the end of the history, remove future states
@@ -437,7 +577,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Undo function
-    function undo() {
+function undo() {
         if (historyIndex > 0) {
             historyIndex--;
             restoreState();
@@ -445,7 +585,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Redo function
-    function redo() {
+function redo() {
         if (historyIndex < history.length - 1) {
             historyIndex++;
             restoreState();
@@ -466,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Re-attach event listeners after DOM changes
     function reattachEventListeners() {
         // Re-attach click listeners to editable elements
-        document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+    document.querySelectorAll('[contenteditable="true"]').forEach(element => {
             element.addEventListener('click', function(e) {
                 // Prevent event bubbling to document click handler
                 e.stopPropagation();
@@ -1469,12 +1609,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // First default project
             const project1 = document.createElement('div');
             project1.className = 'project-card';
+            project1.dataset.id = 'default-project-1';
             project1.innerHTML = `
-                <div class="project-image">
-                    <img src="../../img/project-placeholder-1.jpg" alt="Project Image">
-                    <div class="project-overlay">
-                        <a href="#" class="btn primary">View Project</a>
+        <div class="project-image">
+                    <div class="project-image-placeholder">
+                        <i class="fas fa-image"></i>
                     </div>
+            <div class="project-overlay">
+                        <a href="#" class="btn primary">View Project</a>
+                </div>
                     <div class="project-image-actions">
                         <button class="change-image-btn" title="Change Image">
                             <i class="fas fa-camera"></i>
@@ -1482,35 +1625,38 @@ document.addEventListener('DOMContentLoaded', function() {
                         <button class="remove-image-btn" title="Remove Image">
                             <i class="fas fa-trash"></i>
                         </button>
-                    </div>
+            </div>
                     <div class="project-image-upload">
                         <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
+        </div>
                 </div>
                 <button class="delete-project" title="Delete Project">
                     <i class="fas fa-times"></i>
                 </button>
-                <div class="project-info">
+        <div class="project-info">
                     <h3 contenteditable="true">Portfolio Website</h3>
                     <p contenteditable="true">A responsive portfolio website built with HTML, CSS, and JavaScript to showcase my work and skills.</p>
-                    <div class="project-tech">
+            <div class="project-tech">
                         <span><span class="tag-text" contenteditable="true">HTML</span> <i class="fas fa-times remove-tag"></i></span>
                         <span><span class="tag-text" contenteditable="true">CSS</span> <i class="fas fa-times remove-tag"></i></span>
                         <span><span class="tag-text" contenteditable="true">JavaScript</span> <i class="fas fa-times remove-tag"></i></span>
                     </div>
                     <div class="tag-management">
                         <button class="add-tag-btn">Add Tag</button>
-                    </div>
-                </div>
-            `;
+            </div>
+        </div>
+    `;
             projectsGrid.appendChild(project1);
             
             // Second default project
             const project2 = document.createElement('div');
             project2.className = 'project-card';
+            project2.dataset.id = 'default-project-2';
             project2.innerHTML = `
                 <div class="project-image">
-                    <img src="../../img/project-placeholder-2.jpg" alt="Project Image">
+                    <div class="project-image-placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>
                     <div class="project-overlay">
                         <a href="#" class="btn primary">View Project</a>
                     </div>
@@ -1591,10 +1737,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Save state after adding the tag
-                saveState();
-            }
-        }
-        
+        saveState();
+    }
+}
+
         // Handle removing a tag
         if (e.target.closest('.remove-tag')) {
             const removeBtn = e.target.closest('.remove-tag');
@@ -1618,9 +1764,9 @@ document.addEventListener('DOMContentLoaded', function() {
             imageInput.addEventListener('change', function() {
                 if (this.files && this.files[0]) {
                     const file = this.files[0];
-                    const reader = new FileReader();
+        const reader = new FileReader();
                     
-                    reader.onload = function(e) {
+        reader.onload = function(e) {
                         const imgElement = projectCard.querySelector('.project-image img');
                         if (imgElement) {
                             imgElement.src = e.target.result;
@@ -1645,7 +1791,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             `;
                         }
-                    };
+                        
+                        // Save state after adding the image
+            saveState();
+        };
                     
                     reader.readAsDataURL(file);
                 }
@@ -1663,10 +1812,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="project-image-placeholder">
                     <i class="fas fa-image"></i>
                 </div>
+                <div class="project-overlay">
+                    <a href="#" class="btn primary">View Project</a>
+                </div>
+                <div class="project-image-actions">
+                    <button class="change-image-btn" title="Change Image">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <button class="remove-image-btn" title="Remove Image">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
                 <div class="project-image-upload">
                     <i class="fas fa-cloud-upload-alt"></i>
                 </div>
             `;
+            
+            // Save state after removing image
+            saveState();
         }
     });
 
@@ -1774,9 +1937,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to show project details in the modal
     function showProjectDetails(projectCard) {
-        const modal = document.getElementById('projectViewModal');
+        if (!projectCard) {
+            console.error('No project card provided to showProjectDetails');
+            return;
+        }
         
+        // Make sure the project has an ID
+        if (!projectCard.dataset.id) {
+            // Generate an ID if it doesn't have one
+            projectCard.dataset.id = 'project-' + Date.now();
+            console.log('Generated new ID for project:', projectCard.dataset.id);
+        } else {
+            console.log('Using existing project ID:', projectCard.dataset.id);
+        }
+        
+        // Mark this project as the active one
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.classList.remove('active');
+        });
+        projectCard.classList.add('active');
+        
+        const modal = document.getElementById('projectViewModal');
         if (!modal) return;
+        
+        // Store a reference to the current project card
+        const selector = `.project-card[data-id="${projectCard.dataset.id}"]`;
+        modal.dataset.currentProject = selector;
+        console.log('Set currentProject reference to:', selector);
+        
+        // Test the selector to make sure it works
+        const testProject = document.querySelector(selector);
+        if (!testProject) {
+            console.error('Test selection failed! Project not found with selector:', selector);
+        } else {
+            console.log('Test selection successful:', testProject.dataset.id);
+        }
         
         // Get project data
         const projectImage = projectCard.querySelector('.project-image img');
@@ -1788,8 +1983,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const demoUrl = projectCard.getAttribute('data-demo-url') || '';
         const githubUrl = projectCard.getAttribute('data-github-url') || '';
         
+        // Check if in preview mode
+        const previewBtn = document.querySelector('.preview-btn');
+        const isPreviewMode = previewBtn && previewBtn.getAttribute('data-preview') === 'true';
+        
         // Populate the modal
-        const modalImage = document.getElementById('viewProjectImage');
+        const modalImageContainer = modal.querySelector('.project-view-image');
         const modalTitle = document.getElementById('viewProjectTitle');
         const modalDescription = document.getElementById('viewProjectDescription');
         const modalTags = document.getElementById('viewProjectTags');
@@ -1800,7 +1999,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const demoInput = document.getElementById('editProjectDemo');
         const githubInput = document.getElementById('editProjectGithub');
         
-        if (modalImage && projectImage) modalImage.src = projectImage.src;
+        // Update image or use placeholder
+        if (modalImageContainer) {
+            if (projectImage) {
+                // If there's an image, use it
+                modalImageContainer.innerHTML = `<img src="${projectImage.src}" alt="Project Image">`;
+            } else {
+                // If no image, use placeholder
+                modalImageContainer.innerHTML = `
+                    <div class="project-image-placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>
+                `;
+            }
+        }
+        
         if (modalTitle && projectTitle) modalTitle.textContent = projectTitle.textContent;
         if (modalDescription && projectDescription) modalDescription.textContent = projectDescription.textContent;
         
@@ -1814,14 +2027,68 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
+        // Create edit buttons for URLs - they will only be added if not in preview mode
+        const editDemoBtn = document.createElement('button');
+        editDemoBtn.className = 'edit-url-btn';
+        editDemoBtn.innerHTML = '<i class="fas fa-edit"></i>';
+        editDemoBtn.title = 'Edit Website URL';
+        editDemoBtn.onclick = function() {
+            const newUrl = prompt('Enter the website URL:', demoUrl);
+            if (newUrl !== null) {
+                projectCard.setAttribute('data-demo-url', newUrl);
+                modalDemoBtn.href = newUrl || '#';
+                if (demoInput) demoInput.value = newUrl;
+                saveState();
+            }
+        };
+        
+        const editGithubBtn = document.createElement('button');
+        editGithubBtn.className = 'edit-url-btn';
+        editGithubBtn.innerHTML = '<i class="fas fa-edit"></i>';
+        editGithubBtn.title = 'Edit GitHub URL';
+        editGithubBtn.onclick = function() {
+            const newUrl = prompt('Enter the GitHub URL:', githubUrl);
+            if (newUrl !== null) {
+                projectCard.setAttribute('data-github-url', newUrl);
+                modalGithubBtn.href = newUrl || '#';
+                if (githubInput) githubInput.value = newUrl;
+                saveState();
+            }
+        };
+        
         // Set button URLs - always show the buttons regardless of URL
         if (modalDemoBtn) {
             modalDemoBtn.href = demoUrl || '#';
             modalDemoBtn.style.display = 'flex'; // Always show
-            modalDemoBtn.innerHTML = '<i class="fas fa-globe"></i> Visit Website <i class="fas fa-external-link-alt"></i>';
+            
+            // Clear any existing content
+            modalDemoBtn.innerHTML = '';
+            
+            // Create and append globe icon
+            const globeIcon = document.createElement('i');
+            globeIcon.className = 'fas fa-globe';
+            modalDemoBtn.appendChild(globeIcon);
+            
+            // Add text with space
+            modalDemoBtn.appendChild(document.createTextNode(' Visit Website '));
+            
+            // Add external link icon
+            const externalLinkIcon = document.createElement('i');
+            externalLinkIcon.className = 'fas fa-external-link-alt';
+            modalDemoBtn.appendChild(externalLinkIcon);
+            
+            // Append edit button only if not in preview mode
+            if (!isPreviewMode) {
+                modalDemoBtn.appendChild(editDemoBtn);
+            }
             
             // Add click event listener with validation
             modalDemoBtn.onclick = function(e) {
+                // Only handle the URL click if the target is the main link, not the edit button
+                if (e.target.closest('.edit-url-btn')) {
+                    return; // Let the edit button handle its own click event
+                }
+                
                 if (!demoUrl || demoUrl === '#') {
                     e.preventDefault();
                     alert('No website URL has been provided for this project.');
@@ -1832,10 +2099,35 @@ document.addEventListener('DOMContentLoaded', function() {
         if (modalGithubBtn) {
             modalGithubBtn.href = githubUrl || '#';
             modalGithubBtn.style.display = 'flex'; // Always show
-            modalGithubBtn.innerHTML = '<i class="fab fa-github"></i> View on GitHub <i class="fas fa-external-link-alt"></i>';
+            
+            // Clear any existing content
+            modalGithubBtn.innerHTML = '';
+            
+            // Create and append GitHub icon
+            const githubIcon = document.createElement('i');
+            githubIcon.className = 'fab fa-github';
+            modalGithubBtn.appendChild(githubIcon);
+            
+            // Add text with space
+            modalGithubBtn.appendChild(document.createTextNode(' View on GitHub '));
+            
+            // Add external link icon
+            const externalLinkIcon = document.createElement('i');
+            externalLinkIcon.className = 'fas fa-external-link-alt';
+            modalGithubBtn.appendChild(externalLinkIcon);
+            
+            // Append edit button only if not in preview mode
+            if (!isPreviewMode) {
+                modalGithubBtn.appendChild(editGithubBtn);
+            }
             
             // Add click event listener with validation
             modalGithubBtn.onclick = function(e) {
+                // Only handle the URL click if the target is the main link, not the edit button
+                if (e.target.closest('.edit-url-btn')) {
+                    return; // Let the edit button handle its own click event
+                }
+                
                 if (!githubUrl || githubUrl === '#') {
                     e.preventDefault();
                     alert('No GitHub repository URL has been provided for this project.');
@@ -1906,6 +2198,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
+        // Add functionality to the Add URL button - placing it here directly within showProjectDetails
+        const addUrlBtn = document.getElementById('addProjectUrl');
+        if (addUrlBtn) {
+            // Remove any existing event listeners by creating a clone
+            const newAddUrlBtn = addUrlBtn.cloneNode(true);
+            if (addUrlBtn.parentNode) {
+                addUrlBtn.parentNode.replaceChild(newAddUrlBtn, addUrlBtn);
+            }
+            
+            // Save the current project ID directly in the button's data attribute for easier access
+            newAddUrlBtn.dataset.projectId = projectCard.dataset.id;
+            console.log('Stored project ID in Add URL button:', newAddUrlBtn.dataset.projectId);
+            
+            // Add the click event listener to the new button
+            newAddUrlBtn.addEventListener('click', function() {
+                console.log('Add URL button clicked for project:', this.dataset.projectId);
+                handleAddProjectUrls();
+            });
+        }
+        
         // Show the modal
         showModal(modal);
     }
@@ -1930,14 +2242,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 const projectCard = document.createElement('div');
                 projectCard.className = 'project-card';
                 
+                // Generate a unique ID for this project
+                const projectId = 'project-' + Date.now();
+                projectCard.dataset.id = projectId;
+                console.log(`Created new project with ID: ${projectId}`);
+                
                 // Store URLs as data attributes
                 if (demoUrl) projectCard.setAttribute('data-demo-url', demoUrl);
                 if (githubUrl) projectCard.setAttribute('data-github-url', githubUrl);
                 
+                // Determine whether to use image or placeholder
+                let imageHtml = '';
+                if (imageUrl) {
+                    imageHtml = `<img src="${imageUrl}" alt="${title}">`;
+                } else {
+                    imageHtml = `
+                        <div class="project-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    `;
+                }
+                
                 // Build the project card HTML
                 projectCard.innerHTML = `
                     <div class="project-image">
-                        <img src="${imageUrl}" alt="${title}">
+                        ${imageHtml}
                         <div class="project-overlay">
                             <a href="#" class="btn primary">View Project</a>
                         </div>
@@ -1996,59 +2325,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Add URL editing capabilities to existing projects
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.project-overlay .btn.primary')) {
-            const projectCard = e.target.closest('.project-card');
-            const modal = document.getElementById('projectViewModal');
-            
-            // Add edit buttons for the URLs if user is in editing mode
-            if (modal && projectCard) {
-                const editDemoBtn = document.createElement('button');
-                editDemoBtn.className = 'edit-url-btn';
-                editDemoBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                editDemoBtn.title = 'Edit Website URL';
-                
-                const editGithubBtn = document.createElement('button');
-                editGithubBtn.className = 'edit-url-btn';
-                editGithubBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                editGithubBtn.title = 'Edit GitHub URL';
-                
-                // Append buttons to the view links
-                const demoLink = document.getElementById('viewProjectDemo');
-                const githubLink = document.getElementById('viewProjectGithub');
-                
-                if (demoLink) demoLink.appendChild(editDemoBtn);
-                if (githubLink) githubLink.appendChild(editGithubBtn);
-                
-                // Add event listeners for the edit buttons
-                editDemoBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const newUrl = prompt('Enter website URL:', projectCard.getAttribute('data-demo-url') || '');
-                    if (newUrl !== null) {
-                        projectCard.setAttribute('data-demo-url', newUrl);
-                        demoLink.href = newUrl;
-                        demoLink.style.display = newUrl ? 'flex' : 'none';
-                        saveState();
-                    }
-                });
-                
-                editGithubBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const newUrl = prompt('Enter GitHub URL:', projectCard.getAttribute('data-github-url') || '');
-                    if (newUrl !== null) {
-                        projectCard.setAttribute('data-github-url', newUrl);
-                        githubLink.href = newUrl;
-                        githubLink.style.display = newUrl ? 'flex' : 'none';
-                        saveState();
-                    }
-                });
-            }
-        }
-    });
 
     // Add event listener for project URL inputs
     document.addEventListener('change', function(e) {
@@ -2117,6 +2393,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.toolbar-btn').forEach(btn => {
                 if (btn !== previewBtn) btn.disabled = false;
             });
+            
+            // Remove preview-mode class from body
+            document.body.classList.remove('preview-mode');
         } else {
             // Switch to Preview mode
             // Store original state before changing
@@ -2139,7 +2418,47 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.toolbar-btn').forEach(btn => {
                 if (btn !== previewBtn) btn.disabled = true;
             });
+            
+            // Add preview-mode class to body
+            document.body.classList.add('preview-mode');
+            
+            // Fix for contact links and social media links - ensure they're clickable in preview mode
+            document.querySelectorAll('.contact-item span, .social-link').forEach(item => {
+                // Make sure links become clickable in preview mode
+                makeLinkClickable(item);
+            });
+            
+            // Ensure project links work in preview mode
+            ensureProjectLinksWork();
         }
+        
+        // Fix for project view buttons and demo/github links
+        document.querySelectorAll('.project-overlay .btn.primary, .view-btn').forEach(btn => {
+            // If in preview mode, ensure proper click handling
+            if (!isPreviewMode) {
+                // In edit mode, keep the existing onclick handler
+                btn.onclick = null;
+                
+                // Reattach click handling via event delegation
+                btn.addEventListener('click', function(e) {
+                    if (this.classList.contains('selecting-all')) {
+                        e.preventDefault(); // Prevent navigation if editing
+                    }
+                }, { once: true });
+            } else {
+                // In preview mode, ensure proper navigation
+                btn.onclick = function(e) {
+                    // Only prevent navigation if it's a dummy link
+                    const href = this.getAttribute('href');
+                    if (href === '#' || !href) {
+                        e.preventDefault();
+                        if (this.classList.contains('view-btn')) {
+                            alert('No URL has been provided for this link.');
+                        }
+                    }
+                };
+            }
+        });
         
         // Save the current state to localStorage
         saveState();
@@ -2183,4 +2502,83 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
+
+    // Add a direct click handler for the Add URL button
+    document.addEventListener('DOMContentLoaded', function() {
+        const addUrlButton = document.getElementById('addProjectUrl');
+        if (addUrlButton) {
+            // Use event delegation with a centralized handler
+            addUrlButton.addEventListener('click', handleAddProjectUrls);
+        }
+    });
+
+    // Consolidated event listener for project view and URL editing
+    document.addEventListener('click', function(e) {
+        // Handle View Project button click
+        if (e.target.closest('.project-overlay .btn.primary')) {
+            e.preventDefault();
+            const projectCard = e.target.closest('.project-card');
+            if (projectCard) {
+                console.log('Showing project details for project with ID:', projectCard.dataset.id);
+                showProjectDetails(projectCard);
+            }
+        }
+    });
+
+    // Add this function after makeLinkClickable function
+    // Function to ensure project links work properly in preview mode
+    function ensureProjectLinksWork() {
+        // First get all project cards
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        // For each project card, make sure URLs are correctly set
+        projectCards.forEach(card => {
+            // Get stored URLs from data attributes
+            const demoUrl = card.getAttribute('data-demo-url');
+            const githubUrl = card.getAttribute('data-github-url');
+            
+            // Fix View Project button link
+            const viewBtn = card.querySelector('.project-overlay .btn.primary');
+            if (viewBtn) {
+                viewBtn.onclick = function(e) {
+                    // In preview mode, this should show the project view modal
+                    const previewBtn = document.querySelector('.preview-btn');
+                    const isPreviewMode = previewBtn && previewBtn.getAttribute('data-preview') === 'true';
+                    
+                    if (isPreviewMode) {
+                        e.preventDefault();
+                        showProjectDetails(card);
+                    }
+                };
+            }
+        });
+        
+        // Also ensure modal buttons work correctly
+        const projectViewModal = document.getElementById('projectViewModal');
+        if (projectViewModal) {
+            const demoBtn = document.getElementById('viewProjectDemo');
+            const githubBtn = document.getElementById('viewProjectGithub');
+            
+            // Make sure these buttons navigate correctly based on their href
+            if (demoBtn) {
+                demoBtn.onclick = function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#' || !href) {
+                        e.preventDefault();
+                        alert('No website URL has been provided for this project.');
+                    }
+                };
+            }
+            
+            if (githubBtn) {
+                githubBtn.onclick = function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#' || !href) {
+                        e.preventDefault();
+                        alert('No GitHub repository URL has been provided for this project.');
+                    }
+                };
+            }
+        }
+    }
+}); 
