@@ -6,7 +6,7 @@
     <title>Modern Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="modern-portfolio.css">
+    <link rel="stylesheet" href="./modern-portfolio.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -50,12 +50,32 @@
                         <option value="Poppins">Poppins</option>
                         <option value="Arial">Arial</option>
                         <option value="Helvetica">Helvetica</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Roboto">Roboto</option>
+                        <option value="Open Sans">Open Sans</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Lato">Lato</option>
+                        <option value="Ubuntu">Ubuntu</option>
+                        <option value="Playfair Display">Playfair Display</option>
                     </select>
                     <select class="style-select font-size-select">
+                        <option value="12px">12px</option>
                         <option value="14px">14px</option>
                         <option value="16px" selected>16px</option>
                         <option value="18px">18px</option>
                         <option value="20px">20px</option>
+                        <option value="22px">22px</option>
+                        <option value="24px">24px</option>
+                        <option value="28px">28px</option>
+                        <option value="32px">32px</option>
+                        <option value="36px">36px</option>
+                        <option value="42px">42px</option>
+                        <option value="48px">48px</option>
+                        <option value="56px">56px</option>
+                        <option value="64px">64px</option>
+                        <option value="72px">72px</option>
                     </select>
                 </div>
             </div>
@@ -166,11 +186,11 @@
             </section>
 
             <!-- Contact Section -->
-            <section id="contact" class="contact-section">
-                <div class="section-header">
-                    <h2 contenteditable="true">Get in Touch</h2>
-                    <div class="section-divider"></div>
+            <section class="contact" id="contact">
+                <div class="editable-title-wrapper">
+                    <h2 class="section-title contact" contenteditable="true" data-editable="true">Get in Touch</h2>
                 </div>
+                <div class="section-divider"></div>
                 <div class="contact-content">
                     <div class="contact-form">
                         <form>
@@ -292,9 +312,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="modern-portfolio.js"></script>
-
-    <!-- Preview Mode Script -->
-    <script src="preview-mode.js"></script>
+    <script src="./modern-portfolio.js"></script>
 </body>
 </html> 
