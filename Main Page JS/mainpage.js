@@ -100,38 +100,49 @@ function loadUserData() {
         window.location.href = '../Login/login.html';
         return;
     }
-    
+
     try {
         const userData = JSON.parse(userAuth);
+
         if (!userData || !userData.isLoggedIn) {
             window.location.href = '../Login/login.html';
             return;
         }
-        
-        const usernameElements = document.querySelectorAll('.user-info h4');
-        const emailElements = document.querySelectorAll('.user-info p');
-        const welcomeMessage = document.querySelector('.card-title');
-        
-        if (userData.name) {
-            usernameElements.forEach(element => {
-                element.textContent = userData.name;
+
+        // ✅ Set profile image
+        const profileImages = document.querySelectorAll('.profile-image-wrapper img');
+        if (userData.imageUrl) {
+            profileImages.forEach(img => {
+                img.src = userData.imageUrl;
+                img.alt = userData.name || 'User';
             });
-            
-            if (welcomeMessage?.textContent.includes('Welcome back')) {
-                welcomeMessage.textContent = `Welcome back, ${userData.name}!`;
-            }
         }
-        
+
+        // ✅ Update welcome title on dashboard
+        const welcomeMessage = document.querySelector('.card-title');
+        if (userData.name && welcomeMessage?.textContent.includes('Welcome back')) {
+            welcomeMessage.textContent = `Welcome back, ${userData.name}!`;
+        }
+
+        // ✅ Update any custom placeholders
+        const namePlaceholders = document.querySelectorAll('.user-name-placeholder');
+        const emailPlaceholders = document.querySelectorAll('.user-email-placeholder');
+        if (userData.name) {
+            namePlaceholders.forEach(el => el.textContent = userData.name);
+        }
+
         if (userData.email) {
-            emailElements.forEach(element => {
+            emailPlaceholders.forEach(element => {
                 element.textContent = userData.email;
             });
         }
+
     } catch (error) {
         console.error('Error parsing user auth data:', error);
         window.location.href = '../Login/login.html';
     }
 }
+
 
 // UI Controls
 function toggleProfileMenu() {

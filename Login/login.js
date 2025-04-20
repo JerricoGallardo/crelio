@@ -15,6 +15,20 @@ const blobs = document.querySelectorAll('.blob');
 const particlesContainer = document.querySelector('.particles-container');
 const resumeElementsContainer = document.querySelector('.resume-elements-container');
 
+let googleToken = null;
+
+window.onload = () => {
+    google.accounts.id.initialize({
+        client_id: "324397955892-2kvjrhdn6nms1lq8fup11l3t3fodu5an.apps.googleusercontent.com",
+        callback: (response) => {
+            googleToken = response.credential;
+            console.log("Google token:", googleToken);
+        }
+    });
+
+    google.accounts.id.prompt(); // shows the "Continue as..." prompt
+};
+
 // Initialize animations for elements
 document.addEventListener('DOMContentLoaded', () => {
     // Add CSS class to body when DOM is loaded
@@ -355,26 +369,33 @@ loginForm.addEventListener('submit', async (e) => {
             method: 'POST',
             body: new URLSearchParams({ email, password }),
         });
-
-        const text = await res.text();
-
+    
+        const data = await res.json(); // Convert response to JSON
+    
         if (!res.ok) {
-            throw new Error(text);
+            throw new Error(data.message || "Login failed.");
         }
-
+    
+        if (data.isEmailConfirmed === false) {
+            throw new Error("verify"); // This will trigger the special error message
+        }
+    
         hideLoading(loginSubmit);
-        showSuccessMessage(loginForm, text);
-
+        showSuccessMessage(loginForm, data.message || "Login successful!");
+    
         storeAuthentication({
-            email,
-            name: email.split('@')[0],
+            email: data.email || email,
+            name: data.name || email.split('@')[0],
+            imageUrl: "https://ui-avatars.com/api/?name=" + encodeURIComponent(data.name || email),
             isLoggedIn: true,
         });
-
+        
+        
+    
         setTimeout(() => {
             window.location.href = "../Dashboard/dashboard.html";
         }, 1500);
-
+    
     } catch (err) {
         hideLoading(loginSubmit);
         const msg = err.message.includes("verify") 
@@ -382,6 +403,7 @@ loginForm.addEventListener('submit', async (e) => {
             : "Login failed.";
         showErrorMessage(loginForm, msg);
     }
+    
 });
 
 
@@ -404,7 +426,12 @@ signupForm.addEventListener('submit', async (e) => {
     try {
         const res = await fetch('https://localhost:7258/api/auth/register', {
             method: 'POST',
-            body: new URLSearchParams({ fullname, email, password }),
+            body: new URLSearchParams({
+                fullname,
+                email,
+                password,
+                credential: googleToken // ✅ Send Google token
+            }),
         });
 
         const text = await res.text();
@@ -416,7 +443,12 @@ signupForm.addEventListener('submit', async (e) => {
         hideLoading(signupSubmit);
         showSuccessMessage(signupForm, text);
 
-        storeAuthentication({ email, name: fullname, isLoggedIn: true });
+        storeAuthentication({
+            email,
+            name: fullname,
+            imageUrl: data.picture || "https://ui-avatars.com/api/?name=" + encodeURIComponent(fullname),
+            isLoggedIn: true
+        });
 
         setTimeout(() => {
             window.location.href = "checkEmailVerification.html";
@@ -496,39 +528,52 @@ function storeAuthentication(userData) {
 }
 
 async function handleGoogleSignIn(response) {
+    console.log("Google credential received:", response.credential);
+    
     try {
-      // Decode JWT
-      const responsePayload = jwt_decode(response.credential);
-  
-      // Store locally
-      storeAuthentication({
-        email: responsePayload.email,
-        name: responsePayload.name,
-        picture: responsePayload.picture,
-        isLoggedIn: true
-      });
-  
-      // Send to backend
-      const res = await fetch("https://localhost:7258/api/auth/google", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ credential: response.credential })
-      });
-  
-      if (res.ok) {
-        showSuccessMessage(loginForm, "Successfully logged in with Google!");
-        setTimeout(() => {
-          window.location.href = "Landing Page/index.html";
-        }, 1500);
-      } else {
-        throw new Error("Backend rejected login.");
-      }
-  
+        // Ensure jwt_decode is available
+        if (typeof jwt_decode !== 'function') {
+            throw new Error("JWT decoding library not loaded");
+        }
+        
+        const decoded = jwt_decode(response.credential);
+        console.log("Decoded JWT:", decoded);
+
+        const res = await fetch("https://localhost:7258/api/auth/google", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                credential: response.credential,
+                email: decoded.email,
+                name: decoded.name
+            })
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Google authentication failed");
+        }
+
+        const data = await res.json();
+        
+        if (data.needsPassword) {
+            window.location.href = `createpassword.html?email=${encodeURIComponent(data.email)}&name=${encodeURIComponent(data.name)}&picture=${encodeURIComponent(data.picture || "")}`;
+        } else {
+            const decoded = jwt_decode(response.credential);
+
+            storeAuthentication({
+                email: data.email,
+                name: data.name,
+                imageUrl: data.picture, // ✅ now pulled from backend
+                isLoggedIn: true
+            });
+            window.location.href = "../Dashboard/dashboard.html";
+        }
     } catch (error) {
-      console.error("Google sign-in failed:", error);
-      showErrorMessage(loginForm, "Google sign-in failed. Please try again.");
+        console.error("Google sign-in failed:", error);
+        showErrorMessage(loginForm, error.message || "Google sign-in failed");
     }
 }
 

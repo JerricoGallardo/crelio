@@ -90,25 +90,84 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Form submission
-    form.addEventListener('submit', function(e) {
+    // Modify form submission
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
+        // Show loading state immediately
+        const submitBtn = document.getElementById('createPasswordBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Processing...</span><i class="fas fa-spinner fa-spin"></i>';
         
-        if (!validatePassword(password)) {
-            return;
+        try {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get("email");
+            const name = urlParams.get("name");
+            const picture = urlParams.get("picture");
+
+            storeAuthentication({
+                email,
+                name,
+                imageUrl: picture,
+                isLoggedIn: true
+            });
+            
+            // Client-side validation (instant)
+            if (!validatePassword(password)) {
+                throw new Error("Password doesn't meet requirements");
+            }
+            
+            if (password !== confirmPassword) {
+                throw new Error("Passwords don't match");
+            }
+    
+            // Only proceed if this is a Google sign-up completion
+            if (email) {
+                const startTime = Date.now();
+                console.log("Starting password submission...");
+                
+                const response = await fetch('https://localhost:7258/api/auth/set-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        email: email,
+                        password: password
+                    }),
+                    // Timeout after 5 seconds
+                    signal: AbortSignal.timeout(5000)
+                });
+    
+                console.log(`Request completed in ${Date.now() - startTime}ms`);
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || "Failed to set password");
+                }
+    
+                // Instant local storage update
+                storeAuthentication({
+                    email: email,
+                    name: urlParams.get('name') || email.split('@')[0],
+                    isLoggedIn: true
+                });
+                
+                // Immediate visual feedback
+                submitBtn.innerHTML = '<span>Success!</span><i class="fas fa-check"></i>';
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Brief success display
+                
+                // Redirect
+                window.location.href = '../Dashboard/dashboard.html';
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>Create Password</span><i class="fas fa-arrow-right"></i>';
+            showErrorMessage(form, error.message);
         }
-        
-        if (password !== confirmPassword) {
-            return;
-        }
-        
-        // Here you would typically send the password to your backend
-        // For now, we'll just show a success message
-        alert('Password created successfully!');
-        // Redirect to dashboard or login page
-        window.location.href = '../Dashboard/dashboard.html';
     });
     
     // Initialize button state

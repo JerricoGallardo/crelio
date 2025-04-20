@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Get all edit buttons
     const editButtons = document.querySelectorAll('.edit-btn');
@@ -29,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
         details.querySelectorAll('p').forEach(p => {
             p.contentEditable = true;
             p.classList.add('editable');
+            if (p.textContent.trim() === "Not set") {
+                p.textContent = "";
+            }
         });
         
         // Make skill tags editable
@@ -242,42 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
         contentWrapper.focus();
     }
     
-    // Function to save changes
-    function saveChanges(details) {
-        // Process skill tags before removing editable state
-        details.querySelectorAll('.skill-tag').forEach(tag => {
-            const contentWrapper = tag.querySelector('div');
-            // Clean up the text content
-            const text = contentWrapper.textContent.trim();
-            if (!text) {
-                tag.remove();
-                return;
-            }
-            
-            // Store the cleaned text and remove any existing delete buttons
-            const deleteBtn = tag.querySelector('.delete-btn');
-            if (deleteBtn) {
-                deleteBtn.remove();
-            }
-            contentWrapper.textContent = text;
-        });
-
-        // Remove editable attribute from all elements
-        details.querySelectorAll('.editable').forEach(element => {
-            element.contentEditable = false;
-            element.classList.remove('editable');
-        });
-        
-        // Remove the add skill button
-        const addSkillBtn = details.querySelector('.add-skill-btn');
-        if (addSkillBtn) {
-            addSkillBtn.remove();
-        }
-        
-        // Here you would typically save the changes to a backend
-        console.log('Changes saved:', details.textContent);
-    }
-    
     // Add keyboard event listener for Enter key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && e.target.classList.contains('editable')) {
@@ -285,4 +254,107 @@ document.addEventListener('DOMContentLoaded', function() {
             e.target.blur();
         }
     });
-}); 
+
+    loadUserProfile();
+
+    const user = JSON.parse(localStorage.getItem("userAuth"));
+    if (user?.name) {
+        document.querySelectorAll('.user-name-placeholder').forEach(el => el.textContent = user.name);
+    }
+});
+
+function saveChanges(details) {
+    // Exit edit mode
+    details.querySelectorAll('.skill-tag').forEach(tag => {
+        const contentWrapper = tag.querySelector('div');
+        const text = contentWrapper.textContent.trim();
+        if (!text) {
+            tag.remove();
+            return;
+        }
+        const deleteBtn = tag.querySelector('.delete-btn');
+        if (deleteBtn) deleteBtn.remove();
+        contentWrapper.textContent = text;
+    });
+
+    details.querySelectorAll('.editable').forEach(element => {
+        element.contentEditable = false;
+        element.classList.remove('editable');
+    });
+
+    const addSkillBtn = details.querySelector('.add-skill-btn');
+    if (addSkillBtn) addSkillBtn.remove();
+
+    // ✅ Get values after changes
+    const name = document.querySelector('[data-field="name"]')?.textContent.trim();
+    const email = JSON.parse(localStorage.getItem("userAuth"))?.email;
+    const phone = document.querySelector('[data-field="phone"]')?.textContent.trim() || "";
+    const location = document.querySelector('[data-field="location"]')?.textContent.trim() || "";
+    const website = document.querySelector('[data-field="website"]')?.textContent.trim() || "";
+    const summary = document.querySelector('.summary-text')?.textContent.trim() || "";
+    const skills = Array.from(document.querySelectorAll('.skill-tag div')).map(el => el.textContent.trim());
+
+    console.log({ phone, location, website, summary, skills }); // ✅ Debug
+
+    // ✅ Frontend validation
+    if (phone && phone !== "Not set" && !/^\d+$/.test(phone)) return alert("Phone must be numbers only");
+    if (location.split(" ").length > 100) return alert("Location must be less than 100 words");
+    if (!/^https?:\/\/\S+$/.test(website)) return alert("Invalid website URL");
+    if (summary.split(" ").length > 3000) return alert("Summary too long");
+    if (skills.some(skill => skill.split(" ").length > 10)) return alert("Each skill must be less than 10 words");
+
+    // ✅ Send to backend
+    const body = { name, email, phone, location, website, summary, skills };
+
+    fetch("https://localhost:7258/api/auth/profile/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Profile updated successfully!");
+        } else {
+            alert("Error saving profile.");
+        }
+    });
+}
+
+function loadUserProfile() {
+    const email = JSON.parse(localStorage.getItem("userAuth"))?.email;
+    if (!email) return;
+
+    fetch(`https://localhost:7258/api/auth/profile/${email}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Profile not found");
+            return res.json();
+        })
+        .then(data => {
+            if (!data) return;
+
+            // Update fields
+            document.querySelector('[data-field="phone"]').textContent = data.phone || "Not set";
+            document.querySelector('[data-field="location"]').textContent = data.location || "Not set";
+            document.querySelector('[data-field="website"]').textContent = data.website || "Not set";
+            document.querySelector('.summary-text').textContent = data.summary || "Not set";
+
+            // Update skills
+            const skillsContainer = document.querySelector('.skills-container');
+            skillsContainer.innerHTML = ''; // Clear old
+            (data.skills || []).forEach(skill => {
+                const span = document.createElement('span');
+                span.className = 'skill-tag';
+                span.textContent = skill;
+                skillsContainer.appendChild(span);
+            });
+
+            // Set user name and email in header too
+            document.querySelectorAll('.user-name-placeholder').forEach(el => el.textContent = data.name || "Not set");
+            document.querySelectorAll('.user-email-placeholder').forEach(el => el.textContent = data.email || "Not set");
+        })
+        .catch(err => {
+            console.error("Failed to load profile:", err);
+        });
+}
+
