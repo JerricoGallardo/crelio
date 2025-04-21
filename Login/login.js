@@ -365,7 +365,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
 
     try {
-        const res = await fetch('https://localhost:7258/api/auth/login', {
+        const res = await fetch('http://192.168.1.16:7258/api/auth/login', {
             method: 'POST',
             body: new URLSearchParams({ email, password }),
         });
@@ -386,7 +386,7 @@ loginForm.addEventListener('submit', async (e) => {
         storeAuthentication({
             email: data.email || email,
             name: data.name || email.split('@')[0],
-            imageUrl: "https://ui-avatars.com/api/?name=" + encodeURIComponent(data.name || email),
+            imageUrl: "http://ui-avatars.com/api/?name=" + encodeURIComponent(data.name || email),
             isLoggedIn: true,
         });
         
@@ -424,7 +424,7 @@ signupForm.addEventListener('submit', async (e) => {
     showLoading(signupSubmit);
 
     try {
-        const res = await fetch('https://localhost:7258/api/auth/register', {
+        const res = await fetch('http://192.168.1.16:7258/api/auth/register', {
             method: 'POST',
             body: new URLSearchParams({
                 fullname,
@@ -446,7 +446,7 @@ signupForm.addEventListener('submit', async (e) => {
         storeAuthentication({
             email,
             name: fullname,
-            imageUrl: data.picture || "https://ui-avatars.com/api/?name=" + encodeURIComponent(fullname),
+            imageUrl: data.picture || "http://ui-avatars.com/api/?name=" + encodeURIComponent(fullname),
             isLoggedIn: true
         });
 
@@ -539,7 +539,7 @@ async function handleGoogleSignIn(response) {
         const decoded = jwt_decode(response.credential);
         console.log("Decoded JWT:", decoded);
 
-        const res = await fetch("https://localhost:7258/api/auth/google", {
+        const res = await fetch("http://192.168.1.16:7258/api/auth/google", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
