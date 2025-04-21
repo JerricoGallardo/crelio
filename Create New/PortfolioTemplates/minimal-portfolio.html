@@ -20,6 +20,8 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
@@ -71,167 +73,19 @@
             display: flex;
             align-items: center;
         }
-    </style>
 
-    <!-- Editor Toolbar Styles -->
-    <style>
-        .editor-toolbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 9999;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transform: translateY(0);
-            transition: transform 0.3s ease-in-out;
+        /* Additional style for about section */
+        .section-about p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-top: 20px;
         }
 
-        .toolbar-buttons {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .toolbar-btn {
-            padding: 8px 12px;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toolbar-btn:hover {
-            background-color: #e9ecef;
-        }
-
-        .toolbar-btn.primary {
-            background-color: #212121;
-            color: white;
-            border-color: #212121;
-        }
-
-        .toolbar-btn.primary:hover {
-            background-color: #000;
-        }
-
-        .font-select,
-        .size-select {
-            background: transparent;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 6px 10px;
-            font-size: 14px;
-            color: #555;
-            cursor: pointer;
-            margin: 0 5px;
-        }
-
-        .edit-mode-indicator {
-            background-color: #28a745;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-right: 10px;
-            display: none;
-        }
-
-        .preview-mode-indicator {
-            background-color: #17a2b8;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-right: 10px;
-            display: none;
-        }
-
-        [contenteditable="true"]:focus {
-            outline: 2px dashed #212121;
-            outline-offset: 2px;
-        }
-
-        .section-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .section-control-btn {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            color: #555;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 14px;
-        }
-
-        .section-control-btn:hover {
-            background: #212121;
-            color: white;
-            border-color: #212121;
-        }
-
-        .section-control-btn.add-btn {
-            background: #212121;
-            color: white;
-            border-color: #212121;
-        }
-
-        .section-control-btn.add-btn:hover {
-            background: #000;
-        }
-
-        .section-control-btn.remove-btn {
-            background: #dc3545;
-            color: white;
-            border-color: #dc3545;
-        }
-
-        .section-control-btn.remove-btn:hover {
-            background: #c82333;
-        }
-
-        .item-controls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            gap: 5px;
-            z-index: 10;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .portfolio-item:hover .item-controls,
-        .service:hover .item-controls,
-        .skill:hover .item-controls {
-            opacity: 1;
-        }
-
-        /* Fix for img-res class */
-        .img-res {
-            display: block;
-            width: 100%;
-            height: auto;
-            max-width: 100%;
+        /* Style for projects section */
+        .section-portfolio {
+            background-color: #f9f9f9;
+            padding: 80px 0;
+            position: relative;
         }
 
         /* Fix for portfolio items */
@@ -240,6 +94,59 @@
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
+        }
+
+        .portfolio-item-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .portfolio-item-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* Portfolio Item and Modal Button Styles */
+        .portfolio-item-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .portfolio-item-button {
+            background: rgba(255, 255, 255, 0.8);
+            color: #212121;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .portfolio-item-button:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.1);
+        }
+        
+        .portfolio-modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .portfolio-modal-buttons .btn {
+            flex: 1;
+            text-align: center;
         }
 
         .portfolio-item:before {
@@ -259,18 +166,23 @@
 
         .portfolio-item-info {
             position: absolute;
-            top: 50%;
-            left: 0px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: 999;
             opacity: 0;
-            transition: opacity 0.25s ease-in-out, left 0.25s ease-in-out;
-            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.25s ease-in-out;
             text-align: center;
             width: 100%;
+            padding: 20px;
         }
 
         .portfolio-item:hover .portfolio-item-info {
-            left: 0;
             opacity: 1;
         }
 
@@ -369,8 +281,8 @@
 
         /* Force active state for specific sections */
         body.about-section .site-navigation ul li a[href="#about"],
-        body.service-section .site-navigation ul li a[href="#service"],
-        body.portfolio-section .site-navigation ul li a[href="#portfolio"],
+        body.skills-section .site-navigation ul li a[href="#skills"],
+        body.projects-section .site-navigation ul li a[href="#projects"],
         body.contact-section .site-navigation ul li a[href="#contact"],
         body.hero-section .site-navigation ul li a[href="#hero"] {
             color: #000;
@@ -378,8 +290,8 @@
         }
 
         body.about-section .site-navigation ul li a[href="#about"]:after,
-        body.service-section .site-navigation ul li a[href="#service"]:after,
-        body.portfolio-section .site-navigation ul li a[href="#portfolio"]:after,
+        body.skills-section .site-navigation ul li a[href="#skills"]:after,
+        body.projects-section .site-navigation ul li a[href="#projects"]:after,
         body.contact-section .site-navigation ul li a[href="#contact"]:after,
         body.hero-section .site-navigation ul li a[href="#hero"]:after {
             width: 100%;
@@ -626,6 +538,272 @@
         .section-skills .skill {
             margin-bottom: 30px;
         }
+
+        /* Portfolio Modal Styles */
+        .portfolio-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .portfolio-modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 5px;
+        }
+
+        .portfolio-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .portfolio-modal-body {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .portfolio-modal-body img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            object-fit: contain;
+        }
+
+        .portfolio-modal-details {
+            width: 100%;
+        }
+
+        /* Custom styles */
+        /* Add your custom styles here */
+        
+        /* New custom styles */
+        .section-contact .contact-item {
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section-contact .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        
+        .section-contact .contact-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #FF5722;
+            height: 60px;
+            width: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255, 85, 34, 0.1);
+            margin: 0 auto 15px;
+        }
+        
+        .section-contact .contact-content h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .section-contact .contact-content p {
+            margin-bottom: 0;
+            color: #999;
+        }
+        
+        .section-contact .social-links {
+            margin-top: 20px;
+        }
+        
+        .contact-link {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .contact-link:hover {
+            color: #FF5722;
+        }
+    </style>
+
+    <!-- Editor Toolbar Styles -->
+    <style>
+        .editor-toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .toolbar-buttons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toolbar-btn {
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toolbar-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .toolbar-btn.primary {
+            background-color: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .toolbar-btn.primary:hover {
+            background-color: #000;
+        }
+
+        .font-select,
+        .size-select {
+            background: transparent;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .edit-mode-indicator {
+            background-color: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+            display: none;
+        }
+
+        .preview-mode-indicator {
+            background-color: #17a2b8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+            display: none;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 2px dashed #212121;
+            outline-offset: 2px;
+        }
+
+        .section-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .section-control-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #555;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .section-control-btn:hover {
+            background: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .section-control-btn.add-btn {
+            background: #212121;
+            color: white;
+            border-color: #212121;
+        }
+
+        .section-control-btn.add-btn:hover {
+            background: #000;
+        }
+
+        .section-control-btn.remove-btn {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .section-control-btn.remove-btn:hover {
+            background: #c82333;
+        }
+
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .portfolio-item:hover .item-controls,
+        .service:hover .item-controls,
+        .skill:hover .item-controls {
+            opacity: 1;
+        }
+
+        /* Fix for img-res class */
+        .img-res {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
     </style>
 </head>
 <body style="padding-top: 0;">
@@ -664,13 +842,34 @@
             <div class="edit-mode-only" style="width: 1px; height: 24px; background-color: #dee2e6; margin: 0 15px;"></div>
             <select class="toolbar-select edit-mode-only" style="background: transparent; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; font-size: 14px; color: #555; cursor: pointer; margin-right: 10px; transition: all 0.2s;" id="font-family-select">
                 <option value="Arial">Arial</option>
-                <option value="Times New Roman">Times New Roman</option>
+                <option value="Poppins">Poppins</option>
                 <option value="Helvetica">Helvetica</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+                <option value="Lato">Lato</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Nunito">Nunito</option>
             </select>
             <select class="toolbar-select edit-mode-only" style="background: transparent; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; font-size: 14px; color: #555; cursor: pointer; transition: all 0.2s;" id="font-size-select">
+                <option value="10px">10px</option>
+                <option value="12px">12px</option>
+                <option value="14px">14px</option>
                 <option value="16px">16px</option>
                 <option value="18px">18px</option>
                 <option value="20px">20px</option>
+                <option value="24px">24px</option>
+                <option value="28px">28px</option>
+                <option value="32px">32px</option>
+                <option value="36px">36px</option>
+                <option value="42px">42px</option>
+                <option value="48px">48px</option>
+                <option value="56px">56px</option>
+                <option value="64px">64px</option>
+                <option value="72px">72px</option>
             </select>
         </div>
         <div style="font-weight: 500; color: #333; margin-right: 15px;">Minimal Template</div>
@@ -698,8 +897,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="page-scroll"><a href="#hero">HOME</a></li>
                             <li class="page-scroll"><a href="#about">ABOUT</a></li>
-                            <li class="page-scroll"><a href="#service">SERVICE</a></li>
-                            <li class="page-scroll"><a href="#portfolio">PORTFOLIO</a></li>
+                            <li class="page-scroll"><a href="#projects">PROJECTS</a></li>
+                            <li class="page-scroll"><a href="#skills">SKILLS</a></li>
                             <li class="page-scroll"><a href="#contact">CONTACT</a></li>
                         </ul>
                     </nav>
@@ -717,7 +916,7 @@
                         <p class="job-title" contenteditable="true">Full Stack Developer</p>
                         <a href="#contact" class="btn btn-fill" contenteditable="true">HIRE ME</a>
                         <div class="clearfix visible-xxs"></div>
-                        <a href="#portfolio" class="btn btn-border" contenteditable="true">EXPLORE MORE</a>
+                        <a href="#projects" class="btn btn-border" contenteditable="true">EXPLORE MORE</a>
                     </div>
                 </div>
                 <div class="col-md-6 text-right">
@@ -740,13 +939,82 @@
                     <div class="col-md-6 col-md-offset-3">
                         <h2 contenteditable="true">ABOUT</h2>
                         <img src="assets/img/lines.svg" class="img-lines" alt="lines">
-                        <p contenteditable="true">Hello! I'm Alex, a full stack developer, a Ruby enthusiast, and a guy slightly obsessed with code quality. Also I'm a co-founder of pykod.com. I'm currently available for freelance work. If you have a project that you want to get started or think you need my help with something, then get in touch.</p>
+                        <p contenteditable="true" style="font-size: 18px;">Hello! I'm Alex, a full stack developer, a Ruby enthusiast, and a guy slightly obsessed with code quality. Also I'm a co-founder of pykod.com. I'm currently available for freelance work. If you have a project that you want to get started or think you need my help with something, then get in touch.</p>
+                        <p contenteditable="true" style="font-size: 18px;">With over 10 years of experience in web development, I've worked with a variety of technologies and frameworks. My approach combines technical expertise with a focus on clean, maintainable code that delivers exceptional user experiences. I believe in continuous learning and staying updated with the latest industry trends.</p>
                     </div>
                 </div>
             </div>
         </section><!-- /.secton-about -->
 
-        <section class="site-section section-skills">
+        <section id="projects" class="site-section section-portfolio" style="background-color: #f9f9f9;">
+            <div class="container">
+                <div class="text-center">
+                    <h3 contenteditable="true">MY RECENT WORKS</h3>
+                    <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+                    <div class="section-controls">
+                        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Portfolio Item"><i class="glyphicon glyphicon-plus"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <div class="portfolio-item-wrapper">
+                                <img src="assets/img/portfolio/portfolio-1.jpg" class="img-res" alt="" id="portfolio-image-1">
+                                <div class="portfolio-item-overlay">
+                                    <h4>Project Title</h4>
+                                    <div class="portfolio-item-buttons">
+                                        <a href="#" class="portfolio-item-button view-project" data-project="1" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-1').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="portfolio-upload-1" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <div class="portfolio-item-wrapper">
+                                <img src="assets/img/portfolio/portfolio-2.jpg" class="img-res" alt="" id="portfolio-image-2">
+                                <div class="portfolio-item-overlay">
+                                    <h4>Project Title</h4>
+                                    <div class="portfolio-item-buttons">
+                                        <a href="#" class="portfolio-item-button view-project" data-project="2" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-2').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="portfolio-upload-2" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <div class="item-controls">
+                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                            <div class="portfolio-item-wrapper">
+                                <img src="assets/img/portfolio/portfolio-3.jpg" class="img-res" alt="" id="portfolio-image-3">
+                                <div class="portfolio-item-overlay">
+                                    <h4>Project Title</h4>
+                                    <div class="portfolio-item-buttons">
+                                        <a href="#" class="portfolio-item-button view-project" data-project="3" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-3').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="portfolio-upload-3" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.secton-portfolio -->
+
+        <section id="skills" class="site-section section-skills">
             <div class="container">
                 <div class="text-center">
                     <h3 contenteditable="true">MY SKILLS</h3>
@@ -820,118 +1088,6 @@
             </div>
         </section><!-- /.secton-skills -->
 
-        <section id="service" class="site-section section-services overlay text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 contenteditable="true">WHAT I DO</h3>
-                        <img src="assets/img/lines.svg" class="img-lines" alt="lines">
-                        <div class="section-controls" style="margin-top: 10px; margin-bottom: 20px; display: flex; justify-content: center;">
-                            <button type="button" class="section-control-btn add-btn" id="add-service-btn" title="Add Service" style="cursor: pointer; position: relative; z-index: 100;"><i class="glyphicon glyphicon-plus"></i></button>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="service">
-                            <div class="item-controls">
-                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
-                            </div>
-                            <img src="assets/img/front-end.svg" alt="Front End Developer">
-                            <h4 contenteditable="true">Front-end</h4>
-                            <p contenteditable="true">As a javascript developer, I have experience in HTML5 and CSS3 techniques working with jQuery or more advanced javascript MVC frameworks such as angular</p>
-                        </div><!-- /.service -->
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="service">
-                            <div class="item-controls">
-                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
-                            </div>
-                            <img src="assets/img/back-end.svg" alt="Back End Developer">
-                            <h4 contenteditable="true">Back-end</h4>
-                            <p contenteditable="true">Utilising php frameworks such as Zend or creating bespoke code, I've written services supporting thousands of users, including REST APIs, e-learning applications and more.</p>
-                        </div><!-- /.service -->
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="service">
-                            <div class="item-controls">
-                                <button class="section-control-btn remove-btn" title="Remove Service"><i class="glyphicon glyphicon-trash"></i></button>
-                            </div>
-                            <img src="assets/img/consultancy.svg" alt="Coding">
-                            <h4 contenteditable="true">Consultancy</h4>
-                            <p contenteditable="true">As well as providing development services, I can also help you decide strategic roadmaps via consultancy services.</p>
-                        </div><!-- /.service -->
-                    </div>
-                </div>
-            </div>
-        </section><!-- /.secton-services -->
-
-        <section id="portfolio" class="site-section section-portfolio">
-            <div class="container">
-                <div class="text-center">
-                    <h3 contenteditable="true">MY RECENT WORKS</h3>
-                    <img src="assets/img/lines.svg" class="img-lines" alt="lines">
-                    <div class="section-controls">
-                        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Portfolio Item"><i class="glyphicon glyphicon-plus"></i></button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 col-xs-6">
-                        <div class="portfolio-item">
-                            <div class="item-controls">
-                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
-                            </div>
-                            <div class="portfolio-item-wrapper">
-                                <img src="assets/img/portfolio/portfolio-1.jpg" class="img-res" alt="" id="portfolio-image-1">
-                                <div class="portfolio-item-overlay">
-                                    <h4 contenteditable="true">Project Title</h4>
-                                    <div class="portfolio-item-buttons">
-                                        <a href="#" class="portfolio-item-button view-project" data-project="1" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
-                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-1').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="file" id="portfolio-upload-1" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
-                        </div><!-- /.portfolio-item -->
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <div class="portfolio-item">
-                            <div class="item-controls">
-                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
-                            </div>
-                            <div class="portfolio-item-wrapper">
-                                <img src="assets/img/portfolio/portfolio-2.jpg" class="img-res" alt="" id="portfolio-image-2">
-                                <div class="portfolio-item-overlay">
-                                    <h4 contenteditable="true">Project Title</h4>
-                                    <div class="portfolio-item-buttons">
-                                        <a href="#" class="portfolio-item-button view-project" data-project="2" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
-                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-2').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="file" id="portfolio-upload-2" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
-                        </div><!-- /.portfolio-item -->
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <div class="portfolio-item">
-                            <div class="item-controls">
-                                <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="glyphicon glyphicon-trash"></i></button>
-                            </div>
-                            <div class="portfolio-item-wrapper">
-                                <img src="assets/img/portfolio/portfolio-3.jpg" class="img-res" alt="" id="portfolio-image-3">
-                                <div class="portfolio-item-overlay">
-                                    <h4 contenteditable="true">Project Title</h4>
-                                    <div class="portfolio-item-buttons">
-                                        <a href="#" class="portfolio-item-button view-project" data-project="3" title="View Project"><i class="glyphicon glyphicon-eye-open"></i></a>
-                                        <a href="#" class="portfolio-item-button edit-project" onclick="document.getElementById('portfolio-upload-3').click(); return false;" title="Change Image"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="file" id="portfolio-upload-3" style="display: none;" accept="image/*"><!-- /.portfolio-item-info -->
-                        </div><!-- /.portfolio-item -->
-                    </div>
-                </div>
-            </div>
-        </section><!-- /.secton-portfolio -->
-
         <section class="site-section section-counters text-center">
             <div class="container">
                 <div class="row">
@@ -951,26 +1107,88 @@
             </div>
         </section><!-- /.section-counters -->
 
-        <section id="contact" class="site-section section-form text-center">
+        <section id="contact" class="site-section section-contact text-center">
             <div class="container">
                 <h3 contenteditable="true">CONTACT</h3>
                 <img src="assets/img/lines.svg" class="img-lines" alt="lines">
-                <form>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <input type="text" name="name" class="form-control mt-x-0" placeholder="Name" required>
+                <div class="row contact-info">
+                    <div class="col-md-4 contact-item">
+                        <div class="contact-icon">
+                            <i class="fa fa-envelope"></i>
                         </div>
-                        <div class="col-sm-6">
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="col-sm-12">
-                            <textarea name="message" id="mesaage" class="form-control" placeholder="Message" required></textarea>
+                        <div class="contact-content">
+                            <h4>Email</h4>
+                            <div class="social-link-wrapper">
+                                <p contenteditable="true" data-editable-link="email" class="editable-link">your.email@example.com</p>
+                                <a href="mailto:your.email@example.com" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">your.email@example.com</a>
+                            </div>
                         </div>
                     </div>
-                    <button href="#" class="btn btn-border" type="submit" contenteditable="true">HIRE ME <span class="glyphicon glyphicon-send"></span></button>
-                </form>
+                    <div class="col-md-4 contact-item">
+                        <div class="contact-icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>Phone</h4>
+                            <div class="social-link-wrapper">
+                                <p contenteditable="true" class="editable-link">+1 234 567 890</p>
+                                <a href="tel:+1234567890" class="preview-link" style="display: none; color: inherit; text-decoration: none;">+1 234 567 890</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 contact-item">
+                        <div class="contact-icon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>Location</h4>
+                            <div class="social-link-wrapper">
+                                <p contenteditable="true" class="editable-link">Your Location</p>
+                                <span class="preview-link" style="display: none;">Your Location</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row social-links">
+                    <div class="col-md-4 contact-item">
+                        <div class="contact-icon">
+                            <i class="fa fa-github"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>GitHub</h4>
+                            <div class="social-link-wrapper">
+                                <p contenteditable="true" data-editable-link="github" class="editable-link">github.com/yourusername</p>
+                                <a href="https://github.com/yourusername" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">github.com/yourusername</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 contact-item">
+                        <div class="contact-icon">
+                            <i class="fa fa-linkedin"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>LinkedIn</h4>
+                            <div class="social-link-wrapper">
+                                <p contenteditable="true" data-editable-link="linkedin" class="editable-link">linkedin.com/in/yourprofile</p>
+                                <a href="https://linkedin.com/in/yourprofile" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">linkedin.com/in/yourprofile</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 contact-item">
+                        <div class="contact-icon">
+                            <i class="fa fa-twitter"></i>
+                        </div>
+                        <div class="contact-content">
+                            <h4>Twitter</h4>
+                            <div class="social-link-wrapper">
+                                <p contenteditable="true" data-editable-link="twitter" class="editable-link">twitter.com/yourhandle</p>
+                                <a href="https://twitter.com/yourhandle" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">twitter.com/yourhandle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section><!-- /.section-form -->
+        </section><!-- /.section-contact -->
     </main><!-- /#main -->
 
     <!-- Portfolio Modal -->
@@ -980,9 +1198,12 @@
             <div class="portfolio-modal-body">
                 <img src="" alt="Project Image" id="portfolio-modal-image">
                 <div class="portfolio-modal-details">
-                    <h2 id="portfolio-modal-title">Project title</h2>
+                    <h2 id="portfolio-modal-title" contenteditable="true">Project title</h2>
                     <p id="portfolio-modal-description" contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec commodo finibus tristique. Maecenas dignissim condimentum sem eu tincidunt. Curabitur in dui quis magna vestibulum pulvinar a ut urna. Nam pellentesque mattis urna. Aenean eget lectus sit amet turpis facilisis consectetur quis vel ante. Integer in massa ut nibh ultricies sagittis imperdiet in ante. Nam sed turpis vel ante placerat feugiat ac tempus magna. Nam aliquet ullamcorper dolor non hendrerit.</p>
+                    <div class="portfolio-modal-buttons">
                     <a href="#" class="btn btn-border" id="portfolio-modal-link">VISIT PAGE</a>
+                        <a href="#" class="btn btn-border" id="portfolio-modal-github">CHECK OUT GITHUB</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1049,6 +1270,15 @@
                 var windowHeight = $(window).height();
                 var found = false;
 
+                // Special case for home/hero section - if we're near the top of the page
+                if (scrollPos < 200) {
+                    $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li a[href="#hero"]').parent().addClass('active');
+                    $('body').removeClass('hero-section about-section projects-section skills-section contact-section');
+                    $('body').addClass('hero-section');
+                    return;
+                }
+
                 // Get the current URL hash if any
                 var currentHash = window.location.hash;
 
@@ -1059,36 +1289,34 @@
                     return;
                 }
 
-                // Check each section in reverse order (to prioritize later sections)
-                var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];
+                // Define sections in order from bottom to top of page for more accurate detection
+                var sections = ['#contact', '#skills', '#projects', '#about', '#hero'];
 
                 // Calculate the top and bottom of the viewport
                 var viewportTop = scrollPos;
                 var viewportBottom = scrollPos + windowHeight;
                 var viewportCenter = scrollPos + (windowHeight / 2);
 
-                // First pass: Check if any section occupies a significant portion of the viewport
+                // Loop through each section to find which one is most visible
                 for (var i = 0; i < sections.length; i++) {
                     var section = $(sections[i]);
                     if (section.length) {
                         var sectionTop = section.offset().top;
                         var sectionHeight = section.height();
                         var sectionBottom = sectionTop + sectionHeight;
-                        var sectionCenter = sectionTop + (sectionHeight / 2);
 
-                        // Calculate how much of the section is visible in the viewport
-                        var visibleTop = Math.max(sectionTop, viewportTop);
-                        var visibleBottom = Math.min(sectionBottom, viewportBottom);
-                        var visibleHeight = Math.max(0, visibleBottom - visibleTop);
-                        var visibilityPercentage = visibleHeight / windowHeight * 100;
-
-                        // If section occupies more than 40% of the viewport or contains the viewport center
-                        if (visibilityPercentage > 40 || (sectionTop <= viewportCenter && sectionBottom >= viewportCenter)) {
+                        // Check if this section occupies a significant portion of the viewport
+                        // or if the viewport center is within this section
+                        if ((viewportCenter >= sectionTop && viewportCenter <= sectionBottom) || 
+                            (sectionTop < viewportBottom && sectionBottom > viewportTop && 
+                             (Math.min(sectionBottom, viewportBottom) - Math.max(sectionTop, viewportTop)) > windowHeight * 0.4)) {
+                            
+                            // Set this section as active
                             $('.site-navigation ul li').removeClass('active');
                             $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
 
-                            // Add specific body classes for each section
-                            $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                            // Update body classes
+                            $('body').removeClass('hero-section about-section projects-section skills-section contact-section');
                             $('body').addClass(sections[i].substring(1) + '-section');
 
                             found = true;
@@ -1097,88 +1325,7 @@
                     }
                 }
 
-                // Second pass: If no section is dominant, use the one that contains the center of the viewport
-                if (!found) {
-                    for (var i = 0; i < sections.length; i++) {
-                        var section = $(sections[i]);
-                        if (section.length) {
-                            var sectionTop = section.offset().top - 100; // Add offset for header
-                            var sectionBottom = sectionTop + section.height();
-
-                            if (viewportCenter >= sectionTop && viewportCenter <= sectionBottom) {
-                                $('.site-navigation ul li').removeClass('active');
-                                $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
-
-                                // Add specific body classes for each section
-                                $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
-                                $('body').addClass(sections[i].substring(1) + '-section');
-
-                                found = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                // If still no section is active and we're at the top, activate home
-                if (!found) {
-                    $('.site-navigation ul li').removeClass('active');
-                    $('.site-navigation ul li a[href="#hero"]').parent().addClass('active');
-                    $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
-                    $('body').addClass('hero-section');
-                }
-            }
-
-            // Set active menu item on page load
-            setActiveMenuItem();
-
-            // Update active menu item on scroll
-            $(window).on('scroll', setActiveMenuItem);
-
-            // Force active menu item for the about section if we're in that section
-            if ($('#about').length && $(window).scrollTop() >= $('#about').offset().top - 150) {
-                $('.site-navigation ul li').removeClass('active');
-                $('.site-navigation ul li a[href="#about"]').parent().addClass('active');
-                $('body').addClass('about-section');
-            }
-
-            // Update active section on scroll - this is a more aggressive approach
-            $(window).on('scroll', function() {
-                // Call our main function to update the active menu item
-                setActiveMenuItem();
-
-                // Force immediate update of the navigation state
-                var scrollPos = $(window).scrollTop();
-                var windowHeight = $(window).height();
-                var viewportCenter = scrollPos + (windowHeight / 2);
-
-                // Check each section
-                var sections = ['#contact', '#portfolio', '#service', '#about', '#hero'];
-                var found = false;
-
-                for (var i = 0; i < sections.length; i++) {
-                    var section = $(sections[i]);
-                    if (section.length) {
-                        var sectionTop = section.offset().top - 120; // Adjust for header
-                        var sectionBottom = sectionTop + section.height();
-
-                        // Check if viewport center is within this section
-                        if (viewportCenter >= sectionTop && viewportCenter <= sectionBottom) {
-                            // Set active navigation item
-                            $('.site-navigation ul li').removeClass('active');
-                            $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
-
-                            // Set body class
-                            $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
-                            $('body').addClass(sections[i].substring(1) + '-section');
-
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-
-                // If no section is active, default to the one closest to the viewport center
+                // If no section is dominant, use the one closest to the viewport center
                 if (!found) {
                     var closestSection = null;
                     var closestDistance = Infinity;
@@ -1186,7 +1333,9 @@
                     for (var i = 0; i < sections.length; i++) {
                         var section = $(sections[i]);
                         if (section.length) {
-                            var sectionCenter = section.offset().top + (section.height() / 2);
+                            var sectionTop = section.offset().top;
+                            var sectionHeight = section.height();
+                            var sectionCenter = sectionTop + (sectionHeight / 2);
                             var distance = Math.abs(viewportCenter - sectionCenter);
 
                             if (distance < closestDistance) {
@@ -1197,20 +1346,166 @@
                     }
 
                     if (closestSection) {
-                        $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li').removeClass('active');
                         $('.site-navigation ul li a[href="' + closestSection + '"]').parent().addClass('active');
 
-                        $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                        $('body').removeClass('hero-section about-section projects-section skills-section contact-section');
                         $('body').addClass(closestSection.substring(1) + '-section');
                     }
                 }
+            }
+
+            // Initialize the first time
+            setActiveMenuItem();
+
+            // Update on scroll
+            $(window).on('scroll', function() {
+                setActiveMenuItem();
             });
 
-            // Force the about section to be active if the URL contains #about
-            if (window.location.hash === '#about') {
-                $('.site-navigation ul li').removeClass('active');
-                $('.site-navigation ul li a[href="#about"]').parent().addClass('active');
-                $('body').addClass('about-section');
+            // Add functionality to make progress bars interactive
+            $(document).ready(function() {
+                // Make progress bars interactive
+                $('.progress').each(function() {
+                    makeProgressBarInteractive($(this));
+                });
+
+                // Also handle newly added progress bars
+                $(document).on('DOMNodeInserted', '.progress', function() {
+                    makeProgressBarInteractive($(this));
+                });
+            });
+
+            // Function to make a progress bar interactive
+            function makeProgressBarInteractive(progressContainer) {
+                const progressBar = progressContainer.find('.progress-bar');
+                
+                // Remove any existing click handlers to prevent duplicates
+                progressContainer.off('click mousedown mousemove');
+                
+                // Skip if already initialized
+                if (progressContainer.data('initialized')) return;
+                
+                progressContainer.data('initialized', true);
+                
+                // First ensure the progress bar has consistent initial values
+                let initialPercentage = parseInt(progressBar.attr('data-percentage'));
+                if (isNaN(initialPercentage)) {
+                    initialPercentage = parseInt(progressBar.css('width')) || 50;
+                    if (isNaN(initialPercentage)) {
+                        initialPercentage = 50;
+                    }
+                }
+                
+                // Ensure the width and data attributes are in sync
+                progressBar.css('width', initialPercentage + '%');
+                progressBar.attr('data-percentage', initialPercentage);
+                progressBar.attr('data-transitiongoal', initialPercentage);
+                progressBar.attr('data-content', initialPercentage + '%');
+                progressBar.attr('aria-valuenow', initialPercentage);
+                
+                // Handle click to change progress value
+                progressContainer.on('click', function(e) {
+                    // Check if we're in preview mode - if so, don't allow interaction
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    const containerWidth = $(this).width();
+                    const clickPosition = e.pageX - $(this).offset().left;
+                    const newPercentage = Math.round((clickPosition / containerWidth) * 100);
+                    
+                    // Update visual width
+                    progressBar.css('width', newPercentage + '%');
+                    
+                    // Update data attributes to keep everything consistent
+                    progressBar.attr('data-percentage', newPercentage);
+                    progressBar.attr('data-transitiongoal', newPercentage);
+                    progressBar.attr('data-content', newPercentage + '%');
+                    progressBar.attr('aria-valuenow', newPercentage);
+                });
+                
+                // Add hover effect for better UX
+                progressContainer.on('mousemove', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        $(this).css('cursor', 'default'); // Change cursor to default in preview mode
+                        return; // Exit early if in preview mode
+                    } else {
+                        $(this).css('cursor', 'pointer'); // Show pointer cursor in edit mode
+                    }
+                    
+                    if ($(this).hasClass('dragging')) {
+                        const containerWidth = $(this).width();
+                        const movePosition = e.pageX - $(this).offset().left;
+                        const newPercentage = Math.min(100, Math.max(0, Math.round((movePosition / containerWidth) * 100)));
+                        
+                        // Update visual width
+                        progressBar.css('width', newPercentage + '%');
+                        
+                        // Update data attributes for consistency
+                        progressBar.attr('data-percentage', newPercentage);
+                        progressBar.attr('data-transitiongoal', newPercentage);
+                        progressBar.attr('data-content', newPercentage + '%');
+                        progressBar.attr('aria-valuenow', newPercentage);
+                    }
+                });
+                
+                // Support drag behavior - only in edit mode
+                progressContainer.on('mousedown', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    $(this).addClass('dragging');
+                });
+                
+                $(document).on('mouseup', function() {
+                    $('.progress.dragging').removeClass('dragging');
+                });
+                
+                // Support for touch devices - only in edit mode
+                progressContainer.on('touchstart', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    $(this).addClass('dragging');
+                });
+                
+                progressContainer.on('touchmove', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    if ($(this).hasClass('dragging')) {
+                        const containerWidth = $(this).width();
+                        const touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                        const movePosition = touch.pageX - $(this).offset().left;
+                        const newPercentage = Math.min(100, Math.max(0, Math.round((movePosition / containerWidth) * 100)));
+                        
+                        // Update visual width
+                        progressBar.css('width', newPercentage + '%');
+                        
+                        // Update data attributes for consistency
+                        progressBar.attr('data-percentage', newPercentage);
+                        progressBar.attr('data-transitiongoal', newPercentage);
+                        progressBar.attr('data-content', newPercentage + '%');
+                        progressBar.attr('aria-valuenow', newPercentage);
+                    }
+                });
+                
+                progressContainer.on('touchend', function() {
+                    $(this).removeClass('dragging');
+                });
             }
 
             // Add button animations
@@ -1221,6 +1516,13 @@
                     setTimeout(() => {
                         this.classList.remove('clicked');
                     }, 200);
+                });
+            });
+
+            // Handle removal of skills
+            $(document).on('click', '.skill .remove-btn', function() {
+                $(this).closest('.skill').fadeOut(300, function() {
+                    $(this).remove();
                 });
             });
 
@@ -1237,7 +1539,7 @@
                 $(this).parent().addClass('active');
 
                 // Update body classes for all sections
-                $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                $('body').removeClass('hero-section about-section skills-section projects-section contact-section');
                 $('body').addClass(targetSection + '-section');
 
                 // Smooth scroll to target
@@ -1256,7 +1558,7 @@
                     $('.site-navigation ul li a[href="' + target + '"]').parent().addClass('active');
 
                     // Make sure the body class is still set correctly
-                    $('body').removeClass('hero-section about-section service-section portfolio-section contact-section');
+                    $('body').removeClass('hero-section about-section skills-section projects-section contact-section');
                     $('body').addClass(targetSection + '-section');
 
                     // Force the underline to be visible
@@ -1264,10 +1566,506 @@
                     $('.site-navigation ul li a[href="' + target + '"]:after').css('width', '100%');
                 });
             });
+
+            // Font family change handler
+            $('#font-family-select').on('change', function() {
+                const selectedFont = $(this).val();
+                
+                // Get the current selection
+                const selection = window.getSelection();
+                
+                // Check if there's a selection
+                if (selection && !selection.isCollapsed) {
+                    // Get the range
+                    const range = selection.getRangeAt(0);
+                    
+                    // Create a temporary span to hold our selection
+                    document.execCommand('fontName', false, selectedFont);
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                    
+                    return;
+                }
+                
+                // If no selection, fall back to applying to the whole contenteditable element
+                let activeElement = document.activeElement;
+                if (activeElement && activeElement.getAttribute('contenteditable') === 'true') {
+                    // Apply the font family to the active element
+                    $(activeElement).css('font-family', selectedFont);
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                }
+            });
+
+            // Font size change handler
+            $('#font-size-select').on('change', function() {
+                const selectedSize = $(this).val();
+                
+                // Get the current selection
+                const selection = window.getSelection();
+                
+                // Check if there's a selection
+                if (selection && !selection.isCollapsed) {
+                    // Use document.execCommand for better browser compatibility
+                    // First create a span with the font size
+                    document.execCommand('fontSize', false, '7');  // Use 7 as a placeholder
+                    
+                    // Find all font tags created with size=7 and replace with our custom size
+                    const fontElements = document.querySelectorAll('font[size="7"]');
+                    for (let i = 0; i < fontElements.length; i++) {
+                        const font = fontElements[i];
+                        // Remove the size attribute
+                        font.removeAttribute('size');
+                        // Set the specific pixel size
+                        font.style.fontSize = selectedSize;
+                    }
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                    
+                    return;
+                }
+                
+                // If no selection, fall back to applying to the whole contenteditable element
+                let activeElement = document.activeElement;
+                if (activeElement && activeElement.getAttribute('contenteditable') === 'true') {
+                    // Apply the font size to the active element
+                    $(activeElement).css('font-size', selectedSize);
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                }
+            });
+
+            // Function to update formatting dropdowns based on current selection
+            function updateFormattingButtons() {
+                // Get the current selection
+                const selection = window.getSelection();
+                
+                // Get the focused element
+                const activeElement = document.activeElement;
+                
+                // If there's a contenteditable element with focus but no selection,
+                // still update the dropdowns based on the contenteditable element's style
+                if (activeElement && activeElement.getAttribute('contenteditable') === 'true' && 
+                    (!selection || selection.isCollapsed)) {
+                    
+                    updateDropdownsFromElement(activeElement);
+                    return;
+                }
+                
+                // If no valid selection, exit early
+                if (!selection || selection.rangeCount === 0) return;
+                
+                // Get the range and common ancestor
+                const range = selection.getRangeAt(0);
+                if (!range) return;
+                
+                // Get selected node or its parent if it's a text node
+                const selectedNode = selection.focusNode;
+                if (!selectedNode) return;
+                
+                const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
+                if (!parentElement) return;
+                
+                updateDropdownsFromElement(parentElement);
+            }
+            
+            // Helper function to extract styles from an element and update dropdowns
+            function updateDropdownsFromElement(element) {
+                // Get the computed style
+                const computedStyle = window.getComputedStyle(element);
+                
+                // Get font family
+                let fontFamily = computedStyle.fontFamily;
+                
+                // Clean up font family (remove quotes and get first font in stack)
+                if (fontFamily) {
+                    fontFamily = fontFamily.split(',')[0].trim();
+                    fontFamily = fontFamily.replace(/["']/g, '');
+                }
+                
+                // Get font size
+                let fontSize = computedStyle.fontSize;
+                
+                // Update dropdowns with these values
+                updateFontFamilyDropdown(fontFamily);
+                updateFontSizeDropdown(fontSize);
+                
+                // Also look at child elements if we haven't found inline styles
+                // This helps with text that has spans or other elements with direct styling
+                const children = element.children;
+                if (children.length > 0) {
+                    // Check if selection contains or is within any of these children
+                    const selection = window.getSelection();
+                    if (selection && selection.rangeCount > 0) {
+                        const range = selection.getRangeAt(0);
+                        
+                        for (let i = 0; i < children.length; i++) {
+                            const child = children[i];
+                            // Check if this child is in the selection
+                            if (selection.containsNode(child, true)) {
+                                const childStyle = window.getComputedStyle(child);
+                                
+                                // Use child's style if it seems to override the parent
+                                if (childStyle.fontFamily !== computedStyle.fontFamily) {
+                                    fontFamily = childStyle.fontFamily.split(',')[0].trim().replace(/["']/g, '');
+                                    updateFontFamilyDropdown(fontFamily);
+                                }
+                                
+                                if (childStyle.fontSize !== computedStyle.fontSize) {
+                                    fontSize = childStyle.fontSize;
+                                    updateFontSizeDropdown(fontSize);
+                                }
+                                
+                                // If this child has its own children, check them too
+                                if (child.children.length > 0) {
+                                    updateDropdownsFromElement(child);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Helper function to update font family dropdown
+            function updateFontFamilyDropdown(fontFamily) {
+                if (!fontFamily) return;
+                
+                const fontFamilySelect = $('#font-family-select');
+                const options = Array.from(fontFamilySelect[0].options);
+                
+                // Try to find an exact match first
+                let matchingOption = options.find(option => 
+                    option.value.toLowerCase() === fontFamily.toLowerCase()
+                );
+                
+                // If no exact match, try partial match
+                if (!matchingOption) {
+                    matchingOption = options.find(option => 
+                        fontFamily.toLowerCase().includes(option.value.toLowerCase()) ||
+                        option.value.toLowerCase().includes(fontFamily.toLowerCase())
+                    );
+                }
+                
+                // If still no match, use default
+                if (matchingOption) {
+                    fontFamilySelect.val(matchingOption.value);
+                }
+            }
+            
+            // Helper function to update font size dropdown
+            function updateFontSizeDropdown(fontSize) {
+                if (!fontSize) return;
+                
+                const fontSizeSelect = $('#font-size-select');
+                const options = Array.from(fontSizeSelect[0].options);
+                
+                // Convert fontSize to pixels if it's not already
+                const sizeInPx = parseInt(fontSize);
+                if (isNaN(sizeInPx)) return;
+                
+                // Try to find exact match first
+                let matchingOption = options.find(option => 
+                    parseInt(option.value) === sizeInPx
+                );
+                
+                // If no exact match, find closest
+                if (!matchingOption) {
+                    matchingOption = options.reduce((prev, curr) => {
+                        const prevDiff = Math.abs(parseInt(prev.value) - sizeInPx);
+                        const currDiff = Math.abs(parseInt(curr.value) - sizeInPx);
+                        return prevDiff < currDiff ? prev : curr;
+                    });
+                }
+                
+                if (matchingOption) {
+                    fontSizeSelect.val(matchingOption.value);
+                }
+            }
+            
+            // Listen for selection changes to update buttons
+            document.addEventListener('selectionchange', updateFormattingButtons);
+            
+            // Listen for mouseup to catch selections after they're complete
+            document.addEventListener('mouseup', function(e) {
+                setTimeout(updateFormattingButtons, 10);
+            });
+            
+            // Listen for click events to catch when contenteditable elements are clicked
+            document.addEventListener('click', function(e) {
+                // Check if we clicked on or within a contenteditable element
+                let target = e.target;
+                while (target && target !== document) {
+                    if (target.getAttribute && target.getAttribute('contenteditable') === 'true') {
+                        setTimeout(updateFormattingButtons, 10);
+                        break;
+                    }
+                    target = target.parentNode;
+                }
+            });
+            
+            // Listen for focus events on contenteditable elements
+            $(document).on('focus', '[contenteditable=true]', function() {
+                setTimeout(updateFormattingButtons, 10);
+            });
+            
+            // Completely disable the DOMNodeInserted auto-initialization which might be causing problems
+            $(document).off('DOMNodeInserted', '.progress');
+            
+            // IMPORTANT: Complete rewrite of Add Skill functionality using direct DOM methods 
+            // Remove any and all previous jQuery handlers that might be conflicting
+            $('#add-skill-btn').off(); // Remove ALL handlers of ANY type
+            $('.section-skills').off(); // Remove any delegation handlers
+            $(document).off('click', '#add-skill-btn'); // Remove any document-level delegation
+            
+            // PREVENT DOUBLE EVENT HANDLERS
+            // Remove any existing click event listeners by cloning and replacing the button
+            const addSkillBtn = document.getElementById('add-skill-btn');
+            const newAddSkillBtn = addSkillBtn.cloneNode(true);
+            addSkillBtn.parentNode.replaceChild(newAddSkillBtn, addSkillBtn);
+            
+            // Add a single event listener to the new button
+            newAddSkillBtn.addEventListener('click', function(event) {
+                // Stop all event propagation and default behavior
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+                
+                console.log("DOM EVENT: Add Skill button clicked - NEW IMPLEMENTATION");
+                
+                // Create the HTML for the new skill directly
+                const skillHtml = `
+                    <div class="skill">
+                        <div class="item-controls">
+                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                        </div>
+                        <h4 contenteditable="true">NEW SKILL</h4>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" data-transitiongoal="50" data-percentage="50" data-content="50%" style="width: 50%"></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Find the column with the fewest skills using DOM methods
+                const columns = document.querySelectorAll('.section-skills .col-md-4');
+                let minSkills = Number.MAX_VALUE;
+                let targetColumn = null;
+                
+                columns.forEach(function(column) {
+                    const skillCount = column.querySelectorAll('.skill').length;
+                    if (skillCount < minSkills) {
+                        minSkills = skillCount;
+                        targetColumn = column;
+                    }
+                });
+                
+                // Add the new skill to the column
+                targetColumn.insertAdjacentHTML('beforeend', skillHtml);
+                
+                // Get the newly added skill
+                const newSkill = targetColumn.lastElementChild;
+                
+                // Initialize progress bar interactive behaviors
+                const progressContainer = newSkill.querySelector('.progress');
+                const progressBar = progressContainer.querySelector('.progress-bar');
+                
+                // Initialize progress bar interactions  
+                function handleProgressClick(e) {
+                    const rect = progressContainer.getBoundingClientRect();
+                    const containerWidth = rect.width;
+                    const clickPosition = e.clientX - rect.left;
+                    const newPercentage = Math.round((clickPosition / containerWidth) * 100);
+                    
+                    // Update visual width and attributes
+                    progressBar.style.width = newPercentage + '%';
+                    progressBar.setAttribute('data-percentage', newPercentage);
+                    progressBar.setAttribute('data-transitiongoal', newPercentage);
+                    progressBar.setAttribute('data-content', newPercentage + '%');
+                    progressBar.setAttribute('aria-valuenow', newPercentage);
+                }
+                
+                // Handle drag operations
+                let isDragging = false;
+                
+                function handleMouseDown(e) {
+                    isDragging = true;
+                    progressContainer.classList.add('dragging');
+                    // Prevent text selection during drag
+                    e.preventDefault();
+                }
+                
+                function handleMouseMove(e) {
+                    if (!isDragging) return;
+                    
+                    const rect = progressContainer.getBoundingClientRect();
+                    const containerWidth = rect.width;
+                    const movePosition = e.clientX - rect.left;
+                    const newPercentage = Math.min(100, Math.max(0, Math.round((movePosition / containerWidth) * 100)));
+                    
+                    // Update progress bar
+                    progressBar.style.width = newPercentage + '%';
+                    progressBar.setAttribute('data-percentage', newPercentage);
+                    progressBar.setAttribute('data-transitiongoal', newPercentage);
+                    progressBar.setAttribute('data-content', newPercentage + '%');
+                    progressBar.setAttribute('aria-valuenow', newPercentage);
+                }
+                
+                function handleMouseUp() {
+                    isDragging = false;
+                    progressContainer.classList.remove('dragging');
+                }
+                
+                // Add event listeners directly to the progress bar
+                progressContainer.addEventListener('click', handleProgressClick);
+                progressContainer.addEventListener('mousedown', handleMouseDown);
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+                
+                // Add remove button functionality
+                const removeBtn = newSkill.querySelector('.remove-btn');
+                removeBtn.addEventListener('click', function() {
+                    newSkill.remove();
+                });
+                
+                // Make the skill name editable and focus it
+                const skillTitle = newSkill.querySelector('h4');
+                skillTitle.focus();
+                
+                // Return false to prevent default behavior
+                return false;
+            }, {capture: true}); // Use capture to ensure this handler runs first
+
+            // Toggle preview mode
+            $('#preview-btn').on('click', function() {
+                const isPreview = $(this).attr('data-preview') === 'true';
+                const newPreviewState = !isPreview;
+                
+                $(this).attr('data-preview', newPreviewState);
+                $('#preview-text').text(newPreviewState ? 'Edit' : 'Preview');
+                
+                if (newPreviewState) {
+                    // Going into preview mode
+                    // Store the current state before changing anything
+                    $('[contenteditable="true"]').each(function() {
+                        $(this).attr('data-was-editable', 'true');
+                        $(this).attr('contenteditable', 'false');
+                    });
+                    
+                    // Remember all editable elements for social links wrapper
+                    $('.social-link-wrapper .editable-link').each(function() {
+                        $(this).attr('data-was-editable-link', 'true');
+                    });
+                    
+                    // Handle social media links for preview mode
+                    $('.social-link-wrapper').each(function() {
+                        const editableElem = $(this).find('.editable-link');
+                        const previewLink = $(this).find('.preview-link');
+                        
+                        // Get the text value from editable element and update link
+                        const linkText = editableElem.text().trim();
+                        
+                        // Handle email links
+                        if (editableElem.attr('data-editable-link') === 'email') {
+                            previewLink.attr('href', 'mailto:' + linkText);
+                        } 
+                        // Handle phone links
+                        else if (previewLink.attr('href') && previewLink.attr('href').startsWith('tel:')) {
+                            previewLink.attr('href', 'tel:' + linkText.replace(/\s+/g, ''));
+                        }
+                        // Handle regular links (GitHub, LinkedIn, Twitter)
+                        else if (previewLink.is('a')) {
+                            let fullUrl = linkText;
+                            
+                            // Add https:// if not present
+                            if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                                fullUrl = 'https://' + fullUrl;
+                            }
+                            
+                            // Update the href
+                            previewLink.attr('href', fullUrl);
+                        }
+                        
+                        // Update text content
+                        previewLink.text(linkText);
+                        
+                        // Hide editable, show preview
+                        editableElem.hide();
+                        previewLink.show();
+                    });
+                } else {
+                    // Going back to edit mode
+                    
+                    // First restore all elements that had contenteditable=true
+                    $('[data-was-editable="true"]').attr('contenteditable', 'true');
+                    
+                    // Make sure all editable link elements are editable too
+                    $('[data-was-editable-link="true"]').attr('contenteditable', 'true');
+                    
+                    // Now handle the social link wrappers specifically
+                    $('.social-link-wrapper').each(function() {
+                        const editableElem = $(this).find('.editable-link');
+                        const previewLink = $(this).find('.preview-link');
+                        
+                        // Hide preview elements, show and make editable the editable links
+                        previewLink.hide();
+                        editableElem.show().attr('contenteditable', 'true');
+                    });
+                    
+                    // Ensure all .editable-link elements are editable regardless of other attributes
+                    $('.editable-link').attr('contenteditable', 'true');
+                }
+                
+                // Show/hide controls
+                $('.item-controls, .section-controls, .edit-mode-only').toggle(!newPreviewState);
+                $('.edit-mode-indicator').toggle(!newPreviewState);
+                $('.preview-mode-indicator').toggle(newPreviewState);
+                
+                // Toggle cursor style for progress bars
+                $('.progress').css('cursor', newPreviewState ? 'default' : 'pointer');
+                $('.section-control-btn').toggle(!newPreviewState);
+                
+                // Add preview class to body
+                $('body').toggleClass('preview-mode', newPreviewState);
+            });
+
+            // Update preview links when editable content changes
+            $(document).on('input', '.editable-link', function() {
+                const linkText = $(this).text().trim();
+                const previewLink = $(this).siblings('.preview-link');
+                
+                // Handle different types of links
+                if ($(this).attr('data-editable-link') === 'email') {
+                    previewLink.attr('href', 'mailto:' + linkText);
+                } else if (previewLink.attr('href') && previewLink.attr('href').startsWith('tel:')) {
+                    previewLink.attr('href', 'tel:' + linkText.replace(/\s+/g, ''));
+                } else if (previewLink.is('a')) {
+                    let fullUrl = linkText;
+                    if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                        fullUrl = 'https://' + fullUrl;
+                    }
+                    previewLink.attr('href', fullUrl);
+                }
+                
+                previewLink.text(linkText);
+            });
         });
     </script>
 
     <!-- Preview Mode Script -->
     <script src="preview-mode.js"></script>
+
+    <!-- Google Fonts for Added Font Families -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 </body>
 </html>
