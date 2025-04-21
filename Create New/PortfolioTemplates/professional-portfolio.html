@@ -319,8 +319,8 @@
     /* Add a special class for when the percentage is being edited */
     .percent-editing {
         font-size: 21px !important; /* Keep the same font size as normal state */
-        background-color: rgba(0, 0, 0, 0.5) !important;
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5) inset !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
         /* Keep the same positioning to prevent movement */
         position: absolute !important;
         display: block !important;
@@ -335,40 +335,17 @@
         text-align: center !important;
         line-height: 160px !important;
         border: none !important;
-        /* Add a subtle animation to indicate editing state */
-        animation: editingPulse 2s infinite ease-in-out !important;
+        /* No animation */
     }
 
-    /* Subtle pulsing animation for editing state */
-    @keyframes editingPulse {
-        0% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.3) inset; }
-        50% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.7) inset; }
-        100% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.3) inset; }
-    }
+    /* Removed pulsing animation for editing state */
 
-    /* Add edit indicator for charts */
+    /* Chart positioning only - no edit indicator */
     .chart {
         position: relative;
     }
 
-    .chart::after {
-        content: '\f040'; /* Pencil icon */
-        font-family: 'FontAwesome';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0px;
-        transition: all 0.3s ease;
-        pointer-events: none;
-        z-index: 5;
-    }
-
-    .chart:hover::after {
-        font-size: 16px;
-        color: rgba(255, 255, 255, 0.8);
-    }
+    /* Removed pencil icon */
 
     /* Special styling for skill name */
     .skill h4[contenteditable="true"] {
@@ -552,6 +529,9 @@
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i> </button>
+        <div class="site-logo-container" style="padding: 0; margin-right: 20px;">
+          <h1 id="site-title" contenteditable="true" style="margin: 0; padding-top: 10px; margin-bottom: 0; font-weight: bold; font-size: 20px; color: #fff; letter-spacing: 1px; cursor: text; line-height: 30px; display: block; visibility: visible; opacity: 1; text-transform: uppercase;">PROFESSIONAL</h1>
+        </div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -562,8 +542,7 @@
           <li> <a class="page-scroll" href="#page-top">Home</a> </li>
           <li> <a class="page-scroll" href="#about">About</a> </li>
           <li> <a class="page-scroll" href="#skills">Skills</a> </li>
-          <li> <a class="page-scroll" href="#portfolio">Portfolio</a> </li>
-
+          <li> <a class="page-scroll" href="#portfolio">Projects</a> </li>
           <li> <a class="page-scroll" href="#contact">Contact</a> </li>
         </ul>
       </div>
@@ -593,7 +572,7 @@
           <p contenteditable="true">I am a passionate web developer with over 8 years of experience creating beautiful and functional websites. I specialize in front-end development and user experience design, focusing on creating intuitive interfaces.</p>
           <p contenteditable="true">My goal is to build digital experiences that are not only visually appealing but also highly functional and accessible. I'm constantly learning new technologies and techniques to improve my craft.</p>
           <div class="about-buttons">
-            <a href="#portfolio" class="btn btn-primary btn-lg page-scroll about-btn">MY PORTFOLIO</a>
+            <a href="#portfolio" class="btn btn-primary btn-lg page-scroll about-btn">MY PROJECTS</a>
             <a href="#contact" class="btn btn-outline btn-lg page-scroll about-btn">CONTACT ME</a>
           </div>
         </div>
@@ -649,10 +628,10 @@
 <div id="portfolio">
   <div class="container">
     <div class="section-title text-center center">
-      <h2 contenteditable="true">Portfolio</h2>
+      <h2 contenteditable="true">My Projects</h2>
       <hr>
       <div class="section-controls">
-        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Portfolio Item"><i class="fa fa-plus"></i></button>
+        <button class="section-control-btn add-btn" id="add-portfolio-btn" title="Add Project Item"><i class="fa fa-plus"></i></button>
       </div>
     </div>
     <!-- Category filter removed -->
@@ -660,7 +639,7 @@
       <div class="portfolio-items">
         <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
           <div class="item-controls">
-            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+            <button class="section-control-btn remove-btn" title="Remove Project Item"><i class="fa fa-trash"></i></button>
           </div>
           <div class="hover-bg">
             <div class="hover-text">
@@ -680,7 +659,7 @@
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
           <div class="item-controls">
-            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+            <button class="section-control-btn remove-btn" title="Remove Project Item"><i class="fa fa-trash"></i></button>
           </div>
           <div class="hover-bg">
             <div class="hover-text">
@@ -700,7 +679,7 @@
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
           <div class="item-controls">
-            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+            <button class="section-control-btn remove-btn" title="Remove Project Item"><i class="fa fa-trash"></i></button>
           </div>
           <div class="hover-bg">
             <div class="hover-text">
@@ -720,7 +699,7 @@
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
           <div class="item-controls">
-            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+            <button class="section-control-btn remove-btn" title="Remove Project Item"><i class="fa fa-trash"></i></button>
           </div>
           <div class="hover-bg">
             <div class="hover-text">
@@ -740,7 +719,7 @@
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
           <div class="item-controls">
-            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+            <button class="section-control-btn remove-btn" title="Remove Project Item"><i class="fa fa-trash"></i></button>
           </div>
           <div class="hover-bg">
             <div class="hover-text">
@@ -760,7 +739,7 @@
         </div>
         <div class="col-sm-6 col-md-4 col-lg-4 portfolio-item" data-link="#">
           <div class="item-controls">
-            <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+            <button class="section-control-btn remove-btn" title="Remove Project Item"><i class="fa fa-trash"></i></button>
           </div>
           <div class="hover-bg">
             <div class="hover-text">
@@ -783,112 +762,100 @@
   </div>
 </div>
 
-<!-- Achievements Section -->
-<div id="achievements" class="text-center">
-  <div class="container">
-    <div class="section-title center">
-      <h2 contenteditable="true">Some Stats</h2>
-      <hr>
-      <div class="section-controls">
-        <button class="section-control-btn add-btn" id="add-achievement-btn" title="Add Achievement"><i class="fa fa-plus"></i></button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-sm-3 achievement-item">
-        <div class="item-controls">
-          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
-        </div>
-        <div class="achievement-box">
-          <span class="count" contenteditable="true">310</span>
-          <h4 contenteditable="true">Happy Clients</h4>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-3 achievement-item">
-        <div class="item-controls">
-          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
-        </div>
-        <div class="achievement-box">
-          <span class="count" contenteditable="true">4700</span>
-          <h4 contenteditable="true">Hours of Work</h4>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-3 achievement-item">
-        <div class="item-controls">
-          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
-        </div>
-        <div class="achievement-box">
-          <span class="count" contenteditable="true">30</span>
-          <h4 contenteditable="true">Awards Won</h4>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-3 achievement-item">
-        <div class="item-controls">
-          <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
-        </div>
-        <div class="achievement-box">
-          <span class="count" contenteditable="true">8</span>
-          <h4 contenteditable="true">Years of Experience</h4>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 
 <!-- Contact Section -->
 <div id="contact" class="text-center">
   <div class="overlay">
     <div class="container">
       <div class="section-title center">
-        <h2 contenteditable="true">Get In Touch</h2>
+        <h2 contenteditable="true">CONTACT</h2>
         <hr>
       </div>
-      <div class="col-md-8 col-md-offset-2">
-        <form name="sentMessage" id="contactForm" novalidate>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <input type="text" id="name" class="form-control" placeholder="Name" required="required">
-                <p class="help-block text-danger"></p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input type="email" id="email" class="form-control" placeholder="Email" required="required">
-                <p class="help-block text-danger"></p>
-              </div>
-            </div>
+      <div class="row contact-info-row">
+        <!-- Email Contact Info -->
+        <div class="col-md-4 contact-item">
+          <div class="contact-icon">
+            <i class="fa fa-envelope"></i>
           </div>
-          <div class="form-group">
-            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
-            <p class="help-block text-danger"></p>
+          <div class="contact-details">
+            <h4 contenteditable="true">Email</h4>
+            <p contenteditable="true">your.email@example.com</p>
           </div>
-          <div id="success"></div>
-          <button type="submit" class="btn btn-default" contenteditable="true">Send Message</button>
-        </form>
-        <div class="social">
-          <ul>
-            <li><a href="#" data-editable="true"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#" data-editable="true"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#" data-editable="true"><i class="fa fa-dribbble"></i></a></li>
-            <li><a href="#" data-editable="true"><i class="fa fa-github"></i></a></li>
-            <li><a href="#" data-editable="true"><i class="fa fa-instagram"></i></a></li>
-            <li><a href="#" data-editable="true"><i class="fa fa-linkedin"></i></a></li>
-          </ul>
         </div>
+
+        <!-- Phone Contact Info -->
+        <div class="col-md-4 contact-item">
+          <div class="contact-icon">
+            <i class="fa fa-phone"></i>
+          </div>
+          <div class="contact-details">
+            <h4 contenteditable="true">Phone</h4>
+            <p contenteditable="true">+1 234 567 890</p>
+          </div>
+        </div>
+
+        <!-- Location Contact Info -->
+        <div class="col-md-4 contact-item">
+          <div class="contact-icon">
+            <i class="fa fa-map-marker"></i>
+          </div>
+          <div class="contact-details">
+            <h4 contenteditable="true">Location</h4>
+            <p contenteditable="true">Your Location</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row contact-info-row">
+        <!-- GitHub Contact Info -->
+        <div class="col-md-4 contact-item">
+          <div class="contact-icon">
+            <i class="fa fa-github"></i>
+          </div>
+          <div class="contact-details">
+            <h4 contenteditable="true">GitHub</h4>
+            <p contenteditable="true">github.com/yourusername</p>
+          </div>
+        </div>
+
+        <!-- LinkedIn Contact Info -->
+        <div class="col-md-4 contact-item">
+          <div class="contact-icon">
+            <i class="fa fa-linkedin"></i>
+          </div>
+          <div class="contact-details">
+            <h4 contenteditable="true">LinkedIn</h4>
+            <p contenteditable="true">linkedin.com/in/yourprofile</p>
+          </div>
+        </div>
+
+        <!-- Twitter Contact Info -->
+        <div class="col-md-4 contact-item">
+          <div class="contact-icon">
+            <i class="fa fa-twitter"></i>
+          </div>
+          <div class="contact-details">
+            <h4 contenteditable="true">Twitter</h4>
+            <p contenteditable="true">twitter.com/yourhandle</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Media Links -->
+      <div class="social">
+        <ul>
+          <li><a href="#" data-editable="true"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="#" data-editable="true"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="#" data-editable="true"><i class="fa fa-github"></i></a></li>
+          <li><a href="#" data-editable="true"><i class="fa fa-instagram"></i></a></li>
+          <li><a href="#" data-editable="true"><i class="fa fa-linkedin"></i></a></li>
+        </ul>
       </div>
     </div>
   </div>
 </div>
 
-<div id="footer">
-  <div class="container text-center">
-    <div class="fnav">
-      <p contenteditable="true">Copyright &copy; 2023 Professional Portfolio. Designed by <a href="#" rel="nofollow">TemplateWire</a></p>
-    </div>
-  </div>
-</div>
+
 
 <!-- Project Link Modal -->
 <div class="modal fade" id="project-link-modal" tabindex="-1" role="dialog" aria-labelledby="projectLinkModalLabel" aria-hidden="true">
@@ -929,6 +896,42 @@
 
     <!-- Custom styles for perfect percentage centering and visible buttons -->
     <style>
+        /* Ensure site title is visible and aligned with navigation */
+        #site-title {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            color: #fff !important;
+            font-size: 20px !important;
+            font-weight: bold !important;
+            margin: 0 !important;
+            padding-top: 10px !important;
+            margin-bottom: 0 !important;
+            letter-spacing: 1px !important;
+            cursor: text !important;
+            line-height: 30px !important;
+            text-transform: uppercase !important;
+        }
+
+        .site-logo-container {
+            display: flex !important;
+            align-items: center !important;
+            height: 100% !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            padding: 0 !important;
+            margin-right: 20px !important;
+        }
+
+        .navbar-header {
+            display: flex !important;
+            align-items: center !important;
+            width: auto !important;
+            float: left !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            padding: 0 15px !important;
+        }
         /* Make 'Change Image' buttons always visible with black text */
         .portfolio-item .btn,
         #about .btn {
@@ -1005,11 +1008,12 @@
             border: none !important;
         }
 
-        /* Hide the pencil icon completely */
+        /* No highlight when editing */
         .percent-editing {
             background-color: transparent !important;
             border-radius: 0 !important;
             outline: none !important;
+            box-shadow: none !important;
         }
 
         /* Hide any icons that might appear behind the percentage text */
@@ -1024,8 +1028,23 @@
             display: none !important;
         }
 
-        /* Only show the percentage symbol */
-        .percent:after {
+        /* Only show the percentage symbol when there's content */
+        .percent:not(:empty):after {
+            content: '%' !important;
+            display: inline-block !important;
+            font-size: 0.8em !important;
+            margin-left: 0.1em !important;
+            vertical-align: middle !important;
+        }
+
+        /* Fix for empty percentage - show 0 instead of just % */
+        .percent:empty:before {
+            content: '0' !important;
+            display: inline-block !important;
+        }
+
+        /* Add percentage symbol after the 0 for empty values */
+        .percent:empty:after {
             content: '%' !important;
             display: inline-block !important;
             font-size: 0.8em !important;
@@ -1170,6 +1189,88 @@
             transform: translateY(1px);
             box-shadow: 0 2px 10px rgba(73, 119, 194, 0.4);
         }
+
+        /* Contact section styles */
+        .contact-info-row {
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            padding: 20px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            background: linear-gradient(135deg, #6b4da8, #4977c2);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(107, 77, 168, 0.5);
+        }
+
+        .contact-details h4 {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .contact-details p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        .social {
+            margin-top: 40px;
+        }
+
+        .social ul {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .social ul li a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social ul li a:hover {
+            background: linear-gradient(135deg, #6b4da8, #4977c2);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(107, 77, 168, 0.5);
+        }
     </style>
 
     <!-- Preview Mode Script -->
@@ -1190,6 +1291,11 @@
 
             function applyPercentCentering() {
                 document.querySelectorAll('.percent').forEach(function(el) {
+                    // Ensure we always have a value (0 if empty)
+                    if (!el.textContent.trim()) {
+                        el.textContent = '0';
+                    }
+
                     el.style.position = 'absolute';
                     el.style.display = 'block';
                     el.style.width = '100%';
@@ -1211,9 +1317,27 @@
                     el.style.boxShadow = 'none';
                     el.style.border = 'none';
 
+                    // Make sure there's no blue highlight when editing
+                    el.addEventListener('focus', function() {
+                        this.style.background = 'transparent';
+                        this.style.boxShadow = 'none';
+                    });
+
+                    // Add blur handler to ensure we always have a value
+                    el.addEventListener('blur', function() {
+                        if (!this.textContent.trim()) {
+                            this.textContent = '0';
+                        }
+                    });
+
                     // Remove any pencil icons that might be present
                     const icons = el.querySelectorAll('i, .fa, .fas, .far, .fal, .fab');
                     icons.forEach(icon => icon.remove());
+
+                    // Also remove any ::after pseudo-elements by setting content to none
+                    const style = document.createElement('style');
+                    style.textContent = '.chart::after { display: none !important; content: none !important; }';
+                    document.head.appendChild(style);
                 });
             }
         });

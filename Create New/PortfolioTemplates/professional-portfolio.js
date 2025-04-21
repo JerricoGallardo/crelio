@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
 
     // Make all headings and paragraphs editable
-    document.querySelectorAll('h1, h2, h3, h4, p, a.btn, small, strong, em, .percent').forEach(function(element) {
+    document.querySelectorAll('h1, h2, h3, h4, p, a.btn, small, strong, em, .percent, #site-title').forEach(function(element) {
         // Skip elements that shouldn't be editable
         if (!element.closest('.count') || element.classList.contains('percent')) {
             element.setAttribute('contenteditable', 'true');
@@ -97,6 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                                 // Remove editing class
                                 this.classList.remove('percent-editing');
+
+                                // Make sure there's no highlight
+                                this.style.background = 'transparent';
+                                this.style.boxShadow = 'none';
 
                                 // Blur the element to remove focus
                                 this.blur();
@@ -251,7 +255,9 @@ function initializeSkillCharts() {
         animate: 1000,
         onStep: function(from, to, percent) {
             // Update the percent text when the chart is animated
-            $(this.el).find('.percent').text(Math.round(percent));
+            // Ensure we always have a value (0 if empty)
+            const roundedPercent = Math.round(percent);
+            $(this.el).find('.percent').text(roundedPercent);
         }
     });
 
@@ -262,8 +268,10 @@ function initializeSkillCharts() {
             // Focus and select all text in the percent span
             const percentEl = $(this).find('.percent')[0];
             if (percentEl) {
-                // Add editing class
+                // Add editing class but ensure no highlight
                 percentEl.classList.add('percent-editing');
+                percentEl.style.background = 'transparent';
+                percentEl.style.boxShadow = 'none';
 
                 // Create a range and select all text
                 const selection = window.getSelection();
@@ -281,27 +289,32 @@ function initializeSkillCharts() {
         }
     });
 
-    // Add blur handler to remove editing class and animate the chart
+    // Add blur handler to remove editing class
     $('.percent').on('blur', function() {
         // Remove editing class
         this.classList.remove('percent-editing');
 
+        // Ensure we always have a value (0 if empty)
+        if (!this.textContent.trim()) {
+            this.textContent = '0';
+        }
+
         // Get the chart element
         const chart = $(this).closest('.chart')[0];
 
-        // Apply animation
-        chart.style.animation = 'chartPulse 0.5s ease';
-
-        // Remove animation after it completes
-        setTimeout(() => {
-            chart.style.animation = '';
-        }, 500);
+        // No animation needed
     });
 
     // Add keydown handler for Enter key
     $('.percent').on('keydown', function(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
+
+            // Ensure we always have a value (0 if empty)
+            if (!this.textContent.trim()) {
+                this.textContent = '0';
+            }
+
             this.blur(); // This will trigger the blur event above
         }
     });
@@ -674,7 +687,7 @@ function initializeEditor() {
 
     // Initialize exit button
     document.getElementById('exit-btn').addEventListener('click', function() {
-        window.location.href = '../index.html';
+        window.location.href = '../createnewportfolio.html';
     });
 
     // Add keyboard shortcuts for undo/redo
@@ -1008,7 +1021,7 @@ function initializeAddRemoveControls() {
             // Use the exact HTML structure from the existing items
             newCol.innerHTML = `
                 <div class="item-controls">
-                    <button class="section-control-btn remove-btn" title="Remove Portfolio Item"><i class="fa fa-trash"></i></button>
+                    <button class="section-control-btn remove-btn" title="Remove Project Item"><i class="fa fa-trash"></i></button>
                 </div>
                 <div class="hover-bg">
                     <div class="hover-text">
@@ -1056,7 +1069,7 @@ function initializeAddRemoveControls() {
                     // Check if this is the last portfolio item
                     const allItems = document.querySelectorAll('.portfolio-item');
                     if (allItems.length <= 1) {
-                        alert('Cannot remove the last portfolio item. You need at least one portfolio item.');
+                        alert('Cannot remove the last project item. You need at least one project item.');
                         return;
                     }
 
@@ -1204,7 +1217,7 @@ function initializeAddRemoveControls() {
             // Check if this is the last portfolio item
             const allItems = document.querySelectorAll('.portfolio-item');
             if (allItems.length <= 1) {
-                alert('Cannot remove the last portfolio item. You need at least one portfolio item.');
+                alert('Cannot remove the last project item. You need at least one project item.');
                 return;
             }
 
@@ -1304,85 +1317,7 @@ function initializeAddRemoveControls() {
         });
     });
 
-    // Achievements section controls
-    const addAchievementBtn = document.getElementById('add-achievement-btn');
-    if (addAchievementBtn) {
-        addAchievementBtn.addEventListener('click', function() {
-            // Find an existing achievement to clone
-            const existingItem = document.querySelector('.achievement-item');
-            if (!existingItem) {
-                console.error('No existing achievement found to clone');
-                return;
-            }
-
-            // Clone the existing achievement
-            const newItem = existingItem.cloneNode(true);
-
-            // Reset content
-            newItem.querySelector('h4').textContent = 'New Achievement';
-            const count = newItem.querySelector('.count');
-            count.textContent = '100';
-
-            // Add remove button functionality
-            const removeBtn = newItem.querySelector('.remove-btn');
-            if (removeBtn) {
-                removeBtn.addEventListener('click', function() {
-                    // Check if this is the last achievement
-                    const allItems = document.querySelectorAll('.achievement-item');
-                    if (allItems.length <= 1) {
-                        alert('Cannot remove the last achievement. You need at least one achievement.');
-                        return;
-                    }
-
-                    // Remove the achievement
-                    newItem.remove();
-                    saveState();
-                });
-            }
-
-            // Add input event listener to editable elements
-            newItem.querySelectorAll('[contenteditable="true"]').forEach(el => {
-                el.addEventListener('input', saveState);
-            });
-
-            // Add the new achievement to the achievements container
-            const achievementsContainer = document.querySelector('#achievements .row');
-            achievementsContainer.appendChild(newItem);
-
-            // Initialize the counter for the new achievement
-            $(newItem).find('.count').each(function() {
-                $(this).prop('Counter', 0).animate({
-                    Counter: $(this).text()
-                }, {
-                    duration: 4000,
-                    easing: 'swing',
-                    step: function(now) {
-                        $(this).text(Math.ceil(now));
-                    }
-                });
-            });
-
-            saveState();
-        });
-    }
-
-    // Add remove functionality to existing achievements
-    document.querySelectorAll('.achievement-item .remove-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const item = this.closest('.achievement-item');
-
-            // Check if this is the last achievement
-            const allItems = document.querySelectorAll('.achievement-item');
-            if (allItems.length <= 1) {
-                alert('Cannot remove the last achievement. You need at least one achievement.');
-                return;
-            }
-
-            // Remove the achievement
-            item.remove();
-            saveState();
-        });
-    });
+    // Achievements section has been removed
 }
 
 // Function to capture the current state of editable elements

@@ -415,35 +415,35 @@
                 cursor: pointer !important;
                 transition: all 0.2s !important;
             }
-            
+
             .format-btn:hover, button:hover {
                 background-color: #f0f0f0 !important;
                 transform: translateY(-1px) !important;
             }
-            
+
             .format-btn.active, button.active {
                 background-color: #007bff !important;
                 color: white !important;
             }
-            
+
             /* Specific formatting buttons in toolbar */
             #bold-btn, #italic-btn, #underline-btn,
-            .B, .I, .U, 
+            .B, .I, .U,
             [data-command="bold"], [data-command="italic"], [data-command="underline"] {
                 cursor: pointer !important;
-                min-width: 30px !important; 
+                min-width: 30px !important;
                 text-align: center !important;
                 border-radius: 3px !important;
                 transition: all 0.2s !important;
             }
-            
+
             #bold-btn:hover, #italic-btn:hover, #underline-btn:hover,
             .B:hover, .I:hover, .U:hover,
             [data-command="bold"]:hover, [data-command="italic"]:hover, [data-command="underline"]:hover {
                 background-color: #f0f0f0 !important;
                 color: #007bff !important;
             }
-            
+
             #bold-btn:active, #italic-btn:active, #underline-btn:active,
             .B:active, .I:active, .U:active,
             [data-command="bold"]:active, [data-command="italic"]:active, [data-command="underline"]:active {
@@ -451,7 +451,7 @@
                 color: white !important;
                 transform: scale(0.95) !important;
             }
-            
+
             /* Active state styling */
             #bold-btn.active, #italic-btn.active, #underline-btn.active,
             .B.active, .I.active, .U.active,
@@ -597,12 +597,12 @@
                 display: flex;
                 flex-direction: column;
             }
-            
+
             .portfolio .item:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             }
-            
+
             .portfolio .image-container {
                 position: relative;
                 overflow: hidden;
@@ -613,34 +613,34 @@
                 justify-content: center;
                 flex: 1 0 auto; /* Don't allow shrinking but allow growing */
             }
-            
+
             .portfolio .image-container img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
             }
-            
+
             .portfolio .portfolio-title {
                 padding: 15px;
                 background-color: #fff;
                 border-top: 1px solid #eee;
                 flex: 0 0 auto; /* Fixed height */
             }
-            
+
             .portfolio .portfolio-title h4 {
                 margin: 0;
                 font-size: 16px;
                 font-weight: 600;
                 color: #333;
             }
-            
+
             /* Ensure the row has proper spacing */
             .portfolio .row {
                 margin-bottom: 0;
                 display: flex;
                 flex-wrap: wrap;
             }
-            
+
             .portfolio .col-sm-4 {
                 margin-bottom: 30px;
                 display: flex;
@@ -652,29 +652,29 @@
                 opacity: 0;
                 transition: opacity 0.3s ease, transform 0.2s ease;
             }
-            
+
             .item:hover .section-control-btn.remove-btn {
                 opacity: 1;
             }
-            
+
             /* Fix spacing for the add button */
             .section-controls {
                 margin-bottom: 30px;
             }
-            
+
             /* Clear fix for the rows to prevent layout issues */
             .portfolio .row:after {
                 content: "";
                 display: table;
                 clear: both;
             }
-            
+
             /* Responsive image management */
             .image-management {
                 opacity: 0;
                 transition: opacity 0.3s ease;
             }
-            
+
             .image-container:hover .image-management {
                 opacity: 1;
             }
@@ -686,49 +686,49 @@
             .project-modal-content {
                 padding: 40px;
             }
-            
+
             #project-modal-title[contenteditable="true"]:focus,
             #project-modal-description[contenteditable="true"]:focus {
                 outline: none;
                 border-bottom: 2px solid #007bff;
                 padding-bottom: 5px;
             }
-            
+
             #project-modal-title[contenteditable="true"]::before,
             #project-modal-description[contenteditable="true"]::before {
                 color: #999;
                 font-style: italic;
             }
-            
+
             #project-modal-title[contenteditable="true"]:empty::before {
                 content: "Enter project title";
             }
-            
+
             #project-modal-description[contenteditable="true"]:empty::before {
                 content: "Enter project description";
             }
-            
+
             .project-tag[contenteditable="true"] {
                 cursor: text;
                 transition: all 0.2s;
             }
-            
+
             .project-tag[contenteditable="true"]:hover {
                 background-color: rgba(0, 123, 255, 0.2);
             }
-            
+
             .project-tag[contenteditable="true"]:focus {
                 outline: none;
                 background-color: white;
                 color: #0056b3;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             }
-            
+
             .add-tag-btn:hover {
                 background-color: rgba(0, 123, 255, 0.1);
                 transform: translateY(-1px);
             }
-            
+
             .add-tag-btn:active {
                 transform: translateY(1px);
             }
@@ -741,12 +741,12 @@
                 padding: 40px 0 !important; /* Override any existing padding with smaller, consistent value */
                 margin: 0 !important; /* Remove any margins */
             }
-            
+
             /* Add dividers between sections instead of large spaces */
             section:not(:last-child) {
                 border-bottom: 1px solid #f0f0f0;
             }
-            
+
             /* CONSISTENT HEADING STRUCTURE FOR PROJECTS AND SKILLS */
             /* Make Projects and Skills sections have identical structure and spacing */
             #portfolio.portfolio h2, #skills.skills h2 {
@@ -755,7 +755,7 @@
                 line-height: 1.2 !important;
                 position: relative !important;
             }
-            
+
             /* Ensure both section headings have the same style and spacing */
             #portfolio .section-heading, #skills .section-heading {
                 margin: 0 0 30px 0 !important; /* Increased bottom margin */
@@ -763,14 +763,14 @@
                 height: auto !important;
                 position: relative !important;
             }
-            
+
             /* CONTACT ME style that we want to match */
             #contact h2, #contact .section-heading {
                 margin: 0 0 30px 0 !important;
                 padding: 0 !important;
                 line-height: 1.2 !important;
             }
-            
+
             /* Ensure that both section controls (add buttons) have identical spacing */
             #portfolio .section-controls, #skills .section-controls {
                 margin: 15px 0 !important;
@@ -778,45 +778,45 @@
                 height: auto !important;
                 position: relative !important;
             }
-            
+
             /* Remove any nested containers that might cause different spacing */
             #portfolio .container, #skills .container,
             #portfolio .portfolio-content, #skills .skill-content {
                 padding-top: 15px !important;
                 margin-top: 0 !important;
             }
-            
+
             /* Fix spacing for section headings */
             .section-heading {
                 margin-bottom: 30px !important;
                 padding-bottom: 10px !important;
             }
-            
+
             /* New: Reduce gap between section heading and content */
-            .section-heading + .container, 
-            .section-heading + div, 
+            .section-heading + .container,
+            .section-heading + div,
             h2 + .container,
             h2 + div {
                 margin-top: 15px !important; /* Increased from 0 to add some spacing */
                 padding-top: 0 !important;
             }
-            
+
             /* New: Compact section title spacing */
             .section-heading h2 {
                 margin-bottom: 30px !important; /* Increased from 10px to match CONTACT ME */
             }
-            
+
             /* New: Fix specific issues with Projects and Skills sections */
             #portfolio .section-heading,
             #skills .section-heading {
                 margin-bottom: 30px !important; /* Increased from 20px to match CONTACT ME */
             }
-            
+
             /* Specific fix for add buttons to maintain proper spacing after heading */
             #add-portfolio-btn, #add-skill-btn {
                 margin-top: 15px !important;
             }
-            
+
             /* New: Apply more compact spacing to the add buttons */
             .section-controls {
                 margin-bottom: 15px !important;
@@ -831,29 +831,29 @@
                 padding-bottom: 0 !important;
                 text-align: center !important;
             }
-            
+
             /* Make the add buttons for skills and portfolio match the spacing */
             #skills .section-controls, #portfolio .section-controls {
                 margin-top: -20px !important; /* Adjust to match CONTACT ME appearance */
                 margin-bottom: 25px !important;
                 text-align: center !important;
             }
-            
+
             /* Ensure container spacing is consistent */
             #skills .container, #portfolio .container {
                 padding-top: 15px !important;
             }
-            
+
             /* Remove any previous aggressive fixes that might interfere */
             .section-heading, #portfolio .section-heading, #skills .section-heading {
                 margin-bottom: 30px !important; /* Consistent with CONTACT ME */
             }
-            
+
             /* For consistent section title styling */
             #skills, #portfolio, #contact {
                 text-align: center !important;
             }
-            
+
             /* Ensure section spacing is consistent */
             section {
                 padding: 50px 0 !important;
@@ -869,21 +869,21 @@
                 text-align: center !important;
                 position: relative !important;
             }
-            
+
             /* Style for section dividers (lines above and below) */
             section {
                 border-top: 1px solid #f0f0f0;
                 border-bottom: 1px solid #f0f0f0;
                 padding: 30px 0 !important;
             }
-            
+
             /* Adjust controls to maintain balanced spacing */
             #skills .section-controls, #portfolio .section-controls {
                 margin-top: 0 !important;
                 margin-bottom: 25px !important;
                 text-align: center !important;
             }
-            
+
             /* Ensure equal vertical spacing throughout sections */
             .section-heading {
                 padding: 30px 0 !important;
@@ -899,23 +899,23 @@
                 padding: 0 !important;
                 text-align: center !important;
             }
-            
+
             /* Keep add buttons close to content */
             #skills .section-controls, #portfolio .section-controls {
                 margin-top: 0 !important;
                 margin-bottom: 10px !important;  /* Reduced space between button and content */
             }
-            
+
             /* Remove extra padding in sections */
             section {
                 padding: 0 !important;
             }
-            
+
             /* Fix container spacing */
             #skills .container, #portfolio .container {
                 padding-top: 10px !important;    /* Reduced space after add button */
             }
-            
+
             /* Remove the section heading padding that was causing issues */
             .section-heading {
                 padding: 0 !important;
@@ -928,29 +928,29 @@
             #skills .section-controls {
                 margin-bottom: 5px !important;
             }
-            
+
             /* Remove excess space above the skill content */
             #skills .container {
                 padding-top: 0 !important;
                 margin-top: 0 !important;
             }
-            
+
             /* Reduce space between add button and first skill bar */
             #skills .skill-content {
                 margin-top: 0 !important;
                 padding-top: 0 !important;
             }
-            
+
             /* Reduce space specifically for skill progress bars container */
             .barWrapper {
                 margin-top: 10px !important;
             }
-            
+
             /* Target the exact gap between add button and first skill */
             #skills .row {
                 margin-top: 0 !important;
             }
-            
+
             /* Fix any nested containers causing spacing issues */
             #skills .skill-content > div {
                 padding-top: 0 !important;
@@ -964,7 +964,7 @@
                 margin-top: 0 !important;
                 padding-top: 0 !important;
             }
-            
+
             /* Target skill bar containers directly */
             #skills .barWrapper,
             #skills .row,
@@ -976,23 +976,23 @@
                 padding-top: 0 !important;
                 margin-bottom: 5px !important;
             }
-            
+
             /* Target the green button directly */
             #add-skill-btn {
                 margin-bottom: 10px !important;
             }
-            
+
             /* Force skill bars to be closer */
             .skill-content .barWrapper:first-child {
                 margin-top: 10px !important;
             }
-            
+
             /* Override any framework classes */
             .row, .container, .col-sm-6, .col-md-6 {
                 margin-top: 0 !important;
                 padding-top: 0 !important;
             }
-            
+
             /* Direct fix for gap between add button and first skill */
             #skills .section-controls + * {
                 margin-top: 0 !important;
@@ -1006,26 +1006,26 @@
                 margin-bottom: 30px !important; /* Space between title and line */
                 padding-bottom: 0 !important;
             }
-            
+
             /* Style the section separators */
             section {
                 border-top: 1px solid #f0f0f0;
                 padding-top: 30px !important;  /* Space between top line and title */
                 padding-bottom: 30px !important;
             }
-            
+
             /* Clean approach: Reset previous fixes that might interfere */
             #skills *, #portfolio *, #contact * {
                 margin-top: initial;
                 padding-top: initial;
             }
-            
+
             /* Re-apply specific spacing only where needed */
             #skills h2, #portfolio h2, #contact h2 {
                 margin-top: 30px !important;  /* Space above the title */
                 margin-bottom: 30px !important; /* Space below the title */
             }
-            
+
             /* Keep add buttons close to content */
             .section-controls {
                 margin-top: 0 !important;
@@ -1041,25 +1041,25 @@
                 padding-bottom: 0 !important;
                 text-align: center !important;
             }
-            
+
             /* Reset any previous conflicting styles */
             section {
                 padding: 0 !important;
                 border: none !important;  /* Remove borders that might affect spacing */
             }
-            
+
             /* Create cleaner separation with horizontal lines */
             section:not(:last-child) {
                 border-bottom: 1px solid #f0f0f0 !important;
                 padding-bottom: 40px !important;
             }
-            
+
             /* Ensure visual separation between sections */
             #skills, #portfolio, #contact {
                 margin-top: 40px !important;
                 margin-bottom: 40px !important;
             }
-            
+
             /* Override any framework styles affecting section headers */
             .section-header, .section-heading {
                 margin-bottom: 60px !important;  /* Match the h2 spacing */
@@ -1074,7 +1074,7 @@
                 padding-bottom: 0 !important;
                 text-align: center !important;
             }
-            
+
             /* Match section heading spacing to be consistent */
             .section-header, .section-heading {
                 margin-bottom: 75px !important;  /* Increased from 60px to 75px */
@@ -1087,12 +1087,12 @@
                 margin-bottom: 0 !important;
                 padding-bottom: 20px !important;
             }
-            
+
             #contact {
                 margin-top: 0 !important;
                 padding-top: 20px !important;
             }
-            
+
             /* Fix section spacing globally */
             section {
                 margin: 0 !important;
@@ -1106,12 +1106,12 @@
                 padding-top: 40px !important; /* Reduced from 80px */
                 margin-top: 20px !important; /* Reduced from 40px */
             }
-            
+
             /* Adjust heading spacing */
             #about h2, #about-me h2 {
                 margin-top: 20px !important; /* Reduced from 40px */
             }
-            
+
             /* Adjust spacing after banner */
             .banner-area + section {
                 padding-top: 40px !important; /* Reduced from 80px */
@@ -1124,19 +1124,19 @@
                 margin-top: 20px !important;
                 padding-top: 0 !important;
             }
-            
+
             /* Target the space between the heading and paragraph directly */
             #about h2 + div, #about-me h2 + div,
             #about .section-heading + div, #about-me .section-heading + div {
                 margin-top: 20px !important;
                 padding-top: 0 !important;
             }
-            
+
             /* Target paragraphs specifically */
             #about p:first-of-type, #about-me p:first-of-type {
                 margin-top: 20px !important;
             }
-            
+
             /* Reduce space in container */
             #about .container, #about-me .container {
                 padding-top: 0 !important;
@@ -1171,24 +1171,24 @@
             .preview-mode .edit-mode-only {
                 display: none !important;
             }
-            
+
             /* Enhanced preview mode styles - fix specific issues */
             body.preview-mode .section-control-btn.remove-btn,
             body.preview-mode .remove-skill-btn,
             body.preview-mode .modal-content [contenteditable="true"] {
                 display: none !important;
             }
-            
+
             /* Hide tag management in preview mode */
-            body.preview-mode #projectModal .btn-add-tag, 
-            body.preview-mode #projectModal [class*="remove-tag"], 
+            body.preview-mode #projectModal .btn-add-tag,
+            body.preview-mode #projectModal [class*="remove-tag"],
             body.preview-mode #projectModal .remove-tag-btn,
             body.preview-mode .project-tag .remove-btn,
             body.preview-mode .tag-controls,
             body.preview-mode [data-role="remove-tag"] {
                 display: none !important;
             }
-            
+
             /* Keep View Project buttons visible and centered in preview mode */
             body.preview-mode .view-project-btn {
                 display: inline-block !important;
@@ -1202,7 +1202,7 @@
                 transform: translate(-50%, -50%) !important;
                 margin: 0 !important;
             }
-            
+
             /* In edit mode, position similarly for consistency */
             .view-project-btn {
                 position: absolute;
@@ -1212,14 +1212,14 @@
                 margin: 0;
                 z-index: 10;
             }
-            
+
             /* Ensure the parent containers don't hide the buttons but keep proper layout */
             body.preview-mode .portfolio .item .image-container {
                 display: block !important;
                 visibility: visible !important;
                 position: relative !important;
             }
-            
+
             /* Make header sticky */
             .header-area {
                 position: sticky !important;
@@ -1229,20 +1229,20 @@
                 background-color: rgba(0, 0, 0, 0.7);
                 transition: background-color 0.3s;
             }
-            
+
             /* Ensure project modal still works in preview */
             body.preview-mode #projectModal .modal-footer .btn-primary,
             body.preview-mode #projectModal .modal-footer .btn-secondary {
                 display: inline-block !important;
             }
-            
+
             /* Disable editing in project modal in preview mode */
             body.preview-mode #projectModal [contenteditable="true"] {
                 outline: none !important;
                 border: none !important;
                 cursor: default !important;
             }
-            
+
             /* Keep toolbar sticky as well */
             #editor-toolbar {
                 position: fixed !important;
@@ -1257,7 +1257,7 @@
                 color: white !important;
                 border-color: #28a745 !important;
             }
-            
+
             /* Enhanced preview mode styles */
             body.preview-mode [contenteditable="false"].preview-mode {
                 border: none !important;
@@ -1265,31 +1265,31 @@
                 box-shadow: none !important;
                 cursor: default !important;
             }
-            
+
             /* Hide placeholders in preview mode */
             body.preview-mode [contenteditable="false"].preview-mode:empty:before {
                 content: "" !important;
             }
-            
+
             /* Make sure no hover indicators appear in preview mode */
             body.preview-mode [contenteditable="false"]:hover {
                 outline: none !important;
                 border-color: transparent !important;
             }
-            
+
             /* Style the Preview/Edit button when in preview mode */
             body.preview-mode #preview-btn {
                 background-color: #2196F3 !important;
                 color: white !important;
                 border-color: #2196F3 !important;
             }
-            
+
             /* Make toolbar less prominent in preview mode */
             body.preview-mode #editor-toolbar {
                 opacity: 0.85;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important;
             }
-            
+
             /* Transition for smoother UI changes */
             .section-controls, .item-controls, .image-management, .image-upload-overlay, .edit-mode-only,
             [contenteditable], #preview-btn, #editor-toolbar {
@@ -1375,23 +1375,23 @@
             .modal {
                 z-index: 9999;
             }
-            
+
             .modal-backdrop {
                 z-index: 9998;
             }
-            
+
             /* Lower the modal position on screen */
             .modal-dialog {
                 margin: 100px auto; /* Increased from default 30px to push it lower */
                 position: relative;
                 top: 50px; /* Additional downward offset */
             }
-            
+
             /* Adjust modal vertical alignment */
             .modal.fade .modal-dialog {
                 transform: translate(0, 10%); /* Push downward when appearing */
             }
-            
+
             .modal.in .modal-dialog {
                 transform: translate(0, 5%); /* Final position a bit lower than default */
             }
@@ -1404,7 +1404,7 @@
                 background-color: #f9f9f9;
                 box-shadow: 0 0 15px rgba(0,0,0,0.05);
             }
-            
+
             #contact h2 {
                 color: #333;
                 font-size: 32px;
@@ -1412,7 +1412,7 @@
                 margin-bottom: 40px !important;
                 font-weight: 600;
             }
-            
+
             .contact-info {
                 max-width: 600px;
                 margin: 0 auto;
@@ -1422,7 +1422,7 @@
                 box-shadow: 0 5px 15px rgba(0,0,0,0.08);
                 position: relative;
             }
-            
+
             /* Reduce height of the top spacer */
             .contact-info::before {
                 content: "";
@@ -1431,12 +1431,12 @@
                 width: 100%;
                 background-color: transparent;
             }
-            
+
             /* Reduce top margin of first contact item */
             .contact-info .contact-item:first-child {
                 margin-top: 20px; /* Reduced from 40px */
             }
-            
+
             /* Moderate spacing between items */
             .contact-item {
                 display: flex;
@@ -1446,7 +1446,7 @@
                 transition: all 0.3s ease;
                 border-radius: 8px;
             }
-            
+
             /* Moderate spacing around icons */
             .contact-item i {
                 font-size: 24px;
@@ -1456,27 +1456,27 @@
                 text-align: center;
                 padding: 10px 0; /* Reduced from 15px */
             }
-            
+
             /* Restore hover effect */
             .contact-item:hover {
                 background-color: #f8f9fa;
                 transform: translateY(-2px);
             }
-            
+
             .contact-text {
                 font-size: 18px;
                 color: #555;
             }
-            
+
             .contact-divider {
                 margin: 25px 0;
                 border-top: 1px solid #eee;
             }
-            
+
             .social-links .contact-item {
                 padding: 10px 15px;
             }
-            
+
             /* Fix for project modal title */
             #project-modal .modal-header h2,
             .modal-title,
@@ -1497,7 +1497,7 @@
             #projectModal h2, #projectModal .modal-title {
                 content: none !important;
             }
-            
+
             /* Add styling for the no-image indicator */
             .project-image-container {
                 position: relative;
@@ -1544,14 +1544,14 @@
                 color: #333;
                 text-align: center;
             }
-            
+
             /* Ensure section headers have consistent spacing */
             .section-heading {
                 padding: 30px 0 !important;
                 margin: 0 !important;
                 text-align: center;
             }
-            
+
             /* Ensure h2 elements are properly centered and styled */
             h2[contenteditable="true"] {
                 text-align: center !important;
@@ -1560,7 +1560,7 @@
                 font-weight: 600;
                 color: #333;
             }
-            
+
             /* Fix for contact section styling */
             #contact.contact h2 {
                 font-size: 32px !important;
@@ -1614,7 +1614,7 @@
             .add-tag-btn:hover {
                 background-color: #d0e5ff;
             }
-            
+
             /* Project image container and no-image indicator */
             .project-image-container {
                 position: relative;
@@ -1656,27 +1656,27 @@
             .section-control-btn.remove-btn .fa.fa-times {
                 color: white !important;
             }
-            
+
             .section-control-btn.remove-btn:hover .fa.fa-times {
                 color: white !important;
             }
-            
+
             /* Additional specific overrides for the entire button and icon */
             .item .section-control-btn.remove-btn {
                 color: white !important;
                 background-color: #dc3545 !important;
             }
-            
+
             .item .section-control-btn.remove-btn:hover {
                 color: white !important;
                 background-color: #bd2130 !important;
             }
-            
+
             .item .section-control-btn.remove-btn i,
             .item .section-control-btn.remove-btn:hover i {
                 color: white !important;
             }
-            
+
             /* Force all icons inside remove buttons to be white */
             button[title="Remove Portfolio Item"] i,
             button[title="Remove Portfolio Item"]:hover i,
@@ -1690,7 +1690,7 @@
             .barWrapper .section-control-btn.remove-btn:hover i {
                 color: white !important;
             }
-            
+
             .section-control-btn.remove-btn:hover {
                 background: #bd2130;
                 transform: scale(1.1);
@@ -1931,33 +1931,33 @@
                 // Wait for DOM to be ready
                 document.addEventListener('DOMContentLoaded', function() {
                     console.log('Converting default skills to new format...');
-                    
+
                     // Find all existing skill wrappers
                     var skillWrappers = document.querySelectorAll('.barWrapper');
-                    
+
                     skillWrappers.forEach(function(wrapper) {
                         // Check if this is an old-format skill (needs conversion)
                         if (!wrapper.querySelector('.skill-header')) {
                             console.log('Converting skill to new format:', wrapper);
-                            
+
                             // Extract skill information
-                            var skillName = wrapper.querySelector('.progressText') ? 
-                                            wrapper.querySelector('.progressText').textContent.trim() : 
+                            var skillName = wrapper.querySelector('.progressText') ?
+                                            wrapper.querySelector('.progressText').textContent.trim() :
                                             'Skill';
-                            
+
                             var progressBar = wrapper.querySelector('.progress');
-                            var progressBarValue = progressBar ? 
-                                              progressBar.querySelector('.progress-bar').style.width : 
+                            var progressBarValue = progressBar ?
+                                              progressBar.querySelector('.progress-bar').style.width :
                                               '80%';
-                            
-                            var percentage = wrapper.querySelector('h3') ? 
-                                            wrapper.querySelector('h3').textContent.trim() : 
+
+                            var percentage = wrapper.querySelector('h3') ?
+                                            wrapper.querySelector('h3').textContent.trim() :
                                             progressBarValue;
-                            
+
                             // Clone the progress bar to preserve all attributes and classes
-                            var progressBarHTML = progressBar ? progressBar.outerHTML : 
+                            var progressBarHTML = progressBar ? progressBar.outerHTML :
                                              '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="10" aria-valuemax="100" style="width: 80%;"></div></div>';
-                            
+
                             // Create new HTML structure
                             var newHTML = `
                                 <div class="skill-header">
@@ -1969,10 +1969,10 @@
                                     <div class="skill-percentage" contenteditable="true">${percentage}</div>
                                 </div>
                             `;
-                            
+
                             // Replace content
                             wrapper.innerHTML = newHTML;
-                            
+
                             // Add event listener for remove button
                             var removeBtn = wrapper.querySelector('.remove-btn');
                             if (removeBtn) {
@@ -1986,7 +1986,7 @@
                             }
                         }
                     });
-                    
+
                     console.log('Skills conversion complete');
                 });
             })();
@@ -1996,20 +1996,20 @@
         <script>
             $(document).ready(function() {
                 console.log('jQuery document ready - checking skills format');
-                
+
                 // Check if any skills need conversion (backup jQuery method)
                 $('.barWrapper').each(function() {
                     var $wrapper = $(this);
-                    
+
                     // Only convert if not already in new format
                     if ($wrapper.find('.skill-header').length === 0) {
                         var skillName = $wrapper.find('.progressText').text().trim();
                         var percentage = $wrapper.find('h3').text().trim();
                         var progressBar = $wrapper.find('.progress').clone();
                         var progressBarHTML = progressBar.prop('outerHTML');
-                        
+
                         console.log('jQuery converting skill:', skillName);
-                        
+
                         // Create new structure
                         $wrapper.html(`
                             <div class="skill-header">
@@ -2021,7 +2021,7 @@
                                 <div class="skill-percentage" contenteditable="true">${percentage}</div>
                             </div>
                         `);
-                        
+
                         // Add the click handler for the remove button
                         $wrapper.find('.remove-btn').on('click', function() {
                             $(this).closest('.barWrapper').fadeOut(300, function() {
@@ -2043,14 +2043,14 @@
                     // Clear all local and session storage
                     localStorage.clear();
                     sessionStorage.clear();
-                    
+
                     // Clear all cookies
                     document.cookie.split(';').forEach(function(c) {
                         document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
                     });
-                    
+
                     console.log("All storage cleared successfully");
-                    
+
                     // Force reload the page from server (not from cache)
                     window.location.href = window.location.href.split('?')[0] + "?reset=complete&t=" + new Date().getTime();
                 } catch (e) {
@@ -2058,7 +2058,7 @@
                     alert("Error during reset: " + e.message);
                 }
             }
-            
+
             // Check if reset was requested via URL parameter
             $(document).ready(function() {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -2147,15 +2147,15 @@
                         selection.removeAllRanges();
                         selection.addRange(range);
                         e.preventDefault();
-                        
+
                         // After selection, update formatting indicators
                         updateFormattingButtons();
                     });
-                    
+
                     // Also listen for keyup to update formatting when typing
                     el.addEventListener('keyup', updateFormattingButtons);
                 });
-                
+
                 // Universal function to update formatting button states
                 function updateFormattingButtons() {
                     // Check if bold is applied
@@ -2168,7 +2168,7 @@
                             btn.classList.remove('active');
                         });
                     }
-                    
+
                     // Check if italic is applied
                     if (document.queryCommandState('italic')) {
                         document.querySelectorAll('#italic-btn, .I, [data-command="italic"]').forEach(btn => {
@@ -2179,7 +2179,7 @@
                             btn.classList.remove('active');
                         });
                     }
-                    
+
                     // Check if underline is applied
                     if (document.queryCommandState('underline')) {
                         document.querySelectorAll('#underline-btn, .U, [data-command="underline"]').forEach(btn => {
@@ -2190,28 +2190,28 @@
                             btn.classList.remove('active');
                         });
                     }
-                    
+
                     // Update font family dropdown
                     try {
                         const fontFamily = document.queryCommandValue('fontName');
                         const fontFamilySelects = document.querySelectorAll('select#font-family-select, select.font-family');
-                        
+
                         if (fontFamily) {
                             fontFamilySelects.forEach(select => {
                                 // First try exact match
                                 let found = false;
-                                
+
                                 for (let i = 0; i < select.options.length; i++) {
                                     const optionValue = select.options[i].value;
                                     const optionText = select.options[i].textContent.trim();
-                                    
+
                                     // Check for exact match
                                     if (optionValue === fontFamily) {
                                         select.selectedIndex = i;
                                         found = true;
                                         break;
                                     }
-                                    
+
                                     // Check if font family contains the option text (case insensitive)
                                     if (fontFamily.toLowerCase().includes(optionText.toLowerCase())) {
                                         select.selectedIndex = i;
@@ -2219,17 +2219,17 @@
                                         break;
                                     }
                                 }
-                                
+
                                 // If no match found, try to get the font from computed style
                                 if (!found && window.getSelection().rangeCount > 0) {
                                     const node = window.getSelection().anchorNode;
                                     if (node && node.parentNode) {
                                         const computedFont = window.getComputedStyle(node.nodeType === 3 ? node.parentNode : node).fontFamily;
-                                        
+
                                         for (let i = 0; i < select.options.length; i++) {
                                             const optionValue = select.options[i].value;
                                             const optionText = select.options[i].textContent.trim();
-                                            
+
                                             if (computedFont.toLowerCase().includes(optionText.toLowerCase())) {
                                                 select.selectedIndex = i;
                                                 break;
@@ -2242,21 +2242,21 @@
                     } catch (e) {
                         console.error("Error updating font family:", e);
                     }
-                    
+
                     // Update font size dropdown
                     const fontSizeSelects = document.querySelectorAll('select#font-size-select, select.font-size');
                     const selection = window.getSelection();
-                    
+
                     if (selection && selection.rangeCount > 0) {
                         let node = selection.anchorNode;
                         if (node.nodeType === 3) { // Text node
                             node = node.parentNode;
                         }
-                        
+
                         // Get computed font size
                         let fontSize = window.getComputedStyle(node).fontSize;
                         console.log("Detected font size:", fontSize);
-                        
+
                         // Try to find more specific fontSize by looking at child elements or parents
                         if (node.childNodes.length > 0) {
                             // Check if there are any spans or font elements with specific font size
@@ -2270,7 +2270,7 @@
                                 }
                             }
                         }
-                        
+
                         // If we're in a larger element, check if the specific selection has a different size
                         // by walking up from the selection point
                         let currentNode = selection.anchorNode;
@@ -2285,12 +2285,12 @@
                             }
                             currentNode = currentNode.parentNode;
                         }
-                        
+
                         // Update font size dropdowns
                         fontSizeSelects.forEach(select => {
                             // Set default first (in case we don't find a match)
                             select.selectedIndex = 0;
-                            
+
                             // Find the option that matches the current font size
                             for (let i = 0; i < select.options.length; i++) {
                                 if (select.options[i].value === fontSize) {
@@ -2298,7 +2298,7 @@
                                     break;
                                 }
                             }
-                            
+
                             // If no exact match was found, try to find the closest match
                             if (select.selectedIndex === 0 && fontSize !== '') {
                                 // Extract numeric part from fontSize (e.g., '16px' -> 16)
@@ -2306,7 +2306,7 @@
                                 if (!isNaN(currentSize)) {
                                     let closestIndex = 0;
                                     let closestDiff = Number.MAX_VALUE;
-                                    
+
                                     for (let i = 1; i < select.options.length; i++) {
                                         // Extract numeric part from option value
                                         const optionSize = parseFloat(select.options[i].value);
@@ -2318,7 +2318,7 @@
                                             }
                                         }
                                     }
-                                    
+
                                     select.selectedIndex = closestIndex;
                                 }
                             }
@@ -2330,10 +2330,10 @@
                 setTimeout(function() {
                     // Find all elements that look like buttons with B, I, U text
                     const allElements = document.querySelectorAll('button, [role="button"], .btn, .B, .I, .U');
-                    
+
                     allElements.forEach(function(el) {
                         const text = el.textContent.trim();
-                        
+
                         if (text === 'B') {
                             el.onclick = function(e) {
                                 e.preventDefault();
@@ -2362,17 +2362,17 @@
                             el.style.cursor = 'pointer';
                         }
                     });
-                    
+
                     // Find and handle font family & size dropdowns shown in image
                     const dropdowns = document.querySelectorAll('select');
                     dropdowns.forEach(function(dropdown) {
                         // Look for fonts in options to identify font family dropdown
                         let isFontFamily = false;
                         let isFontSize = false;
-                        
+
                         for (let i = 0; i < dropdown.options.length; i++) {
                             const optionText = dropdown.options[i].textContent.trim();
-                            if (optionText.includes('Arial') || optionText.includes('Times') || 
+                            if (optionText.includes('Arial') || optionText.includes('Times') ||
                                 optionText.includes('Montserrat') || optionText.includes('Roboto')) {
                                 isFontFamily = true;
                                 break;
@@ -2381,7 +2381,7 @@
                                 isFontSize = true;
                             }
                         }
-                        
+
                         if (isFontFamily) {
                             // This is likely a font family dropdown
                             dropdown.classList.add('font-family');
@@ -2392,29 +2392,29 @@
                                     if (selection.rangeCount > 0) {
                                         const range = selection.getRangeAt(0);
                                         const color = window.getComputedStyle(range.commonAncestorContainer.parentElement).color;
-                                        
+
                                         // First try standard execCommand
                                         document.execCommand('fontName', false, this.value);
-                                        
+
                                         // Find all font elements we just created and preserve their color
                                         const selectedFontElements = document.querySelectorAll('font[face="' + this.value + '"]');
                                         selectedFontElements.forEach(font => {
                                             font.style.color = color;
                                         });
-                                        
+
                                         // If standard command doesn't work well, use a more direct approach
                                         if (selectedFontElements.length === 0) {
                                             const span = document.createElement('span');
                                             span.style.fontFamily = this.value;
                                             span.style.color = color;
-                                            
+
                                             // Wrap selection with our span
                                             try {
                                                 range.surroundContents(span);
                                             } catch (e) {
                                                 // If surroundContents fails (often with multiple blocks selected)
                                                 console.log("Using alternative font application method");
-                                                
+
                                                 // Extract contents and insert with new span
                                                 const fragment = range.extractContents();
                                                 span.appendChild(fragment);
@@ -2422,7 +2422,7 @@
                                             }
                                         }
                                     }
-                                    
+
                                     // Update formatting indicators
                                     updateFormattingButtons();
                                 }
@@ -2435,7 +2435,7 @@
                                 if (this.value) {
                                     // Use the fontSize command with a placeholder value (7)
                                     document.execCommand('fontSize', false, '7');
-                                    
+
                                     // Find the newly created font elements with size 7 and apply the real font size
                                     const fontElements = document.getElementsByTagName('font');
                                     for(let i = fontElements.length - 1; i >= 0; i--) {
@@ -2444,35 +2444,35 @@
                                             fontElements[i].style.fontSize = this.value;
                                         }
                                     }
-                                    
+
                                     // Update formatting indicators after changing font size
                                     updateFormattingButtons();
                                 }
                             };
                         }
                     });
-                    
+
                     // Add click listeners to update the font size dropdown when clicking on text
                     document.querySelectorAll('[contenteditable="true"]').forEach(function(el) {
                         el.addEventListener('mouseup', function() {
                             setTimeout(updateFormattingButtons, 10); // Short delay to ensure selection is complete
                         });
                     });
-                    
+
                     // Listen for any selection change in the document
                     document.addEventListener('selectionchange', function() {
                         setTimeout(updateFormattingButtons, 10);
                     });
-                    
+
                     // Initial update of formatting buttons
                     updateFormattingButtons();
                 }, 500);
-                
+
                 // Add event listeners to the main toolbar buttons to update states after click
                 document.querySelectorAll('#bold-btn, #italic-btn, #underline-btn').forEach(btn => {
                     btn.addEventListener('click', updateFormattingButtons);
                 });
-                
+
                 // Add event handler for font size dropdown
                 document.querySelectorAll('select#font-size-select, select.font-size').forEach(select => {
                     select.addEventListener('change', function() {
@@ -2483,29 +2483,29 @@
                         }
                     });
                 });
-                
+
                 // Helper function to apply font size more reliably
                 function applyFontSize(size) {
                     const selection = window.getSelection();
                     if (!selection.rangeCount) return;
-                    
+
                     const range = selection.getRangeAt(0);
-                    
+
                     // Check if range is collapsed (just a cursor)
                     if (range.collapsed) {
                         // Place a marker where we want to insert text
                         const marker = document.createElement('span');
                         marker.id = 'temp-marker';
                         range.insertNode(marker);
-                        
+
                         // Set focus to parent of marker for when user types
                         const parent = marker.parentNode;
                         const span = document.createElement('span');
                         span.style.fontSize = size;
-                        
+
                         // Replace marker with span
                         parent.replaceChild(span, marker);
-                        
+
                         // Place cursor inside the span
                         const newRange = document.createRange();
                         newRange.setStart(span, 0);
@@ -2514,47 +2514,47 @@
                         selection.addRange(newRange);
                         return;
                     }
-                    
+
                     // First try standard execCommand
                     document.execCommand('fontSize', false, '7');
-                    
+
                     // Find the newly created font elements with size 7 and apply the real font size
                     const fontElements = document.getElementsByTagName('font');
                     for (let i = fontElements.length - 1; i >= 0; i--) {
                         if (fontElements[i].size === '7') {
                             fontElements[i].removeAttribute('size');
                             fontElements[i].style.fontSize = size;
-                            
+
                             // If the font element just wraps plain text with no other styling,
                             // we can convert it to a span for better compatibility
-                            if (!fontElements[i].getAttribute('face') && 
+                            if (!fontElements[i].getAttribute('face') &&
                                 !fontElements[i].getAttribute('color') &&
                                 !fontElements[i].style.color) {
                                 const span = document.createElement('span');
                                 span.style.fontSize = size;
-                                
+
                                 // Move all child nodes to the new span
                                 while (fontElements[i].firstChild) {
                                     span.appendChild(fontElements[i].firstChild);
                                 }
-                                
+
                                 // Replace the font element with our span
                                 fontElements[i].parentNode.replaceChild(span, fontElements[i]);
                             }
                         }
                     }
-                    
+
                     // Fallback method if no font elements were created
                     if (document.querySelectorAll('font[size="7"]').length === 0) {
                         try {
                             const span = document.createElement('span');
                             span.style.fontSize = size;
-                            
+
                             // Get range contents and wrap with span
                             const fragment = range.extractContents();
                             span.appendChild(fragment);
                             range.insertNode(span);
-                            
+
                             // Restore selection
                             selection.removeAllRanges();
                             const newRange = document.createRange();
@@ -2756,7 +2756,7 @@
                                             <button class="portfolio-edit-btn">Edit</button>
                                         </div>
                                     </div><!-- /.item -->
-                                </div><!-- /.col -->        
+                                </div><!-- /.col -->
 
                         <div class="col-sm-4">
                                     <div class="item" style="position: relative;">
@@ -2942,7 +2942,7 @@
                 <div class="contact-content">
                     <div class="contact-info">
                         <!-- Remove the extra spacer div -->
-                        
+
                         <div class="contact-item">
                             <i class="fa fa-envelope"></i>
                             <span contenteditable="true" class="contact-text">your.email@example.com</span>
@@ -2979,7 +2979,7 @@
         <!-- Include all js compiled plugins (below), or include individual files as needed -->
 
         <script src="browny-assets/js/jquery.js"></script>
-        
+
         <!-- Complete fix for Add Portfolio Button and View Project buttons -->
         <script>
             // Add save-id attributes to all editable content
@@ -2990,29 +2990,29 @@
                         el.setAttribute('data-save-id', 'editable-' + index);
                     }
                 });
-                
+
                 // Restore content immediately after assigning IDs
                 loadSavedContent();
-                
+
                 // Set up auto-save
                 setupAutoSave();
             });
-            
+
             // Simple direct save function
             function saveAllContent() {
                 const contentToSave = {};
-                
+
                 // Save all contenteditable elements by data-save-id
                 document.querySelectorAll('[contenteditable="true"][data-save-id]').forEach(function(el) {
                     const saveId = el.getAttribute('data-save-id');
                     contentToSave[saveId] = el.innerHTML;
                 });
-                
+
                 // Store in localStorage
                 try {
                     localStorage.setItem('portfolio-saved-content', JSON.stringify(contentToSave));
                     console.log('Content saved successfully:', Object.keys(contentToSave).length, 'items');
-                    
+
                     // Visual feedback
                     if (document.getElementById('save-btn')) {
                         const saveBtn = document.getElementById('save-btn');
@@ -3026,7 +3026,7 @@
                     console.error('Failed to save content:', e);
                 }
             }
-            
+
             // Load saved content
             function loadSavedContent() {
                 try {
@@ -3034,7 +3034,7 @@
                     if (savedContent) {
                         const contentObj = JSON.parse(savedContent);
                         console.log('Found saved content with', Object.keys(contentObj).length, 'items');
-                        
+
                         // Apply to matching elements
                         for (const saveId in contentObj) {
                             const el = document.querySelector(`[data-save-id="${saveId}"]`);
@@ -3050,7 +3050,7 @@
                     console.error('Error loading saved content:', e);
                 }
             }
-            
+
             // Set up auto-save and event handlers
             function setupAutoSave() {
                 // Save when inputs change
@@ -3061,14 +3061,14 @@
                         window.saveTimeout = setTimeout(saveAllContent, 1000);
                     }
                 });
-                
+
                 // Save when user clicks away from editable content
                 document.addEventListener('blur', function(e) {
                     if (e.target.hasAttribute('contenteditable') && e.target.getAttribute('contenteditable') === 'true') {
                         saveAllContent();
                     }
                 }, true);
-                
+
                 // Save on Ctrl+S
                 document.addEventListener('keydown', function(e) {
                     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
@@ -3076,10 +3076,10 @@
                         saveAllContent();
                     }
                 });
-                
+
                 // Save before page unload
                 window.addEventListener('beforeunload', saveAllContent);
-                
+
                 // Manual save button
                 if (document.getElementById('save-btn')) {
                     document.getElementById('save-btn').addEventListener('click', function() {
@@ -3088,17 +3088,17 @@
                     });
                 }
             }
-            
+
             // Define the functions if they don't exist
-            
+
             // Add Portfolio Item Function
             function addNewPortfolioItem() {
                 console.log("Adding new portfolio item");
-                
+
                 // Find all rows in the portfolio
                 var rows = $('.portfolio .row');
                 var targetColumn = null;
-                
+
                 // If there are no rows yet, create one
                 if (rows.length === 0) {
                     $('.portfolio .isotope').append('<div class="row clearfix"><div class="col-sm-4 left-column"></div><div class="col-sm-4"></div><div class="col-sm-4"></div></div>');
@@ -3106,10 +3106,10 @@
                 } else {
                     // Get the last row
                     var lastRow = $(rows[rows.length - 1]);
-                    
+
                     // Get all columns in the last row
                     var columns = lastRow.find('.col-sm-4');
-                    
+
                     // Check columns from left to right
                     for (var i = 0; i < columns.length; i++) {
                         var column = $(columns[i]);
@@ -3119,16 +3119,16 @@
                             break;
                         }
                     }
-                    
+
                     // If all columns in the last row are filled, create a new row
                     if (!targetColumn) {
                         $('.portfolio .isotope').append('<div class="row clearfix"><div class="col-sm-4 left-column"></div><div class="col-sm-4"></div><div class="col-sm-4"></div></div>');
                         targetColumn = $('.portfolio .row:last .col-sm-4:first'); // Left column of new row
                     }
                 }
-                
+
                 console.log("Target column found, adding new item");
-                
+
                 // Generate a unique ID for the new item
                 var existingIds = [];
                 $('.portfolio .item img[id^="portfolio-image-"]').each(function() {
@@ -3136,15 +3136,15 @@
                     var idNum = parseInt(id.replace('portfolio-image-', ''));
                     existingIds.push(idNum);
                 });
-                
+
                 var newId = 1;
                 while (existingIds.includes(newId)) {
                     newId++;
                 }
-                
+
                 // Get the next save ID for the editable content
                 var nextSaveId = 'editable-' + document.querySelectorAll('[data-save-id]').length;
-                
+
                 // Create the new portfolio item
                 var newItem = $('<div class="item" style="position: relative;">' +
                     '<div class="item-controls">' +
@@ -3168,21 +3168,21 @@
                     '<button class="portfolio-edit-btn">Edit</button>' +
                     '</div>' +
                     '</div>');
-                
+
                 // Add the new item to the target column
                 targetColumn.append(newItem);
-                
+
                 // Make the content editable
                 newItem.find('[data-editable="true"]').attr('contenteditable', 'true');
-                
+
                 // Setup the image change handler
                 var imageChangeBtn = newItem.find('.image-btn:first');
                 var fileInput = newItem.find('input[type="file"]');
-                
+
                 imageChangeBtn.on('click', function() {
                     fileInput.click();
                 });
-                
+
                 fileInput.on('change', function() {
                     if (this.files && this.files[0]) {
                         var reader = new FileReader();
@@ -3192,12 +3192,12 @@
                         reader.readAsDataURL(this.files[0]);
                     }
                 });
-                
+
                 // Setup the remove image handler
                 newItem.find('.image-btn.remove-img').on('click', function() {
                     newItem.find('img').attr('src', 'browny-assets/images/portfolio/placeholder.jpg');
                 });
-                
+
                 // Set up the view project button
                 newItem.find('.view-project-btn').on('click', function(e) {
                     e.preventDefault();
@@ -3206,16 +3206,16 @@
                     openProjectModal(index);
                     return false;
                 });
-                
+
                 // Fade in the new item
                 newItem.hide().fadeIn(500);
-                
+
                 // Save the content after adding
                 saveAllContent();
-                
+
                 return newItem;
             }
-            
+
             // Function to remove portfolio item
             function removePortfolioItem(btn) {
                 $(btn).closest('.item').fadeOut(300, function() {
@@ -3223,13 +3223,13 @@
                     saveAllContent(); // Save after removing
                 });
             }
-            
+
             // Function to remove portfolio image
             function removePortfolioImage(btn) {
                 $(btn).closest('.image-container').find('img').attr('src', 'browny-assets/images/portfolio/placeholder.jpg');
                 saveAllContent(); // Save after changing
             }
-            
+
             // Function to update portfolio image
             function updatePortfolioImage(input, id) {
                 if (input.files && input.files[0]) {
@@ -3241,11 +3241,11 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-            
+
             // Project Modal Function
             function openProjectModal(index) {
                 console.log("Opening project modal for index:", index);
-                
+
                 // Store projects data in localStorage if it doesn't exist yet
                 if (!window.projectsData) {
                     // Try to load from localStorage first
@@ -3263,7 +3263,7 @@
                         window.projectsData = [];
                     }
                 }
-                
+
                 // Ensure Bootstrap is loaded before proceeding
                 if (typeof($.fn.modal) === 'undefined') {
                     console.log("Bootstrap modal not found, loading it dynamically");
@@ -3275,7 +3275,7 @@
                     });
                     return; // Exit and wait for the callback
                 }
-                
+
                 // Check if modal exists, if not create it
                 var modal = $('#projectModal');
                 if (modal.length === 0) {
@@ -3317,39 +3317,39 @@
                                         </div>
                     `);
                     modal = $('#projectModal');
-                    
+
                     // Make sure modal backdrop is added
                     $('<div class="modal-backdrop fade in" style="position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1040; background-color: #000; opacity: 0.5;"></div>').appendTo('body');
-                    
+
                     // Add project index data attribute to modal to track which project is being edited
                     modal.attr('data-project-index', index);
-                    
+
                     // Listen for modal close to save content
                     modal.on('hidden.bs.modal', function() {
                         saveProjectData($(this).attr('data-project-index'));
                         $('.modal-backdrop').remove(); // Ensure backdrop is removed
-                        
+
                         // Fix for scrolling issue - reset body styles
                         $('body').removeClass('modal-open').css({
                             'overflow': '',
                             'padding-right': ''
                         });
                     });
-                    
+
                     // Add close button functionality if Bootstrap isn't working right
                     modal.find('.close, [data-dismiss="modal"]').on('click', function(e) {
                         e.preventDefault();
                         saveProjectData(modal.attr('data-project-index'));
                         modal.removeClass('in').addClass('fade').hide();
                         $('.modal-backdrop').remove();
-                        
+
                         // Fix for scrolling issue - reset body styles
                         $('body').removeClass('modal-open').css({
                             'overflow': '',
                             'padding-right': ''
                         });
                     });
-                    
+
                     // Set up event listeners for editable content in the modal
                     modal.find('[contenteditable="true"]').on('input', function() {
                         // Mark this project as having unsaved changes
@@ -3359,21 +3359,21 @@
                     // Update the project index on the existing modal
                     modal.attr('data-project-index', index);
                 }
-                
+
                 // Get the project title and image from the DOM
                 var projectItems = $('.portfolio .item');
                 if (index >= projectItems.length) {
                     console.error("Project index out of bounds:", index, "total items:", projectItems.length);
                     index = 0; // Fallback to first project
                 }
-                
+
                 var projectItem = $(projectItems[index]);
                 var projectTitle = projectItem.find('[data-title="true"]').text();
                 var projectImage = projectItem.find('img').attr('src');
-                
+
                 // Debug image path
                 console.log("Loading image from:", projectImage);
-                
+
                 // Ensure this project has data in our store
                 if (!window.projectsData[index]) {
                     // Create default project data
@@ -3390,19 +3390,19 @@
                     if (projectImage && projectImage !== 'undefined' && projectImage !== 'null') {
                         window.projectsData[index].image = projectImage;
                     }
-                    
+
                     // If the title changed in the grid, update it in our data
                     if (window.projectsData[index].title !== projectTitle) {
                         window.projectsData[index].title = projectTitle;
                     }
                 }
-                
+
                 var projectData = window.projectsData[index];
-                
+
                 // Update modal with project data from our store
                 $('#project-modal-title').text(projectData.title);
                 $('#project-modal-description').text(projectData.description);
-                
+
                 // Handle the image more carefully
                 if (projectData.image && projectData.image !== 'undefined' && projectData.image !== 'null') {
                     $('#project-modal-image').attr('src', projectData.image)
@@ -3417,7 +3417,7 @@
                     $('#project-modal-image').hide();
                     $('#project-no-image').show();
                 }
-                
+
                 // Handle URLs with validation
                 if (projectData.website && projectData.website.trim() !== '') {
                     $('#project-website-link').attr('href', projectData.website)
@@ -3436,7 +3436,7 @@
                                                  return false;
                                              });
                 }
-                
+
                 if (projectData.github && projectData.github.trim() !== '') {
                     $('#project-github-link').attr('href', projectData.github)
                                             .removeClass('disabled')
@@ -3454,12 +3454,12 @@
                                                 return false;
                                             });
                 }
-                
+
                 // Set up URL Add button
                 $('#add-url-button').off('click').on('click', function() {
                     showUrlInputDialog(index);
                 });
-                
+
                 // Add tags with proper styling
                 var tagsContainer = $('#project-modal-tags').empty();
                 if (projectData.tags && projectData.tags.length > 0) {
@@ -3468,54 +3468,54 @@
                         var isPreviewMode = document.body.classList.contains('preview-mode');
                         var editableAttr = isPreviewMode ? 'false' : 'true';
                         var removeButtonStyle = isPreviewMode ? 'display:none;visibility:hidden;' : '';
-                        
-                        tagsContainer.append('<span class="project-tag" data-tag-index="' + i + '">' + 
+
+                        tagsContainer.append('<span class="project-tag" data-tag-index="' + i + '">' +
                                             '<span contenteditable="' + editableAttr + '">' + tag + '</span>' +
                                             '<span class="tag-remove" title="Remove Tag" style="' + removeButtonStyle + '">&times;</span>' +
                                             '</span>');
                     });
                 }
-                
+
                 // Add the "Add Tag" button - hide in preview mode
                 var isPreviewMode = document.body.classList.contains('preview-mode');
                 var buttonStyle = isPreviewMode ? 'display:none;visibility:hidden;' : '';
                 tagsContainer.append('<span class="add-tag-btn" id="add-tag-button" style="' + buttonStyle + '">+ Add Tag</span>');
-                
+
                 // Add event listener for the Add Tag button
                 $('#add-tag-button').off('click').on('click', function() {
                     // Don't add tags in preview mode
                     if (document.body.classList.contains('preview-mode')) return;
-                    
+
                     var newTagIndex = $('.project-tag').length;
                     var newTag = $('<span class="project-tag" data-tag-index="' + newTagIndex + '">' +
                                   '<span contenteditable="true">New Tag</span>' +
                                   '<span class="tag-remove" title="Remove Tag">&times;</span>' +
                                   '</span>');
-                    
+
                     // Insert the new tag before the Add Tag button
                     $(this).before(newTag);
-                    
+
                     // Focus on the new tag for editing
                     newTag.find('[contenteditable="true"]').focus();
-                    
+
                     // Select all text in the new tag
                     document.execCommand('selectAll', false, null);
-                    
+
                     // Mark modal as having changes
                     $('#projectModal').attr('data-has-changes', 'true');
-                    
+
                     // Attach event listeners to the new tag
                     addTagEventListeners(newTag);
                 });
-                
+
                 // Add event listeners for removing tags
                 function addTagEventListeners(tagElement) {
                     // For single tag if provided, otherwise for all tags
                     var elements = tagElement ? [tagElement] : $('.project-tag');
-                    
+
                     $(elements).each(function() {
                         var tag = $(this);
-                        
+
                         // Remove existing listeners first to prevent duplicates
                         tag.find('.tag-remove').off('click').on('click', function(e) {
                             e.stopPropagation();
@@ -3529,7 +3529,7 @@
                                 $('#projectModal').attr('data-has-changes', 'true');
                             });
                         });
-                        
+
                         // Editable content listener
                         tag.find('[contenteditable="true"]').off('input').on('input', function() {
                             // Mark modal as having changes
@@ -3537,22 +3537,22 @@
                         });
                     });
                 }
-                
+
                 // Apply event listeners to all initial tags
                 addTagEventListeners();
-                
+
                 // Show the modal with proper styling
                 modal.addClass('in').css('display', 'block');
                 $('body').addClass('modal-open');
             }
-            
+
             // Function to load Bootstrap dynamically
             function loadBootstrap(callback) {
                 // Load Bootstrap CSS if needed
                 if ($('link[href*="bootstrap"]').length === 0) {
                     $('head').append('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">');
                 }
-                
+
                 // Load Bootstrap JS
                 $.getScript("https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", function() {
                     console.log("Bootstrap loaded successfully");
@@ -3567,40 +3567,40 @@
                     }
                 });
             }
-            
+
             // New function to save project data when the modal is closed
             function saveProjectData(index) {
                 var modal = $('#projectModal');
                 if (modal.length === 0 || !modal.attr('data-has-changes')) {
                     return; // No changes to save
                 }
-                
+
                 index = parseInt(index);
                 if (isNaN(index)) {
                     console.error("Invalid project index:", index);
                     return;
                 }
-                
+
                 // Ensure projectsData exists
                 if (!window.projectsData) {
                     window.projectsData = [];
                 }
-                
+
                 // Ensure this project has data
                 if (!window.projectsData[index]) {
                     window.projectsData[index] = {};
                 }
-                
+
                 // Update project data from modal
                 window.projectsData[index].title = $('#project-modal-title').text();
                 window.projectsData[index].description = $('#project-modal-description').text();
-                
+
                 // Safely get the image src
                 var imageSrc = $('#project-modal-image').attr('src');
                 if (imageSrc && imageSrc !== 'undefined' && imageSrc !== 'null') {
                     window.projectsData[index].image = imageSrc;
                 }
-                
+
                 // Update tags - make sure to handle tags properly in all cases
                 var tags = [];
                 $('#project-modal-tags .project-tag [contenteditable]').each(function() {
@@ -3609,17 +3609,17 @@
                         tags.push(tagText);
                     }
                 });
-                
+
                 // Only update if we actually found some tags (or if we need to clear existing tags)
                 if (tags.length > 0 || window.projectsData[index].tags) {
                     window.projectsData[index].tags = tags;
                 }
-                
+
                 // Save to localStorage
                 try {
                     localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
                     console.log("Saved project data to localStorage:", index);
-                    
+
                     // Update the portfolio grid with the new title if it changed
                     var projectItems = $('.portfolio .item');
                     if (index < projectItems.length) {
@@ -3627,27 +3627,27 @@
                         if (titleElement.length && titleElement.text() !== window.projectsData[index].title) {
                             titleElement.text(window.projectsData[index].title);
                         }
-                        
+
                         // Also update the image if needed
                         var imageElement = $(projectItems[index]).find('img');
-                        if (imageElement.length && imageElement.attr('src') !== window.projectsData[index].image && 
-                            window.projectsData[index].image && 
-                            window.projectsData[index].image !== 'undefined' && 
+                        if (imageElement.length && imageElement.attr('src') !== window.projectsData[index].image &&
+                            window.projectsData[index].image &&
+                            window.projectsData[index].image !== 'undefined' &&
                             window.projectsData[index].image !== 'null') {
                             imageElement.attr('src', window.projectsData[index].image);
                         }
                     }
-                    
+
                     // Reset change flag
                     modal.attr('data-has-changes', 'false');
                 } catch (e) {
                     console.error("Error saving project data:", e);
                 }
-                
+
                 // Also save all content (for other editable elements)
                 saveAllContent();
             }
-            
+
             // Update the portfolio image function to handle image changes properly
             function updatePortfolioImage(input, id) {
                 if (input.files && input.files[0]) {
@@ -3655,14 +3655,14 @@
                     reader.onload = function(e) {
                         var imgElement = $('#portfolio-image-' + id);
                         imgElement.attr('src', e.target.result);
-                        
+
                         // Find which project index this is
                         var projectItem = imgElement.closest('.item');
                         var allItems = $('.portfolio .item');
                         var index = allItems.index(projectItem);
-                        
+
                         console.log("Updated image for project index:", index);
-                        
+
                         // Update the project data if it exists
                         if (window.projectsData && index >= 0) {
                             if (!window.projectsData[index]) {
@@ -3674,7 +3674,7 @@
                                     github: "https://github.com/example"
                                 };
                             }
-                            
+
                             window.projectsData[index].image = e.target.result;
                             try {
                                 localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
@@ -3683,39 +3683,39 @@
                                 console.error("Error saving project image:", e);
                             }
                         }
-                        
+
                         saveAllContent(); // Save after updating
                     };
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-            
+
             // Function to update the profile image in the about section
             function updateProfileImage(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         $('#profile-image').attr('src', e.target.result);
-                        
+
                         try {
                             localStorage.setItem('profile-image', e.target.result);
                             console.log("Saved profile image to localStorage");
                         } catch (e) {
                             console.error("Error saving profile image:", e);
                         }
-                        
+
                         saveAllContent(); // Save after updating
                     };
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-            
+
             // Function to remove the profile image in the about section
             function removeAboutImage(btn) {
                 // Set a default placeholder image or hide the image
                 const defaultImage = 'browny-assets/images/about/placeholder_profile.jpg';
                 $('#profile-image').attr('src', defaultImage);
-                
+
                 try {
                     // Remove from localStorage or set to default
                     localStorage.setItem('profile-image', defaultImage);
@@ -3723,27 +3723,27 @@
                 } catch (e) {
                     console.error("Error resetting profile image:", e);
                 }
-                
+
                 saveAllContent(); // Save after updating
-                
+
                 // Optional: Show a toast or notification
                 alert("Profile image has been removed");
             }
-            
+
             // Handle removing portfolio item properly
             function removePortfolioItem(btn) {
                 // Get the index of the project being removed
                 var projectItem = $(btn).closest('.item');
                 var allItems = $('.portfolio .item');
                 var index = allItems.index(projectItem);
-                
+
                 console.log("Removing project with index:", index);
-                
+
                 // Remove the project data
                 if (window.projectsData && index >= 0) {
                     // Keep the array structure intact but mark this item as removed
                     window.projectsData[index] = { removed: true };
-                    
+
                     try {
                         localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
                         console.log("Marked project as removed in data store");
@@ -3751,23 +3751,23 @@
                         console.error("Error updating removed project state:", e);
                     }
                 }
-                
+
                 $(btn).closest('.item').fadeOut(300, function() {
                     $(this).remove();
                     saveAllContent(); // Save after removing
                 });
             }
-            
+
             // Initialize on document ready
             $(document).ready(function() {
                 console.log("Document ready - setting up button handlers");
-                
+
                 // Load Bootstrap if not already loaded
                 if (typeof($.fn.modal) === 'undefined') {
                     console.log("Bootstrap not loaded, loading it now");
                     $.getScript("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js");
                 }
-                
+
                 // Add global handler to ensure scrolling works after modal closes
                 $(document).on('hidden.bs.modal', function() {
                     console.log("Global modal hidden event - restoring scroll");
@@ -3777,7 +3777,7 @@
                     });
                     $('.modal-backdrop').remove();
                 });
-                
+
                 // Set up the Add Portfolio button with direct click handler
                 document.getElementById('add-portfolio-btn').addEventListener('click', function(e) {
                     console.log("Add Portfolio button clicked (direct DOM)");
@@ -3786,7 +3786,7 @@
                     addNewPortfolioItem();
                     return false;
                 });
-                
+
                 // Set up View Project buttons with direct click handlers
                 document.querySelectorAll('.view-project-btn').forEach(function(btn, idx) {
                     btn.addEventListener('click', function(e) {
@@ -3797,16 +3797,16 @@
                         return false;
                     });
                 });
-                
+
                 // Remove any unwanted About Me text blocks
                 function removeAboutMeBlueBox() {
                     console.log("Removing About Me blue boxes");
-                    
+
                     // Remove by CSS background color property
                     $('div').each(function() {
                         var bg = $(this).css('background-color');
                         if (bg && (
-                            bg.indexOf('rgb(173, 216, 230)') !== -1 || 
+                            bg.indexOf('rgb(173, 216, 230)') !== -1 ||
                             bg.indexOf('rgb(135, 206, 235)') !== -1 ||
                             bg.indexOf('lightblue') !== -1 ||
                             bg.indexOf('rgb(142, 180, 227)') !== -1 ||
@@ -3821,7 +3821,7 @@
                             }
                         }
                     });
-                    
+
                     // Remove by inline style
                     $('[style*="background-color: lightblue"], [style*="background-color:#add8e6"], [style*="background-color: #add8e6"]').each(function() {
                         if ($(this).text().toLowerCase().indexOf('about me') !== -1) {
@@ -3830,21 +3830,21 @@
                             $(this).css('background-color', 'transparent');
                         }
                     });
-                    
+
                     // Remove specific element by text content
                     $('div:contains("About Me")').each(function() {
                         // Only target the specific blue box, not our actual section heading
                         var isHeading = $(this).find('h2').length > 0;
                         var isInSection = $(this).closest('section').length > 0;
                         var isSmallBox = $(this).width() < 300 && $(this).height() < 100;
-                        
+
                         if (!isHeading && isSmallBox && !isInSection) {
                             console.log("Removing text-matched About Me element");
                             $(this).remove();
                         }
                     });
                 }
-                
+
                 // Run the cleanup immediately, then again after a short delay
                 removeAboutMeBlueBox();
                 // Run again after a delay to catch any delayed rendering
@@ -3862,23 +3862,23 @@
                         $(this).text("CONTACT ME");
                     }
                 });
-                
+
                 // Change any modal titles except for the project modal
                 $('.modal-title').each(function() {
                     if ($(this).text().trim() === "NEW PROJECT" && $(this).attr('id') !== "projectModalLabel") {
                         $(this).text("CONTACT ME");
                     }
                 });
-                
+
                 // Check for any elements with NEW PROJECT text except in the project modal
                 $('*').contents().filter(function() {
-                    return this.nodeType === 3 && 
+                    return this.nodeType === 3 &&
                            this.nodeValue.includes('NEW PROJECT') &&
                            !$(this).closest('#projectModal').length;
                 }).each(function() {
                     this.nodeValue = this.nodeValue.replace('NEW PROJECT', 'CONTACT ME');
                 });
-                
+
                 // Watch for dynamic content
                 const observer = new MutationObserver(function(mutations) {
                     mutations.forEach(function(mutation) {
@@ -3896,10 +3896,10 @@
                         }
                     });
                 });
-                
+
                 // Start observing the document with the configured parameters
                 observer.observe(document.body, { childList: true, subtree: true });
-                
+
                 // Ensure project modal always shows "PROJECT DETAILS"
                 $(document).on('shown.bs.modal', '#projectModal', function() {
                     // Set the modal header title
@@ -3913,12 +3913,12 @@
             $(document).ready(function() {
                 // Leave project titles as they are, don't change to "CONTACT ME"
                 console.log("Modal title fix loaded - preserving original project titles");
-                
+
                 // Ensure that modal title reflects actual project title
                 $(document).on('shown.bs.modal', '#projectModal', function() {
                     // Set the modal header title to PROJECT DETAILS
                     $('#projectModalLabel').text('PROJECT DETAILS');
-                    
+
                     // Set the project title within the modal body
                     var index = parseInt($(this).attr('data-project-index'));
                     if (window.projectsData && window.projectsData[index]) {
@@ -3934,7 +3934,7 @@
                 // Add larger font size options if they don't exist
                 var fontSizeSelect = $('#fontSize');
                 var hasLargerSizes = $('#fontSize option[value="60"]').length > 0;
-                
+
                 if (!hasLargerSizes) {
                     fontSizeSelect.append('<option value="48">48px</option>');
                     fontSizeSelect.append('<option value="56">56px</option>');
@@ -3944,7 +3944,7 @@
                     fontSizeSelect.append('<option value="96">96px</option>');
                     console.log("Added larger font size options");
                 }
-                
+
                 // Improved function to accurately detect font size
                 function getExactFontSize(element) {
                     // Use getComputedStyle to get the exact computed font size
@@ -3953,7 +3953,7 @@
                     var sizeValue = parseInt(fontSize);
                     return sizeValue;
                 }
-                
+
                 // Enhanced function to update the font size dropdown
                 function updateFontSizeDropdownEnhanced() {
                     try {
@@ -3961,16 +3961,16 @@
                         if (selection.rangeCount > 0) {
                             var range = selection.getRangeAt(0);
                             var container = range.commonAncestorContainer;
-                            
+
                             // Get the element that contains the selection
                             var element = container;
                             if (element.nodeType === 3) { // Text node
                                 element = element.parentNode;
                             }
-                            
+
                             // First try to get size from the current element
                             var fontSize = getExactFontSize(element);
-                            
+
                             // If no meaningful font size, look at containing editable element
                             if (!fontSize || fontSize === 0) {
                                 var editableParent = $(element).closest('[contenteditable="true"]');
@@ -3978,9 +3978,9 @@
                                     fontSize = getExactFontSize(editableParent[0]);
                                 }
                             }
-                            
+
                             console.log("Detected font size:", fontSize);
-                            
+
                             // Check if size exists exactly in dropdown
                             var exactMatch = $('#fontSize option[value="'+fontSize+'"]');
                             if (exactMatch.length > 0) {
@@ -3989,17 +3989,17 @@
                                 // Find the closest option
                                 var closestOption = null;
                                 var closestDiff = Number.MAX_VALUE;
-                                
+
                                 $('#fontSize option').each(function() {
                                     var optionValue = parseInt($(this).val());
                                     var diff = Math.abs(optionValue - fontSize);
-                                    
+
                                     if (diff < closestDiff) {
                                         closestDiff = diff;
                                         closestOption = optionValue;
                                     }
                                 });
-                                
+
                                 // If we don't have a close match, add a new option
                                 if (closestDiff > 5 && fontSize > 0) {
                                     // Create a new option with the exact font size
@@ -4010,7 +4010,7 @@
                                     fontSizeSelect.val(closestOption);
                                 }
                             }
-                            
+
                             // Update the text displayed in the dropdown to match the value
                             var displayText = fontSize + 'px';
                             $('.select2-selection__rendered').text(displayText);
@@ -4019,33 +4019,33 @@
                         console.error("Error updating font size dropdown:", e);
                     }
                 }
-                
+
                 // Apply our enhanced function to replace any existing one
                 window.updateFormattingButtons = function() {
                     // Update font size dropdown
                     updateFontSizeDropdownEnhanced();
-                    
+
                     // Rest of your formatting buttons logic...
                 };
-                
+
                 // Make sure events are properly set up
                 $(document).on('mouseup keyup', function() {
                     setTimeout(updateFontSizeDropdownEnhanced, 10);
                 });
-                
+
                 $(document).on('click', '[contenteditable="true"]', function() {
                     setTimeout(updateFontSizeDropdownEnhanced, 10);
                 });
-                
+
                 // Completely replace the font size handling
                 $('#fontSize').off('change').on('change', function() {
                     var size = $(this).val();
                     var selection = window.getSelection();
-                    
+
                     if (selection.rangeCount > 0) {
                         // Get the current selection
                         var range = selection.getRangeAt(0);
-                        
+
                         // Check if we have a selection or just a cursor position
                         if (range.collapsed) {
                             // Cursor only - find parent editable element
@@ -4053,7 +4053,7 @@
                             while (node && node.nodeType !== 1) {
                                 node = node.parentNode;
                             }
-                            
+
                             if (node && node.getAttribute('contenteditable') === 'true') {
                                 // Apply font size to the entire editable element
                                 $(node).css('font-size', size + 'px');
@@ -4063,12 +4063,12 @@
                             // Create a span with the desired font size
                             var span = document.createElement('span');
                             span.style.fontSize = size + 'px';
-                            
+
                             // Surround the selection with the span
                             var contents = range.extractContents();
                             span.appendChild(contents);
                             range.insertNode(span);
-                            
+
                             // Reselect the text
                             selection.removeAllRanges();
                             range = document.createRange();
@@ -4077,7 +4077,7 @@
                         }
                     }
                 });
-                
+
                 // Initialize
                 setTimeout(updateFontSizeDropdownEnhanced, 100);
             });
@@ -4088,44 +4088,44 @@
             $(document).ready(function() {
                 // Add a reset button to the toolbar
                 $('.toolbar-right').prepend('<button id="reset-portfolio" class="btn btn-danger" style="margin-right: 15px; background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px;">Reset Portfolio</button>');
-                
+
                 // Complete portfolio reset function
                 function resetEntirePortfolio() {
                     if (confirm("Are you sure you want to reset the entire portfolio to its initial state? All your changes will be lost.")) {
                         // Clear all storage
                         localStorage.clear();
                         sessionStorage.clear();
-                        
+
                         // Clear all cookies
                         document.cookie.split(';').forEach(function(c) {
                             document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
                         });
-                        
+
                         // Reload the page to get a fresh start
                         window.location.reload(true);
                     }
                 }
-                
+
                 // Attach click handler to reset button
                 $('#reset-portfolio').on('click', function() {
                     resetEntirePortfolio();
                 });
-                
+
                 // Execute reset once immediately if requested via query parameter
                 if (window.location.search.includes('reset=true')) {
                     // Remove the query parameter to prevent endless reloading
                     var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
                     window.history.replaceState({path: newUrl}, '', newUrl);
-                    
+
                     // Clear all storage without confirmation
                     localStorage.clear();
                     sessionStorage.clear();
-                    
+
                     // Clear cookies
                     document.cookie.split(';').forEach(function(c) {
                         document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
                     });
-                    
+
                     console.log("Portfolio has been reset to initial state");
                     alert("Portfolio has been reset to its initial state.");
                 }
@@ -4139,14 +4139,14 @@
                     // Determine which column to add to (add to the one with fewer skills)
                     var leftColumn = $('#skills .col-md-6:first .single-skill-content');
                     var rightColumn = $('#skills .col-md-6:last .single-skill-content');
-                    
-                    var targetColumn = (leftColumn.find('.barWrapper').length <= rightColumn.find('.barWrapper').length) 
-                        ? leftColumn 
+
+                    var targetColumn = (leftColumn.find('.barWrapper').length <= rightColumn.find('.barWrapper').length)
+                        ? leftColumn
                         : rightColumn;
-                    
+
                     // Generate a random percentage between 75 and 98
                     var randomPercentage = Math.floor(Math.random() * (98 - 75 + 1)) + 75;
-                    
+
                     // Create a new skill with default name and percentage
                     var newSkill = $(`
                         <div class="barWrapper">
@@ -4156,7 +4156,7 @@
                                         </div>
                             <div class="skill-progress">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="${randomPercentage}" 
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="${randomPercentage}"
                                          aria-valuemin="10" aria-valuemax="100" style="width: ${randomPercentage}%;">
                                             </div>
                                         </div>
@@ -4164,43 +4164,43 @@
                                         </div>
                                         </div>
                     `);
-                    
+
                     // Add the new skill to the target column
                     targetColumn.append(newSkill);
-                    
+
                     // Make the new skill removable
                     newSkill.find('.remove-btn').on('click', function() {
                         $(this).closest('.barWrapper').fadeOut(300, function() {
                             $(this).remove();
                         });
                     });
-                    
+
                     // Apply event listeners to make the skill name and percentage editable
                     newSkill.find('[contenteditable="true"]').each(function(i, el) {
                         $(el).attr('data-save-id', 'skill-' + Date.now() + '-' + i);
                     });
-                    
+
                     // Animate the new skill
                     newSkill.hide().fadeIn(500);
-                    
+
                     // Save all content
                     setTimeout(saveAllContent, 500);
                 }
-                
+
                 // Connect the Add Skill button to the addNewSkill function
                 $('#add-skill-btn').off('click').on('click', function(e) {
                     e.preventDefault();
                     addNewSkill();
                     return false;
                 });
-                
+
                 // Make sure all skills have remove buttons with proper styling
                 $(document).on('click', '.barWrapper .remove-btn', function() {
                     $(this).closest('.barWrapper').fadeOut(300, function() {
                         $(this).remove();
                     });
                 });
-                
+
                 // Make the progress bars clickable if this function exists
                 if (typeof makeProgressBarsClickable === 'function') {
                     makeProgressBarsClickable();
@@ -4212,7 +4212,7 @@
             $(document).ready(function() {
                 // Make skill progress bars clickable for width adjustment
                 makeProgressBarsClickable();
-                
+
                 // Also make sure newly added skills get the clickable functionality
                 $('#add-skill-btn').on('click', function() {
                     // Wait for the new skill to be added
@@ -4220,62 +4220,62 @@
                         makeProgressBarsClickable();
                     }, 100);
                 });
-                
+
                 // Function to make progress bars clickable
                 function makeProgressBarsClickable() {
                     // Find all progress bars in the skills section
                     $('.barWrapper .progress').each(function() {
                         var progress = $(this);
                         var progressBar = progress.find('.progress-bar');
-                        
+
                         // Remove any existing click handlers first to avoid duplicates
                         progress.off('click');
-                        
+
                         // Add click handler to set width at click position
                         progress.on('click', function(e) {
                             // Calculate percentage based on click position
                             var totalWidth = progress.width();
                             var clickPosition = e.pageX - progress.offset().left;
                             var percentage = Math.min(100, Math.max(0, Math.round((clickPosition / totalWidth) * 100)));
-                            
+
                             // Update the progress bar width and aria value
                             progressBar.css('width', percentage + '%');
                             progressBar.attr('aria-valuenow', percentage);
-                            
+
                             // Update the percentage text
                             var percentageText = progress.parent().find('h3');
                             if (percentageText.length > 0) {
                                 percentageText.text(percentage + '%');
                             }
-                            
+
                             // Optionally save the state if you have a save function
                             if (typeof saveAllContent === 'function') {
                                 saveAllContent();
                             }
                         });
-                        
+
                         // Add hover styles for better UX
                         progress.css('cursor', 'pointer');
-                        
+
                         // Add touch support for mobile devices
                         progress.off('touchstart').on('touchstart', function(e) {
                             e.preventDefault();
-                            
+
                             var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
                             var totalWidth = progress.width();
                             var touchPosition = touch.pageX - progress.offset().left;
                             var percentage = Math.min(100, Math.max(0, Math.round((touchPosition / totalWidth) * 100)));
-                            
+
                             // Update the progress bar width and aria value
                             progressBar.css('width', percentage + '%');
                             progressBar.attr('aria-valuenow', percentage);
-                            
+
                             // Update the percentage text
                             var percentageText = progress.parent().find('h3');
                             if (percentageText.length > 0) {
                                 percentageText.text(percentage + '%');
                             }
-                            
+
                             // Optionally save the state if you have a save function
                             if (typeof saveAllContent === 'function') {
                                 saveAllContent();
@@ -4291,12 +4291,12 @@
             $(document).ready(function() {
                 // Leave project titles as they are, don't change to "CONTACT ME"
                 console.log("Modal title fix loaded - preserving original project titles");
-                
+
                 // Ensure that modal title reflects actual project title
                 $(document).on('shown.bs.modal', '#projectModal', function() {
                     // Set the modal header title to PROJECT DETAILS
                     $('#projectModalLabel').text('PROJECT DETAILS');
-                    
+
                     // Set the project title within the modal body
                     var index = parseInt($(this).attr('data-project-index'));
                     if (window.projectsData && window.projectsData[index]) {
@@ -4321,21 +4321,21 @@
                     // Get the current project data or create empty object
                     if (!window.projectsData) window.projectsData = [];
                     if (!window.projectsData[index]) window.projectsData[index] = {};
-                    
+
                     // Get modal elements
                     var modal = $('#projectModal');
-                    
+
                     // Update project data with current values
                     window.projectsData[index].title = $('#project-modal-title').text();
                     window.projectsData[index].description = $('#project-modal-description').text();
-                    
+
                     // Get tags
                     var tags = [];
                     $('.project-tag').each(function() {
                         tags.push($(this).find('[contenteditable="true"]').text());
                     });
                     window.projectsData[index].tags = tags;
-                    
+
                     // Save to localStorage
                     localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
                     console.log("Saved project data for index", index);
@@ -4343,14 +4343,14 @@
                     console.error("Error saving project data:", e);
                 }
             }
-            
+
             // Function to show URL input dialog
             function showUrlInputDialog(index) {
                 // Get current URLs
                 var projectData = window.projectsData[index];
                 var websiteUrl = projectData.website || '';
                 var githubUrl = projectData.github || '';
-                
+
                 // Create URL input dialog
                 var urlDialog = $(`
                     <div class="url-input-dialog" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center;">
@@ -4371,24 +4371,24 @@
                                         </div>
                                         </div>
                 `);
-                
+
                 // Add to body
                 $('body').append(urlDialog);
-                
+
                 // Handle dialog buttons
                 urlDialog.find('#url-cancel').on('click', function() {
                     urlDialog.remove();
                 });
-                
+
                 urlDialog.find('#url-save').on('click', function() {
                     // Get entered URLs
                     var newWebsiteUrl = urlDialog.find('#website-url').val().trim();
                     var newGithubUrl = urlDialog.find('#github-url').val().trim();
-                    
+
                     // Simple URL validation
                     var isValidWebsiteUrl = true;
                     var isValidGithubUrl = true;
-                    
+
                     if (newWebsiteUrl !== '') {
                         isValidWebsiteUrl = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/.test(newWebsiteUrl);
                         if (!isValidWebsiteUrl) {
@@ -4400,7 +4400,7 @@
                             newWebsiteUrl = "https://" + newWebsiteUrl;
                         }
                     }
-                    
+
                     if (newGithubUrl !== '') {
                         isValidGithubUrl = /^(https?:\/\/)?(www\.)?github\.com\/([a-zA-Z0-9_-]+)(\/[a-zA-Z0-9_-]+)*\/?$/.test(newGithubUrl);
                         if (!isValidGithubUrl) {
@@ -4412,11 +4412,11 @@
                             newGithubUrl = "https://" + newGithubUrl;
                         }
                     }
-                    
+
                     // Update project data
                     window.projectsData[index].website = newWebsiteUrl;
                     window.projectsData[index].github = newGithubUrl;
-                    
+
                     // Update modal buttons
                     if (newWebsiteUrl) {
                         $('#project-website-link').attr('href', newWebsiteUrl)
@@ -4434,7 +4434,7 @@
                                                      return false;
                                                  });
                     }
-                    
+
                     if (newGithubUrl) {
                         $('#project-github-link').attr('href', newGithubUrl)
                                                 .removeClass('disabled')
@@ -4451,69 +4451,69 @@
                                                     return false;
                                                 });
                     }
-                    
+
                     // Save to localStorage
                     localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
                     console.log("Updated URLs for project", index);
-                    
+
                     // Close dialog
                     urlDialog.remove();
                 });
             }
         </script>
 
-        // Add a reset function to clear all storage before the closing body tag
+
         <script>
             // Function to reset all storage data
             function resetAllStorage() {
                 try {
                     // Clear all localStorage items related to the portfolio
                     var keysToRemove = [];
-                    
+
                     // Find all keys related to the portfolio
                     for (var i = 0; i < localStorage.length; i++) {
                         var key = localStorage.key(i);
-                        if (key.includes('portfolio') || 
-                            key.includes('skill') || 
-                            key.includes('project') || 
-                            key.includes('content-') || 
+                        if (key.includes('portfolio') ||
+                            key.includes('skill') ||
+                            key.includes('project') ||
+                            key.includes('content-') ||
                             key.includes('save-') ||
                             key.includes('modal-')) {
                             keysToRemove.push(key);
                         }
                     }
-                    
+
                     // Remove the found keys
                     for (var i = 0; i < keysToRemove.length; i++) {
                         localStorage.removeItem(keysToRemove[i]);
                         console.log('Removed from localStorage:', keysToRemove[i]);
                     }
-                    
+
                     // Clear sessionStorage as well
                     keysToRemove = [];
                     for (var i = 0; i < sessionStorage.length; i++) {
                         var key = sessionStorage.key(i);
-                        if (key.includes('portfolio') || 
-                            key.includes('skill') || 
-                            key.includes('project') || 
-                            key.includes('content-') || 
+                        if (key.includes('portfolio') ||
+                            key.includes('skill') ||
+                            key.includes('project') ||
+                            key.includes('content-') ||
                             key.includes('save-') ||
                             key.includes('modal-')) {
                             keysToRemove.push(key);
                         }
                     }
-                    
+
                     for (var i = 0; i < keysToRemove.length; i++) {
                         sessionStorage.removeItem(keysToRemove[i]);
                         console.log('Removed from sessionStorage:', keysToRemove[i]);
                     }
-                    
+
                     // Reset window.projectsData
                     window.projectsData = [];
-                    
+
                     // Show feedback
                     alert('All storage has been reset. The page will now reload to apply changes.');
-                    
+
                     // Reload the page to apply changes
                     location.reload();
                 } catch (e) {
@@ -4521,23 +4521,23 @@
                     alert('There was an error resetting storage: ' + e.message);
                 }
             }
-            
+
             // Add a reset button to the navigation bar
             $(document).ready(function() {
                 // Create reset button
                 var resetButton = $(`
-                    <button id="reset-storage-btn" class="btn btn-danger btn-sm" 
-                        style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; 
-                            background-color: #dc3545; color: white; border: none; 
+                    <button id="reset-storage-btn" class="btn btn-danger btn-sm"
+                        style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+                            background-color: #dc3545; color: white; border: none;
                             border-radius: 4px; padding: 8px 15px; cursor: pointer;
                             box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         Reset All Data
                     </button>
                 `);
-                
+
                 // Add to body
                 $('body').append(resetButton);
-                
+
                 // Attach click event
                 $('#reset-storage-btn').on('click', function(e) {
                     e.preventDefault();
@@ -4555,72 +4555,72 @@
                 // Function to make progress bars clickable with the new structure
                 function setupProgressBarInteraction() {
                     console.log('Setting up progress bar interaction for new skill structure...');
-                    
+
                     // Select all progress bars within the skill progress containers
                     $('.skill-progress .progress').each(function() {
                         var $progress = $(this);
                         var $progressBar = $progress.find('.progress-bar');
                         var $percentageElement = $progress.closest('.skill-progress').find('.skill-percentage');
-                        
+
                         // Remove any existing handlers to avoid duplicates
                         $progress.off('click touchstart');
-                        
+
                         // Add click handler
                         $progress.on('click', function(e) {
                             handleProgressBarInteraction(e, $progress, $progressBar, $percentageElement);
                         });
-                        
+
                         // Add touch support for mobile
                         $progress.on('touchstart', function(e) {
                             e.preventDefault();
                             var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-                            
+
                             // Create a synthetic event object with pageX from the touch
                             var syntheticEvent = {
                                 pageX: touch.pageX
                             };
-                            
+
                             handleProgressBarInteraction(syntheticEvent, $progress, $progressBar, $percentageElement);
                         });
-                        
+
                         // Make sure the progress bar looks clickable
                         $progress.css('cursor', 'pointer');
                     });
                 }
-                
+
                 // Helper function to handle both click and touch interactions
                 function handleProgressBarInteraction(e, $progress, $progressBar, $percentageElement) {
                     // Calculate percentage based on click/touch position
                     var totalWidth = $progress.width();
                     var position = e.pageX - $progress.offset().left;
                     var percentage = Math.min(100, Math.max(0, Math.round((position / totalWidth) * 100)));
-                    
+
                     // Update progress bar width and aria attribute
                     $progressBar.css('width', percentage + '%');
                     $progressBar.attr('aria-valuenow', percentage);
-                    
+
                     // Update the percentage text
                     if ($percentageElement.length > 0) {
                         $percentageElement.text(percentage + '%');
                     }
-                    
+
                     console.log('Updated progress bar to ' + percentage + '%');
-                    
+
                     // Save changes if the save function exists
                     if (typeof saveAllContent === 'function') {
                         setTimeout(saveAllContent, 100);
                     }
                 }
-                
+
                 // Initial setup
                 setupProgressBarInteraction();
-                
+
                 // Make sure the progress bar interaction is set up again after any DOM changes
                 setInterval(setupProgressBarInteraction, 2000);
-                
+
                 // Override the existing makeProgressBarsClickable function
                 window.makeProgressBarsClickable = setupProgressBarInteraction;
-                
+
                 // Connect to the Add Skill button to ensure new skills get the interaction
                 $(document).on('click', '#add-skill-btn', function() {
                     setTimeout(setupProgressBarInteraction, 500);
@@ -4632,21 +4632,21 @@
         <script>
             $(document).ready(function() {
                 console.log("Setting up enhanced project title synchronization");
-                
+
                 // Add input handler to the project modal title
                 $(document).on('input', '#project-modal-title', function() {
                     var newTitle = $(this).text().trim();
                     var index = $('#projectModal').attr('data-project-index');
-                    
+
                     console.log("Project title changed to:", newTitle, "for index:", index);
-                    
+
                     // Mark modal as having changes
                     $('#projectModal').attr('data-has-changes', 'true');
-                    
+
                     // Immediately update the title in the data store
                     if (window.projectsData && window.projectsData[index]) {
                         window.projectsData[index].title = newTitle;
-                        
+
                         // Also update the title in the portfolio grid immediately
                         var projectItems = $('.portfolio .item');
                         if (index < projectItems.length) {
@@ -4655,7 +4655,7 @@
                                 titleElement.text(newTitle);
                             }
                         }
-                        
+
                         // Save to localStorage in real-time
                         try {
                             localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
@@ -4665,54 +4665,54 @@
                         }
                     }
                 });
-                
+
                 // Enhanced saveProjectData function to ensure title sync
                 window.saveProjectData = function(index) {
                     console.log("Enhanced saveProjectData called for index:", index);
-                    
+
                     // Convert to number if it's a string
                     index = parseInt(index);
                     if (isNaN(index)) {
                         console.error("Invalid project index:", index);
                         return;
                     }
-                    
+
                     // Ensure projectsData exists
                     if (!window.projectsData) {
                         window.projectsData = [];
                     }
-                    
+
                     // Ensure this project has data
                     if (!window.projectsData[index]) {
                         window.projectsData[index] = {};
                     }
-                    
+
                     // Get current modal title and description
                     var modalTitle = $('#project-modal-title').text().trim();
                     var modalDescription = $('#project-modal-description').text().trim();
-                    
+
                     // Update project data from modal
                     window.projectsData[index].title = modalTitle;
                     window.projectsData[index].description = modalDescription;
-                    
+
                     // Safely get the image src
                     var imageSrc = $('#project-modal-image').attr('src');
                     if (imageSrc && imageSrc !== 'undefined' && imageSrc !== 'null') {
                         window.projectsData[index].image = imageSrc;
                     }
-                    
+
                     // Update tags
                     var tags = [];
                     $('.project-tag [contenteditable="true"]').each(function() {
                         tags.push($(this).text());
                     });
                     window.projectsData[index].tags = tags;
-                    
+
                     // Save to localStorage
                     try {
                         localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
                         console.log("Saved project data to localStorage:", index);
-                        
+
                         // Update the portfolio grid with the new title
                         var projectItems = $('.portfolio .item');
                         if (index < projectItems.length) {
@@ -4721,12 +4721,12 @@
                                 titleElement.text(modalTitle);
                                 console.log("Updated grid title to:", modalTitle);
                             }
-                            
+
                             // Also update the image if needed
                             var imageElement = $(projectItems[index]).find('img');
-                            if (imageElement.length && 
-                                window.projectsData[index].image && 
-                                window.projectsData[index].image !== 'undefined' && 
+                            if (imageElement.length &&
+                                window.projectsData[index].image &&
+                                window.projectsData[index].image !== 'undefined' &&
                                 window.projectsData[index].image !== 'null') {
                                 imageElement.attr('src', window.projectsData[index].image);
                             }
@@ -4734,18 +4734,18 @@
                     } catch (e) {
                         console.error("Error saving project data:", e);
                     }
-                    
+
                     // Also save all content (for other editable elements)
                     if (typeof saveAllContent === 'function') {
                         saveAllContent();
                     }
                 };
-                
+
                 // Enhanced openProjectModal function to ensure title sync
                 var originalOpenProjectModal = window.openProjectModal;
                 window.openProjectModal = function(index) {
                     console.log("Enhanced openProjectModal called for index:", index);
-                    
+
                     // Ensure project data is loaded from localStorage if not already in memory
                     if (!window.projectsData || !window.projectsData[index]) {
                         try {
@@ -4758,28 +4758,28 @@
                             console.error("Error loading projects data:", e);
                         }
                     }
-                    
+
                     // Call the original function
                     originalOpenProjectModal(index);
-                    
+
                     // Always ensure tags are displayed properly
                     if (window.projectsData && window.projectsData[index] && window.projectsData[index].tags) {
                         var tagsContainer = $('#project-modal-tags');
                         if (tagsContainer.children().length === 0 || tagsContainer.find('.project-tag').length === 0) {
                             console.log("Regenerating tags for project", index);
                             tagsContainer.empty();
-                            
+
                             // Regenerate tags from stored data
                             window.projectsData[index].tags.forEach(function(tag, i) {
-                                tagsContainer.append('<span class="project-tag" data-tag-index="' + i + '">' + 
+                                tagsContainer.append('<span class="project-tag" data-tag-index="' + i + '">' +
                                                   '<span contenteditable="true">' + tag + '</span>' +
                                                   '<span class="tag-remove" title="Remove Tag">&times;</span>' +
                                                   '</span>');
                             });
-                            
+
                             // Add the "Add Tag" button
                             tagsContainer.append('<span class="add-tag-btn" id="add-tag-button">+ Add Tag</span>');
-                            
+
                             // Add event handlers for tag functionality
                             $('#add-tag-button').off('click').on('click', function() {
                                 var newTagIndex = $('.project-tag').length;
@@ -4787,19 +4787,19 @@
                                             '<span contenteditable="true">New Tag</span>' +
                                             '<span class="tag-remove" title="Remove Tag">&times;</span>' +
                                             '</span>');
-                                
+
                                 // Insert the new tag before the Add Tag button
                                 $(this).before(newTag);
-                                
+
                                 // Focus on the new tag for editing
                                 newTag.find('[contenteditable="true"]').focus();
-                                
+
                                 // Select all text in the new tag
                                 document.execCommand('selectAll', false, null);
-                                
+
                                 // Mark modal as having changes
                                 $('#projectModal').attr('data-has-changes', 'true');
-                                
+
                                 // Add event handlers for the new tag
                                 newTag.find('.tag-remove').on('click', function(e) {
                                     e.preventDefault();
@@ -4807,7 +4807,7 @@
                                     $('#projectModal').attr('data-has-changes', 'true');
                                 });
                             });
-                            
+
                             // Add click handlers for existing tag remove buttons
                             $('.project-tag .tag-remove').off('click').on('click', function(e) {
                                 e.preventDefault();
@@ -4816,21 +4816,21 @@
                             });
                         }
                     }
-                    
+
                     // Apply preview mode to modal if body has preview-mode class
                     if (document.body.classList.contains('preview-mode')) {
                         console.log("Applying preview mode to modal content");
-                        
+
                         // Make modal content non-editable
                         document.querySelectorAll('#projectModal [contenteditable="true"]').forEach(el => {
                             el.setAttribute('contenteditable', 'false');
                             el.classList.add('preview-mode');
                         });
-                        
+
                         // Hide editing buttons
                         document.querySelector('#add-url-button').style.display = 'none';
                     }
-                    
+
                     // Extra steps to ensure title sync
                     setTimeout(function() {
                         // Get the project title from the grid
@@ -4838,7 +4838,7 @@
                         if (index < projectItems.length) {
                             var gridTitle = $(projectItems[index]).find('[data-title="true"]').text().trim();
                             var modalTitle = $('#project-modal-title').text().trim();
-                            
+
                             // If there's a real discrepancy, update from the data store
                             if (gridTitle !== modalTitle && window.projectsData && window.projectsData[index]) {
                                 var storedTitle = window.projectsData[index].title;
@@ -4852,22 +4852,22 @@
                         }
                     }, 100);
                 };
-                
+
                 // Also handle updating the grid when a title is changed directly in the grid
                 $(document).on('input', '.portfolio .item [data-title="true"]', function() {
                     var newTitle = $(this).text().trim();
                     var index = $('.portfolio .item').index($(this).closest('.item'));
-                    
+
                     console.log("Grid title changed to:", newTitle, "for index:", index);
-                    
+
                     // Update data store
                     if (window.projectsData && index >= 0) {
                         if (!window.projectsData[index]) {
                             window.projectsData[index] = {};
                         }
-                        
+
                         window.projectsData[index].title = newTitle;
-                        
+
                         // Save to localStorage
                         try {
                             localStorage.setItem('portfolio-projects-data', JSON.stringify(window.projectsData));
@@ -4888,7 +4888,7 @@
                         console.log("Profile image updated");
                         // Update the image source
                         document.getElementById('profile-image').src = e.target.result;
-                        
+
                         // Save the image to localStorage for persistence
                         try {
                             localStorage.setItem('portfolio-profile-image', e.target.result);
@@ -4900,7 +4900,7 @@
                                 alert("The image is too large to save in local storage. Try using a smaller image.");
                             }
                         }
-                        
+
                         // If saveAllContent function exists, call it
                         if (typeof saveAllContent === 'function') {
                             setTimeout(saveAllContent, 500);
@@ -4909,7 +4909,7 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-            
+
             // Load saved profile image on page load
             $(document).ready(function() {
                 var savedProfileImage = localStorage.getItem('portfolio-profile-image');
@@ -4917,43 +4917,43 @@
                     document.getElementById('profile-image').src = savedProfileImage;
                     console.log("Loaded saved profile image");
                 }
-                
+
                 // Preview/Edit Mode Toggle
                 const previewBtn = document.querySelector('button.preview, #preview-btn');
                 if (previewBtn) {
                     previewBtn.addEventListener('click', function() {
                         const isPreviewMode = this.getAttribute('data-mode') !== 'preview';
-                        
+
                         // Toggle between Preview and Edit modes
                         if (isPreviewMode) {
                             // Switch to Preview Mode
                             document.getElementById('preview-text').textContent = 'Edit';
                             this.setAttribute('data-mode', 'preview');
-                            
+
                             // Change icon from eye to pencil
                             const icon = this.querySelector('i.fa');
                             if (icon) {
                                 icon.classList.remove('fa-eye');
                                 icon.classList.add('fa-pencil');
                             }
-                            
+
                             // Make all editable elements not editable
                             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
                                 el.setAttribute('contenteditable', 'false');
                                 el.classList.add('preview-mode');
                             });
-                            
+
                             // Hide all editing controls except View Project buttons
                             document.querySelectorAll('.section-controls, .image-management, .image-upload-overlay, .edit-mode-only, .remove-skill-btn').forEach(el => {
                                 el.style.display = 'none';
                             });
-                            
+
                             // Handle item controls specially - don't hide if they contain view project buttons
                             document.querySelectorAll('.item-controls').forEach(el => {
                                 if (!el.querySelector('.view-project-btn')) {
                                     el.style.display = 'none';
                                 } else {
-                                    // This item control contains a view project button, 
+                                    // This item control contains a view project button,
                                     // so keep it visible but hide other editing controls inside it
                                     el.querySelectorAll('.section-control-btn, .remove-btn').forEach(btn => {
                                         if (!btn.classList.contains('view-project-btn')) {
@@ -4962,14 +4962,14 @@
                                     });
                                 }
                             });
-                            
+
                             // Make sure View Project buttons remain visible
                             document.querySelectorAll('.view-project-btn').forEach(btn => {
                                 btn.style.display = 'inline-block';
                                 btn.style.opacity = '1';
                                 btn.style.visibility = 'visible';
                                 btn.style.pointerEvents = 'auto';
-                                
+
                                 // Make sure parent containers are visible too
                                 let parent = btn.parentElement;
                                 while (parent && !parent.classList.contains('item')) {
@@ -4978,14 +4978,14 @@
                                     parent = parent.parentElement;
                                 }
                             });
-                            
+
                             // Save content before preview
                             if (typeof saveAllContent === 'function') {
                                 saveAllContent();
                             }
-                            
+
                             document.body.classList.add('preview-mode');
-                            
+
                             // Specifically handle tags in preview mode
                             document.querySelectorAll('.project-tag').forEach(tag => {
                                 // Make tag text not editable
@@ -4994,7 +4994,7 @@
                                     tagText.setAttribute('contenteditable', 'false');
                                     tagText.style.cursor = 'default';
                                 }
-                                
+
                                 // Hide removal buttons
                                 const removeBtn = tag.querySelector('.tag-remove');
                                 if (removeBtn) {
@@ -5003,19 +5003,19 @@
                                     removeBtn.style.pointerEvents = 'none';
                                 }
                             });
-                            
+
                             // Hide Add Tag buttons
                             document.querySelectorAll('.add-tag-btn').forEach(btn => {
                                 btn.style.display = 'none';
                                 btn.style.visibility = 'hidden';
                             });
-                            
+
                             // Disable editing in project modal if it's already open
                             if (document.getElementById('projectModal')) {
                                 document.querySelectorAll('#projectModal [contenteditable="true"]').forEach(el => {
                                     el.setAttribute('contenteditable', 'false');
                                 });
-                                
+
                                 // Hide Add Tag button in modal
                                 const addTagBtn = document.getElementById('add-tag-button');
                                 if (addTagBtn) {
@@ -5026,58 +5026,58 @@
                             // Switch back to Edit Mode
                             document.getElementById('preview-text').textContent = 'Preview';
                             this.setAttribute('data-mode', 'edit');
-                            
+
                             // Change icon back to eye
                             const icon = this.querySelector('i.fa');
                             if (icon) {
                                 icon.classList.remove('fa-pencil');
                                 icon.classList.add('fa-eye');
                             }
-                            
+
                             // Make all elements editable again
                             document.querySelectorAll('[contenteditable="false"].preview-mode').forEach(el => {
                                 el.setAttribute('contenteditable', 'true');
                                 el.classList.remove('preview-mode');
                             });
-                            
+
                             // Show all editing controls again
                             document.querySelectorAll('.section-controls, .item-controls, .image-management, .image-upload-overlay, .edit-mode-only, .remove-skill-btn').forEach(el => {
                                 el.style.removeProperty('display');
                             });
-                            
+
                             document.body.classList.remove('preview-mode');
-                            
+
                             // Re-enable tag editing
                             document.querySelectorAll('.project-tag [contenteditable="false"]').forEach(tagText => {
                                 tagText.setAttribute('contenteditable', 'true');
                                 tagText.style.removeProperty('cursor');
                             });
-                            
+
                             // Show tag removal buttons
                             document.querySelectorAll('.project-tag .tag-remove').forEach(btn => {
                                 btn.style.removeProperty('display');
                                 btn.style.removeProperty('visibility');
                                 btn.style.removeProperty('pointer-events');
                             });
-                            
+
                             // Show Add Tag buttons
                             document.querySelectorAll('.add-tag-btn').forEach(btn => {
                                 btn.style.removeProperty('display');
                                 btn.style.removeProperty('visibility');
                             });
-                            
+
                             // Re-enable editing in project modal if it's open
                             if (document.getElementById('projectModal')) {
                                 document.querySelectorAll('#projectModal [contenteditable="false"]').forEach(el => {
                                     el.setAttribute('contenteditable', 'true');
                                 });
-                                
+
                                 // Make sure the Add URL button is visible in edit mode
                                 const addUrlButton = document.querySelector('#add-url-button');
                                 if (addUrlButton) {
                                     addUrlButton.style.display = 'inline-block';
                                 }
-                                
+
                                 // Show Add Tag button in modal
                                 const addTagBtn = document.getElementById('add-tag-button');
                                 if (addTagBtn) {
@@ -5112,7 +5112,7 @@
                 backface-visibility: hidden;
                 will-change: background-color, box-shadow;
             }
-            
+
             /* Ensure visibility in preview mode */
             body.preview-mode .view-project-btn {
                 display: inline-block !important;
@@ -5141,7 +5141,7 @@
                 transition: none !important;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
             }
-            
+
             /* Prevent any parent hover effects from affecting the button */
             .portfolio .item:hover .view-project-btn,
             .portfolio .image-container:hover .view-project-btn {
@@ -5176,7 +5176,7 @@
                 pointer-events: none !important;
                 opacity: 0 !important;
             }
-            
+
             /* Ensure tags display properly in preview mode */
             body.preview-mode .project-tag {
                 padding: 5px 10px !important;
@@ -5186,7 +5186,7 @@
                 background-color: #f0f0f0 !important;
                 display: inline-block !important;
             }
-            
+
             /* Ensure tag text is visible but not editable */
             body.preview-mode .project-tag [contenteditable="true"],
             body.preview-mode .project-tag span[contenteditable="true"] {
@@ -5200,13 +5200,13 @@
                 -moz-user-select: text !important;
                 -ms-user-select: text !important;
             }
-            
+
             /* Keep tag container visible */
             body.preview-mode #project-modal-tags {
                 display: block !important;
                 margin-bottom: 20px !important;
             }
-            
+
             /* Remove hover effects on tags */
             body.preview-mode .project-tag:hover {
                 background-color: #f0f0f0 !important;
@@ -5250,7 +5250,7 @@
                 visibility: visible !important;
             }
         </style>
-        
+
         <!-- Style for about section text colors -->
         <style>
             /* Make the second paragraph in about section black */
@@ -5262,25 +5262,25 @@
                 margin-bottom: 20px !important;
                 font-weight: 400 !important;
             }
-            
+
             /* First paragraph slightly bolder for emphasis */
             .single-about-txt p:first-of-type {
                 font-weight: 500 !important;
                 margin-top: -10px !important; /* Move paragraph up by adding negative margin */
             }
-            
+
             /* Make contact information black */
             .single-about-add-info p {
                 color: #000 !important;
                 font-size: 16px !important;
                 font-weight: 400 !important;
             }
-            
+
             /* Red X icon for About section */
             .remove-img .fa-times {
                 color: #ff0000 !important;
             }
-            
+
             /* Ensure image management controls are visible in About section */
             .single-about-img .image-management {
                 position: absolute;
@@ -5291,7 +5291,7 @@
                 gap: 5px;
                 z-index: 100;
             }
-            
+
             .single-about-img .image-btn {
                 background-color: rgba(255, 255, 255, 0.8);
                 border: none;
@@ -5304,26 +5304,26 @@
                 cursor: pointer;
                 transition: all 0.2s;
             }
-            
+
             .single-about-img .image-btn:hover {
                 background-color: rgba(255, 255, 255, 1);
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             }
-            
+
             .single-about-img .remove-img {
                 background-color: rgba(255, 255, 255, 0.8);
             }
-            
+
             .single-about-img .remove-img:hover {
                 background-color: rgba(255, 0, 0, 0.1);
             }
-            
+
             /* Improved About section styling */
             #about {
                 padding: 60px 0 40px !important;
                 background-color: #fff !important;
             }
-            
+
             .about-intro {
                 font-size: 22px !important;
                 font-weight: 500 !important;
@@ -5332,7 +5332,7 @@
                 margin-bottom: 25px !important;
                 margin-top: 0 !important; /* Remove top margin to align with image */
             }
-            
+
             .about-details {
                 font-size: 18px !important;
                 font-weight: 400 !important;
@@ -5340,58 +5340,58 @@
                 color: #333 !important;
                 margin-bottom: 30px !important;
             }
-            
+
             .about-divider {
                 margin: 25px 0 !important;
                 border-top: 1px solid #eaeaea !important;
             }
-            
+
             .contact-heading {
                 margin-bottom: 20px !important;
                 font-weight: 600 !important;
                 color: #333 !important;
                 font-size: 18px !important;
             }
-            
+
             .single-about-add-info h3 {
                 text-transform: capitalize !important;
                 color: #555 !important;
                 font-size: 16px !important;
                 margin-bottom: 5px !important;
             }
-            
+
             /* Remove blue background from About section */
             .about-content {
                 background-color: transparent !important;
                 padding: 0 !important;
                 box-shadow: none !important;
             }
-            
+
             /* Fix vertical alignment of text and image */
             .single-about-txt {
                 padding-top: 0 !important;
                 margin-top: 0 !important;
             }
-            
+
             .single-about-img {
                 padding-top: 0 !important;
                 margin-top: 0 !important;
             }
-            
+
             /* Ensure row is properly aligned */
             .about-content .row {
                 display: flex !important;
                 align-items: flex-start !important;
                 margin-top: 0 !important;
             }
-            
+
             /* Remove any trace of "About Me" text in blue background */
             #about [class*="about-me-text"],
             #about .about-me-text,
             #about .blue-bg {
                 display: none !important;
             }
-            
+
             /* Ensure profile image has appropriate styling */
             .single-about-img img {
                 border-radius: 5px !important;
@@ -5402,13 +5402,13 @@
                 min-height: 350px !important; /* Set minimum height */
                 object-fit: cover !important; /* Maintain aspect ratio without stretching */
             }
-            
+
             /* Make image container larger */
             .single-about-img .image-container {
                 min-height: 350px !important;
                 max-width: 100% !important;
             }
-            
+
             /* Additional alignment fixes */
             .about-content .col-sm-6,
             .about-content .col-sm-5 {
@@ -5416,7 +5416,7 @@
                 margin-top: 0 !important;
             }
         </style>
-        
+
         <!-- Fix for vertical alignment between text and image -->
         <style>
             /* Direct fix for alignment using flexbox */
@@ -5425,20 +5425,20 @@
                     display: flex;
                     align-items: flex-start;
                 }
-                
+
                 .about-content .col-sm-6,
                 .about-content .col-sm-offset-1,
                 .about-content .col-sm-5 {
                     display: flex;
                     align-items: flex-start;
                 }
-                
+
                 .single-about-img,
                 .single-about-txt {
                     margin-top: 0;
                     padding-top: 0;
                 }
-                
+
                 /* Ensure no blue background shows up */
                 #about .about-content :not(.section-heading)[style*="background-color"] {
                     background-color: transparent !important;

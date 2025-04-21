@@ -1,5 +1,49 @@
 /* Professional Portfolio Template CSS */
 
+/* Site title styles */
+#site-title {
+    cursor: text !important;
+    padding-top: 10px;
+    margin-bottom: 0;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff !important;
+    letter-spacing: 1px;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    text-transform: uppercase !important;
+}
+
+.site-logo-container {
+    cursor: default;
+    display: flex !important;
+    align-items: center;
+    height: 100%;
+    visibility: visible !important;
+    opacity: 1 !important;
+    padding: 0;
+    margin-right: 20px;
+}
+
+/* Adjust navigation alignment */
+.navbar-custom .navbar-nav {
+    float: right;
+    margin-top: 8px;
+}
+
+/* Ensure the navigation row is properly aligned */
+.navbar-header {
+    display: flex !important;
+    align-items: center;
+    width: auto !important;
+    float: left !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    padding: 0 15px !important;
+}
+
 /* Editor toolbar styles */
 .editor-toolbar {
     position: fixed;
@@ -473,19 +517,99 @@ body {
     box-shadow: 0 2px 3px rgba(0,0,0,0.1) !important; /* Smaller shadow when clicked */
 }
 
+/* Contact section styles */
+.contact-info-row {
+    margin-bottom: 40px;
+}
+
+.contact-item {
+    padding: 20px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.contact-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+    background: linear-gradient(135deg, #6b4da8, #4977c2);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(107, 77, 168, 0.5);
+}
+
+.contact-details h4 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.contact-details p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
 /* Fix for social media icons */
+.social {
+    margin-top: 40px;
+}
+
+.social ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+}
+
 .social ul li {
     display: inline-block;
-    margin: 0 20px;
+    margin: 0;
+}
+
+.social ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #fff;
+    transition: all 0.3s ease;
 }
 
 .social i.fa {
-    font-size: 24px;
-    padding: 10px;
+    font-size: 20px;
     color: #fff;
     transition: all 0.3s;
 }
 
+.social ul li a:hover {
+    background: linear-gradient(135deg, #6b4da8, #4977c2);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(107, 77, 168, 0.5);
+}
+
 .social i.fa:hover {
-    color: #1CBB9B;
+    color: #fff;
 }
