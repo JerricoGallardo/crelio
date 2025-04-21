@@ -7,12 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize add/remove functionality for sections
     initializeAddRemoveControls();
 
-    // Enable group text selection for better editing
-    setupTextGroupSelection();
-    
-    // Ensure toolbar buttons work
-    setupToolbarButtons();
-
     // Navigation functionality
     const navLinks = document.querySelectorAll('.smooth-menu a');
     const sections = document.querySelectorAll('section[id]');
@@ -958,18 +952,8 @@ function initializeAddRemoveControls() {
     if (addSkillBtn) {
         addSkillBtn.addEventListener('click', function() {
             const skillContainers = document.querySelectorAll('.single-skill-content');
-            
-            // Find the container with fewer skills to balance the columns
-            const leftContainer = skillContainers[0];
-            const rightContainer = skillContainers[1];
-            
-            // Count skills in each column
-            const leftSkillsCount = leftContainer.querySelectorAll('.barWrapper').length;
-            const rightSkillsCount = rightContainer.querySelectorAll('.barWrapper').length;
-            
-            // Choose the container with fewer skills
-            const targetContainer = leftSkillsCount <= rightSkillsCount ? leftContainer : rightContainer;
-            const lastSkill = targetContainer.querySelector('.barWrapper:last-child');
+            const lastSkillContainer = skillContainers[skillContainers.length - 1];
+            const lastSkill = lastSkillContainer.querySelector('.barWrapper:last-child');
 
             if (lastSkill) {
                 const newSkill = lastSkill.cloneNode(true);
@@ -991,7 +975,7 @@ function initializeAddRemoveControls() {
                     });
                 }
 
-                targetContainer.appendChild(newSkill);
+                lastSkillContainer.appendChild(newSkill);
             }
         });
     }
@@ -1145,121 +1129,4 @@ function initializeAddRemoveControls() {
     // Set initial state of mode indicators and controls
     document.querySelector('.edit-mode-indicator').style.display = 'inline-block';
     document.querySelector('.preview-mode-indicator').style.display = 'none';
-}
-
-// Add this new function at the end of the file
-function setupTextGroupSelection() {
-    // Get all text containers that should be group-selectable
-    const editableElements = document.querySelectorAll('[contenteditable="true"]');
-    
-    editableElements.forEach(element => {
-        element.addEventListener('mousedown', function(e) {
-            // When clicking on an editable element, select all its content
-            const selection = window.getSelection();
-            const range = document.createRange();
-            range.selectNodeContents(this);
-            selection.removeAllRanges();
-            selection.addRange(range);
-            
-            // Prevent default behavior to ensure our selection works
-            e.preventDefault();
-        });
-    });
-}
-
-// Add this new function to ensure toolbar buttons work
-function setupToolbarButtons() {
-    // Get the main toolbar buttons - improve selectors to work with any toolbar
-    const boldBtn = document.querySelector('#bold-btn, [data-command="bold"]');
-    const italicBtn = document.querySelector('#italic-btn, [data-command="italic"]');
-    const underlineBtn = document.querySelector('#underline-btn, [data-command="underline"]');
-    const undoBtn = document.querySelector('#undo-btn, [data-command="undo"]');
-    const redoBtn = document.querySelector('#redo-btn, [data-command="redo"]');
-    const fontFamilySelect = document.querySelector('#font-family-select');
-    const fontSizeSelect = document.querySelector('#font-size-select');
-    
-    // Create a function to execute command with improved functionality
-    function execCommand(command, value = null) {
-        // Focus back to the document to ensure command gets applied
-        document.execCommand(command, false, value);
-        
-        // Force focus back to the document
-        setTimeout(() => {
-            // Try to restore selection if lost
-            const selection = window.getSelection();
-            if (selection.rangeCount === 0) {
-                const lastFocused = document.activeElement;
-                if (lastFocused && lastFocused.getAttribute('contenteditable') === 'true') {
-                    lastFocused.focus();
-                }
-            }
-        }, 10);
-    }
-    
-    // Add event listeners to buttons if they exist
-    if (boldBtn) {
-        boldBtn.addEventListener('click', () => execCommand('bold'));
-    }
-    
-    if (italicBtn) {
-        italicBtn.addEventListener('click', () => execCommand('italic'));
-    }
-    
-    if (underlineBtn) {
-        underlineBtn.addEventListener('click', () => execCommand('underline'));
-    }
-    
-    if (undoBtn) {
-        undoBtn.addEventListener('click', () => execCommand('undo'));
-    }
-    
-    if (redoBtn) {
-        redoBtn.addEventListener('click', () => execCommand('redo'));
-    }
-    
-    // Update font family select
-    if (fontFamilySelect) {
-        fontFamilySelect.addEventListener('change', function() {
-            if (this.value) {
-                execCommand('fontName', this.value);
-            }
-        });
-    }
-    
-    // Update font size select with improved functionality
-    if (fontSizeSelect) {
-        fontSizeSelect.addEventListener('change', function() {
-            const fontSize = this.value;
-            if (fontSize) {
-                // Better font size implementation
-                const selection = window.getSelection();
-                if (selection.rangeCount > 0) {
-                    const range = selection.getRangeAt(0);
-                    
-                    // Check if we have text selected or just a cursor position
-                    if (range.collapsed) {
-                        // Cursor only - create a wrapper span to insert
-                        const span = document.createElement('span');
-                        span.style.fontSize = fontSize;
-                        span.innerHTML = '&nbsp;'; // Add a space to be able to continue typing
-                        
-                        range.insertNode(span);
-                        
-                        // Move cursor inside the span
-                        range.setStart(span, 1);
-                        range.setEnd(span, 1);
-                        selection.removeAllRanges();
-                        selection.addRange(range);
-                    } else {
-                        // Text selected - wrap with span
-                        const span = document.createElement('span');
-                        span.style.fontSize = fontSize;
-                        
-                        // Wrap selected content in the span
-                        range.surroundContents(span);
-                    }
-                }
-            }
-        });
-    }
 }
