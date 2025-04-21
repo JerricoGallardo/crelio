@@ -377,24 +377,274 @@ function initializeEditor() {
         .toolbar-button.clicked {
             transform: scale(0.95);
         }
+
+        /* Add styles for font size spans */
+        .custom-font-size {
+            display: inline;
+        }
     `;
     document.head.appendChild(style);
 
+    // Track the currently active editable element
+    let activeEditableElement = null;
+
+    // Function to get the current selection
+    function getSelection() {
+        return window.getSelection();
+    }
+
+    // Function to get the current range if there's a selection
+    function getRange() {
+        const selection = getSelection();
+        if (selection && selection.rangeCount > 0) {
+            return selection.getRangeAt(0);
+        }
+        return null;
+    }
+
+    // Function to select all text in an element
+    function selectAllInElement(element) {
+        if (!element) return false;
+
+        const selection = getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        return true;
+    }
+
+    // Function to apply basic formatting (bold, italic, underline)
+    function applyBasicFormatting(command) {
+        // Save the current selection
+        const selection = getSelection();
+        const range = getRange();
+
+        // If there's a selection, apply formatting directly
+        if (range && !range.collapsed) {
+            document.execCommand(command, false, null);
+            saveState();
+            return true;
+        }
+
+        // If no selection but we have an active element, select all its text
+        if (activeEditableElement) {
+            if (selectAllInElement(activeEditableElement)) {
+                document.execCommand(command, false, null);
+                saveState();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Function to apply font family
+    function applyFontFamily(fontFamily) {
+        console.log('Applying font family:', fontFamily);
+
+        // Save the current selection
+        const selection = getSelection();
+        const range = getRange();
+
+        // If there's a selection, apply font family directly
+        if (range && !range.collapsed) {
+            document.execCommand('fontName', false, fontFamily);
+            saveState();
+            return true;
+        }
+
+        // If no selection but we have an active element, select all its text
+        if (activeEditableElement) {
+            if (selectAllInElement(activeEditableElement)) {
+                document.execCommand('fontName', false, fontFamily);
+                saveState();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Function to apply font size
+    function applyFontSize(fontSize) {
+        console.log('Applying font size:', fontSize);
+
+        // Save the current selection
+        const selection = getSelection();
+        const range = getRange();
+
+        // If there's a selection, wrap it in a span with the font size
+        if (range && !range.collapsed) {
+            try {
+                // Create a span with the font size
+                const span = document.createElement('span');
+                span.className = 'custom-font-size';
+                span.style.fontSize = fontSize;
+
+                // Extract the selected content and wrap it in the span
+                const fragment = range.extractContents();
+                span.appendChild(fragment);
+                range.insertNode(span);
+
+                // Select the span
+                selection.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(span);
+                selection.addRange(newRange);
+
+                saveState();
+                return true;
+            } catch (e) {
+                console.error('Error applying font size to selection:', e);
+            }
+        }
+
+        // If no selection but we have an active element, apply to the whole element
+        if (activeEditableElement) {
+            try {
+                // If the element already has a font size, update it
+                if (activeEditableElement.style.fontSize) {
+                    activeEditableElement.style.fontSize = fontSize;
+                } else {
+                    // Otherwise, select all and wrap in a span
+                    if (selectAllInElement(activeEditableElement)) {
+                        const span = document.createElement('span');
+                        span.className = 'custom-font-size';
+                        span.style.fontSize = fontSize;
+
+                        const range = getRange();
+                        const fragment = range.extractContents();
+                        span.appendChild(fragment);
+                        range.insertNode(span);
+
+                        // Select the span
+                        selection.removeAllRanges();
+                        const newRange = document.createRange();
+                        newRange.selectNodeContents(span);
+                        selection.addRange(newRange);
+                    }
+                }
+
+                saveState();
+                return true;
+            } catch (e) {
+                console.error('Error applying font size to element:', e);
+            }
+        }
+
+        return false;
+    }
+
+    // Function to update toolbar state based on current selection or active element
+    function updateToolbarState() {
+        // Get the element to check - either the selected text's parent or the active element
+        let elementToCheck = null;
+
+        const range = getRange();
+        if (range && !range.collapsed) {
+            // We have a text selection, get its parent element
+            const selectedNode = range.commonAncestorContainer;
+            elementToCheck = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
+        } else if (activeEditableElement) {
+            // No selection but we have an active element
+            elementToCheck = activeEditableElement;
+        }
+
+        if (elementToCheck) {
+            // Get computed styles
+            const computedStyle = window.getComputedStyle(elementToCheck);
+
+            // Update font selector
+            const fontSelector = document.getElementById('font-selector');
+            if (fontSelector) {
+                const fontFamily = computedStyle.fontFamily.split(',')[0].replace(/['"\/]/g, '').trim();
+
+                // Find the closest match in the dropdown
+                for (let i = 0; i < fontSelector.options.length; i++) {
+                    if (fontSelector.options[i].value.toLowerCase() === fontFamily.toLowerCase()) {
+                        fontSelector.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            // Update font size selector
+            const fontSizeSelector = document.getElementById('font-size-selector');
+            if (fontSizeSelector) {
+                const fontSize = parseInt(computedStyle.fontSize);
+
+                // Find the closest match in the dropdown
+                let bestMatch = 0;
+                let minDiff = Number.MAX_VALUE;
+
+                for (let i = 0; i < fontSizeSelector.options.length; i++) {
+                    // Parse the pixel value from the option (e.g., "16px" -> 16)
+                    const optionSize = parseInt(fontSizeSelector.options[i].value);
+                    const diff = Math.abs(optionSize - fontSize);
+
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        bestMatch = i;
+                    }
+                }
+
+                fontSizeSelector.selectedIndex = bestMatch;
+            }
+        }
+    }
+
+    // Track clicks on editable elements to maintain the active element
+    document.addEventListener('mousedown', function(e) {
+        // Find if we clicked on or within an editable element
+        const clickedElement = e.target.closest('[contenteditable="true"]');
+
+        if (clickedElement) {
+            // Update the active element
+            activeEditableElement = clickedElement;
+            console.log('Active element set to:', activeEditableElement);
+        } else {
+            // If we clicked outside editable elements, clear the active element
+            // but only if we didn't click on a toolbar button
+            if (!e.target.closest('.editor-toolbar')) {
+                activeEditableElement = null;
+            }
+        }
+    });
+
+    // Track selection changes to update toolbar state
+    document.addEventListener('selectionchange', function() {
+        updateToolbarState();
+    });
+
     // Initialize toolbar buttons
     document.getElementById('bold-btn').addEventListener('click', function() {
-        document.execCommand('bold', false, null);
-        saveState();
+        applyBasicFormatting('bold');
     });
 
     document.getElementById('italic-btn').addEventListener('click', function() {
-        document.execCommand('italic', false, null);
-        saveState();
+        applyBasicFormatting('italic');
     });
 
     document.getElementById('underline-btn').addEventListener('click', function() {
-        document.execCommand('underline', false, null);
-        saveState();
+        applyBasicFormatting('underline');
     });
+
+    // Initialize font selector
+    const fontSelector = document.getElementById('font-selector');
+    if (fontSelector) {
+        fontSelector.addEventListener('change', function() {
+            applyFontFamily(this.value);
+        });
+    }
+
+    // Initialize font size selector
+    const fontSizeSelector = document.getElementById('font-size-selector');
+    if (fontSizeSelector) {
+        fontSizeSelector.addEventListener('change', function() {
+            applyFontSize(this.value);
+        });
+    }
 
     document.getElementById('undo-btn').addEventListener('click', function() {
         // Add visual feedback
