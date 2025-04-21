@@ -1,1 +1,0 @@
-document.addEventListener('DOMContentLoaded', function() { const addPortfolioBtn = document.getElementById('add-portfolio-btn'); if (addPortfolioBtn) { .off('click').on('click', function(e) { e.preventDefault(); addNewPortfolioItem(); }); } });
