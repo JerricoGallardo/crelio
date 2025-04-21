@@ -293,26 +293,57 @@
     /* Special styling for skill percent */
     .percent[contenteditable="true"] {
         cursor: text;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .percent[contenteditable="true"]:hover,
     .percent[contenteditable="true"]:focus {
-        font-size: 24px;
         background-color: rgba(0, 0, 0, 0.5);
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-        padding: 2px 5px;
+        /* Keep the same positioning to prevent movement */
+        position: absolute !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        text-align: center !important;
+        line-height: 160px !important;
     }
 
     /* Add a special class for when the percentage is being edited */
     .percent-editing {
-        font-size: 24px !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-        border-radius: 5px !important;
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.7) !important;
-        padding: 2px 8px !important;
-        border: 1px solid rgba(0, 243, 255, 0.5) !important;
+        font-size: 21px !important; /* Keep the same font size as normal state */
+        background-color: rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5) inset !important;
+        /* Keep the same positioning to prevent movement */
+        position: absolute !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        text-align: center !important;
+        line-height: 160px !important;
+        border: none !important;
+        /* Add a subtle animation to indicate editing state */
+        animation: editingPulse 2s infinite ease-in-out !important;
+    }
+
+    /* Subtle pulsing animation for editing state */
+    @keyframes editingPulse {
+        0% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.3) inset; }
+        50% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.7) inset; }
+        100% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.3) inset; }
     }
 
     /* Add edit indicator for charts */
@@ -408,7 +439,6 @@
 
     .portfolio-item:hover .item-controls,
     .skill:hover .item-controls,
-    .testimonial-item:hover .item-controls,
     .achievement-box:hover .item-controls {
         display: block;
     }
@@ -421,6 +451,67 @@
 
     .preview-mode .edit-mode-only {
         display: none !important;
+    }
+
+    /* Enhanced preview mode styles to ensure view-only experience */
+    body.preview-mode .btn-modern,
+    body.preview-mode .btn-default:not(.visit-project),
+    body.preview-mode .section-control-btn,
+    body.preview-mode .item-controls,
+    body.preview-mode .section-controls,
+    body.preview-mode .edit-project-link {
+        display: none !important;
+    }
+
+    body.preview-mode [contenteditable="false"] {
+        cursor: default !important;
+        outline: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    body.preview-mode [contenteditable="false"]:hover,
+    body.preview-mode [contenteditable="false"]:focus {
+        outline: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    body.preview-mode .chart::after {
+        display: none !important;
+    }
+
+    body.preview-mode input[type="file"] {
+        pointer-events: none !important;
+        opacity: 0 !important;
+    }
+
+    /* Prevent any interaction with buttons and controls in preview mode */
+    body.preview-mode button:not(#preview-btn),
+    body.preview-mode select,
+    body.preview-mode input,
+    body.preview-mode .toolbar-btn,
+    body.preview-mode .style-select,
+    body.preview-mode .section-control-btn,
+    body.preview-mode .item-controls {
+        pointer-events: none !important;
+    }
+
+    /* Add a subtle visual indicator that we're in preview mode */
+    body.preview-mode::after {
+        content: "Preview Mode";
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 243, 255, 0.2);
+        color: #00f3ff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0.7;
     }
 
     #preview-btn.active {
@@ -472,7 +563,7 @@
           <li> <a class="page-scroll" href="#about">About</a> </li>
           <li> <a class="page-scroll" href="#skills">Skills</a> </li>
           <li> <a class="page-scroll" href="#portfolio">Portfolio</a> </li>
-          <li> <a class="page-scroll" href="#testimonials">Testimonials</a> </li>
+
           <li> <a class="page-scroll" href="#contact">Contact</a> </li>
         </ul>
       </div>
@@ -491,15 +582,21 @@
       <div class="col-xs-12 col-md-6">
         <img src="assets/professional/img/about.jpg" class="img-responsive" alt="" id="about-image">
         <div class="text-center" style="margin-top: 10px;">
-          <button class="btn btn-default" onclick="document.getElementById('about-upload').click()">Change Image</button>
+          <button class="btn btn-modern" onclick="document.getElementById('about-upload').click()">
+            <i class="fa fa-camera"></i> Change Image
+          </button>
           <input type="file" id="about-upload" style="display: none;" accept="image/*">
         </div>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="about-text">
-          <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
-          <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare.</p>
-          <a href="#portfolio" class="btn btn-primary btn-lg page-scroll" contenteditable="true">My Portfolio</a> </div>
+          <p contenteditable="true">I am a passionate web developer with over 8 years of experience creating beautiful and functional websites. I specialize in front-end development and user experience design, focusing on creating intuitive interfaces.</p>
+          <p contenteditable="true">My goal is to build digital experiences that are not only visually appealing but also highly functional and accessible. I'm constantly learning new technologies and techniques to improve my craft.</p>
+          <div class="about-buttons">
+            <a href="#portfolio" class="btn btn-primary btn-lg page-scroll about-btn">MY PORTFOLIO</a>
+            <a href="#contact" class="btn btn-outline btn-lg page-scroll about-btn">CONTACT ME</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -520,28 +617,28 @@
         <div class="item-controls">
           <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
         </div>
-        <span class="chart" data-percent="95"> <span class="percent" contenteditable="true">95</span> </span>
+        <span class="chart" data-percent="95"> <span class="percent" contenteditable="true" style="position: absolute; display: block; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; text-align: center; font-size: 21px; color: #fff; font-weight: 600; z-index: 10; line-height: 160px; outline: none; background: transparent;">95</span> </span>
         <h4 contenteditable="true">HTML5</h4>
       </div>
       <div class="col-md-3 col-sm-6 skill">
         <div class="item-controls">
           <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
         </div>
-        <span class="chart" data-percent="85"> <span class="percent" contenteditable="true">85</span> </span>
+        <span class="chart" data-percent="85"> <span class="percent" contenteditable="true" style="position: absolute; display: block; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; text-align: center; font-size: 21px; color: #fff; font-weight: 600; z-index: 10; line-height: 160px; outline: none; background: transparent;">85</span> </span>
         <h4 contenteditable="true">CSS3</h4>
       </div>
       <div class="col-md-3 col-sm-6 skill">
         <div class="item-controls">
           <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
         </div>
-        <span class="chart" data-percent="80"> <span class="percent" contenteditable="true">80</span> </span>
+        <span class="chart" data-percent="80"> <span class="percent" contenteditable="true" style="position: absolute; display: block; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; text-align: center; font-size: 21px; color: #fff; font-weight: 600; z-index: 10; line-height: 160px; outline: none; background: transparent;">80</span> </span>
         <h4 contenteditable="true">jQuery</h4>
       </div>
       <div class="col-md-3 col-sm-6 skill">
         <div class="item-controls">
           <button class="section-control-btn remove-btn" title="Remove Skill"><i class="fa fa-trash"></i></button>
         </div>
-        <span class="chart" data-percent="80"> <span class="percent" contenteditable="true">80</span> </span>
+        <span class="chart" data-percent="80"> <span class="percent" contenteditable="true" style="position: absolute; display: block; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; text-align: center; font-size: 21px; color: #fff; font-weight: 600; z-index: 10; line-height: 160px; outline: none; background: transparent;">80</span> </span>
         <h4 contenteditable="true">WordPress</h4>
       </div>
     </div>
@@ -577,7 +674,7 @@
             <img src="assets/professional/img/portfolio/01-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-1">
           </div>
           <div class="text-center edit-mode-only" style="margin-top: 10px;">
-            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-1').click()">Change Image</button>
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-1').click()" style="color: #000 !important; background-color: #f8f8f8 !important; border: 1px solid #ddd !important; opacity: 1 !important; font-weight: 500 !important; visibility: visible !important; transition: all 0.3s ease !important; box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;">Change Image</button>
             <input type="file" id="portfolio-upload-1" style="display: none;" accept="image/*">
           </div>
         </div>
@@ -597,7 +694,7 @@
             <img src="assets/professional/img/portfolio/02-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-2">
           </div>
           <div class="text-center edit-mode-only" style="margin-top: 10px;">
-            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-2').click()">Change Image</button>
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-2').click()" style="color: #000 !important; background-color: #f8f8f8 !important; border: 1px solid #ddd !important; opacity: 1 !important; font-weight: 500 !important; visibility: visible !important; transition: all 0.3s ease !important; box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;">Change Image</button>
             <input type="file" id="portfolio-upload-2" style="display: none;" accept="image/*">
           </div>
         </div>
@@ -617,7 +714,7 @@
             <img src="assets/professional/img/portfolio/03-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-3">
           </div>
           <div class="text-center edit-mode-only" style="margin-top: 10px;">
-            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-3').click()">Change Image</button>
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-3').click()" style="color: #000 !important; background-color: #f8f8f8 !important; border: 1px solid #ddd !important; opacity: 1 !important; font-weight: 500 !important; visibility: visible !important; transition: all 0.3s ease !important; box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;">Change Image</button>
             <input type="file" id="portfolio-upload-3" style="display: none;" accept="image/*">
           </div>
         </div>
@@ -637,7 +734,7 @@
             <img src="assets/professional/img/portfolio/04-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-4">
           </div>
           <div class="text-center edit-mode-only" style="margin-top: 10px;">
-            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-4').click()">Change Image</button>
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-4').click()" style="color: #000 !important; background-color: #f8f8f8 !important; border: 1px solid #ddd !important; opacity: 1 !important; font-weight: 500 !important; visibility: visible !important; transition: all 0.3s ease !important; box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;">Change Image</button>
             <input type="file" id="portfolio-upload-4" style="display: none;" accept="image/*">
           </div>
         </div>
@@ -657,7 +754,7 @@
             <img src="assets/professional/img/portfolio/05-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-5">
           </div>
           <div class="text-center edit-mode-only" style="margin-top: 10px;">
-            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-5').click()">Change Image</button>
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-5').click()" style="color: #000 !important; background-color: #f8f8f8 !important; border: 1px solid #ddd !important; opacity: 1 !important; font-weight: 500 !important; visibility: visible !important; transition: all 0.3s ease !important; box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;">Change Image</button>
             <input type="file" id="portfolio-upload-5" style="display: none;" accept="image/*">
           </div>
         </div>
@@ -677,7 +774,7 @@
             <img src="assets/professional/img/portfolio/06-small.jpg" class="img-responsive" alt="Project Title" id="portfolio-image-6">
           </div>
           <div class="text-center edit-mode-only" style="margin-top: 10px;">
-            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-6').click()">Change Image</button>
+            <button class="btn btn-default" onclick="document.getElementById('portfolio-upload-6').click()" style="color: #000 !important; background-color: #f8f8f8 !important; border: 1px solid #ddd !important; opacity: 1 !important; font-weight: 500 !important; visibility: visible !important; transition: all 0.3s ease !important; box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;">Change Image</button>
             <input type="file" id="portfolio-upload-6" style="display: none;" accept="image/*">
           </div>
         </div>
@@ -702,7 +799,7 @@
           <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
         </div>
         <div class="achievement-box">
-          <span class="count">310</span>
+          <span class="count" contenteditable="true">310</span>
           <h4 contenteditable="true">Happy Clients</h4>
         </div>
       </div>
@@ -711,7 +808,7 @@
           <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
         </div>
         <div class="achievement-box">
-          <span class="count">4700</span>
+          <span class="count" contenteditable="true">4700</span>
           <h4 contenteditable="true">Hours of Work</h4>
         </div>
       </div>
@@ -720,7 +817,7 @@
           <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
         </div>
         <div class="achievement-box">
-          <span class="count">30</span>
+          <span class="count" contenteditable="true">30</span>
           <h4 contenteditable="true">Awards Won</h4>
         </div>
       </div>
@@ -729,7 +826,7 @@
           <button class="section-control-btn remove-btn" title="Remove Achievement"><i class="fa fa-trash"></i></button>
         </div>
         <div class="achievement-box">
-          <span class="count">8</span>
+          <span class="count" contenteditable="true">8</span>
           <h4 contenteditable="true">Years of Experience</h4>
         </div>
       </div>
@@ -737,60 +834,7 @@
   </div>
 </div>
 
-<!-- Testimonials Section -->
-<div id="testimonials" class="text-center">
-  <div class="container">
-    <div class="section-title center">
-      <h2 contenteditable="true">Testimonials</h2>
-      <hr>
-      <div class="section-controls">
-        <button class="section-control-btn add-btn" id="add-testimonial-btn" title="Add Testimonial"><i class="fa fa-plus"></i></button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="row testimonials">
-          <div class="col-sm-4 testimonial-item">
-            <div class="item-controls">
-              <button class="section-control-btn remove-btn" title="Remove Testimonial"><i class="fa fa-trash"></i></button>
-            </div>
-            <blockquote><i class="fa fa-quote-left"></i>
-              <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
-              <div class="clients-name">
-                <p><strong contenteditable="true">John Doe</strong><br>
-                  <em contenteditable="true">CEO, Company Inc.</em></p>
-              </div>
-            </blockquote>
-          </div>
-          <div class="col-sm-4 testimonial-item">
-            <div class="item-controls">
-              <button class="section-control-btn remove-btn" title="Remove Testimonial"><i class="fa fa-trash"></i></button>
-            </div>
-            <blockquote><i class="fa fa-quote-left"></i>
-              <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
-              <div class="clients-name">
-                <p><strong contenteditable="true">Jane Doe</strong><br>
-                  <em contenteditable="true">CEO, Company Inc.</em></p>
-              </div>
-            </blockquote>
-          </div>
-          <div class="col-sm-4 testimonial-item">
-            <div class="item-controls">
-              <button class="section-control-btn remove-btn" title="Remove Testimonial"><i class="fa fa-trash"></i></button>
-            </div>
-            <blockquote><i class="fa fa-quote-left"></i>
-              <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
-              <div class="clients-name">
-                <p><strong contenteditable="true">Chris Smith</strong><br>
-                  <em contenteditable="true">CEO, Company Inc.</em></p>
-              </div>
-            </blockquote>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!-- Contact Section -->
 <div id="contact" class="text-center">
@@ -883,7 +927,299 @@
 <script src="professional-portfolio.js"></script>
 
 
+    <!-- Custom styles for perfect percentage centering and visible buttons -->
+    <style>
+        /* Make 'Change Image' buttons always visible with black text */
+        .portfolio-item .btn,
+        #about .btn {
+            color: #000 !important;
+            background-color: #f8f8f8 !important;
+            border: 1px solid #ddd !important;
+            opacity: 1 !important;
+            font-weight: 500 !important;
+            visibility: visible !important;
+            display: inline-block !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        }
+
+        /* Hover animation for image upload buttons */
+        .portfolio-item .btn:hover,
+        #about .btn:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15) !important;
+            background-color: #fff !important;
+            border-color: #aaa !important;
+            color: #526cbb !important;
+        }
+
+        /* Active state for image upload buttons */
+        .portfolio-item .btn:active,
+        #about .btn:active {
+            transform: translateY(1px) !important;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1) !important;
+        }
+        /* Complete reset of chart and percent styles */
+        .chart {
+            position: relative !important;
+            width: 160px !important;
+            height: 160px !important;
+            margin: 0 auto !important;
+            display: block !important;
+        }
+
+        .chart canvas {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+        }
+
+        /* Fix for percentage centering - completely override all other styles */
+        .percent {
+            position: absolute !important;
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: center !important;
+            font-size: 21px !important;
+            color: #fff !important;
+            font-weight: 600 !important;
+            z-index: 10 !important;
+            line-height: 160px !important;
+            box-sizing: border-box !important;
+            outline: none !important;
+            background: transparent !important;
+        }
+
+        /* Remove highlight box when editing */
+        .percent:focus {
+            outline: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        /* Hide the pencil icon completely */
+        .percent-editing {
+            background-color: transparent !important;
+            border-radius: 0 !important;
+            outline: none !important;
+        }
+
+        /* Hide any icons that might appear behind the percentage text */
+        .percent:before,
+        .percent:after,
+        .percent i,
+        .percent .fa,
+        .percent .fas,
+        .percent .far,
+        .percent .fal,
+        .percent .fab {
+            display: none !important;
+        }
+
+        /* Only show the percentage symbol */
+        .percent:after {
+            content: '%' !important;
+            display: inline-block !important;
+            font-size: 0.8em !important;
+            margin-left: 0.1em !important;
+            vertical-align: middle !important;
+        }
+
+        /* Styles for editable achievement counts */
+        .count[contenteditable="true"] {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .count[contenteditable="true"]:hover {
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        .count[contenteditable="true"]:focus {
+            outline: none;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+
+        /* About section button styles */
+        .about-buttons {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .about-btn {
+            padding: 12px 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .btn-primary.about-btn {
+            background: linear-gradient(135deg, #6b4da8, #4977c2);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(73, 119, 194, 0.4);
+        }
+
+        .btn-primary.about-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(73, 119, 194, 0.5);
+        }
+
+        .btn-primary.about-btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-outline.about-btn {
+            background: transparent;
+            border: 2px solid #6b4da8;
+            color: #6b4da8;
+        }
+
+        .btn-outline.about-btn:hover {
+            background: rgba(107, 77, 168, 0.1);
+            color: #6b4da8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(107, 77, 168, 0.2);
+        }
+
+        .btn-outline.about-btn:active {
+            transform: translateY(1px);
+        }
+
+
+
+        /* Styling for the Change Image button below the image */
+        #about .btn-modern {
+            margin-top: 10px;
+            background-color: #6b4da8;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #about .btn-modern:hover {
+            background-color: #4977c2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        #about .btn-modern:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Ensure the image takes up the full width */
+        #about-image {
+            width: 100%;
+            display: block;
+        }
+
+        /* Ensure the button is more visible */
+        .btn-modern {
+            background: linear-gradient(135deg, #6b4da8, #4977c2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 16px;
+            /* Add a subtle white border for better visibility */
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(73, 119, 194, 0.5);
+            color: white;
+            background: linear-gradient(135deg, #7b5db8, #5987d2);
+            border-color: white;
+        }
+
+        .btn-modern:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(73, 119, 194, 0.4);
+        }
+    </style>
+
     <!-- Preview Mode Script -->
     <script src="preview-mode.js"></script>
+
+    <!-- Direct fix for percentage centering -->
+    <script>
+        // Apply centering to percentage text on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply centering immediately
+            applyPercentCentering();
+
+            // Apply centering after a short delay to ensure it takes effect
+            setTimeout(applyPercentCentering, 500);
+
+            // Apply centering after a longer delay for good measure
+            setTimeout(applyPercentCentering, 1000);
+
+            function applyPercentCentering() {
+                document.querySelectorAll('.percent').forEach(function(el) {
+                    el.style.position = 'absolute';
+                    el.style.display = 'block';
+                    el.style.width = '100%';
+                    el.style.height = '100%';
+                    el.style.top = '0';
+                    el.style.left = '0';
+                    el.style.right = '0';
+                    el.style.bottom = '0';
+                    el.style.margin = '0';
+                    el.style.padding = '0';
+                    el.style.textAlign = 'center';
+                    el.style.fontSize = '21px';
+                    el.style.color = '#fff';
+                    el.style.fontWeight = '600';
+                    el.style.zIndex = '10';
+                    el.style.lineHeight = '160px';
+                    el.style.outline = 'none';
+                    el.style.background = 'transparent';
+                    el.style.boxShadow = 'none';
+                    el.style.border = 'none';
+
+                    // Remove any pencil icons that might be present
+                    const icons = el.querySelectorAll('i, .fa, .fas, .far, .fal, .fab');
+                    icons.forEach(icon => icon.remove());
+                });
+            }
+        });
+    </script>
+
+    <!-- Font Size Fix -->
+    <script type="text/javascript" src="professional-portfolio-fix.js"></script>
 </body>
 </html>

@@ -357,18 +357,80 @@ body {
 }
 
 .percent {
-    display: inline-block;
-    line-height: 160px;
-    z-index: 2;
-    font-size: 30px;
-    font-weight: 600;
-    color: #1CBB9B;
+    position: absolute !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    font-size: 30px !important;
+    color: #1CBB9B !important;
+    font-weight: 600 !important;
+    z-index: 2 !important;
+    line-height: 160px !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
+/* Remove highlight box when editing */
+.percent:focus {
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Hide the pencil icon completely */
+.percent-editing {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    outline: none !important;
+}
+
+/* Completely hide any icons inside percent */
+.percent i,
+.percent svg,
+.percent img,
+.percent .fa,
+.percent .fas,
+.percent .far,
+.percent .fal,
+.percent .fab {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+/* Hide any icons that might appear behind the percentage text */
+.percent:before,
+.percent i,
+.percent .fa,
+.percent .fas,
+.percent .far,
+.percent .fal,
+.percent .fab {
+    display: none !important;
+}
+
+/* Only show the percentage symbol */
 .percent:after {
-    content: '%';
-    margin-left: 0.1em;
-    font-size: .8em;
+    content: '%' !important;
+    display: inline-block !important;
+    font-size: .8em !important;
+    margin-left: 0.1em !important;
+    vertical-align: middle !important;
 }
 
 /* Testimonial styles */
@@ -385,6 +447,30 @@ body {
 .portfolio-item .btn,
 #about .btn {
     margin-top: 10px;
+    color: #000 !important; /* Make button text black */
+    background-color: #f8f8f8 !important; /* Light background for better visibility */
+    border: 1px solid #ddd !important; /* Add a subtle border */
+    opacity: 1 !important; /* Ensure buttons are always visible */
+    font-weight: 500 !important; /* Make text slightly bolder */
+    transition: all 0.3s ease !important; /* Smooth transition for hover effects */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important; /* Subtle shadow */
+}
+
+/* Hover animation for image upload buttons */
+.portfolio-item .btn:hover,
+#about .btn:hover {
+    transform: translateY(-3px) !important; /* Move button up slightly */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15) !important; /* Larger shadow on hover */
+    background-color: #fff !important; /* Slightly lighter background */
+    border-color: #aaa !important; /* Darker border */
+    color: #526cbb !important; /* Change text color to theme color */
+}
+
+/* Active state for image upload buttons */
+.portfolio-item .btn:active,
+#about .btn:active {
+    transform: translateY(1px) !important; /* Push down when clicked */
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1) !important; /* Smaller shadow when clicked */
 }
 
 /* Fix for social media icons */
