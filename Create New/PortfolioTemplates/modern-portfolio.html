@@ -10,6 +10,346 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    /* Fix modal input fields - with !important flags */
+    .modal .form-group input[type="text"],
+    .modal .form-group input[type="url"],
+    .modal .form-group textarea,
+    #projectTitle, 
+    #projectDescription, 
+    #demoUrl, 
+    #githubUrl {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        min-height: 50px !important;
+        padding: 12px 15px !important;
+        border: 3px solid #4a6cf7 !important;
+        border-radius: 6px !important;
+        font-size: 16px !important;
+        font-family: 'Poppins', sans-serif !important;
+        background-color: #fff !important; 
+        color: #333 !important;
+        margin-bottom: 15px !important;
+        box-sizing: border-box !important;
+        display: block !important;
+        z-index: 10000 !important;
+        position: relative !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1) !important;
+    }
+
+    .modal .form-group textarea {
+        min-height: 150px !important;
+        resize: vertical !important;
+    }
+
+    .modal .form-group label {
+        display: block !important;
+        margin-bottom: 10px !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        color: #333 !important;
+    }
+
+    .modal-content {
+        width: 90% !important;
+        max-width: 600px !important;
+        padding: 30px !important;
+        max-height: 80vh !important;
+    }
+
+    /* Extra styles to ensure form displays correctly */
+    #projectForm {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    /* Ultra-specific selectors for form elements */
+    body #projectModal #projectForm .form-group #projectTitle,
+    body #projectModal #projectForm .form-group #projectDescription,
+    body #projectModal #projectForm .form-group #demoUrl,
+    body #projectModal #projectForm .form-group #githubUrl {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        border: 3px solid #4a6cf7 !important;
+        padding: 15px !important;
+        margin-bottom: 20px !important;
+        z-index: 99999 !important;
+    }
+    
+    /* Ensure the form groups take full width */
+    #projectForm .form-group {
+        width: 100% !important;
+        display: block !important;
+        margin-bottom: 20px !important;
+    }
+    
+    /* Modal structure fixes */
+    #projectModal {
+        padding: 15px !important;
+    }
+    
+    #projectModal .modal-content {
+        width: 100% !important;
+        max-width: 600px !important;
+        padding: 25px !important;
+    }
+
+    /* Image Upload Enhancements */
+    .image-preview {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 6px;
+        margin-top: 10px;
+        object-fit: contain;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Project Card Styling */
+    .project-card {
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .project-image-container {
+        position: relative;
+        overflow: hidden;
+        height: 200px;
+    }
+
+    .project-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-image {
+        transform: scale(1.05);
+    }
+
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+
+    .project-info {
+        padding: 20px;
+    }
+
+    .project-info h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .project-info p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 0;
+    }
+
+    .project-links {
+        display: flex;
+        gap: 10px;
+    }
+
+    .project-link {
+        padding: 8px 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .project-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .project-card:hover .project-actions {
+        opacity: 1;
+    }
+
+    .delete-project {
+        background-color: white;
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: background-color 0.2s ease;
+    }
+
+    .delete-project:hover {
+        background-color: #ff5252;
+        color: white;
+    }
+
+    /* Improved Buttons */
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn.primary {
+        background-color: #4a6cf7;
+        color: white;
+    }
+
+    .btn.primary:hover {
+        background-color: #3a5ce5;
+        transform: translateY(-2px);
+    }
+
+    .btn.secondary {
+        background-color: #e0e0e0;
+        color: #333;
+    }
+
+    .btn.secondary:hover {
+        background-color: #d0d0d0;
+        transform: translateY(-2px);
+    }
+
+    /* Make the form elements larger and more clickable */
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #4a6cf7;
+        box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.15);
+    }
+
+    /* Fix for 100% height containers */
+    html, body, #projectModal {
+        min-height: 100% !important;
+    }
+    
+    /* About section paragraph styling */
+    .about-text p {
+        display: block !important;
+        margin-bottom: 15px !important;
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+        color: #333 !important;
+    }
+    
+    .about-text p:last-child {
+        margin-bottom: 0 !important;
+    }
+    
+    /* Make About section bigger and fix text overflow */
+    .about-section {
+        min-height: 450px !important;
+        padding: 60px 40px !important;
+        overflow: visible !important;
+    }
+    
+    .about-content {
+        max-width: 800px !important;
+        margin: 0 auto !important;
+        padding: 15px !important;
+        background: none !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+    }
+    
+    .about-text {
+        padding: 10px !important;
+        margin-top: -10px !important;
+        font-size: 18px !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+    }
+    
+    /* Section header adjustments */
+    .section-header {
+        margin-bottom: 15px !important;
+    }
+    
+    .section-divider {
+        margin-bottom: 15px !important;
+    }
+    
+    /* Make paragraphs clearly visible and prevent overflow */
+    .about-text p {
+        display: block !important;
+        margin-bottom: 25px !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
+        color: #333 !important;
+        background: none !important;
+        padding: 0 !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Make second paragraph more distinct */
+    .about-text p:nth-child(2) {
+        margin-top: 30px !important;
+        padding: 20px !important;
+        background-color: rgba(74, 108, 247, 0.15) !important;
+        border-left: 4px solid #4a6cf7 !important;
+        font-weight: 500 !important;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1) !important;
+        display: block !important;
+        position: relative !important;
+        z-index: 5 !important;
+    }
+    </style>
 </head>
 <body>
     <div class="editor-container">
@@ -18,7 +358,7 @@
                 <button class="toolbar-btn" onclick="window.location.href='../createnewportfolio.html'">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <button class="toolbar-btn primary" onclick="savePortfolio()">
+                <button class="toolbar-btn primary" id="saveButton" onclick="savePortfolio()">
                     <i class="fas fa-save"></i> Save
                 </button>
                 <button class="toolbar-btn" onclick="previewPortfolio()">
@@ -107,8 +447,7 @@
                 <div class="hero-content">
                     <div class="hero-text">
                         <h2 contenteditable="true">Hello, I'm <span class="highlight">Your Name</span></h2>
-                        <p class="hero-subtitle" contenteditable="true">Full Stack Developer & Designer</p>
-                        <p class="hero-description" contenteditable="true">Creating beautiful digital experiences through code and design</p>
+                        <p class="hero-description" contenteditable="true">Expanding the Frontier in Information</p>
                         <div class="hero-buttons">
                             <a href="#projects" class="btn primary">View Work</a>
                             <a href="#contact" class="btn secondary">Contact Me</a>
@@ -142,20 +481,8 @@
                 <div class="about-content">
                     <div class="about-text">
                         <p contenteditable="true">I am a passionate web developer with expertise in creating responsive and user-friendly websites. With a strong foundation in modern web technologies, I strive to build innovative solutions that make a difference.</p>
-                    </div>
-                    <div class="about-details">
-                        <div class="detail-item">
-                            <i class="fas fa-envelope"></i>
-                            <span contenteditable="true">your.email@example.com</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span contenteditable="true">Your Location</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-globe"></i>
-                            <span contenteditable="true">yourwebsite.com</span>
-                        </div>
+                        <div style="height: 30px;"></div><!-- Spacer to ensure separation -->
+                        <p contenteditable="true" style="display: block !important; margin-top: 30px !important; background-color: rgba(74, 108, 247, 0.15) !important; border-left: 4px solid #4a6cf7 !important; padding: 20px !important; font-weight: 500 !important; box-shadow: 0 3px 10px rgba(0,0,0,0.1) !important;">In addition to my technical skills, I bring a unique perspective shaped by my diverse background in design and business. This cross-disciplinary approach allows me to create solutions that not only function flawlessly but also align perfectly with business objectives and user needs.</p>
                     </div>
                 </div>
             </section>
@@ -192,34 +519,35 @@
                 </div>
                 <div class="section-divider"></div>
                 <div class="contact-content">
-                    <div class="contact-form">
-                        <form>
-                            <div class="form-group">
-                                <input type="text" placeholder="Your Name" required>
+                    <div class="form-group">
+                        <div class="left-section">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span contenteditable="true">your.email@example.com</span>
                             </div>
-                            <div class="form-group">
-                                <input type="email" placeholder="Your Email" required>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span contenteditable="true">+1 234 567 890</span>
                             </div>
-                            <div class="form-group">
-                                <textarea placeholder="Your Message" required></textarea>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span contenteditable="true">Your Location</span>
                             </div>
-                            <button type="submit" class="btn primary">Send Message</button>
-                        </form>
-                    </div>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span contenteditable="true">your.email@example.com</span>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span contenteditable="true">Your Location</span>
-                        </div>
-                        <div class="social-links">
-                            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <div class="divider"></div>
+                        <div class="right-section">
+                            <div class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <span contenteditable="true">github.com/yourusername</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-linkedin"></i>
+                                <span contenteditable="true">linkedin.com/in/yourusername</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-twitter"></i>
+                                <span contenteditable="true">twitter.com/yourusername</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -238,29 +566,38 @@
                     <h2>Add New Project</h2>
                     <button class="close-modal">&times;</button>
                 </div>
-                <form id="projectForm">
+                <form id="projectForm" method="post" onsubmit="return false;">
                     <div class="form-group">
                         <label for="projectTitle">Project Title</label>
-                        <input type="text" id="projectTitle" name="projectTitle" required>
+                        <input type="text" id="projectTitle" name="projectTitle" placeholder="Enter project title" autocomplete="off" required>
                     </div>
                     <div class="form-group">
                         <label for="projectDescription">Description</label>
-                        <textarea id="projectDescription" name="projectDescription" required></textarea>
+                        <textarea id="projectDescription" name="projectDescription" placeholder="Describe your project" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="projectImage">Image URL</label>
-                        <input type="url" id="projectImage" name="projectImage" required>
+                        <label for="projectImageUpload">Project Image</label>
+                        <div class="image-upload-container" id="imageUploadContainer">
+                            <div id="imageUploadPrompt">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px;"></i>
+                                <p>Click to browse or drag an image here</p>
+                            </div>
+                            <img id="imagePreview" class="image-preview" style="display: none;">
+                            <input type="file" id="projectImageUpload" accept="image/*" style="display: none;">
+                            <input type="hidden" id="projectImage" name="projectImage">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="demoUrl">Demo URL</label>
-                        <input type="url" id="demoUrl" name="demoUrl" required>
+                        <input type="url" id="demoUrl" name="demoUrl" placeholder="https://example.com">
                     </div>
                     <div class="form-group">
                         <label for="githubUrl">GitHub URL</label>
-                        <input type="url" id="githubUrl" name="githubUrl" required>
+                        <input type="url" id="githubUrl" name="githubUrl" placeholder="https://github.com/username/project">
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn">Add Project</button>
+                        <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn primary" id="addProjectBtn">Add Project</button>
                     </div>
                 </form>
             </div>
@@ -313,5 +650,429 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="./modern-portfolio.js"></script>
+    <script>
+    function previewPortfolio() {
+        // Get the current portfolio content
+        const portfolioContent = document.querySelector('.portfolio-canvas').innerHTML;
+        
+        // Create a new window for preview
+        const previewWindow = window.open('', '_blank');
+        
+        // Write the portfolio content to the new window
+        previewWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Portfolio Preview</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+                <link rel="stylesheet" href="./modern-portfolio.css">
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+            </head>
+            <body>
+                ${portfolioContent}
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"><\/script>
+                <script src="https://unpkg.com/aos@next/dist/aos.js"><\/script>
+                <script src="./modern-portfolio.js"><\/script>
+            </body>
+            </html>
+        `);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize AOS if available
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 800,
+                offset: 100,
+                once: true
+            });
+        }
+        
+        // Check if modal elements exist - debug output
+        console.log("Modal elements check:", {
+            projectModal: !!document.getElementById('projectModal'),
+            projectForm: !!document.getElementById('projectForm'),
+            projectTitle: !!document.getElementById('projectTitle'),
+            projectDescription: !!document.getElementById('projectDescription'),
+            uploadContainer: !!document.getElementById('imageUploadContainer')
+        });
+        
+        // Set up image upload with more direct handling
+        const setupImageUpload = function() {
+            const imageUploadContainer = document.getElementById('imageUploadContainer');
+            const imageInput = document.getElementById('projectImageUpload');
+            const imagePreview = document.getElementById('imagePreview');
+            const imageValue = document.getElementById('projectImage');
+            const uploadPrompt = document.getElementById('imageUploadPrompt');
+            
+            if (!imageUploadContainer || !imageInput || !imagePreview) {
+                console.error("Missing image upload elements");
+                return;
+            }
+            
+            // Manually add click handler to container
+            imageUploadContainer.onclick = function(e) {
+                console.log("Image container clicked");
+                if (e.target !== imagePreview) {
+                    imageInput.click();
+                }
+            };
+            
+            // Handle drag events
+            ['dragenter', 'dragover'].forEach(eventName => {
+                imageUploadContainer.addEventListener(eventName, function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.style.borderColor = '#4a6cf7';
+                    this.style.backgroundColor = '#f0f7ff';
+                }, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                imageUploadContainer.addEventListener(eventName, function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.style.borderColor = '#ddd';
+                    this.style.backgroundColor = '#f9f9f9';
+                }, false);
+            });
+            
+            // Handle file drop
+            imageUploadContainer.addEventListener('drop', function(e) {
+                console.log("File dropped");
+                if (e.dataTransfer.files.length) {
+                    const file = e.dataTransfer.files[0];
+                    processImageFile(file);
+                }
+            }, false);
+            
+            // Handle file selection
+            imageInput.onchange = function() {
+                console.log("File selected via input");
+                if (this.files && this.files[0]) {
+                    processImageFile(this.files[0]);
+                }
+            };
+            
+            // Process image file helper function
+            function processImageFile(file) {
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file (JPG, PNG, etc.)');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log("Image file read successfully");
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    if (uploadPrompt) uploadPrompt.style.display = 'none';
+                    imageValue.value = e.target.result;
+                };
+                
+                reader.onerror = function(error) {
+                    console.error("Error reading file:", error);
+                    alert('Error reading image file. Please try again.');
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        // Initialize image upload functionality
+        setupImageUpload();
+        
+        // Setup form handlers with direct DOM manipulation
+        const setupFormHandlers = function() {
+            const projectTitle = document.getElementById('projectTitle');
+            const projectDescription = document.getElementById('projectDescription');
+            const demoUrl = document.getElementById('demoUrl');
+            const githubUrl = document.getElementById('githubUrl');
+            const projectImage = document.getElementById('projectImage');
+            const addButton = document.getElementById('addProjectBtn');
+            const projectForm = document.getElementById('projectForm');
+            
+            // Apply direct styles to form elements
+            [projectTitle, projectDescription, demoUrl, githubUrl].forEach(input => {
+                if (!input) return;
+                
+                // Direct styling to maximize visibility and usability
+                input.style.display = 'block';
+                input.style.width = '100%';
+                input.style.boxSizing = 'border-box';
+                input.style.padding = '15px';
+                input.style.border = '2px solid #ddd';
+                input.style.borderRadius = '8px';
+                input.style.fontSize = '16px';
+                input.style.margin = '8px 0 20px 0';
+                
+                // Focus styles
+                input.onfocus = function() {
+                    this.style.borderColor = '#4a6cf7';
+                    this.style.boxShadow = '0 0 0 3px rgba(74, 108, 247, 0.15)';
+                };
+                
+                input.onblur = function() {
+                    this.style.borderColor = '#ddd';
+                    this.style.boxShadow = 'none';
+                };
+                
+                // Prevent event propagation
+                input.onclick = function(e) {
+                    e.stopPropagation();
+                };
+            });
+            
+            // Set up form submission
+            if (addButton && projectForm) {
+                console.log("Setting up add button handler");
+                
+                addButton.onclick = function(e) {
+                    console.log("Add button clicked");
+                    e.preventDefault();
+                    
+                    // Validate form
+                    if (!projectTitle || !projectTitle.value.trim()) {
+                        alert('Please enter a project title');
+                        projectTitle.focus();
+                        return;
+                    }
+                    
+                    if (!projectDescription || !projectDescription.value.trim()) {
+                        alert('Please enter a project description');
+                        projectDescription.focus();
+                        return;
+                    }
+                    
+                    if (!projectImage || !projectImage.value) {
+                        alert('Please upload a project image');
+                        return;
+                    }
+                    
+                    // Get values safely
+                    const title = projectTitle.value.trim();
+                    const description = projectDescription.value.trim();
+                    const image = projectImage.value;
+                    const demo = demoUrl && demoUrl.value ? demoUrl.value.trim() : '#';
+                    const github = githubUrl && githubUrl.value ? githubUrl.value.trim() : '#';
+                    
+                    console.log("Adding project:", { title, description: description.substring(0, 20) + "...", demo, github });
+                    
+                    // Create project card
+                    addProjectToDOM(title, description, image, demo, github);
+                    
+                    // Close modal and reset form
+                    const modal = document.getElementById('projectModal');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                    
+                    // Reset form
+                    projectForm.reset();
+                    
+                    // Reset image preview
+                    const imagePreview = document.getElementById('imagePreview');
+                    const uploadPrompt = document.getElementById('imageUploadPrompt');
+                    
+                    if (imagePreview) {
+                        imagePreview.style.display = 'none';
+                        imagePreview.src = '';
+                    }
+                    
+                    if (uploadPrompt) {
+                        uploadPrompt.style.display = 'block';
+                    }
+                    
+                    // Show success message
+                    alert('Project added successfully!');
+                };
+            }
+        };
+        
+        // Initialize form handlers
+        setupFormHandlers();
+        
+        // Helper function to add project to DOM
+        function addProjectToDOM(title, description, image, demoUrl, githubUrl) {
+            // Create new project card element
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card';
+            projectCard.setAttribute('data-aos', 'fade-up');
+            
+            // Populate card with content
+            projectCard.innerHTML = `
+                <div class="project-actions">
+                    <button class="delete-project" title="Delete Project">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="project-image-container">
+                    <img class="project-image" src="${image}" alt="${title}">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            <a href="${demoUrl}" class="btn primary project-link demo" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </a>
+                            <a href="${githubUrl}" class="btn secondary project-link github" target="_blank">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3 contenteditable="true">${title}</h3>
+                    <p contenteditable="true">${description}</p>
+                </div>
+            `;
+            
+            // Add card to grid
+            const projectsGrid = document.querySelector('.projects-grid');
+            if (projectsGrid) {
+                projectsGrid.appendChild(projectCard);
+                
+                // Add delete functionality
+                const deleteBtn = projectCard.querySelector('.delete-project');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', function() {
+                        if (confirm('Are you sure you want to delete this project?')) {
+                            projectCard.remove();
+                        }
+                    });
+                }
+            }
+        }
+        
+        // Set up modal functionality
+        const addProjectBtn = document.querySelector('.add-project-btn');
+        if (addProjectBtn) {
+            console.log("Setting up modal trigger button");
+            addProjectBtn.addEventListener('click', function() {
+                const projectModal = document.getElementById('projectModal');
+                if (projectModal) {
+                    console.log("Opening project modal");
+                    projectModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Focus first input after modal opens
+                    setTimeout(() => {
+                        const projectTitle = document.getElementById('projectTitle');
+                        if (projectTitle) projectTitle.focus();
+                    }, 100);
+                }
+            });
+        }
+        
+        // Set up modal close
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log("Closing modal");
+                const modal = this.closest('.modal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Add this direct DOM manipulation at the beginning
+        window.onload = function() {
+            console.log("Window loaded - fixing modal elements");
+            
+            // Get modal elements
+            const modal = document.getElementById('projectModal');
+            const form = document.getElementById('projectForm');
+            const titleInput = document.getElementById('projectTitle');
+            const descInput = document.getElementById('projectDescription');
+            const demoInput = document.getElementById('demoUrl');
+            const githubInput = document.getElementById('githubUrl');
+            
+            // Set a timeout to ensure everything is loaded
+            setTimeout(function() {
+                console.log("Applying direct styles to modal inputs");
+                
+                // Force full width on form groups
+                const formGroups = document.querySelectorAll('#projectForm .form-group');
+                formGroups.forEach(group => {
+                    group.style.width = '100%';
+                    group.style.display = 'block';
+                    group.style.marginBottom = '20px';
+                });
+                
+                // Apply direct inline styles to inputs with max specificity
+                [titleInput, descInput, demoInput, githubInput].forEach(input => {
+                    if (!input) {
+                        console.error("Missing input element");
+                        return;
+                    }
+                    
+                    console.log("Setting styles for", input.id);
+                    
+                    // Force full width and visibility
+                    input.setAttribute('style', 
+                        'width: 100% !important; ' +
+                        'min-width: 100% !important; ' +
+                        'max-width: 100% !important; ' +
+                        'display: block !important; ' +
+                        'box-sizing: border-box !important; ' +
+                        'padding: 15px !important; ' +
+                        'border: 3px solid #4a6cf7 !important; ' +
+                        'border-radius: 8px !important; ' +
+                        'font-size: 16px !important; ' +
+                        'background-color: #fff !important; ' +
+                        'color: #000 !important; ' +
+                        'margin-bottom: 20px !important; ' +
+                        'opacity: 1 !important; ' +
+                        'z-index: 99999 !important; ' +
+                        'position: relative !important; ' +
+                        'box-shadow: 0 0 10px rgba(74, 108, 247, 0.2) !important;'
+                    );
+                    
+                    // For textarea, add height
+                    if (input.tagName === 'TEXTAREA') {
+                        input.style.minHeight = '150px';
+                        input.style.height = 'auto';
+                    }
+                });
+                
+                // Fix form width
+                if (form) {
+                    form.style.width = '100%';
+                    form.style.maxWidth = '100%';
+                    form.style.display = 'block';
+                }
+                
+                // Fix modal content
+                const modalContent = modal?.querySelector('.modal-content');
+                if (modalContent) {
+                    modalContent.style.width = '90%';
+                    modalContent.style.maxWidth = '600px';
+                    modalContent.style.padding = '30px';
+                }
+            }, 200);
+        };
+
+        // Add direct click handler for the add project button
+        const addProjectBtnOutside = document.querySelector('.add-project-btn');
+        if (addProjectBtnOutside) {
+            addProjectBtnOutside.onclick = function() {
+                console.log("Add project button clicked");
+                const modal = document.getElementById('projectModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Focus the first input field
+                    setTimeout(function() {
+                        const titleInput = document.getElementById('projectTitle');
+                        if (titleInput) titleInput.focus();
+                    }, 100);
+                }
+            };
+        }
+    });
+    </script>
 </body>
 </html> 

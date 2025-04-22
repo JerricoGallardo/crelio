@@ -573,91 +573,181 @@ document.addEventListener('DOMContentLoaded', function() {
         const editableElements = document.querySelectorAll('[contenteditable="true"], [contenteditable="false"]');
         const toolbarCenter = document.querySelector('.toolbar-center');
         const formatControls = document.querySelector('.format-controls');
+        const allButtons = document.querySelectorAll('button:not(.toolbar-btn)');
+        const allInputs = document.querySelectorAll('input, textarea');
+        const allForms = document.querySelectorAll('form');
+        const projectLinks = document.querySelectorAll('.project-link');
+        const profilePhotoOverlays = document.querySelectorAll('.camera-overlay, .delete-overlay');
+        
+        // Store the original click handlers for project links
+        const originalClickHandlers = new Map();
         
         if (isPreviewMode) {
             // Enter preview mode
             editableElements.forEach(el => {
                 el.setAttribute('data-previous-editable', el.contentEditable);
                 el.contentEditable = 'false';
-                el.style.cursor = 'default';
             });
+            
+            // Hide toolbar and format controls
             if (toolbarCenter) toolbarCenter.style.display = 'none';
             if (formatControls) formatControls.style.display = 'none';
+            
+            // Disable all buttons except toolbar buttons
+            allButtons.forEach(btn => {
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.6';
+            });
+            
+            // Disable all inputs and textareas
+            allInputs.forEach(input => {
+                input.disabled = true;
+                input.style.pointerEvents = 'none';
+            });
+            
+            // Prevent form submissions
+            allForms.forEach(form => {
+                form.onsubmit = (e) => e.preventDefault();
+            });
+            
+            // Store and disable project links
+            projectLinks.forEach(link => {
+                // Store the original click handler
+                const originalClick = link.onclick;
+                originalClickHandlers.set(link, originalClick);
+                
+                // Disable the link in preview mode
+                link.style.pointerEvents = 'none';
+                link.style.opacity = '0.6';
+                link.onclick = (e) => e.preventDefault();
+            });
+            
+            // Disable profile photo overlays
+            profilePhotoOverlays.forEach(overlay => {
+                overlay.style.display = 'none';
+                overlay.style.pointerEvents = 'none';
+            });
+            
+            // Update preview button
             previewBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
-            showPreviewBanner();
+            
+            // Add preview mode styles without affecting layout
+            const previewStyles = document.createElement('style');
+            previewStyles.id = 'preview-mode-styles';
+            previewStyles.textContent = `
+                [contenteditable="false"] {
+                    cursor: default !important;
+                    user-select: none !important;
+                }
+                
+                .add-btn, .delete-project, .delete-category, .delete-skill {
+                    cursor: not-allowed !important;
+                }
+                
+                input:disabled, textarea:disabled, button:disabled {
+                    cursor: not-allowed !important;
+                }
+                
+                #projectModal {
+                    pointer-events: none !important;
+                }
+                
+                .skill-category h3, .skill-item span {
+                    position: relative !important;
+                    display: inline-block !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+                
+                .skill-category {
+                    position: relative !important;
+                    margin-bottom: 1rem !important;
+                }
+                
+                .project-link {
+                    pointer-events: none !important;
+                }
+                
+                .profile-photo:hover .camera-overlay,
+                .profile-photo:hover .delete-overlay {
+                    display: none !important;
+                    pointer-events: none !important;
+                }
+                
+                .profile-photo {
+                    pointer-events: none !important;
+                }
+            `;
+            document.head.appendChild(previewStyles);
+            
+            // Disable modal triggers
+            const modalTriggers = document.querySelectorAll('[data-toggle="modal"]');
+            modalTriggers.forEach(trigger => {
+                trigger.style.pointerEvents = 'none';
+            });
+            
         } else {
             // Exit preview mode
             editableElements.forEach(el => {
                 const wasEditable = el.getAttribute('data-previous-editable');
                 if (wasEditable !== 'false') {
                     el.contentEditable = 'true';
-                    el.style.cursor = 'text';
                 }
                 el.removeAttribute('data-previous-editable');
             });
+            
+            // Show toolbar and format controls
             if (toolbarCenter) toolbarCenter.style.display = 'flex';
             if (formatControls) formatControls.style.display = 'flex';
+            
+            // Re-enable all buttons
+            allButtons.forEach(btn => {
+                btn.style.pointerEvents = '';
+                btn.style.opacity = '';
+            });
+            
+            // Re-enable all inputs and textareas
+            allInputs.forEach(input => {
+                input.disabled = false;
+                input.style.pointerEvents = '';
+            });
+            
+            // Re-enable project links
+            projectLinks.forEach(link => {
+                link.style.pointerEvents = '';
+                link.style.opacity = '';
+                // Restore the original click handler
+                link.onclick = originalClickHandlers.get(link);
+            });
+            
+            // Re-enable profile photo overlays
+            profilePhotoOverlays.forEach(overlay => {
+                overlay.style.display = '';
+                overlay.style.pointerEvents = '';
+            });
+            
+            // Restore form functionality
+            allForms.forEach(form => {
+                form.onsubmit = null;
+            });
+            
+            // Update preview button
             previewBtn.innerHTML = '<i class="fas fa-eye"></i> Preview';
-            removePreviewBanner();
+            
+            // Remove preview mode styles
+            const previewStyles = document.getElementById('preview-mode-styles');
+            if (previewStyles) {
+                previewStyles.remove();
+            }
+            
+            // Re-enable modal triggers
+            const modalTriggers = document.querySelectorAll('[data-toggle="modal"]');
+            modalTriggers.forEach(trigger => {
+                trigger.style.pointerEvents = '';
+            });
             
             // Re-initialize editable areas
             makeContentEditable();
-        }
-    }
-
-    // Function to show preview banner
-    function showPreviewBanner() {
-        const existingBanner = document.querySelector('.preview-banner');
-        if (existingBanner) existingBanner.remove();
-
-        const banner = document.createElement('div');
-        banner.className = 'preview-banner';
-        banner.innerHTML = 'Preview Mode';
-        document.body.appendChild(banner);
-
-        // Add styles if they don't exist
-        if (!document.querySelector('#preview-banner-styles')) {
-            const style = document.createElement('style');
-            style.id = 'preview-banner-styles';
-            style.textContent = `
-                .preview-banner {
-                    position: fixed;
-                    top: 70px;
-                    right: 20px;
-                    padding: 0.5rem 1rem;
-                    background: rgba(71, 118, 230, 0.9);
-                    color: white;
-                    border-radius: 4px;
-                    font-size: 0.9rem;
-                    z-index: 1000;
-                    animation: fadeIn 0.3s ease-out;
-                }
-
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(-10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-    }
-
-    // Function to remove preview banner
-    function removePreviewBanner() {
-        const banner = document.querySelector('.preview-banner');
-        if (banner) {
-            banner.style.animation = 'fadeOut 0.3s ease-in forwards';
-            setTimeout(() => {
-                if (banner.parentElement) {
-                    banner.remove();
-                }
-            }, 300);
         }
     }
 

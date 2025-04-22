@@ -1094,7 +1094,7 @@
                     <div class="col-sm-4 col-xs-12">
                         <p class="counter start" data-to="10" data-speed="2000">0</p>
                         <h4>Years Experience</h4>
-                    </div>
+                        </div>
                     <div class="col-sm-4 col-xs-12">
                         <p class="counter start" data-to="120" data-speed="2000">0</p>
                         <h4>Projects Delivered</h4>
@@ -1102,92 +1102,92 @@
                     <div class="col-sm-4 col-xs-12">
                         <p id="infinity" class="counter" data-from="0" data-to="1" data-speed="1000">0</p>
                         <h4>Seconds on this site!<br>What are you waiting for?</h4>
+                            </div>
                     </div>
-                </div>
-            </div>
+                            </div>
         </section><!-- /.section-counters -->
 
         <section id="contact" class="site-section section-contact text-center">
             <div class="container">
                 <h3 contenteditable="true">CONTACT</h3>
-                <img src="assets/img/lines.svg" class="img-lines" alt="lines">
+                    <img src="assets/img/lines.svg" class="img-lines" alt="lines">
                 <div class="row contact-info">
                     <div class="col-md-4 contact-item">
                         <div class="contact-icon">
                             <i class="fa fa-envelope"></i>
-                        </div>
+                    </div>
                         <div class="contact-content">
                             <h4>Email</h4>
                             <div class="social-link-wrapper">
                                 <p contenteditable="true" data-editable-link="email" class="editable-link">your.email@example.com</p>
                                 <a href="mailto:your.email@example.com" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">your.email@example.com</a>
+                </div>
                             </div>
-                        </div>
-                    </div>
+                                    </div>
                     <div class="col-md-4 contact-item">
                         <div class="contact-icon">
                             <i class="fa fa-phone"></i>
-                        </div>
+                                </div>
                         <div class="contact-content">
                             <h4>Phone</h4>
                             <div class="social-link-wrapper">
                                 <p contenteditable="true" class="editable-link">+1 234 567 890</p>
                                 <a href="tel:+1234567890" class="preview-link" style="display: none; color: inherit; text-decoration: none;">+1 234 567 890</a>
                             </div>
-                        </div>
                     </div>
+                            </div>
                     <div class="col-md-4 contact-item">
                         <div class="contact-icon">
                             <i class="fa fa-map-marker"></i>
-                        </div>
+                                    </div>
                         <div class="contact-content">
                             <h4>Location</h4>
                             <div class="social-link-wrapper">
                                 <p contenteditable="true" class="editable-link">Your Location</p>
                                 <span class="preview-link" style="display: none;">Your Location</span>
+                                </div>
                             </div>
-                        </div>
                     </div>
-                </div>
+                            </div>
                 <div class="row social-links">
                     <div class="col-md-4 contact-item">
                         <div class="contact-icon">
                             <i class="fa fa-github"></i>
-                        </div>
+                                    </div>
                         <div class="contact-content">
                             <h4>GitHub</h4>
                             <div class="social-link-wrapper">
                                 <p contenteditable="true" data-editable-link="github" class="editable-link">github.com/yourusername</p>
                                 <a href="https://github.com/yourusername" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">github.com/yourusername</a>
+                                </div>
                             </div>
-                        </div>
                     </div>
                     <div class="col-md-4 contact-item">
                         <div class="contact-icon">
                             <i class="fa fa-linkedin"></i>
-                        </div>
+                </div>
                         <div class="contact-content">
                             <h4>LinkedIn</h4>
                             <div class="social-link-wrapper">
                                 <p contenteditable="true" data-editable-link="linkedin" class="editable-link">linkedin.com/in/yourprofile</p>
                                 <a href="https://linkedin.com/in/yourprofile" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">linkedin.com/in/yourprofile</a>
-                            </div>
-                        </div>
+            </div>
+                    </div>
                     </div>
                     <div class="col-md-4 contact-item">
                         <div class="contact-icon">
                             <i class="fa fa-twitter"></i>
-                        </div>
+                    </div>
                         <div class="contact-content">
                             <h4>Twitter</h4>
                             <div class="social-link-wrapper">
                                 <p contenteditable="true" data-editable-link="twitter" class="editable-link">twitter.com/yourhandle</p>
                                 <a href="https://twitter.com/yourhandle" target="_blank" class="preview-link" style="display: none; color: inherit; text-decoration: none;">twitter.com/yourhandle</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
+                        </div>
+                        </div>
+                        </div>
         </section><!-- /.section-contact -->
     </main><!-- /#main -->
 
@@ -2059,6 +2059,233 @@
                 
                 previewLink.text(linkText);
             });
+        });
+    </script>
+
+    <!-- Fix for editable content issues -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Fixing editable content issues...');
+            
+            // Force enable contenteditable for all elements that should be editable
+            function forceEnableEditing() {
+                const editableElements = document.querySelectorAll('[data-editable="true"], [contenteditable="true"], p, h1, h2, h3, h4, h5, h6, .section-title, .about-text p, .skill h4, .portfolio-item-info h4, .contact-info p, .hero-content h1, .hero-content h2, .hero-content p');
+                
+                editableElements.forEach(function(element) {
+                    // Skip elements that are inside the toolbar
+                    if (element.closest('.site-header, .navbar, .site-navigation')) {
+                        return;
+                    }
+                    
+                    // Make sure the element is editable only when not in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    const isPreview = previewBtn && previewBtn.getAttribute('data-preview') === 'true';
+                    
+                    if (!isPreview) {
+                        element.setAttribute('contenteditable', 'true');
+                        
+                        // Add styling to indicate it's editable
+                        element.style.cursor = 'text';
+                        
+                        // Add highlighting style on focus
+                        element.addEventListener('focus', function() {
+                            this.style.outline = '2px solid #4a6cf7';
+                            this.style.backgroundColor = 'rgba(74, 108, 247, 0.1)';
+                        });
+                        
+                        element.addEventListener('blur', function() {
+                            this.style.outline = 'none';
+                            this.style.backgroundColor = 'transparent';
+                        });
+                    } else {
+                        element.setAttribute('contenteditable', 'false');
+                        element.style.cursor = 'default';
+                    }
+                    
+                    // Add click handler to ensure focus works (only in edit mode)
+                    element.addEventListener('click', function(e) {
+                        const previewBtn = document.getElementById('preview-btn');
+                        const isPreview = previewBtn && previewBtn.getAttribute('data-preview') === 'true';
+                        
+                        if (isPreview) {
+                            // In preview mode, prevent editing
+                            e.preventDefault();
+                            return false;
+                        }
+                        
+                        // In edit mode, continue with focus
+                        e.stopPropagation();
+                        this.setAttribute('contenteditable', 'true');
+                        this.focus();
+                    });
+                });
+            }
+            
+            // Improve the preview mode toggle to properly disable editing
+            const originalPreviewToggle = $('#preview-btn').off('click').get(0);
+            if (originalPreviewToggle) {
+                originalPreviewToggle.addEventListener('click', function() {
+                    const isPreview = this.getAttribute('data-preview') === 'true';
+                    const newPreviewState = !isPreview;
+                    
+                    this.setAttribute('data-preview', newPreviewState);
+                    $('#preview-text').text(newPreviewState ? 'Edit' : 'Preview');
+                    
+                    if (newPreviewState) {
+                        // Going into preview mode
+                        $('[contenteditable="true"]').each(function() {
+                            $(this).attr('data-was-editable', 'true');
+                            $(this).attr('contenteditable', 'false');
+                            $(this).css('cursor', 'default');
+                            $(this).css('outline', 'none');
+                            $(this).css('backgroundColor', 'transparent');
+                        });
+                        
+                        // Force all elements to be non-editable
+                        document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, .editable-link').forEach(function(element) {
+                            element.setAttribute('contenteditable', 'false');
+                            element.style.cursor = 'default';
+                            element.style.outline = 'none';
+                            element.style.backgroundColor = 'transparent';
+                            element.style.pointerEvents = 'none'; // Prevent clicks in preview mode
+                        });
+                        
+                        // Remember all editable elements for social links wrapper
+                        $('.social-link-wrapper .editable-link').each(function() {
+                            $(this).attr('data-was-editable-link', 'true');
+                            $(this).attr('contenteditable', 'false');
+                        });
+                        
+                        // Handle social media links for preview mode
+                        $('.social-link-wrapper').each(function() {
+                            const editableElem = $(this).find('.editable-link');
+                            const previewLink = $(this).find('.preview-link');
+                            
+                            // Get the text value from editable element and update link
+                            const linkText = editableElem.text().trim();
+                            
+                            // Handle email links
+                            if (editableElem.attr('data-editable-link') === 'email') {
+                                previewLink.attr('href', 'mailto:' + linkText);
+                            } 
+                            // Handle phone links
+                            else if (previewLink.attr('href') && previewLink.attr('href').startsWith('tel:')) {
+                                previewLink.attr('href', 'tel:' + linkText.replace(/\s+/g, ''));
+                            }
+                            // Handle regular links (GitHub, LinkedIn, Twitter)
+                            else if (previewLink.is('a')) {
+                                let fullUrl = linkText;
+                                
+                                // Add https:// if not present
+                                if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                                    fullUrl = 'https://' + fullUrl;
+                                }
+                                
+                                // Update the href
+                                previewLink.attr('href', fullUrl);
+                            }
+                            
+                            // Update text content
+                            previewLink.text(linkText);
+                            
+                            // Hide editable, show preview
+                            editableElem.hide();
+                            previewLink.show();
+                        });
+                    } else {
+                        // Going back to edit mode
+                        
+                        // First restore all elements that had contenteditable=true
+                        $('[data-was-editable="true"]').attr('contenteditable', 'true');
+                        
+                        // Enable all typical content elements
+                        document.querySelectorAll('p, h1, h2, h3, h4, h5, h6').forEach(function(element) {
+                            // Skip elements in the header/toolbar
+                            if (element.closest('.site-header, .navbar, .site-navigation')) {
+                                return;
+                            }
+                            element.setAttribute('contenteditable', 'true');
+                            element.style.cursor = 'text';
+                            element.style.pointerEvents = 'auto';
+                        });
+                        
+                        // Make sure all editable link elements are editable too
+                        $('[data-was-editable-link="true"]').attr('contenteditable', 'true');
+                        
+                        // Now handle the social link wrappers specifically
+                        $('.social-link-wrapper').each(function() {
+                            const editableElem = $(this).find('.editable-link');
+                            const previewLink = $(this).find('.preview-link');
+                            
+                            // Hide preview elements, show and make editable the editable links
+                            previewLink.hide();
+                            editableElem.show().attr('contenteditable', 'true');
+                        });
+                        
+                        // Ensure all .editable-link elements are editable regardless of other attributes
+                        $('.editable-link').attr('contenteditable', 'true');
+                    }
+                    
+                    // Show/hide controls
+                    $('.item-controls, .section-controls, .edit-mode-only').toggle(!newPreviewState);
+                    $('.edit-mode-indicator').toggle(!newPreviewState);
+                    $('.preview-mode-indicator').toggle(newPreviewState);
+                    
+                    // Toggle cursor style for progress bars
+                    $('.progress').css('cursor', newPreviewState ? 'default' : 'pointer');
+                    $('.section-control-btn').toggle(!newPreviewState);
+                    
+                    // Add preview class to body
+                    $('body').toggleClass('preview-mode', newPreviewState);
+                    
+                    // Re-initialize editing if going to edit mode
+                    if (!newPreviewState) {
+                        setTimeout(forceEnableEditing, 100);
+                    }
+                });
+            }
+            
+            // Run immediately
+            forceEnableEditing();
+            
+            // Override any CSS that might be preventing text selection
+            const styleOverride = document.createElement('style');
+            styleOverride.textContent = `
+                [contenteditable="true"] {
+                    -webkit-user-select: text !important;
+                    user-select: text !important;
+                    cursor: text !important;
+                    pointer-events: auto !important;
+                    transition: background-color 0.2s, outline 0.2s !important;
+                }
+                
+                [contenteditable="true"]:hover {
+                    outline: 2px dashed #4a6cf7 !important;
+                }
+                
+                [contenteditable="true"]:focus {
+                    outline: 2px solid #4a6cf7 !important;
+                    background-color: rgba(74, 108, 247, 0.1) !important;
+                }
+                
+                body.preview-mode [contenteditable="true"],
+                body.preview-mode p, 
+                body.preview-mode h1, 
+                body.preview-mode h2, 
+                body.preview-mode h3, 
+                body.preview-mode h4, 
+                body.preview-mode h5, 
+                body.preview-mode h6, 
+                body.preview-mode .editable-link {
+                    outline: none !important;
+                    cursor: default !important;
+                    background-color: transparent !important;
+                    pointer-events: none !important;
+                    -webkit-user-select: none !important;
+                    user-select: none !important;
+                }
+            `;
+            document.head.appendChild(styleOverride);
         });
     </script>
 
