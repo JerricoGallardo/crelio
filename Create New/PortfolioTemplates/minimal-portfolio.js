@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeImageUploads();
     initializePortfolioItems();
     initializeSocialLinks();
-    
+
     // Load saved state
     loadState();
     
@@ -1448,7 +1448,7 @@ function initializeImageUploads() {
                 // Add change handler to the new input
                 newInput.addEventListener('change', function() {
                     if (this.files && this.files[0]) {
-                        handleImageUpload(this, 'profile-image');
+            handleImageUpload(this, 'profile-image');
                     }
                 });
                 
@@ -1581,7 +1581,7 @@ function initializeImageUploads() {
                                 if (this.files && this.files[0]) {
                                     // Try to find an image ID to update
                                     const imgId = newInput.id.replace('upload', 'image');
-                                    handleImageUpload(this, imgId);
+            handleImageUpload(this, imgId);
                                 }
                             });
                             
@@ -2061,11 +2061,11 @@ function initializePortfolioItems() {
             e.preventDefault();
             const projectId = this.getAttribute('data-project');
             if (projectId) {
-                openPortfolioModal(projectId);
+            openPortfolioModal(projectId);
             }
         });
     });
-    
+
     // Make titles in grid view non-editable but store their original content
     const portfolioTitles = document.querySelectorAll('.portfolio-item h4');
     portfolioTitles.forEach((title, index) => {
@@ -2081,9 +2081,9 @@ function initializePortfolioItems() {
         if (portfolioItem) {
             portfolioItem.setAttribute('data-item-index', index + 1);
             portfolioItem.setAttribute('data-title', originalTitle);
-        }
-    });
-}
+            }
+        });
+    }
 
 // Function to open portfolio modal
 function openPortfolioModal(projectId) {
@@ -2101,8 +2101,8 @@ function openPortfolioModal(projectId) {
     
     // If not found, try by data attribute
     if (!portfolioItem) {
-        const viewButton = document.querySelector(`.view-project[data-project="${projectId}"]`);
-        if (viewButton) {
+                const viewButton = document.querySelector(`.view-project[data-project="${projectId}"]`);
+                if (viewButton) {
             portfolioItem = viewButton.closest('.portfolio-item');
         }
     }
@@ -2358,15 +2358,15 @@ function openPortfolioModal(projectId) {
     }
     
     // Named handlers for window events
-    function handleOutsideClick(e) {
+                function handleOutsideClick(e) {
         if (e.target === modal) {
             console.log('Clicked outside modal - closing');
             closePortfolioModal();
-        }
-    }
-    
-    function handleEscapeKey(e) {
-        if (e.key === 'Escape') {
+                    }
+                }
+
+                function handleEscapeKey(e) {
+                    if (e.key === 'Escape') {
             console.log('Escape key pressed - closing modal');
             closePortfolioModal();
         }
@@ -2443,7 +2443,7 @@ function closePortfolioModal() {
         console.error('Modal not found when closing');
         return;
     }
-    
+
     // Get updated values from the modal
     const modalTitle = document.getElementById('portfolio-modal-title');
     const modalDescription = document.getElementById('portfolio-modal-description');
