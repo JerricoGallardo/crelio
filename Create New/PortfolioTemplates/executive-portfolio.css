@@ -209,3 +209,42 @@ a[data-editable="true"]:hover::after {
 .image-container:hover + .isotope-overlay a::after {
     display: none;
 }
+
+/* Footer styles */
+.portfolio-footer {
+    text-align: center;
+    padding: 2.5rem 0;
+    background-color: #222;
+    color: #fff;
+    margin-top: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-footer .container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-footer p {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 400;
+}
+
+.portfolio-footer p[contenteditable="true"]:focus {
+    outline: none;
+    border-bottom: 1px solid #007bff;
+    padding-bottom: 4px;
+}
+
+.portfolio-footer p[contenteditable="true"]:hover {
+    color: #fff;
+    opacity: 0.8;
+}

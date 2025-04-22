@@ -613,3 +613,44 @@ body {
 .social i.fa:hover {
     color: #fff;
 }
+
+/* Add styles for footer */
+.portfolio-footer {
+    text-align: center;
+    padding: 3rem 0;
+    background: white;
+    color: #333;
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-footer .container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-footer p {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+.portfolio-footer p[contenteditable="true"]:focus {
+    outline: none;
+    border-bottom: 1px solid #6b4da8;
+    padding-bottom: 4px;
+}
+
+.portfolio-footer p[contenteditable="true"]:hover {
+    color: #111;
+}
