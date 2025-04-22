@@ -1209,34 +1209,1090 @@
         </div>
     </div>
 
+    <footer id="colophon" class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <a class="icon facebook-bg" href="#" data-editable="true"><i class="icon-facebook"></i></a>
+                    <a class="icon twitter-bg" href="#" data-editable="true"><i class="icon-twitter"></i></a>
+                    <a class="icon gplus-bg" href="#" data-editable="true"><i class="icon-linkedin"></i></a>
+                    <a class="icon linkedin-bg" href="#" data-editable="true"><i class="icon-gplus"></i></a>
+                </div>
+                <div class="col-sm-4 col-sm-offset-0 col-xs-6 col-xs-offset-3"><p class="copyright" contenteditable="true">2023. All Rights Reserved</p></div>
+                <div class="col-sm-4 col-xs-3">
+                    <div class="text-right page-scroll">
+                        <a class="icon icon-up-bg" href="#hero"><i class="icon-up"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer><!-- /#footer -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="assets/js/skrollr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-progressbar/0.9.0/bootstrap-progressbar.min.js"></script>
+    <script src="assets/js/jquery.countTo.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="minimal-portfolio.js"></script>
+
+    <!-- Initialize the Portfolio Perfect template -->
+    <script>
+        $(document).ready(function() {
+            // Initialize skrollr for parallax effects
+            if (!(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
+                skrollr.init({
+                    forceHeight: false,
+                    smoothScrolling: false,
+                    mobileCheck: function() {
+                        //hack - forces mobile version to be off
+                        return false;
+                    }
+                });
+            }
+
+            // Add sticky header on scroll
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 100) {
+                    $('.site-header').addClass('sticky');
+                } else {
+                    $('.site-header').removeClass('sticky');
+                }
+            });
+
+            // Function to set active menu item based on current section
+            function setActiveMenuItem() {
+                var scrollPos = $(document).scrollTop();
+                var windowHeight = $(window).height();
+                var found = false;
+
+                // Special case for home/hero section - if we're near the top of the page
+                if (scrollPos < 200) {
+                    $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li a[href="#hero"]').parent().addClass('active');
+                    $('body').removeClass('hero-section about-section projects-section skills-section contact-section');
+                    $('body').addClass('hero-section');
+                    return;
+                }
+
+                // Get the current URL hash if any
+                var currentHash = window.location.hash;
+
+                // If we have a hash in the URL, activate that menu item
+                if (currentHash && $(currentHash).length) {
+                    $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li a[href="' + currentHash + '"]').parent().addClass('active');
+                    return;
+                }
+
+                // Define sections in order from bottom to top of page for more accurate detection
+                var sections = ['#contact', '#skills', '#projects', '#about', '#hero'];
+
+                // Calculate the top and bottom of the viewport
+                var viewportTop = scrollPos;
+                var viewportBottom = scrollPos + windowHeight;
+                var viewportCenter = scrollPos + (windowHeight / 2);
+
+                // Loop through each section to find which one is most visible
+                for (var i = 0; i < sections.length; i++) {
+                    var section = $(sections[i]);
+                    if (section.length) {
+                        var sectionTop = section.offset().top;
+                        var sectionHeight = section.height();
+                        var sectionBottom = sectionTop + sectionHeight;
+
+                        // Check if this section occupies a significant portion of the viewport
+                        // or if the viewport center is within this section
+                        if ((viewportCenter >= sectionTop && viewportCenter <= sectionBottom) || 
+                            (sectionTop < viewportBottom && sectionBottom > viewportTop && 
+                             (Math.min(sectionBottom, viewportBottom) - Math.max(sectionTop, viewportTop)) > windowHeight * 0.4)) {
+                            
+                            // Set this section as active
+                            $('.site-navigation ul li').removeClass('active');
+                            $('.site-navigation ul li a[href="' + sections[i] + '"]').parent().addClass('active');
+
+                            // Update body classes
+                            $('body').removeClass('hero-section about-section projects-section skills-section contact-section');
+                            $('body').addClass(sections[i].substring(1) + '-section');
+
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                // If no section is dominant, use the one closest to the viewport center
+                if (!found) {
+                    var closestSection = null;
+                    var closestDistance = Infinity;
+
+                    for (var i = 0; i < sections.length; i++) {
+                        var section = $(sections[i]);
+                        if (section.length) {
+                            var sectionTop = section.offset().top;
+                            var sectionHeight = section.height();
+                            var sectionCenter = sectionTop + (sectionHeight / 2);
+                            var distance = Math.abs(viewportCenter - sectionCenter);
+
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestSection = sections[i];
+                            }
+                        }
+                    }
+
+                    if (closestSection) {
+                    $('.site-navigation ul li').removeClass('active');
+                        $('.site-navigation ul li a[href="' + closestSection + '"]').parent().addClass('active');
+
+                        $('body').removeClass('hero-section about-section projects-section skills-section contact-section');
+                        $('body').addClass(closestSection.substring(1) + '-section');
+                    }
+                }
+            }
+
+            // Initialize the first time
+            setActiveMenuItem();
+
+            // Update on scroll
+            $(window).on('scroll', function() {
+                setActiveMenuItem();
+            });
+
+            // Add functionality to make progress bars interactive
+            $(document).ready(function() {
+                // Make progress bars interactive
+                $('.progress').each(function() {
+                    makeProgressBarInteractive($(this));
+                });
+
+                // Also handle newly added progress bars
+                $(document).on('DOMNodeInserted', '.progress', function() {
+                    makeProgressBarInteractive($(this));
+                });
+            });
+
+            // Function to make a progress bar interactive
+            function makeProgressBarInteractive(progressContainer) {
+                const progressBar = progressContainer.find('.progress-bar');
+                
+                // Remove any existing click handlers to prevent duplicates
+                progressContainer.off('click mousedown mousemove');
+                
+                // Skip if already initialized
+                if (progressContainer.data('initialized')) return;
+                
+                progressContainer.data('initialized', true);
+                
+                // First ensure the progress bar has consistent initial values
+                let initialPercentage = parseInt(progressBar.attr('data-percentage'));
+                if (isNaN(initialPercentage)) {
+                    initialPercentage = parseInt(progressBar.css('width')) || 50;
+                    if (isNaN(initialPercentage)) {
+                        initialPercentage = 50;
+                    }
+                }
+                
+                // Ensure the width and data attributes are in sync
+                progressBar.css('width', initialPercentage + '%');
+                progressBar.attr('data-percentage', initialPercentage);
+                progressBar.attr('data-transitiongoal', initialPercentage);
+                progressBar.attr('data-content', initialPercentage + '%');
+                progressBar.attr('aria-valuenow', initialPercentage);
+                
+                // Handle click to change progress value
+                progressContainer.on('click', function(e) {
+                    // Check if we're in preview mode - if so, don't allow interaction
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    const containerWidth = $(this).width();
+                    const clickPosition = e.pageX - $(this).offset().left;
+                    const newPercentage = Math.round((clickPosition / containerWidth) * 100);
+                    
+                    // Update visual width
+                    progressBar.css('width', newPercentage + '%');
+                    
+                    // Update data attributes to keep everything consistent
+                    progressBar.attr('data-percentage', newPercentage);
+                    progressBar.attr('data-transitiongoal', newPercentage);
+                    progressBar.attr('data-content', newPercentage + '%');
+                    progressBar.attr('aria-valuenow', newPercentage);
+                });
+                
+                // Add hover effect for better UX
+                progressContainer.on('mousemove', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        $(this).css('cursor', 'default'); // Change cursor to default in preview mode
+                        return; // Exit early if in preview mode
+                    } else {
+                        $(this).css('cursor', 'pointer'); // Show pointer cursor in edit mode
+                    }
+                    
+                    if ($(this).hasClass('dragging')) {
+                        const containerWidth = $(this).width();
+                        const movePosition = e.pageX - $(this).offset().left;
+                        const newPercentage = Math.min(100, Math.max(0, Math.round((movePosition / containerWidth) * 100)));
+                        
+                        // Update visual width
+                        progressBar.css('width', newPercentage + '%');
+                        
+                        // Update data attributes for consistency
+                        progressBar.attr('data-percentage', newPercentage);
+                        progressBar.attr('data-transitiongoal', newPercentage);
+                        progressBar.attr('data-content', newPercentage + '%');
+                        progressBar.attr('aria-valuenow', newPercentage);
+                    }
+                });
+                
+                // Support drag behavior - only in edit mode
+                progressContainer.on('mousedown', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    $(this).addClass('dragging');
+                });
+                
+                $(document).on('mouseup', function() {
+                    $('.progress.dragging').removeClass('dragging');
+                });
+                
+                // Support for touch devices - only in edit mode
+                progressContainer.on('touchstart', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    $(this).addClass('dragging');
+                });
+                
+                progressContainer.on('touchmove', function(e) {
+                    // Check if we're in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    if (previewBtn && previewBtn.getAttribute('data-preview') === 'true') {
+                        return; // Exit early if in preview mode
+                    }
+                    
+                    if ($(this).hasClass('dragging')) {
+                        const containerWidth = $(this).width();
+                        const touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                        const movePosition = touch.pageX - $(this).offset().left;
+                        const newPercentage = Math.min(100, Math.max(0, Math.round((movePosition / containerWidth) * 100)));
+                        
+                        // Update visual width
+                        progressBar.css('width', newPercentage + '%');
+                        
+                        // Update data attributes for consistency
+                        progressBar.attr('data-percentage', newPercentage);
+                        progressBar.attr('data-transitiongoal', newPercentage);
+                        progressBar.attr('data-content', newPercentage + '%');
+                        progressBar.attr('aria-valuenow', newPercentage);
+                    }
+                });
+                
+                progressContainer.on('touchend', function() {
+                    $(this).removeClass('dragging');
+                });
+            }
+
+            // Add button animations
+            const toolbarButtons = document.querySelectorAll('.toolbar-btn');
+            toolbarButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.add('clicked');
+                    setTimeout(() => {
+                        this.classList.remove('clicked');
+                    }, 200);
+                });
+            });
+
+            // Handle removal of skills
+            $(document).on('click', '.skill .remove-btn', function() {
+                $(this).closest('.skill').fadeOut(300, function() {
+                    $(this).remove();
+                });
+            });
+
+            // Add click handlers for navigation links
+            $('.site-navigation ul li a').on('click', function(e) {
+                e.preventDefault();
+                var target = $(this).attr('href');
+                var targetSection = target.substring(1); // Remove the # to get the section name
+
+                // Remove active class from all menu items
+                $('.site-navigation ul li').removeClass('active');
+
+                // Add active class to clicked menu item
+                $(this).parent().addClass('active');
+
+                // Update body classes for all sections
+                $('body').removeClass('hero-section about-section skills-section projects-section contact-section');
+                $('body').addClass(targetSection + '-section');
+
+                // Smooth scroll to target
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 120
+                }, 800, function() {
+                    // After animation completes, update the URL hash
+                    if (history.pushState) {
+                        history.pushState(null, null, target);
+                    } else {
+                        window.location.hash = target;
+                    }
+
+                    // Force active state again after scroll completes
+                    $('.site-navigation ul li').removeClass('active');
+                    $('.site-navigation ul li a[href="' + target + '"]').parent().addClass('active');
+
+                    // Make sure the body class is still set correctly
+                    $('body').removeClass('hero-section about-section skills-section projects-section contact-section');
+                    $('body').addClass(targetSection + '-section');
+
+                    // Force the underline to be visible
+                    $('.site-navigation ul li a[href="' + target + '"]').css('position', 'relative');
+                    $('.site-navigation ul li a[href="' + target + '"]:after').css('width', '100%');
+                });
+            });
+
+            // Font family change handler
+            $('#font-family-select').on('change', function() {
+                const selectedFont = $(this).val();
+                
+                // Get the current selection
+                const selection = window.getSelection();
+                
+                // Check if there's a selection
+                if (selection && !selection.isCollapsed) {
+                    // Get the range
+                    const range = selection.getRangeAt(0);
+                    
+                    // Create a temporary span to hold our selection
+                    document.execCommand('fontName', false, selectedFont);
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                    
+                    return;
+                }
+                
+                // If no selection, fall back to applying to the whole contenteditable element
+                let activeElement = document.activeElement;
+                if (activeElement && activeElement.getAttribute('contenteditable') === 'true') {
+                    // Apply the font family to the active element
+                    $(activeElement).css('font-family', selectedFont);
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                }
+            });
+
+            // Font size change handler
+            $('#font-size-select').on('change', function() {
+                const selectedSize = $(this).val();
+                
+                // Get the current selection
+                const selection = window.getSelection();
+                
+                // Check if there's a selection
+                if (selection && !selection.isCollapsed) {
+                    // Use document.execCommand for better browser compatibility
+                    // First create a span with the font size
+                    document.execCommand('fontSize', false, '7');  // Use 7 as a placeholder
+                    
+                    // Find all font tags created with size=7 and replace with our custom size
+                    const fontElements = document.querySelectorAll('font[size="7"]');
+                    for (let i = 0; i < fontElements.length; i++) {
+                        const font = fontElements[i];
+                        // Remove the size attribute
+                        font.removeAttribute('size');
+                        // Set the specific pixel size
+                        font.style.fontSize = selectedSize;
+                    }
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                    
+                    return;
+                }
+                
+                // If no selection, fall back to applying to the whole contenteditable element
+                let activeElement = document.activeElement;
+                if (activeElement && activeElement.getAttribute('contenteditable') === 'true') {
+                    // Apply the font size to the active element
+                    $(activeElement).css('font-size', selectedSize);
+                    
+                    // Save the state for later restoration
+                    if (typeof saveContent === 'function') {
+                        saveContent();
+                    }
+                }
+            });
+
+            // Function to update formatting dropdowns based on current selection
+            function updateFormattingButtons() {
+                // Get the current selection
+                const selection = window.getSelection();
+                
+                // Get the focused element
+                const activeElement = document.activeElement;
+                
+                // If there's a contenteditable element with focus but no selection,
+                // still update the dropdowns based on the contenteditable element's style
+                if (activeElement && activeElement.getAttribute('contenteditable') === 'true' && 
+                    (!selection || selection.isCollapsed)) {
+                    
+                    updateDropdownsFromElement(activeElement);
+                    return;
+                }
+                
+                // If no valid selection, exit early
+                if (!selection || selection.rangeCount === 0) return;
+                
+                // Get the range and common ancestor
+                const range = selection.getRangeAt(0);
+                if (!range) return;
+                
+                // Get selected node or its parent if it's a text node
+                const selectedNode = selection.focusNode;
+                if (!selectedNode) return;
+                
+                const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
+                if (!parentElement) return;
+                
+                updateDropdownsFromElement(parentElement);
+            }
+            
+            // Helper function to extract styles from an element and update dropdowns
+            function updateDropdownsFromElement(element) {
+                // Get the computed style
+                const computedStyle = window.getComputedStyle(element);
+                
+                // Get font family
+                let fontFamily = computedStyle.fontFamily;
+                
+                // Clean up font family (remove quotes and get first font in stack)
+                if (fontFamily) {
+                    fontFamily = fontFamily.split(',')[0].trim();
+                    fontFamily = fontFamily.replace(/["']/g, '');
+                }
+                
+                // Get font size
+                let fontSize = computedStyle.fontSize;
+                
+                // Update dropdowns with these values
+                updateFontFamilyDropdown(fontFamily);
+                updateFontSizeDropdown(fontSize);
+                
+                // Also look at child elements if we haven't found inline styles
+                // This helps with text that has spans or other elements with direct styling
+                const children = element.children;
+                if (children.length > 0) {
+                    // Check if selection contains or is within any of these children
+                    const selection = window.getSelection();
+                    if (selection && selection.rangeCount > 0) {
+                        const range = selection.getRangeAt(0);
+                        
+                        for (let i = 0; i < children.length; i++) {
+                            const child = children[i];
+                            // Check if this child is in the selection
+                            if (selection.containsNode(child, true)) {
+                                const childStyle = window.getComputedStyle(child);
+                                
+                                // Use child's style if it seems to override the parent
+                                if (childStyle.fontFamily !== computedStyle.fontFamily) {
+                                    fontFamily = childStyle.fontFamily.split(',')[0].trim().replace(/["']/g, '');
+                                    updateFontFamilyDropdown(fontFamily);
+                                }
+                                
+                                if (childStyle.fontSize !== computedStyle.fontSize) {
+                                    fontSize = childStyle.fontSize;
+                                    updateFontSizeDropdown(fontSize);
+                                }
+                                
+                                // If this child has its own children, check them too
+                                if (child.children.length > 0) {
+                                    updateDropdownsFromElement(child);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Helper function to update font family dropdown
+            function updateFontFamilyDropdown(fontFamily) {
+                if (!fontFamily) return;
+                
+                const fontFamilySelect = $('#font-family-select');
+                const options = Array.from(fontFamilySelect[0].options);
+                
+                // Try to find an exact match first
+                let matchingOption = options.find(option => 
+                    option.value.toLowerCase() === fontFamily.toLowerCase()
+                );
+                
+                // If no exact match, try partial match
+                if (!matchingOption) {
+                    matchingOption = options.find(option => 
+                        fontFamily.toLowerCase().includes(option.value.toLowerCase()) ||
+                        option.value.toLowerCase().includes(fontFamily.toLowerCase())
+                    );
+                }
+                
+                // If still no match, use default
+                if (matchingOption) {
+                    fontFamilySelect.val(matchingOption.value);
+                }
+            }
+            
+            // Helper function to update font size dropdown
+            function updateFontSizeDropdown(fontSize) {
+                if (!fontSize) return;
+                
+                const fontSizeSelect = $('#font-size-select');
+                const options = Array.from(fontSizeSelect[0].options);
+                
+                // Convert fontSize to pixels if it's not already
+                const sizeInPx = parseInt(fontSize);
+                if (isNaN(sizeInPx)) return;
+                
+                // Try to find exact match first
+                let matchingOption = options.find(option => 
+                    parseInt(option.value) === sizeInPx
+                );
+                
+                // If no exact match, find closest
+                if (!matchingOption) {
+                    matchingOption = options.reduce((prev, curr) => {
+                        const prevDiff = Math.abs(parseInt(prev.value) - sizeInPx);
+                        const currDiff = Math.abs(parseInt(curr.value) - sizeInPx);
+                        return prevDiff < currDiff ? prev : curr;
+                    });
+                }
+                
+                if (matchingOption) {
+                    fontSizeSelect.val(matchingOption.value);
+                }
+            }
+            
+            // Listen for selection changes to update buttons
+            document.addEventListener('selectionchange', updateFormattingButtons);
+            
+            // Listen for mouseup to catch selections after they're complete
+            document.addEventListener('mouseup', function(e) {
+                setTimeout(updateFormattingButtons, 10);
+            });
+            
+            // Listen for click events to catch when contenteditable elements are clicked
+            document.addEventListener('click', function(e) {
+                // Check if we clicked on or within a contenteditable element
+                let target = e.target;
+                while (target && target !== document) {
+                    if (target.getAttribute && target.getAttribute('contenteditable') === 'true') {
+                        setTimeout(updateFormattingButtons, 10);
+                        break;
+                    }
+                    target = target.parentNode;
+                }
+            });
+            
+            // Listen for focus events on contenteditable elements
+            $(document).on('focus', '[contenteditable=true]', function() {
+                setTimeout(updateFormattingButtons, 10);
+            });
+            
+            // Completely disable the DOMNodeInserted auto-initialization which might be causing problems
+            $(document).off('DOMNodeInserted', '.progress');
+            
+            // IMPORTANT: Complete rewrite of Add Skill functionality using direct DOM methods 
+            // Remove any and all previous jQuery handlers that might be conflicting
+            $('#add-skill-btn').off(); // Remove ALL handlers of ANY type
+            $('.section-skills').off(); // Remove any delegation handlers
+            $(document).off('click', '#add-skill-btn'); // Remove any document-level delegation
+            
+            // PREVENT DOUBLE EVENT HANDLERS
+            // Remove any existing click event listeners by cloning and replacing the button
+            const addSkillBtn = document.getElementById('add-skill-btn');
+            const newAddSkillBtn = addSkillBtn.cloneNode(true);
+            addSkillBtn.parentNode.replaceChild(newAddSkillBtn, addSkillBtn);
+            
+            // Add a single event listener to the new button
+            newAddSkillBtn.addEventListener('click', function(event) {
+                // Stop all event propagation and default behavior
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+                
+                console.log("DOM EVENT: Add Skill button clicked - NEW IMPLEMENTATION");
+                
+                // Create the HTML for the new skill directly
+                const skillHtml = `
+                    <div class="skill">
+                        <div class="item-controls">
+                            <button class="section-control-btn remove-btn" title="Remove Skill"><i class="glyphicon glyphicon-trash"></i></button>
+                        </div>
+                        <h4 contenteditable="true">NEW SKILL</h4>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" data-transitiongoal="50" data-percentage="50" data-content="50%" style="width: 50%"></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Find the column with the fewest skills using DOM methods
+                const columns = document.querySelectorAll('.section-skills .col-md-4');
+                let minSkills = Number.MAX_VALUE;
+                let targetColumn = null;
+                
+                columns.forEach(function(column) {
+                    const skillCount = column.querySelectorAll('.skill').length;
+                    if (skillCount < minSkills) {
+                        minSkills = skillCount;
+                        targetColumn = column;
+                    }
+                });
+                
+                // Add the new skill to the column
+                targetColumn.insertAdjacentHTML('beforeend', skillHtml);
+                
+                // Get the newly added skill
+                const newSkill = targetColumn.lastElementChild;
+                
+                // Initialize progress bar interactive behaviors
+                const progressContainer = newSkill.querySelector('.progress');
+                const progressBar = progressContainer.querySelector('.progress-bar');
+                
+                // Initialize progress bar interactions  
+                function handleProgressClick(e) {
+                    const rect = progressContainer.getBoundingClientRect();
+                    const containerWidth = rect.width;
+                    const clickPosition = e.clientX - rect.left;
+                    const newPercentage = Math.round((clickPosition / containerWidth) * 100);
+                    
+                    // Update visual width and attributes
+                    progressBar.style.width = newPercentage + '%';
+                    progressBar.setAttribute('data-percentage', newPercentage);
+                    progressBar.setAttribute('data-transitiongoal', newPercentage);
+                    progressBar.setAttribute('data-content', newPercentage + '%');
+                    progressBar.setAttribute('aria-valuenow', newPercentage);
+                }
+                
+                // Handle drag operations
+                let isDragging = false;
+                
+                function handleMouseDown(e) {
+                    isDragging = true;
+                    progressContainer.classList.add('dragging');
+                    // Prevent text selection during drag
+                    e.preventDefault();
+                }
+                
+                function handleMouseMove(e) {
+                    if (!isDragging) return;
+                    
+                    const rect = progressContainer.getBoundingClientRect();
+                    const containerWidth = rect.width;
+                    const movePosition = e.clientX - rect.left;
+                    const newPercentage = Math.min(100, Math.max(0, Math.round((movePosition / containerWidth) * 100)));
+                    
+                    // Update progress bar
+                    progressBar.style.width = newPercentage + '%';
+                    progressBar.setAttribute('data-percentage', newPercentage);
+                    progressBar.setAttribute('data-transitiongoal', newPercentage);
+                    progressBar.setAttribute('data-content', newPercentage + '%');
+                    progressBar.setAttribute('aria-valuenow', newPercentage);
+                }
+                
+                function handleMouseUp() {
+                    isDragging = false;
+                    progressContainer.classList.remove('dragging');
+                }
+                
+                // Add event listeners directly to the progress bar
+                progressContainer.addEventListener('click', handleProgressClick);
+                progressContainer.addEventListener('mousedown', handleMouseDown);
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+                
+                // Add remove button functionality
+                const removeBtn = newSkill.querySelector('.remove-btn');
+                removeBtn.addEventListener('click', function() {
+                    newSkill.remove();
+                });
+                
+                // Make the skill name editable and focus it
+                const skillTitle = newSkill.querySelector('h4');
+                skillTitle.focus();
+                
+                // Return false to prevent default behavior
+                return false;
+            }, {capture: true}); // Use capture to ensure this handler runs first
+
+            // Toggle preview mode
+            $('#preview-btn').on('click', function() {
+                const isPreview = $(this).attr('data-preview') === 'true';
+                const newPreviewState = !isPreview;
+                
+                $(this).attr('data-preview', newPreviewState);
+                $('#preview-text').text(newPreviewState ? 'Edit' : 'Preview');
+                
+                if (newPreviewState) {
+                    // Going into preview mode
+                    // Store the current state before changing anything
+                    $('[contenteditable="true"]').each(function() {
+                        $(this).attr('data-was-editable', 'true');
+                        $(this).attr('contenteditable', 'false');
+                    });
+                    
+                    // Remember all editable elements for social links wrapper
+                    $('.social-link-wrapper .editable-link').each(function() {
+                        $(this).attr('data-was-editable-link', 'true');
+                    });
+                    
+                    // Handle social media links for preview mode
+                    $('.social-link-wrapper').each(function() {
+                        const editableElem = $(this).find('.editable-link');
+                        const previewLink = $(this).find('.preview-link');
+                        
+                        // Get the text value from editable element and update link
+                        const linkText = editableElem.text().trim();
+                        
+                        // Handle email links
+                        if (editableElem.attr('data-editable-link') === 'email') {
+                            previewLink.attr('href', 'mailto:' + linkText);
+                        } 
+                        // Handle phone links
+                        else if (previewLink.attr('href') && previewLink.attr('href').startsWith('tel:')) {
+                            previewLink.attr('href', 'tel:' + linkText.replace(/\s+/g, ''));
+                        }
+                        // Handle regular links (GitHub, LinkedIn, Twitter)
+                        else if (previewLink.is('a')) {
+                            let fullUrl = linkText;
+                            
+                            // Add https:// if not present
+                            if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                                fullUrl = 'https://' + fullUrl;
+                            }
+                            
+                            // Update the href
+                            previewLink.attr('href', fullUrl);
+                        }
+                        
+                        // Update text content
+                        previewLink.text(linkText);
+                        
+                        // Hide editable, show preview
+                        editableElem.hide();
+                        previewLink.show();
+                    });
+                } else {
+                    // Going back to edit mode
+                    
+                    // First restore all elements that had contenteditable=true
+                    $('[data-was-editable="true"]').attr('contenteditable', 'true');
+                    
+                    // Make sure all editable link elements are editable too
+                    $('[data-was-editable-link="true"]').attr('contenteditable', 'true');
+                    
+                    // Now handle the social link wrappers specifically
+                    $('.social-link-wrapper').each(function() {
+                        const editableElem = $(this).find('.editable-link');
+                        const previewLink = $(this).find('.preview-link');
+                        
+                        // Hide preview elements, show and make editable the editable links
+                        previewLink.hide();
+                        editableElem.show().attr('contenteditable', 'true');
+                    });
+                    
+                    // Ensure all .editable-link elements are editable regardless of other attributes
+                    $('.editable-link').attr('contenteditable', 'true');
+                }
+                
+                // Show/hide controls
+                $('.item-controls, .section-controls, .edit-mode-only').toggle(!newPreviewState);
+                $('.edit-mode-indicator').toggle(!newPreviewState);
+                $('.preview-mode-indicator').toggle(newPreviewState);
+                
+                // Toggle cursor style for progress bars
+                $('.progress').css('cursor', newPreviewState ? 'default' : 'pointer');
+                $('.section-control-btn').toggle(!newPreviewState);
+                
+                // Add preview class to body
+                $('body').toggleClass('preview-mode', newPreviewState);
+            });
+
+            // Update preview links when editable content changes
+            $(document).on('input', '.editable-link', function() {
+                const linkText = $(this).text().trim();
+                const previewLink = $(this).siblings('.preview-link');
+                
+                // Handle different types of links
+                if ($(this).attr('data-editable-link') === 'email') {
+                    previewLink.attr('href', 'mailto:' + linkText);
+                } else if (previewLink.attr('href') && previewLink.attr('href').startsWith('tel:')) {
+                    previewLink.attr('href', 'tel:' + linkText.replace(/\s+/g, ''));
+                } else if (previewLink.is('a')) {
+                    let fullUrl = linkText;
+                    if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                        fullUrl = 'https://' + fullUrl;
+                    }
+                    previewLink.attr('href', fullUrl);
+                }
+                
+                previewLink.text(linkText);
+            });
+        });
+    </script>
+
+    <!-- Fix for editable content issues -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Fixing editable content issues...');
+            
+            // Force enable contenteditable for all elements that should be editable
+            function forceEnableEditing() {
+                const editableElements = document.querySelectorAll('[data-editable="true"], [contenteditable="true"], p, h1, h2, h3, h4, h5, h6, .section-title, .about-text p, .skill h4, .portfolio-item-info h4, .contact-info p, .hero-content h1, .hero-content h2, .hero-content p');
+                
+                editableElements.forEach(function(element) {
+                    // Skip elements that are inside the toolbar
+                    if (element.closest('.site-header, .navbar, .site-navigation')) {
+                        return;
+                    }
+                    
+                    // Make sure the element is editable only when not in preview mode
+                    const previewBtn = document.getElementById('preview-btn');
+                    const isPreview = previewBtn && previewBtn.getAttribute('data-preview') === 'true';
+                    
+                    if (!isPreview) {
+                        element.setAttribute('contenteditable', 'true');
+                        
+                        // Add styling to indicate it's editable
+                        element.style.cursor = 'text';
+                        
+                        // Add highlighting style on focus
+                        element.addEventListener('focus', function() {
+                            this.style.outline = '2px solid #4a6cf7';
+                            this.style.backgroundColor = 'rgba(74, 108, 247, 0.1)';
+                        });
+                        
+                        element.addEventListener('blur', function() {
+                            this.style.outline = 'none';
+                            this.style.backgroundColor = 'transparent';
+                        });
+                    } else {
+                        element.setAttribute('contenteditable', 'false');
+                        element.style.cursor = 'default';
+                    }
+                    
+                    // Add click handler to ensure focus works (only in edit mode)
+                    element.addEventListener('click', function(e) {
+                        const previewBtn = document.getElementById('preview-btn');
+                        const isPreview = previewBtn && previewBtn.getAttribute('data-preview') === 'true';
+                        
+                        if (isPreview) {
+                            // In preview mode, prevent editing
+                            e.preventDefault();
+                            return false;
+                        }
+                        
+                        // In edit mode, continue with focus
+                        e.stopPropagation();
+                        this.setAttribute('contenteditable', 'true');
+                        this.focus();
+                    });
+                });
+            }
+            
+            // Improve the preview mode toggle to properly disable editing
+            const originalPreviewToggle = $('#preview-btn').off('click').get(0);
+            if (originalPreviewToggle) {
+                originalPreviewToggle.addEventListener('click', function() {
+                    const isPreview = this.getAttribute('data-preview') === 'true';
+                    const newPreviewState = !isPreview;
+                    
+                    this.setAttribute('data-preview', newPreviewState);
+                    $('#preview-text').text(newPreviewState ? 'Edit' : 'Preview');
+                    
+                    if (newPreviewState) {
+                        // Going into preview mode
+                        $('[contenteditable="true"]').each(function() {
+                            $(this).attr('data-was-editable', 'true');
+                            $(this).attr('contenteditable', 'false');
+                            $(this).css('cursor', 'default');
+                            $(this).css('outline', 'none');
+                            $(this).css('backgroundColor', 'transparent');
+                        });
+                        
+                        // Force all elements to be non-editable
+                        document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, .editable-link').forEach(function(element) {
+                            element.setAttribute('contenteditable', 'false');
+                            element.style.cursor = 'default';
+                            element.style.outline = 'none';
+                            element.style.backgroundColor = 'transparent';
+                            element.style.pointerEvents = 'none'; // Prevent clicks in preview mode
+                        });
+                        
+                        // Remember all editable elements for social links wrapper
+                        $('.social-link-wrapper .editable-link').each(function() {
+                            $(this).attr('data-was-editable-link', 'true');
+                            $(this).attr('contenteditable', 'false');
+                        });
+                        
+                        // Handle social media links for preview mode
+                        $('.social-link-wrapper').each(function() {
+                            const editableElem = $(this).find('.editable-link');
+                            const previewLink = $(this).find('.preview-link');
+                            
+                            // Get the text value from editable element and update link
+                            const linkText = editableElem.text().trim();
+                            
+                            // Handle email links
+                            if (editableElem.attr('data-editable-link') === 'email') {
+                                previewLink.attr('href', 'mailto:' + linkText);
+                            } 
+                            // Handle phone links
+                            else if (previewLink.attr('href') && previewLink.attr('href').startsWith('tel:')) {
+                                previewLink.attr('href', 'tel:' + linkText.replace(/\s+/g, ''));
+                            }
+                            // Handle regular links (GitHub, LinkedIn, Twitter)
+                            else if (previewLink.is('a')) {
+                                let fullUrl = linkText;
+                                
+                                // Add https:// if not present
+                                if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                                    fullUrl = 'https://' + fullUrl;
+                                }
+                                
+                                // Update the href
+                                previewLink.attr('href', fullUrl);
+                            }
+                            
+                            // Update text content
+                            previewLink.text(linkText);
+                            
+                            // Hide editable, show preview
+                            editableElem.hide();
+                            previewLink.show();
+                        });
+                    } else {
+                        // Going back to edit mode
+                        
+                        // First restore all elements that had contenteditable=true
+                        $('[data-was-editable="true"]').attr('contenteditable', 'true');
+                        
+                        // Enable all typical content elements
+                        document.querySelectorAll('p, h1, h2, h3, h4, h5, h6').forEach(function(element) {
+                            // Skip elements in the header/toolbar
+                            if (element.closest('.site-header, .navbar, .site-navigation')) {
+                                return;
+                            }
+                            element.setAttribute('contenteditable', 'true');
+                            element.style.cursor = 'text';
+                            element.style.pointerEvents = 'auto';
+                        });
+                        
+                        // Make sure all editable link elements are editable too
+                        $('[data-was-editable-link="true"]').attr('contenteditable', 'true');
+                        
+                        // Now handle the social link wrappers specifically
+                        $('.social-link-wrapper').each(function() {
+                            const editableElem = $(this).find('.editable-link');
+                            const previewLink = $(this).find('.preview-link');
+                            
+                            // Hide preview elements, show and make editable the editable links
+                            previewLink.hide();
+                            editableElem.show().attr('contenteditable', 'true');
+                        });
+                        
+                        // Ensure all .editable-link elements are editable regardless of other attributes
+                        $('.editable-link').attr('contenteditable', 'true');
+                    }
+                    
+                    // Show/hide controls
+                    $('.item-controls, .section-controls, .edit-mode-only').toggle(!newPreviewState);
+                    $('.edit-mode-indicator').toggle(!newPreviewState);
+                    $('.preview-mode-indicator').toggle(newPreviewState);
+                    
+                    // Toggle cursor style for progress bars
+                    $('.progress').css('cursor', newPreviewState ? 'default' : 'pointer');
+                    $('.section-control-btn').toggle(!newPreviewState);
+                    
+                    // Add preview class to body
+                    $('body').toggleClass('preview-mode', newPreviewState);
+                    
+                    // Re-initialize editing if going to edit mode
+                    if (!newPreviewState) {
+                        setTimeout(forceEnableEditing, 100);
+                    }
+                });
+            }
+            
+            // Run immediately
+            forceEnableEditing();
+            
+            // Override any CSS that might be preventing text selection
+            const styleOverride = document.createElement('style');
+            styleOverride.textContent = `
+                [contenteditable="true"] {
+                    -webkit-user-select: text !important;
+                    user-select: text !important;
+                    cursor: text !important;
+                    pointer-events: auto !important;
+                    transition: background-color 0.2s, outline 0.2s !important;
+                }
+                
+                [contenteditable="true"]:hover {
+                    outline: 2px dashed #4a6cf7 !important;
+                }
+                
+                [contenteditable="true"]:focus {
+                    outline: 2px solid #4a6cf7 !important;
+                    background-color: rgba(74, 108, 247, 0.1) !important;
+                }
+                
+                body.preview-mode [contenteditable="true"],
+                body.preview-mode p, 
+                body.preview-mode h1, 
+                body.preview-mode h2, 
+                body.preview-mode h3, 
+                body.preview-mode h4, 
+                body.preview-mode h5, 
+                body.preview-mode h6, 
+                body.preview-mode .editable-link {
+                    outline: none !important;
+                    cursor: default !important;
+                    background-color: transparent !important;
+                    pointer-events: none !important;
+                    -webkit-user-select: none !important;
+                    user-select: none !important;
+                }
+            `;
+            document.head.appendChild(styleOverride);
+        });
+    </script>
+
     <!-- Preview Mode Script -->
     <script src="preview-mode.js"></script>
 
     <!-- Google Fonts for Added Font Families -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Simple Footer -->
-    <style>
-        .simple-footer {
-            background-color: #f5f5f5;
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid #e0e0e0;
-            margin-top: 100px;
-            clear: both;
-            width: 100%;
-        }
-        
-        .simple-footer p {
-            font-size: 18px;
-            color: #333;
-            margin: 0;
-        }
-    </style>
-
-    <div class="simple-footer">
-        <p contenteditable="true">© 2024 Your Name. All rights reserved.</p>
-    </div>
-
 </body>
 </html>
