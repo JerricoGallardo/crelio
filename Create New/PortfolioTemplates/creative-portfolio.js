@@ -1636,15 +1636,7 @@ function redo() {
         <div class="project-info">
                     <h3 contenteditable="true">Portfolio Website</h3>
                     <p contenteditable="true">A responsive portfolio website built with HTML, CSS, and JavaScript to showcase my work and skills.</p>
-            <div class="project-tech">
-                        <span><span class="tag-text" contenteditable="true">HTML</span> <i class="fas fa-times remove-tag"></i></span>
-                        <span><span class="tag-text" contenteditable="true">CSS</span> <i class="fas fa-times remove-tag"></i></span>
-                        <span><span class="tag-text" contenteditable="true">JavaScript</span> <i class="fas fa-times remove-tag"></i></span>
-                    </div>
-                    <div class="tag-management">
-                        <button class="add-tag-btn">Add Tag</button>
-            </div>
-        </div>
+                </div>
     `;
             projectsGrid.appendChild(project1);
             
@@ -1678,14 +1670,6 @@ function redo() {
                 <div class="project-info">
                     <h3 contenteditable="true">E-commerce App</h3>
                     <p contenteditable="true">A full-featured online store with product listings, shopping cart, and secure checkout functionality.</p>
-                    <div class="project-tech">
-                        <span><span class="tag-text" contenteditable="true">React</span> <i class="fas fa-times remove-tag"></i></span>
-                        <span><span class="tag-text" contenteditable="true">Node.js</span> <i class="fas fa-times remove-tag"></i></span>
-                        <span><span class="tag-text" contenteditable="true">MongoDB</span> <i class="fas fa-times remove-tag"></i></span>
-                    </div>
-                    <div class="tag-management">
-                        <button class="add-tag-btn">Add Tag</button>
-                    </div>
                 </div>
             `;
             projectsGrid.appendChild(project2);
@@ -1737,9 +1721,9 @@ function redo() {
                 }
                 
                 // Save state after adding the tag
-        saveState();
-    }
-}
+                saveState();
+            }
+        }
 
         // Handle removing a tag
         if (e.target.closest('.remove-tag')) {
@@ -1833,94 +1817,6 @@ function redo() {
         }
     });
 
-    function createProjectTagsSection(projectElement) {
-        const tagsSection = document.createElement('div');
-        tagsSection.className = 'project-tags';
-        
-        const tagList = document.createElement('div');
-        tagList.className = 'tag-list';
-        
-        const tagManagement = document.createElement('div');
-        tagManagement.className = 'tag-management';
-        
-        const addTagBtn = document.createElement('button');
-        addTagBtn.className = 'add-tag-btn';
-        addTagBtn.textContent = 'Add Tag';
-        
-        tagManagement.appendChild(addTagBtn);
-        
-        tagsSection.appendChild(tagList);
-        tagsSection.appendChild(tagManagement);
-        projectElement.querySelector('.project-info').appendChild(tagsSection);
-        
-        addTagBtn.addEventListener('click', function() {
-            const newTag = document.createElement('span');
-            newTag.className = 'tag';
-            newTag.contentEditable = true;
-            newTag.textContent = 'New Tag';
-            newTag.dataset.defaultText = 'Tag Name';
-            
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete-tag';
-            deleteBtn.innerHTML = '&times;';
-            deleteBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (confirm('Are you sure you want to delete this tag?')) {
-                    newTag.remove();
-                    saveState();
-                }
-            });
-            
-            newTag.appendChild(deleteBtn);
-            tagList.appendChild(newTag);
-            
-            // Focus and select all text in the new tag for immediate editing
-            newTag.focus();
-            const range = document.createRange();
-            range.selectNodeContents(newTag);
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-            
-            saveState();
-        });
-        
-        return tagsSection;
-    }
-
-    function restoreProjectTags(projects) {
-        projects.forEach((project, index) => {
-            if (savedContent && savedContent.projectTags && savedContent.projectTags[index]) {
-                const tagList = project.querySelector('.tag-list');
-                if (tagList) {
-                    tagList.innerHTML = '';  // Clear existing tags
-                    
-                    savedContent.projectTags[index].forEach(tagText => {
-                        const tag = document.createElement('span');
-                        tag.className = 'tag';
-                        tag.contentEditable = true;
-                        tag.textContent = tagText;
-                        tag.dataset.defaultText = 'Tag Name';
-                        
-                        const deleteBtn = document.createElement('button');
-                        deleteBtn.className = 'delete-tag';
-                        deleteBtn.innerHTML = '&times;';
-                        deleteBtn.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            if (confirm('Are you sure you want to delete this tag?')) {
-                                tag.remove();
-                                saveState();
-                            }
-                        });
-                        
-                        tag.appendChild(deleteBtn);
-                        tagList.appendChild(tag);
-                    });
-                }
-            }
-        });
-    }
-
     // Update the project form to handle website and GitHub URLs
     document.addEventListener('click', function(e) {
         // Handle clicking on the view project button
@@ -1977,7 +1873,6 @@ function redo() {
         const projectImage = projectCard.querySelector('.project-image img');
         const projectTitle = projectCard.querySelector('.project-info h3');
         const projectDescription = projectCard.querySelector('.project-info p');
-        const projectTags = projectCard.querySelectorAll('.project-tech .tag-text');
         
         // Get URLs if they exist (stored as data attributes)
         const demoUrl = projectCard.getAttribute('data-demo-url') || '';
@@ -1991,7 +1886,6 @@ function redo() {
         const modalImageContainer = modal.querySelector('.project-view-image');
         const modalTitle = document.getElementById('viewProjectTitle');
         const modalDescription = document.getElementById('viewProjectDescription');
-        const modalTags = document.getElementById('viewProjectTags');
         const modalDemoBtn = document.getElementById('viewProjectDemo');
         const modalGithubBtn = document.getElementById('viewProjectGithub');
         
@@ -2016,16 +1910,6 @@ function redo() {
         
         if (modalTitle && projectTitle) modalTitle.textContent = projectTitle.textContent;
         if (modalDescription && projectDescription) modalDescription.textContent = projectDescription.textContent;
-        
-        // Clear and add tags
-        if (modalTags) {
-            modalTags.innerHTML = '';
-            projectTags.forEach(tag => {
-                const span = document.createElement('span');
-                span.textContent = tag.textContent;
-                modalTags.appendChild(span);
-            });
-        }
         
         // Create edit buttons for URLs - they will only be added if not in preview mode
         const editDemoBtn = document.createElement('button');

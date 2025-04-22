@@ -654,43 +654,21 @@ body {
     line-height: 1.5;
 }
 
-.project-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.project-tech span {
-    background-color: rgba(0, 243, 255, 0.1);
-    color: var(--neon-blue);
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    margin-bottom: 0.3rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    position: relative;
-}
-
-.tag-text {
-    outline: none;
-    min-width: 10px;
-}
-
-.tag-text:focus {
-    background-color: rgba(0, 243, 255, 0.15);
-    border-radius: 4px;
-    padding: 0 2px;
-}
-
-.remove-tag {
-    cursor: pointer;
-    font-size: 0.8rem;
-    color: var(--neon-pink);
-    opacity: 0.7;
-    transition: all 0.2s ease;
+/* Hide tag-related elements */
+.project-tech, 
+.tag-management, 
+.tag-list, 
+.add-tag-btn, 
+.project-tags, 
+.remove-tag,
+.project-view-tech,
+#viewProjectTags,
+.tag-text,
+.tag-new,
+.tag-input,
+.project-tag,
+.tag-remove {
+    display: none !important;
 }
 
 /* Skills Section - Enhanced */
